@@ -4,3 +4,4 @@ donde
 euros = 567,
 centimos1 = 456,
 centimos2 = 10
+eurosHex = 0xAA
