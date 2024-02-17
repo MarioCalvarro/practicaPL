@@ -1,0 +1,42 @@
+package asint;
+
+import java_cup.runtime.*;
+import alex.AnalizadorLexicoListas;
+import alex.UnidadLexica;
+import errors.GestionErroresTiny;
+
+scan with {: return getScanner().next_token(); :};
+parser code {: 
+   private GestionErroresTiny errores;
+   public void syntax_error(Symbol unidadLexica) {
+     errores.errorSintactico((UnidadLexica)unidadLexica);
+   }
+:};
+init with {: 
+   errores = new GestionErroresTiny();
+   AnalizadorLexicoListas alex = (AnalizadorLexicoListas)getScanner();
+   alex.fijaGestionErrores(errores);
+:};
+
+
+terminal     PRINT, LFILTER, LMAP, LREDUCE, IDEN, ENT, REAL, MAS,
+             MENOS, POR, DIV, MENOR, MAYOR, IGUAL, DESIGUAL, CONCATENACION,
+             PAP, PCIERRE, CAP, CCIERRE, ASIGNACION, COMA;
+
+non terminal  S, L0, L1, L2, CORC, FUNC2, FUNC3, OPAR, OPREL ;
+
+
+
+S   ::= PRINT L0 S | IDEN ASIGNACION L0 S |  ;
+
+L0   ::= L1 CONCATENACION L1 ;
+L1   ::= FUNC2 | FUNC3 ; 
+L2   ::= IDEN | CAP CORC CCIERRE | PAP L0 PCIERRE ;
+
+CORC ::= ENT COMA CORC | L0 COMA CORC | ENT | L0 ;
+
+FUNC2 ::= LREDUCE OPAR L2 ;
+FUNC3 ::= LFILTER OPREL ENT L2 | LMAP OPAR ENT L2 ;
+
+OPAR ::= MAS | MENOS | POR | DIV ;
+OPREL ::= MENOR | MAYOR | IGUAL | DESIGUAL ;
