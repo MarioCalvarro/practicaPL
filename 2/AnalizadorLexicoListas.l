@@ -57,7 +57,7 @@ corcheteApertura = \[
 corcheteCierre = \]
 parentesisApertura = \(
 parentesisCierre = \)
-coma  = ,
+coma = ,
 %%
 {separador}               {}
 {comentario}              {}
