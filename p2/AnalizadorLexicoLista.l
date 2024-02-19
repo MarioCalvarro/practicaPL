@@ -6,7 +6,7 @@ import errors.GestionErroresTiny;
 %cup
 %line
 %column
-%class AnalizadorLexicoListas
+%class AnalizadorLexicoLista
 %unicode
 %public
 
@@ -58,6 +58,7 @@ corcheteCierre = \]
 parentesisApertura = \(
 parentesisCierre = \)
 coma = ,
+
 %%
 {separador}               {}
 {comentario}              {}

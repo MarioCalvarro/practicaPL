@@ -1,7 +1,7 @@
 package asint;
 
 import java_cup.runtime.*;
-import alex.AnalizadorLexicoListas;
+import alex.AnalizadorLexicoLista;
 import alex.UnidadLexica;
 import errors.GestionErroresTiny;
 
@@ -14,7 +14,7 @@ parser code {:
 :};
 init with {: 
    errores = new GestionErroresTiny();
-   AnalizadorLexicoListas alex = (AnalizadorLexicoListas)getScanner();
+   AnalizadorLexicoLista alex = (AnalizadorLexicoLista)getScanner();
    alex.fijaGestionErrores(errores);
 :};
 
@@ -33,7 +33,7 @@ L0   ::= L0 CONCATENACION L1 | L1 ;
 L1   ::= FUNC2 | FUNC3 | L2 ; 
 L2   ::= IDEN | CAP CORC CCIERRE | PAP L0 PCIERRE ;
 
-CORC ::= ENT COMA CORC | L0 COMA CORC | ENT | L0 ;
+CORC ::= ENT COMA CORC | L0 COMA CORC | ENT | L0  | ;
 
 FUNC2 ::= LREDUCE OPAR L2 ;
 FUNC3 ::= LFILTER OPREL ENT L2 | LMAP OPAR ENT L2 ;

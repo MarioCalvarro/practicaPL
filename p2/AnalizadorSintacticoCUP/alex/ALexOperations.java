@@ -3,8 +3,8 @@ package alex;
 import asint.ClaseLexica;
 
 public class ALexOperations {
-    private AnalizadorLexicoListas alex;
-    public ALexOperations(AnalizadorLexicoListas alex) {
+    private AnalizadorLexicoLista alex;
+    public ALexOperations(AnalizadorLexicoLista alex) {
         this.alex = alex;   
     }
     public UnidadLexica unidadId() {
@@ -49,7 +49,7 @@ public class ALexOperations {
     } 
     public UnidadLexica unidadIgual() {
         return new UnidadLexica(alex.fila(),alex.columna(),ClaseLexica.IGUAL); 
-    } 
+    }
     public UnidadLexica unidadDesigual() {
         return new UnidadLexica(alex.fila(),alex.columna(),ClaseLexica.DESIGUAL); 
     } 
