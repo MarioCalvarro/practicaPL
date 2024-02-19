@@ -133,3 +133,42 @@ incognito matriz = ent[][];
     \end{lstlisting}
     \caption{Ejemplo de uso del alias.}
 \end{figure}
+
+\section*{Conjunto de instrucciones del lenguaje}
+En nuestro lenguaje habrá presentes multitud de instrucciones de asignación
+dependiendo del tipo de la variable (simples, arrays o registros). Todas ellas
+tendrán en común el uso del operador igual (=) y la siguiente estructura: en el
+lado izquierdo de la asignación tendremos una declaración de una variable y en
+el derecho una expresión con un valor. Las expresiones posibles son las
+habituales aritméticas y booleanas (con los operadores anteriormente definidos),
+pero también hemos decidido incorporar el operador ternario (?) que evalúa una
+condición y dependiendo de esto asigna un valor u otro (que vienen dados por
+expresiones a su vez). Los arrays serán asignados elemento a elementos,
+separando los valores dados por comas y todo ello entre corchetes. Por otro
+lado, los registros se asignarán valor a valor, pero asignando, recursivamente,
+a cada campo individualmente su valor. Por último, las asignaciones pueden
+combinarse con operadores para realizarse sobre sí mismas. Para asignar a un
+array una cantidad de memoria sin inicializar simplemente escribimos el tipo de
+los elementos seguido de, entre corchetes, el número de elementos. Los
+registros inicializados sin valor inicial simplemente escribimos el tipo del
+registro. Por ejemplo,
+\begin{figure}[H]
+    \centering
+    \begin{lstlisting}
+ent a = 5;
+a = cond? 3 - 1 : 2 + 2;    //Si se cumple, 2. En caso contrario, 4
+a += 5;                     //a = a + 5
+
+bin b = true;
+bin c = ~b;
+c |= b                      //c = b || c
+
+ent arr1[] = [2, 3, 4];
+arr1 = [3, 2, 1];
+ent arr2[] = ent[3];
+
+registro datos reg1 = {a = 2 + 1, b = cond? true : b || c,};
+reg1 = registro datos       //Reservar espacio nuevo
+    \end{lstlisting}
+    \caption{Ejemplos de asignaciones.}
+\end{figure}
