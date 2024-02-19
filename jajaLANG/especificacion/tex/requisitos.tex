@@ -4,7 +4,7 @@ dividiremos en varias secciones siguiendo el enunciado de la práctica. En prime
 lugar, debemos recalcar que todas las sentencias del lenguaje acaban con puntos
 y coma y los comentarios pueden ser unilínea (usando //) o multilínea (usando /*
 */). También es importante clarificar que la extensión de los ficheros de este
-lenguaje será «.jaja».
+lenguaje será «.jeja».
 \section*{Identificadores y ámbitos de definición}
 A la hora de declarar una nueva variable debemos indicar el tipo de la misma y
 su identificador, acabando en punto y coma. Respecto a los arrays,
@@ -107,4 +107,29 @@ más prioritario de todo).
         \item Producto (*), división (/) y módulo (\%).
         \item Suma (*) y división (-).
     \end{enumerate}
+\item Operadores relacionales (todos tienen la misma prioridad):
+
+Comparaciones: ==, $\sim =$, $>$, $<$, $>=$, $<=$.
+
+\item Operadores lógicos:
+\begin{enumerate}
+    \item Negación lógica: $\sim$.
+    \item «Y» lógico: \&\&.
+    \item «O» inclusivo lógico: $\mid \mid$.
+\end{enumerate}
 \end{itemize}
+La asociatividad de los distintos operadores será la habitual.
+
+El tipo array será como el indicado en la anterior sección.
+
+El usuario podrá definir sus propios tipos haciendo un alias de tipos
+compuestos (registros o arrays). La estructura para realizar un alias será la
+siguiente: la palabra clave «incognito» seguido del alias y un igual. Tras esto,
+se escribirá la expresión que se abrevia. Por ejemplo:
+\begin{figure}[H]
+    \centering
+    \begin{lstlisting}
+incognito matriz = ent[][];
+    \end{lstlisting}
+    \caption{Ejemplo de uso del alias.}
+\end{figure}
