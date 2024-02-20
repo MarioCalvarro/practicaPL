@@ -1,226 +1,215 @@
 \chapter*{Requisitos}
-En esa sección daremos los detalles sobre la sintaxis de nuestro lenguaje. La
-dividiremos en varias secciones siguiendo el enunciado de la práctica. En primer
-lugar, debemos recalcar que todas las sentencias del lenguaje acaban con punto
-y coma y los comentarios pueden ser unilínea (usando //) o multilínea (usando /*
-*/). También es importante clarificar que la extensión de los ficheros de este
-lenguaje será «.jaja».
+En esa sección daremos los detalles sobre la sintaxis de nuestro lenguaje.
+Siguiendo de manera aproximada el enunciado dividiremos las secciones de este
+apartado.
+
+\section*{Léxico}
+Veamos en primer lugar el léxico, es decir, los \textit{tokens} que manejaremos
+en nuestro lenguaje. Únicamente se manejan símbolos ASCII:
+\subsection*{Palabras clave}
+Listado de las palabras clave del lenguaje:
+\begin{itemize}
+    \item \lstinline{ent}
+    \item \lstinline{bin}
+    \item \lstinline{si}
+    \item \lstinline{mientras}
+    \item \lstinline{diver}
+    \item \lstinline{registro}
+    \item \lstinline{incognito}
+\end{itemize}
+
+\subsection*{Identificadores}
+Los identificadores de las variables serán una letra o un guion bajo seguido de
+una secuencia de letras y números.
+
+\subsection*{Espacios}
+Los espacios o secuencia nulas en nuestro lenguaje serán los espacio propiamente
+dichos (` '), saltos de línea (`\lstinline{\n}'), tabuladores
+(`\lstinline{\t}`), \textit{carriage return} (`\lstinline{\r}') y el
+\textit{backspace} (`\lstinline{\b}').
+
 \section*{Identificadores y ámbitos de definición}
+Veamos la declaración de los distintos tipos de variables.
+\subsection*{Variables simples}
 A la hora de declarar una nueva variable debemos indicar el tipo de la misma y
-su identificador, acabando en punto y coma. Respecto a los arrays,
-permitiremos la creación de arrays de dimensión arbitraria cuyo tamaño puede
-venir dado en tiempo de ejecución por una variable o en compilación de forma
-constante. La sintaxis para declarar estos arrays será el tipo de los elementos del
-array, seguido del identificador del mismo y corchetes que abren y cierran.
-Cada pareja de corchetes indicará una dimensión más.
-Por ejemplo,
+su identificador.
 \begin{figure}[H]
     \centering
     \begin{lstlisting}
-ent id1;
-bin id2;
-ent arr1[];
-ent arr2[][];
+tipo id;
     \end{lstlisting}
-    \caption{Ejemplo de declaración de variables y arrays de una y dos
-    dimensiones.}
+    \caption{Declaración de una variable simple.}
+\end{figure}
+También es posible declarar múltiples variables del mismo tipo, separándolas por
+comas:
+\begin{figure}[H]
+    \centering
+    \begin{lstlisting}
+tipo id1, id2;
+    \end{lstlisting}
+    \caption{Declaración de múltiples variables.}
 \end{figure}
 
-Los bloques anidados simplemente serán delimitados por llaves, por ejemplo,
+
+\subsection*{Arrays}
+Respecto a los arrays, permitiremos la creación de arrays de dimensión
+arbitraria cuyo tamaño puede venir dado en tiempo de ejecución por una variable
+o en compilación de forma constante. La sintaxis para declarar estos arrays será
+el tipo de los elementos del array, seguido del identificador del mismo y
+corchetes que abren y cierran. Cada pareja de corchetes indicará una dimensión
+más. Por ejemplo,
 \begin{figure}[H]
     \centering
     \begin{lstlisting}
-si cond {
-    mientras condicion {
+tipo arr[]...[];
+    \end{lstlisting}
+    \caption{Declaración de arrays de dimensión arbitraria.}
+\end{figure}
+
+\subsection*{Registros y punteros}
+Hemos decidido incluir en nuestro lenguaje tanto punteros como registros. La
+declaración de los punteros la realizaremos similarmente a la de las variables,
+pero incluyendo el símbolo (\lstinline{@}) entre el tipo y el identificador. Respecto a los
+registros se hace de manera similar, pero añadiendo la palabra clave
+\lstinline{registro} en primer lugar. Estos datos se definen de la siguiente
+manera: en primer lugar, utilizamos la palabra clave \lstinline{registro},
+seguido del nombre de este nuevo tipo. Tras esto, iniciamos un bloque anidado
+con los campos del registro y su tipo, separados por comas (el último también
+puede tener coma al final de forma opcional).
+\begin{figure}[H]
+    \centering
+    \begin{lstlisting}
+//Registros
+registro datos {
+    atributo11, atributo12, ...: tipo1,
+    atributo21, atributo22, ...: tipo2,
+    ...
+} id1, id2, ...;
+
+//Punteros
+tipo @ id;
+    \end{lstlisting}
+    \caption{Declaración de variables registro y de punteros.}
+\end{figure}
+
+\subsection*{Bloques anidados}
+Los bloques anidados simplemente serán delimitados por llaves.
+\begin{figure}[H]
+    \centering
+    \begin{lstlisting}
+{
+    {
+        //Codigo
+    }
+    {
         //Codigo
     }
 }
     \end{lstlisting}
-    \caption{Ejemplo de bloques anidados con un condicional y un bucle.}
+    \caption{Bloque con otros dos bloques anidados.}
 \end{figure}
 
+\subsection*{Funciones}
 Las funciones se componen de cinco partes diferenciadas. Primero, declaramos que
-es una función a través de la palabra clave «diver» (que proviene de la palabra
+es una función a través de la palabra clave \lstinline{diver} (que proviene de la palabra
 inglesa \textit{fun} (\textit{function})). Tras esto, incluimos el nombre que se
 le da a la función seguido de los argumentos, separados por flechas. Estos
 argumentos tendrán la siguiente forma: identificador del parámetro y su tipo.
 Por defecto, el paso de parámetros será por valor, en caso de que sea por
-referencia, se deberá añadir el símbolo «\&».
+referencia, se deberá añadir el símbolo \lstinline{&} antes del identificador.
 Finalmente, a través de una flecha indicamos el tipo de retorno de la función y
-entre corchetes el cuerpo de la misma. El tipo de retorno es opcional en el caso
-de que únicamente se modifique el estado del programa. Por ejemplo,
+un bloque anidado con el cuerpo de la función. El tipo de retorno es opcional en
+el caso de que únicamente se modifique el estado del programa. Por ejemplo,
 \begin{figure}[H]
     \centering
     \begin{lstlisting}
-diver jubilo (a: ent -> &b: ent) -> ent {
+diver id1 (par1: tipo1 -> par2: tipo2 -> ... ) {
+    //Codigo
+}
+diver id2 (&par1: tipo1 -> par2: tipo2 -> ... ) -> tipo {
     //Codigo
 }
     \end{lstlisting}
-    \caption{Ejemplo de la función \textit{jubilo}, que recibe dos enteros (uno
-        de ellos por referencia) y devuelve otro.}
+    \caption{Declaración de funciones con y sin tipo de retorno y con parámetros
+    por valor y por referencia.}
 \end{figure}
 
-Hemos decidido incluir en nuestro lenguaje tanto punteros como registros. La
-declaración de los punteros la realizaremos similarmente a la de las variables,
-pero incluyendo el símbolo (@) entre el tipo y el identificador. Respecto a los
-registros se hace de manera similar a las variables habituales, pero añadiendo
-la palabra clave «registro» en primer lugar. Se asume que este tipo de datos ha
-sido definido correctamente con anterioridad. Estos datos se definen de la
-siguiente manera: en primer lugar, utilizamos la palabra clave «registro»,
-seguido del nombre de este nuevo tipo. Tras esto, iniciamos un bloque anidado
-con los campos del registro y su tipo, separados por comas (el último también
-puede tener coma al final de forma opcional). Por ejemplo,
-\begin{figure}[H]
-    \centering
-    \begin{lstlisting}
-registro datos {
-    a: ent,
-    b: bin,
-}
-
-entero @ p;
-registro datos reg;
-    \end{lstlisting}
-    \caption{Ejemplo de la declaración de un puntero a un entero y de un
-    registro con dos campos.}
-\end{figure}
-
+\subsection*{Importación de código}
 Para importar código procedente de otros ficheros utilizamos la palabra clave
-«\#traficar» seguido de la localización del otro fichero. Por ejemplo,
+\lstinline{#traficar} seguido de la localización del otro fichero. Por ejemplo,
 \begin{figure}[H]
     \centering
     \begin{lstlisting}
 #traficar ruta/a/fichero.jaja
     \end{lstlisting}
-    \caption{Ejemplo de la declaración de un puntero a un entero y de un
-    registro con dos campos.}
+    \caption{Importación de código procedente de otro fichero.}
 \end{figure}
 
 \section*{Tipos}
 Como ya hemos indicado anteriormente, las variables tienen que venir declaradas
 de forma explícita y su tipado es estático. Los tipos predefinidos del lenguaje
-serán los «enteros» y los «binarios» (booleanos). La lista de operadores
-predefinidos será la siguiente (el orden en que aparecen en la lista indica la
-prioridad siendo el primero el más prioritario, pero siendo los paréntesis lo
-más prioritario de todo).
+serán los «enteros» de $32$ bits (que declararemos con la palabra clave
+\lstinline{ent}) y los «binarios» (booleanos, con palabra clave
+\lstinline{bin}). La lista de operadores predefinidos será la siguiente.
 \begin{itemize}
 \item Operadores aritméticos:
     \begin{enumerate}
-        \item Potenciación (\^{}).
-        \item Producto (*), división (/) y módulo (\%).
-        \item Suma (*) y división (-).
+        \item Potenciación: \lstinline{^}.
+        \item Producto (\lstinline{*}), división (\lstinline{/}) y módulo (\lstinline{%}).
+        \item Suma (\lstinline{+}) y división (\lstinline{-}).
     \end{enumerate}
-\item Operadores relacionales (todos tienen la misma prioridad):
-
-Comparaciones: ==, $!=$, $>$, $<$, $>=$, $<=$.
+\item Operadores relacionales: \lstinline{==}, \lstinline{!=}, \lstinline{>}, \lstinline{<},
+    \lstinline{>=}, \lstinline{<=}.
 
 \item Operadores lógicos:
 \begin{enumerate}
-    \item Negación lógica: $!$.
-    \item «Y» lógico: \&\&.
-    \item «O» inclusivo lógico: $\mid \mid$.
+    \item Negación lógica: \lstinline{!}.
+    \item «Y» lógico: \lstinline{&&}.
+    \item «O» inclusivo lógico: \lstinline{||}.
 \end{enumerate}
+
+\item Otros operadores:
+\begin{enumerate}
+    \item Acceso a atributos de un registro: \lstinline{.}
+    \item Acceso a un elemento de un array: \lstinline{[]}
+    \item Llamada a una función (identificador de la función a la izquierda,
+        parámetros dentro): \lstinline{()}
+    \item Opuesto de un entero: \lstinline{-}
+    \item Acceso a la dirección de una variable: \lstinline{&}
+    \item Acceso al valor apuntado por un puntero: \lstinline{@}
+\end{enumerate}
+Por último, la asignación será \lstinline{=} y se podrá combinar con las
+operaciones aritméticas y de lógicas.
 \end{itemize}
-La asociatividad de los distintos operadores será la habitual.
-
-El tipo array será como el indicado en la anterior sección.
-
-El usuario podrá definir sus propios tipos haciendo un alias de tipos
-compuestos (registros o arrays). La estructura para realizar un alias será la
-siguiente: la palabra clave «incognito» seguido del alias y un igual. Tras esto,
-se escribirá la expresión que se abrevia. Por ejemplo:
-\begin{figure}[H]
+\begin{table}[H]
     \centering
-    \begin{lstlisting}
-incognito matriz = ent[][];
-    \end{lstlisting}
-    \caption{Ejemplo de uso del alias.}
-\end{figure}
-
-\section*{Conjunto de instrucciones del lenguaje}
-En nuestro lenguaje habrá presentes multitud de instrucciones de asignación
-dependiendo del tipo de la variable (simples, arrays o registros). Todas ellas
-tendrán en común el uso del operador igual (=) y la siguiente estructura: en el
-lado izquierdo de la asignación tendremos una declaración de una variable o su
-identificador y en el derecho una expresión con un valor. Las expresiones
-posibles son las aritméticas y booleanas habituales (con los operadores
-anteriormente definidos), pero también hemos decidido incorporar el operador
-ternario (?) que evalúa una condición y dependiendo de esto asigna un valor u
-otro (que vienen dados, a su vez, por expresiones). 
-
-Los arrays serán asignados elemento a elemento, separando los valores dados por
-comas y todo ello entre corchetes. Por otro lado, los registros se asignarán
-valor a valor, pero de manera recursiva, cada campo individualmente. Por último,
-las asignaciones pueden combinarse con operadores para realizarse sobre sí
-mismas. Para asignar a un array una cantidad de memoria sin inicializar
-simplemente escribimos el tipo de los elementos seguido de, entre corchetes, el
-número de elementos. Para los registros inicializados sin valor inicial
-simplemente escribimos el tipo del registro. Por ejemplo,
-\begin{figure}[H]
-    \centering
-    \begin{lstlisting}
-ent a = 5;
-a = cond? 3 - 1 : 2 + 2;    //Si se cumple, 2. En caso contrario, 4
-a += 5;                     //a = a + 5
-
-bin b = true;
-bin c = !b;
-c |= b                      //c = b || c
-
-ent arr1[] = [2, 3, 4];
-arr1 = [3, 2, 1];
-ent arr2[] = ent[3];        //Array de size 3, pero sin valores
-
-registro datos reg1 = {a = 2 + 1, b = cond? true : b || c,};
-reg1 = registro datos       //Reservar espacio nuevo
-    \end{lstlisting}
-    \caption{Ejemplos de asignaciones.}
-\end{figure}
-
-La ejecución condicional en este lenguaje tendrá como palabras claves «si» y
-«sino». Estos condicionales tendrán $n$ ramas siguiendo la siguiente estructura:
-empezamos con la palabra clave «si» seguida de una expresión condicional que se
-evalúa a un «binario» y un bloque anidado de código (que se ejecutará si el
-«binario» se evalúa a $1$. Tras esto, le seguirán $n$ bloques que empezarán con
-la palabra clave «sino» y, opcionalmente, una condición y su correspondiente
-bloque anidado de código. Si no existe condición, se interpretará como un «en
-caso contrario» y se ejecutará si lo anteriores no lo han hecho. Por ejemplo,
-\begin{figure}[H]
-    \centering
-    \begin{lstlisting}
-si true || false || (3 != 2) {
-    //Codigo
-} sino false && true {
-    //Codigo
-} sino {
-    //Codigo
-}
-    \end{lstlisting}
-    \caption{Ejemplo de la ejecución condicional.}
-\end{figure}
-
-Hemos decidido incluir dos tipos de bucles que nombramos por «mientras» y «para»
-(provenientes de \textit{while} y \textit{for}). La sintaxis que sigue
-«mientras» es: palabra clave seguida de una expresión condicional y el bloque de
-código que se ejecuta mientras se cumpla la condición. Por otro lado, el bucle
-«para» es: palabra clave, la asignación de una nueva variable (que no es
-necesario declarar de forma explícita) a su valor inicial, una flecha y el valor
-final (no inclusivo) que tendrá la variable. Por ejemplo,
-\begin{figure}[H]
-    \centering
-    \begin{lstlisting}
-mientras a || b && !c {
-    //Codigo
-
-    para i = 0 -> 20 {
-        //Codigo anidado
-    }
-}
-    \end{lstlisting}
-    \caption{Ejemplo de bucles (anidados).}
-\end{figure}
-
-\section*{Gestión de errores}
-Para la gestión de errores, el compilador simplemente imprimirá el tipo de error
-que se ha dado y su localización en el fichero de texto. No habrá recuperación
-de errores).
+    \begin{tabular}{ | c | c | c | } 
+        \hline
+        Operador & Prioridad & Asociatividad \\ 
+        \hline
+        \lstinline$[] .$ & $0$ & Izquierda \\ 
+        \hline
+        \lstinline$()$ & $1$ & Izquierda \\ 
+        \hline
+        \lstinline$-$ unario & $2$ & Derecha \\ 
+        \hline
+        \lstinline$& @$ & $3$ & - \\ 
+        \hline
+        \lstinline$* / %$ & $4$ & Izquierda \\ 
+        \hline
+        \lstinline$+ -$ & $5$ & Izquierda \\ 
+        \hline
+        \lstinline$ < > <= >=$ & $6$ & Izquierda \\ 
+        \hline
+        \lstinline$== !=$ & $7$ & Izquierda \\ 
+        \hline
+        \lstinline$&&$ & $8$ & Izquierda \\ 
+        \hline
+        \lstinline$||$ & $9$ & Izquierda \\ 
+        \hline
+        \lstinline$= += ...$ & $10$ & Derecha \\ 
+        \hline
+    \end{tabular}
+    \caption{Tabla con los distintos operadores, su prioridad y su
+    asociatividad.}
+\end{table}

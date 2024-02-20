@@ -12,6 +12,41 @@
 \usepackage{listings}
 \usepackage{float} %Paquete para figuras
 
+\lstset{
+    xleftmargin=1.1cm,
+    belowskip=2em,
+    basicstyle=\fontsize{10}{15}\ttfamily,
+    basewidth  = {.5em,0.4em},
+    captionpos=t,
+    lineskip={2pt},
+    framextopmargin=6pt,
+    framexrightmargin=0pt,
+    framexleftmargin=0.9em,    
+    framexbottommargin=6pt, 
+    frame=l,
+%    frame=single,        
+%    frame=tb, framerule=0pt,    
+    framesep=6.5mm,
+    fillcolor=\color{white},
+%    numbers=left,
+    numberstyle=\normalfont\color{red},
+%    numberstyle=\footnotesize,    
+    numbersep=10pt,
+    abovecaptionskip=10pt, %space above the caption
+    belowcaptionskip=10pt, %space below the caption
+    extendedchars=true,
+    showstringspaces=false,
+    showspaces=false,
+    stepnumber=1, % the step between two line-numbers. If it is 1 each line will be numbered
+    tabsize=2,
+    breaklines=true,
+    showtabs=false,
+    upquote=true,
+    % Diéresis
+    literate=%
+    {ü}{{\"u}}1
+}
+
 %% Inclusion de referencias cruzadas por defecto y específicas
 \usepackage[colorlinks=true]{hyperref}
 \hypersetup{linkcolor = blue}
