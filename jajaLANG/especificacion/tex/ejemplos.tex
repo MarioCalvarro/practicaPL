@@ -84,3 +84,43 @@ diver tronco() {
     \caption{Programa determina si un número es par o impar, usando recursión
     mutua entre dos funciones.}
 \end{figure}
+
+\subsection{Registros y arrays}
+Programa que comprueba el funcionamiento de los registros y los arrays, el
+acceso a sus atributos/elementos y su modificación.
+\begin{figure}[htbp]
+    \centering
+    \begin{lstlisting}
+incognito dato = struct { arr: ent[] };
+
+diver tronco() {
+    dato x = struct { arr = [1, 2, 3] };
+    escribeEnt(x.arr[0]);
+    x.arr[0] = 9;
+    escribeEnt(x.arr[0]);
+}
+    \end{lstlisting}
+    \caption{Programa que trata con los atributos/elementos de los
+    registros/arrays.}
+\end{figure}
+
+\subsection{Paso por referencia y memoria dinámica}
+Programa que pasa por referencia una variable y utiliza memoria dinámica.
+\begin{figure}[htbp]
+    \centering
+    \begin{lstlisting}
+diver f(&a -> ent) -> ent {
+    return @a;
+}
+
+diver tronco() {
+    ent @ punt = reservar(capacidad(ent));
+    @punt = 10;
+    ent b = f(punt);
+    escribeEnt(b); //Tiene que dar 10
+    liberar(punt);
+}
+    \end{lstlisting}
+    \caption{Programa que contiene una función con un parámetro que se pasa por
+    referencia y un puntero que hace uso de memoria dinámica.}
+\end{figure}
