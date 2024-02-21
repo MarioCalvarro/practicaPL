@@ -18,7 +18,7 @@ incognito estructura = registro {
     \caption{Declaración de un nuevo alias y ejemplos con arrays y registros.}
 \end{figure}
 
-\section*{Conjunto de instrucciones del lenguaje}
+\subsection*{Conjunto de instrucciones del lenguaje}
 En nuestro lenguaje habrá presentes multitud de instrucciones de asignación
 dependiendo del tipo de la variable (simples, arrays o registros). Todas ellas
 tendrán en común el uso del operador igual (\lstinline{=}) y la siguiente estructura: en el
@@ -36,7 +36,7 @@ expr_bin? expr_true : expr_false;
     \caption{Expresión con ramas condicionales.}
 \end{figure}
 
-\subsection*{Variables simples}
+\subsubsection*{Variables simples}
 La asignación de variables simples simplemente se realizará con el operador
 igual. En el lado izquierdo de la operación se encontrará el identificador de la
 variable y en el derecho una expresión del tipo de la variable (aritmética o
@@ -61,7 +61,7 @@ tipo id1 = expr_tipo, id2, id3 = expr_tipo...;
     no tiene valor asignado.}
 \end{figure}
 
-\subsection*{Arrays}
+\subsubsection*{Arrays}
 Los arrays serán asignados elemento a elemento, separando los valores dados por
 comas y todo ello entre corchetes. Para asignar a un array una cantidad de
 memoria sin inicializar simplemente escribimos el tipo de los elementos seguido
@@ -83,7 +83,7 @@ tipo arr[]...[] = tipo[i1]...[in]
     \caption{Asignación de valores a los arrays.}
 \end{figure}
 
-\subsection*{Registros}
+\subsubsection*{Registros}
 Por otro lado, los registros se asignarán valor a valor, pero de manera
 recursiva, cada campo individualmente y, de nuevo, se podrá declarar y asignar a
 la vez. Si simplemente queremos reservar memoria, la asignación se hará de
@@ -119,7 +119,7 @@ registro {
     \caption{Asignación de valores a los registros.}
 \end{figure}
 
-\subsection*{Ejecución condicional}
+\subsubsection*{Ejecución condicional}
 La ejecución condicional en este lenguaje tendrá como palabras claves \lstinline{si} y
 \lstinline{sino}. Estos condicionales tendrán $n$ ramas siguiendo la siguiente estructura:
 empezamos con la palabra clave \lstinline{si} seguida de una expresión condicional que se
@@ -146,7 +146,7 @@ sino {
     \caption{Ejecución condicional.}
 \end{figure}
 
-\subsection*{Bucles}
+\subsubsection*{Bucles}
 Hemos decidido incluir dos tipos de bucles que nombramos por
 \lstinline{mientras} y \lstinline{para}
 (provenientes de \textit{while} y \textit{for}). La sintaxis que sigue
@@ -169,7 +169,7 @@ para i = expr_arit_ini -> expr_arit_fin {
     \caption{Ejecución iterativa.}
 \end{figure}
 
-\subsection*{Entrada/Salida}
+\subsubsection*{Entrada/Salida}
 Para realizar la entrada y la salida, el lenguaje contará con una serie de
 funciones predefinidas para permitirlo. Estas simplemente permitirán la lectura
 de enteros y binarios o su escritura. En caso de que se intente leer o escribir
@@ -186,11 +186,11 @@ escribirBin();
 \end{figure}
 
 
-\subsection*{Composición}
+\subsubsection*{Composición}
 Aunque ya se haya dicho de manera implícita, la composición de instrucciones en
 este lenguaje se hará mediante el símbolo \lstinline{;}.
 
-\section*{Expresiones}
+\subsection*{Expresiones}
 La expresiones de nuestro lenguaje se dividirán en aquellas que sean aritméticas
 (es decir, que su valor sea un entero) y lógicas (con valor binario). Serán las
 siguientes:
@@ -209,7 +209,7 @@ siguientes:
 Las expresiones podrán ser, obviamente, una combinación de todas estas y se
 podrán entender semánticamente como el valor que producen como resultado.
 
-\section*{Gestión de errores}
+\subsection*{Gestión de errores}
 Para la gestión de errores, el compilador simplemente imprimirá el tipo de error
 que se ha dado y su localización en el fichero de texto. No habrá recuperación
 de errores.

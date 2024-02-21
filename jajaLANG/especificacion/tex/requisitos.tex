@@ -1,12 +1,12 @@
-\chapter*{Requisitos}
+\section*{Requisitos}
 En esa sección daremos los detalles sobre la sintaxis de nuestro lenguaje.
 Siguiendo de manera aproximada el enunciado dividiremos las secciones de este
 apartado.
 
-\section*{Léxico}
+\subsection*{Léxico}
 Veamos en primer lugar el léxico, es decir, los \textit{tokens} que manejaremos
 en nuestro lenguaje. Únicamente se manejan caracteres ASCII:
-\subsection*{Palabras clave}
+\subsubsection*{Palabras clave}
 Listado de las palabras clave del lenguaje:
 \begin{itemize}
     \item \lstinline{ent}
@@ -20,19 +20,19 @@ Listado de las palabras clave del lenguaje:
     \item \lstinline{incognito}
 \end{itemize}
 
-\subsection*{Identificadores}
+\subsubsection*{Identificadores}
 Los identificadores de las variables serán una letra o un guion bajo seguido de
 una secuencia de letras y números.
 
-\subsection*{Espacios}
+\subsubsection*{Espacios}
 Los espacios o secuencia nulas en nuestro lenguaje serán los espacio propiamente
 dichos (` '), saltos de línea (`\lstinline{\n}'), tabuladores
 (`\lstinline{\t}`), \textit{carriage return} (`\lstinline{\r}') y el
 \textit{backspace} (`\lstinline{\b}').
 
-\section*{Identificadores y ámbitos de definición}
+\subsection*{Identificadores y ámbitos de definición}
 Veamos la declaración de los distintos tipos de variables.
-\subsection*{Variables simples}
+\subsubsection*{Variables simples}
 A la hora de declarar una nueva variable debemos indicar el tipo de la misma y
 su identificador.
 \begin{figure}[H]
@@ -53,7 +53,7 @@ tipo id1, id2;
 \end{figure}
 
 
-\subsection*{Arrays}
+\subsubsection*{Arrays}
 Respecto a los arrays, permitiremos la creación de arrays de dimensión
 arbitraria cuyo tamaño puede venir dado en tiempo de ejecución por una variable
 o en compilación de forma constante. La sintaxis para declarar estos arrays será
@@ -68,7 +68,7 @@ tipo arr[]...[];
     \caption{Declaración de arrays de dimensión arbitraria.}
 \end{figure}
 
-\subsection*{Registros y punteros}
+\subsubsection*{Registros y punteros}
 Hemos decidido incluir en nuestro lenguaje tanto punteros como registros. La
 declaración de los punteros la realizaremos similarmente a la de las variables,
 pero incluyendo el símbolo (\lstinline{@}) entre el tipo y el identificador. Respecto a los
@@ -91,7 +91,7 @@ tipo @ id;
     \caption{Declaración de variables registro y de punteros.}
 \end{figure}
 
-\subsection*{Bloques anidados}
+\subsubsection*{Bloques anidados}
 Los bloques anidados simplemente serán delimitados por llaves.
 \begin{figure}[H]
     \centering
@@ -108,7 +108,7 @@ Los bloques anidados simplemente serán delimitados por llaves.
     \caption{Bloque con otros dos bloques anidados.}
 \end{figure}
 
-\subsection*{Funciones}
+\subsubsection*{Funciones}
 Las funciones se componen de cinco partes diferenciadas. Primero, declaramos que
 es una función a través de la palabra clave \lstinline{diver} (que proviene de la palabra
 inglesa \textit{fun} (\textit{function})). Tras esto, incluimos el nombre que se
@@ -144,7 +144,7 @@ Para importar código procedente de otros ficheros utilizamos la palabra clave
     \caption{Importación de código procedente de otro fichero.}
 \end{figure}
 
-\section*{Tipos}
+\subsection*{Tipos}
 Como ya hemos indicado anteriormente, las variables tienen que venir declaradas
 de forma explícita y su tipado es estático. Los tipos predefinidos del lenguaje
 serán los «enteros» de $32$ bits (que declararemos con la palabra clave
