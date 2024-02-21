@@ -5,17 +5,9 @@ se escribirá la expresión que se abrevia.
 \begin{figure}[htbp]
     \centering
     \begin{lstlisting}
-//En general
 incognito alias = tipo;
-
-//Ejemplos
-incognito matriz = ent[][];
-incognito estructura = registro {
-    a: ent,
-    b: bin,
-};
     \end{lstlisting}
-    \caption{Declaración de un nuevo alias y ejemplos con arrays y registros.}
+    \caption{Declaración de un nuevo alias.}
 \end{figure}
 
 \subsection{Conjunto de instrucciones del lenguaje}
@@ -40,7 +32,7 @@ expr_bin? expr_true : expr_false;
 La asignación de variables simples simplemente se realizará con el operador
 igual. En el lado izquierdo de la operación se encontrará el identificador de la
 variable y en el derecho una expresión del tipo de la variable (aritmética o
-lógica):
+lógica).
 \begin{figure}[htbp]
     \centering
     \begin{lstlisting}
@@ -57,7 +49,7 @@ tipo id = expr_tipo;
 tipo id1 = expr_tipo, id2, id3 = expr_tipo...;
     \end{lstlisting}
     \caption{Declaración y asignación de múltiples variables de forma
-    simultanea. Cabe destacar que, en este caso, la variable con identificador \lstinline{id2}
+    simultánea. Cabe destacar que, en este caso, la variable con identificador \lstinline{id2}
     no tiene valor asignado.}
 \end{figure}
 
@@ -133,7 +125,7 @@ evalúa a un «binario» y un bloque anidado de código (que se ejecutará si el
 «binario» se evalúa a $1$. Tras esto, le seguirán $n$ bloques que empezarán con
 la palabra clave \lstinline{sino} y, opcionalmente, una condición y su correspondiente
 bloque anidado de código. Si no existe condición, se interpretará como un «en
-caso contrario» y se ejecutará si lo anteriores no lo han hecho.
+caso contrario» y se ejecutará si los anteriores no lo han hecho.
 \begin{figure}[htbp]
     \centering
     \begin{lstlisting}
@@ -158,7 +150,7 @@ Hemos decidido incluir dos tipos de bucles que nombramos por
 (provenientes de \textit{while} y \textit{for}). La sintaxis que sigue
 \lstinline{mientras} es: palabra clave seguida de una expresión condicional y el bloque de
 código que se ejecuta mientras se cumpla la condición. Por otro lado, el bucle
-\lstinline{para} es: palabra clave, la asignación de una nueva variable (que no es
+\lstinline{para} es: palabra clave, la asignación de una nueva variable entera (que no es
 necesario declarar de forma explícita) a su valor inicial, una flecha y el valor
 final (no inclusivo) que tendrá la variable.
 \begin{figure}[htbp]
@@ -177,9 +169,9 @@ para i = expr_arit_ini -> expr_arit_fin {
 
 \subsubsection{Entrada/Salida}
 Para realizar la entrada y la salida, el lenguaje contará con una serie de
-funciones predefinidas para permitirlo. Estas simplemente permitirán la lectura
-de enteros y binarios o su escritura. En caso de que se intente leer o escribir
-algo que no coincide con la función llamada, se producirá un error.
+funciones predefinidas para permitirlo. Estas simplemente permitirán la
+lectura/escritura de enteros y binarios. En caso de que se intente leer o
+escribir algo que no coincide con la función llamada, se producirá un error.
 \begin{figure}[htbp]
     \centering
     \begin{lstlisting}
@@ -224,13 +216,13 @@ La expresiones de nuestro lenguaje se dividirán en aquellas que sean aritmétic
 siguientes:
 \begin{itemize}
     \item \textbf{Constantes}: Serán números enteros habituales (aritméticas) o
-        las palabras clave \lstinline{facto} y \lstinline{fake} (lógicas).
+        las palabras clave \lstinline{facto} (del latín \textit{factum}, hecho) y \lstinline{fake} (lógicas).
     \item \textbf{Variables}: Identificadores de las variables inicializadas
         anteriormente.
     \item \textbf{Operadores infijos}: Expresiones compuestas por dos operandos
-        y, entre estos, uno de los anteriormente definidos operadores.
+        y, entre estos, uno de los operadores definidos anteriormente.
     \item \textbf{Llamadas a funciones}: Siguiendo la definición del operador
-        \lstinline{()} definido anteriormente, serán simplemente el
+        \lstinline{()} especificado anteriormente, serán simplemente el
         identificador de la función a llamar y, entre paréntesis, los argumentos
         con los que se la llama.
 \end{itemize}

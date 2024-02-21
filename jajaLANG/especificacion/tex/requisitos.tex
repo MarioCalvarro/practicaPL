@@ -1,6 +1,6 @@
 \section{Requisitos}
 En esa sección daremos los detalles sobre la sintaxis de nuestro lenguaje.
-Siguiendo de manera aproximada el enunciado dividiremos las secciones de este
+Siguiendo de manera aproximada el enunciado dividiremos las partes de este
 apartado.
 
 \subsection{Léxico}
@@ -11,7 +11,7 @@ Listado de las palabras clave del lenguaje:
 \begin{itemize}
     \item \lstinline{ent}
     \item \lstinline{bin}
-    \item \lstinline{facto} (de \textit{fact} (verdadero))
+    \item \lstinline{facto}
     \item \lstinline{fake}
     \item \lstinline{si}
     \item \lstinline{mientras}
@@ -49,7 +49,7 @@ tipo id;
     \caption{Declaración de una variable simple.}
 \end{figure}
 También es posible declarar múltiples variables del mismo tipo, separándolas por
-comas:
+comas.
 \begin{figure}[htbp]
     \centering
     \begin{lstlisting}
@@ -116,18 +116,18 @@ Los bloques anidados simplemente serán delimitados por llaves.
 
 \subsubsection{Funciones}
 Las funciones se componen de cinco partes diferenciadas. Primero, declaramos que
-es una función a través de la palabra clave \lstinline{diver} (que proviene de la palabra
-inglesa \textit{fun} (\textit{function})). Tras esto, incluimos el nombre que se
-le da a la función seguido de los argumentos, separados por flechas. Estos
-argumentos tendrán la siguiente forma: identificador del parámetro y su tipo.
-Por defecto, el paso de parámetros será por valor, en caso de que sea por
-referencia, se deberá añadir el símbolo \lstinline{&} antes del identificador.
-Finalmente, a través de una flecha indicamos el tipo de retorno de la función y
-un bloque anidado con el cuerpo de la función. El tipo de retorno es opcional en
-el caso de que únicamente se modifique el estado del programa. En el caso de que
-queramos devolver un valor, utilizaremos la sentencia \lstinline{devuelve valor;}
-que devolverá dicho valor y hará que la ejecución del programa vuelva al
-programa que ha llamado a la función.
+es una función a través de la palabra clave \lstinline{diver} (que proviene de
+la palabra inglesa \textit{fun} (\textit{function})). Tras esto, incluimos el
+nombre que se le da a la función seguido de los argumentos, separados por
+flechas. Estos argumentos tendrán la siguiente forma: identificador del
+parámetro y su tipo. Por defecto, el paso de parámetros será por valor, en caso
+de que sea por referencia, se deberá añadir el símbolo \lstinline{&} antes del
+identificador. Finalmente, a través de una flecha indicamos el tipo de retorno
+de la función y un bloque anidado con el cuerpo de la función. El tipo de
+retorno es opcional en el caso de que únicamente se modifique el estado del
+programa. En el caso de que queramos devolver un valor, utilizaremos la
+sentencia \lstinline{devuelve valor;} que, además, hará que la ejecución del
+programa vuelva al lugar desde el que se ha llamado a la función.
 \begin{figure}[htbp]
     \centering
     \begin{lstlisting}
@@ -166,7 +166,7 @@ serán los «enteros» de $32$ bits (que declararemos con la palabra clave
     \begin{enumerate}
         \item Potenciación: \lstinline{^}.
         \item Producto (\lstinline{*}), división (\lstinline{/}) y módulo (\lstinline{%}).
-        \item Suma (\lstinline{+}) y división (\lstinline{-}).
+        \item Suma (\lstinline{+}) y resta (\lstinline{-}).
     \end{enumerate}
 \item Operadores relacionales: \lstinline{==}, \lstinline{!=}, \lstinline{>}, \lstinline{<},
     \lstinline{>=}, \lstinline{<=}.
