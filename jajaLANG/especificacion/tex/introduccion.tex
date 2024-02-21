@@ -1,4 +1,4 @@
-\section*{Introducción}
+\section{Introducción}
 En este documento se presenta una especificación de la sintaxis del lenguaje que
 vamos a crear. Hemos decidido llamarlo \textit{jajaLang} debido a que será un
 lenguaje de «juguete» (¡y muy divertido de programar!).
@@ -7,7 +7,11 @@ Por otra parte, las principales influencias a la hora de decidir como va a ser
 la sintaxis han sido \textit{C}, \textit{C++} y \textit{Rust}. Simplemente eran
 los lenguajes que mejor manejamos y que en mayor estima tenemos.
 
+Todo programa deberá tener, si se quiere ejecutar y no usar como una
+librería, una función \lstinline{tronco} que será el punto de inicio (como en un
+árbol).
+
 A continuación presentamos la especificación detallada del lenguaje, pero
 consideramos que antes debemos aclarar un par de cuestiones. En primer lugar,
 los ficheros de este lenguaje tendrán la extensión \textit{.jaja}. A su vez,
-todas las sentencias acaban en punto y coma (;).
+todas las sentencias acaban en punto y coma (\lstinline{;}).

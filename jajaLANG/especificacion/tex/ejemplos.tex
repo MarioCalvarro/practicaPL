@@ -1,0 +1,86 @@
+\section{Ejemplos}
+En esta sección presentaremos ejemplos de algunos programas habituales escritos
+en \textit{jajaLang} para ilustrar las características del lenguaje y como
+afronta diversas situaciones.
+
+\subsection{Fibonacci}
+Programa que calcula los primeros $10$ elementos de la serie de Fibonacci, de forma
+recursiva, y los muestra por pantalla.
+\begin{figure}[htbp]
+    \centering
+    \begin{lstlisting}
+diver fibonacci(r: ent) -> ent {
+    si c == 0 {
+        devuelve 1; 
+    }
+    sino c == 1 {
+        devuelve 1;
+    }
+    devuelve fibonacci(c-1) + fibonacci(c-2);
+}
+
+diver tronco() {
+    para i = 0 -> 10 {
+        escribirEntero(fibonacci(i));
+    } 
+}
+    \end{lstlisting}
+    \caption{Programa que calcula la serie de Fibonacci.}
+\end{figure}
+
+\subsection{Lectura/Escritura}
+Programa que lee un entero y un binario. Si el binario es \lstinline{facto}, se
+imprimirá el entero. En caso contrario, no se hará nada.
+\begin{figure}[htbp]
+    \centering
+    \begin{lstlisting}
+diver tronco() {
+    ent num = leerEnt();
+    bin cond = leerBin();
+    si cond {
+        escribirEnt(num);
+    }
+}
+    \end{lstlisting}
+    \caption{Programa que lee un número y una condición que, si se cumple, hace
+    que se imprima el entero.}
+\end{figure}
+
+\subsection{Par/Impar}
+Programa que calcula si un número es par (\lstinline{facto}) o impar
+(\lstinline{fake}). Para ello se hace uso de una recursión mutua.
+\begin{figure}[htbp]
+    \centering
+    \begin{lstlisting}
+diver par(x: ent) -> bin {
+    si x == 0 {
+        devuelve facto;
+    }
+    sino x == 1 {
+        devuelve fake;
+    }
+    sino {
+        devuelve impar(x-1);
+    }
+}
+
+diver impar(x: ent) -> bin {
+    si x == 0 {
+        devuelve fake;
+    }
+    sino x == 1 {
+        devuelve facto;
+    }
+    sino {
+        devuelve par(x-1);
+    }
+}
+
+diver tronco() {
+    escribeBin(impar(9));
+    escribeBin(par(12));
+}
+    \end{lstlisting}
+    \caption{Programa determina si un número es par o impar, usando recursión
+    mutua entre dos funciones.}
+\end{figure}

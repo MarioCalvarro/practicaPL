@@ -1,42 +1,47 @@
-\section*{Requisitos}
+\section{Requisitos}
 En esa sección daremos los detalles sobre la sintaxis de nuestro lenguaje.
 Siguiendo de manera aproximada el enunciado dividiremos las secciones de este
 apartado.
 
-\subsection*{Léxico}
+\subsection{Léxico}
 Veamos en primer lugar el léxico, es decir, los \textit{tokens} que manejaremos
 en nuestro lenguaje. Únicamente se manejan caracteres ASCII:
-\subsubsection*{Palabras clave}
+\subsubsection{Palabras clave}
 Listado de las palabras clave del lenguaje:
 \begin{itemize}
     \item \lstinline{ent}
     \item \lstinline{bin}
-    \item \lstinline{true}
-    \item \lstinline{false}
+    \item \lstinline{facto} (de \textit{fact} (verdadero))
+    \item \lstinline{fake}
     \item \lstinline{si}
     \item \lstinline{mientras}
     \item \lstinline{diver}
     \item \lstinline{registro}
     \item \lstinline{incognito}
+    \item \lstinline{devuelve}
     \item \lstinline{#traficar}
 \end{itemize}
 
-\subsubsection*{Identificadores}
+\subsubsection{Identificadores}
 Los identificadores de las variables serán una letra o un guion bajo seguido de
 una secuencia de letras y números.
 
-\subsubsection*{Espacios}
+\subsubsection{Espacios}
 Los espacios o secuencia nulas en nuestro lenguaje serán los espacio propiamente
 dichos (` '), saltos de línea (`\lstinline{\n}'), tabuladores
 (`\lstinline{\t}`), \textit{carriage return} (`\lstinline{\r}') y el
 \textit{backspace} (`\lstinline{\b}').
 
-\subsection*{Identificadores y ámbitos de definición}
+\subsubsection{Comentarios}
+Los comentarios en este lenguaje podrán ser de una sola línea (\lstinline{//}) o
+ocupar múltiples (se abren con \lstinline{/*} y se cierran con \lstinline{*/}).
+
+\subsection{Identificadores y ámbitos de definición}
 Veamos la declaración de los distintos tipos de variables.
-\subsubsection*{Variables simples}
+\subsubsection{Variables simples}
 A la hora de declarar una nueva variable debemos indicar el tipo de la misma y
 su identificador.
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \begin{lstlisting}
 tipo id;
@@ -45,7 +50,7 @@ tipo id;
 \end{figure}
 También es posible declarar múltiples variables del mismo tipo, separándolas por
 comas:
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \begin{lstlisting}
 tipo id1, id2;
@@ -54,14 +59,14 @@ tipo id1, id2;
 \end{figure}
 
 
-\subsubsection*{Arrays}
+\subsubsection{Arrays}
 Respecto a los arrays, permitiremos la creación de arrays de dimensión
 arbitraria cuyo tamaño puede venir dado en tiempo de ejecución por una variable
 o en compilación de forma constante. La sintaxis para declarar estos arrays será
 el tipo de los elementos del array, seguido del identificador del mismo y
 corchetes que abren y cierran. Cada pareja de corchetes indicará una dimensión
-más. Por ejemplo,
-\begin{figure}[H]
+más.
+\begin{figure}[htbp]
     \centering
     \begin{lstlisting}
 tipo arr[]...[];
@@ -69,14 +74,14 @@ tipo arr[]...[];
     \caption{Declaración de arrays de dimensión arbitraria.}
 \end{figure}
 
-\subsubsection*{Registros y punteros}
+\subsubsection{Registros y punteros}
 Hemos decidido incluir en nuestro lenguaje tanto punteros como registros. La
 declaración de los punteros la realizaremos similarmente a la de las variables,
 pero incluyendo el símbolo (\lstinline{@}) entre el tipo y el identificador. Respecto a los
 registros se hace de manera similar: primero, utilizamos la palabra clave \lstinline{registro}. Tras esto, iniciamos un bloque anidado
 con los campos del registro y su tipo, separados por comas (el último también
 puede tener coma al final de forma opcional).
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \begin{lstlisting}
 //Registros
@@ -92,9 +97,9 @@ tipo @ id;
     \caption{Declaración de variables registro y de punteros.}
 \end{figure}
 
-\subsubsection*{Bloques anidados}
+\subsubsection{Bloques anidados}
 Los bloques anidados simplemente serán delimitados por llaves.
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \begin{lstlisting}
 {
@@ -109,7 +114,7 @@ Los bloques anidados simplemente serán delimitados por llaves.
     \caption{Bloque con otros dos bloques anidados.}
 \end{figure}
 
-\subsubsection*{Funciones}
+\subsubsection{Funciones}
 Las funciones se componen de cinco partes diferenciadas. Primero, declaramos que
 es una función a través de la palabra clave \lstinline{diver} (que proviene de la palabra
 inglesa \textit{fun} (\textit{function})). Tras esto, incluimos el nombre que se
@@ -119,8 +124,11 @@ Por defecto, el paso de parámetros será por valor, en caso de que sea por
 referencia, se deberá añadir el símbolo \lstinline{&} antes del identificador.
 Finalmente, a través de una flecha indicamos el tipo de retorno de la función y
 un bloque anidado con el cuerpo de la función. El tipo de retorno es opcional en
-el caso de que únicamente se modifique el estado del programa. Por ejemplo,
-\begin{figure}[H]
+el caso de que únicamente se modifique el estado del programa. En el caso de que
+queramos devolver un valor, utilizaremos la sentencia \lstinline{devuelve valor;}
+que devolverá dicho valor y hará que la ejecución del programa vuelva al
+programa que ha llamado a la función.
+\begin{figure}[htbp]
     \centering
     \begin{lstlisting}
 diver id1 (par1: tipo1 -> par2: tipo2 -> ... ) {
@@ -128,16 +136,18 @@ diver id1 (par1: tipo1 -> par2: tipo2 -> ... ) {
 }
 diver id2 (&par1: tipo1 -> par2: tipo2 -> ... ) -> tipo {
     //Codigo
+    //...
+    devuelve valor;
 }
     \end{lstlisting}
     \caption{Declaración de funciones con y sin tipo de retorno y con parámetros
     por valor y por referencia.}
 \end{figure}
 
-\subsection*{Importación de código}
+\subsubsection{Importación de código}
 Para importar código procedente de otros ficheros utilizamos la palabra clave
-\lstinline{#traficar} seguido de la localización del otro fichero. Por ejemplo,
-\begin{figure}[H]
+\lstinline{#traficar} seguido de la localización del otro fichero.
+\begin{figure}[htbp]
     \centering
     \begin{lstlisting}
 #traficar ruta/a/fichero.jaja
@@ -145,7 +155,7 @@ Para importar código procedente de otros ficheros utilizamos la palabra clave
     \caption{Importación de código procedente de otro fichero.}
 \end{figure}
 
-\subsection*{Tipos}
+\subsection{Tipos}
 Como ya hemos indicado anteriormente, las variables tienen que venir declaradas
 de forma explícita y su tipado es estático. Los tipos predefinidos del lenguaje
 serán los «enteros» de $32$ bits (que declararemos con la palabra clave
