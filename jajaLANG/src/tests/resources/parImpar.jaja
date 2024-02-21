@@ -1,0 +1,28 @@
+diver par(x: ent) -> bin {
+    si x == 0 {
+        devuelve facto;
+    }
+    sino x == 1 {
+        devuelve fake;
+    }
+    sino {
+        devuelve impar(x-1);
+    }
+}
+
+diver impar(x: ent) -> bin {
+    si x == 0 {
+        devuelve fake;
+    }
+    sino x == 1 {
+        devuelve facto;
+    }
+    sino {
+        devuelve par(x-1);
+    }
+}
+
+diver tronco() {
+    escribeBin(impar(9));
+    escribeBin(par(12));
+}

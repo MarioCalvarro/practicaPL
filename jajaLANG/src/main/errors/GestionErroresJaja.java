@@ -1,6 +1,6 @@
-package errors;
+package main.errors;
 
-import lexico.UnidadLexica;
+import main.lexico.UnidadLexica;
 
 public class GestionErroresJaja {
 	

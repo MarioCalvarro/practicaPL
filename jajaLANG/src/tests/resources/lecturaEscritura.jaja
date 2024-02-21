@@ -1,0 +1,7 @@
+diver tronco() {
+    ent num = leerEnt();
+    bin cond = leerBin();
+    si cond {
+        escribirEnt(num);
+    }
+}

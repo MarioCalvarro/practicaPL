@@ -1,6 +1,6 @@
-package lexico;
+package main.lexico;
 
-import sintactico.ClaseLexica;
+import main.sintactico.ClaseLexica;
 
 public class ALexOperaciones {
 	private AnalizadorLexicoJaja alex;

@@ -1,4 +1,4 @@
-package lexico;
+package main.lexico;
 
 import java_cup.runtime.Symbol;
 

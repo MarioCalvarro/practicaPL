@@ -1,0 +1,16 @@
+diver fibonacci(r: ent) -> ent {
+	si c == 0 {
+		devuelve 1;
+	}
+	si c == 1 {
+		devuelve 1;
+	}
+
+	devuelve fibonacci(c-1) + fibonacci(c-2);
+}
+
+diver tronco() {
+	para i = 0 -> 10 {
+		escribirEntero(fibonacci(i));
+	}
+}

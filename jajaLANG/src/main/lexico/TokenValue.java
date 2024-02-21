@@ -1,4 +1,4 @@
-package lexico;
+package main.lexico;
 
 public class TokenValue {
 	public String lexema;
