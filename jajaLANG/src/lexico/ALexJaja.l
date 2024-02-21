@@ -17,7 +17,7 @@ import errors.GestionErroresJaja;
   public int fila() {return yyline+1;}
   public int columna() {return yycolumn+1;}
   public void fijaGestionErrores(GestionErroresJaja errores) {
-   this.errores = errores;
+    this.errores = errores;
   }
 %}
 
