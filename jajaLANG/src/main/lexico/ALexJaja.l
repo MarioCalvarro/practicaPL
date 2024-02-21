@@ -108,19 +108,19 @@ llaveCierre = \}
 
 
 //Palabras clave
-{ent}                {return ops.unidadEnt();}
-{bin}                {return ops.unidadBin();}
-{facto}              {return ops.unidadFacto();}
-{fake}              {return ops.unidadFake();}
-{si}                {return ops.unidadSi();}
-{sino}              {return ops.unidadSino();}
-{mientras}          {return ops.unidadMientras();}
-{para}              {return ops.unidadPara();}
-{diver}              {return ops.unidadDiver();}
-{registro}          {return ops.unidadRegistro();}
-{incognito}          {return ops.unidadIncognito();}
-{devuelve}          {return ops.unidadDevuelve();}
-{traficar}          {return ops.unidadTraficar();}
+{ent}                     {return ops.unidadEnt();}
+{bin}                     {return ops.unidadBin();}
+{facto}                   {return ops.unidadFacto();}
+{fake}                    {return ops.unidadFake();}
+{si}                      {return ops.unidadSi();}
+{sino}                    {return ops.unidadSino();}
+{mientras}                {return ops.unidadMientras();}
+{para}                    {return ops.unidadPara();}
+{diver}                   {return ops.unidadDiver();}
+{registro}                {return ops.unidadRegistro();}
+{incognito}               {return ops.unidadIncognito();}
+{devuelve}                {return ops.unidadDevuelve();}
+{traficar}                {return ops.unidadTraficar();}
 
 
 //Variables
@@ -129,35 +129,35 @@ llaveCierre = \}
 
 //Operadores
 //Aritmeticos
-{operadorPotencia}          {return ops.unidadPot();}
+{operadorPotencia}        {return ops.unidadPot();}
 {operadorMultiplicacion}  {return ops.unidadMul();}
 {operadorDivision}        {return ops.unidadDiv();}
 {operadorModulo}          {return ops.unidadMod();}
-{operadorSuma}              {return ops.unidadSuma();}
-{operadorResta}              {return ops.unidadResta();}
+{operadorSuma}            {return ops.unidadSuma();}
+{operadorResta}           {return ops.unidadResta();}
 
 //Relacionales
 {operadorIgual}           {return ops.unidadIgual();}
 {operadorDesigual}        {return ops.unidadDesigual();}
 {operadorMayor}           {return ops.unidadMayor();}
 {operadorMenor}           {return ops.unidadMenor();}
-{operadorMayorIgual}           {return ops.unidadMayorIgual();}
-{operadorMenorIgual}           {return ops.unidadMenorIgual();}
+{operadorMayorIgual}      {return ops.unidadMayorIgual();}
+{operadorMenorIgual}      {return ops.unidadMenorIgual();}
 
 //Logicos
-{operadorNegacion}       {return ops.unidadNeg();}
-{operadorConj}          {return ops.unidadConj();}
-{operadorDisy}          {return ops.unidadDisy();}
+{operadorNegacion}        {return ops.unidadNeg();}
+{operadorConj}            {return ops.unidadConj();}
+{operadorDisy}            {return ops.unidadDisy();}
 
 //Otros
-{operadorDireccion}         {return ops.unidadDireccion();}
-{operadorPuntero}           {return ops.unidadPuntero();}
-{operadorAsignacion}        {return ops.unidadAsignacion();}
-{punto}                     {return ops.unidadPunto();}
-{coma}                      {return ops.unidadComa();}
-{puntoComa}                  {return ops.unidadPuntoComa();}
-{dosPuntos}                  {return ops.unidadDosPuntos();}
-{flecha}                    {return ops.unidadFlecha();}
+{operadorDireccion}       {return ops.unidadDireccion();}
+{operadorPuntero}         {return ops.unidadPuntero();}
+{operadorAsignacion}      {return ops.unidadAsignacion();}
+{punto}                   {return ops.unidadPunto();}
+{coma}                    {return ops.unidadComa();}
+{puntoComa}               {return ops.unidadPuntoComa();}
+{dosPuntos}               {return ops.unidadDosPuntos();}
+{flecha}                  {return ops.unidadFlecha();}
 
 
 //Agrupaciones
@@ -165,8 +165,8 @@ llaveCierre = \}
 {corcheteCierre}          {return ops.unidadCCierre();}
 {parentesisApertura}      {return ops.unidadPAp();}
 {parentesisCierre}        {return ops.unidadPCierre();} 
-{llaveApertura}             {return ops.unidadLlAp();}
-{llaveCierre}               {return ops.unidadLlCierre();}
+{llaveApertura}           {return ops.unidadLlAp();}
+{llaveCierre}             {return ops.unidadLlCierre();}
 
 
 //Errores
