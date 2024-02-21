@@ -370,7 +370,7 @@ public class AnalizadorLexicoJaja implements java_cup.runtime.Scanner {
   public int fila() {return yyline+1;}
   public int columna() {return yycolumn+1;}
   public void fijaGestionErrores(GestionErroresJaja errores) {
-   this.errores = errores;
+    this.errores = errores;
   }
 
 
