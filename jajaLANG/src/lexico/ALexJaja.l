@@ -1,4 +1,4 @@
-package alex;
+package lexico;
 
 import errors.GestionErroresJaja;
 
@@ -11,7 +11,7 @@ import errors.GestionErroresJaja;
 %public
 
 %{
-  private ALexOperations ops;
+  private ALexOperaciones ops;
   private GestionErroresJaja errores;
   public String lexema() {return yytext();}
   public int fila() {return yyline+1;}
@@ -26,7 +26,7 @@ import errors.GestionErroresJaja;
 %eofval}
 
 %init{
-  ops = new ALexOperations(this);
+  ops = new ALexOperaciones(this);
 %init}
 
 //A eliminar
@@ -47,7 +47,7 @@ diver = diver
 registro = registro
 incognito = incognito
 devuelve = devuelve
-#traficar = traficar
+traficar = \#traficar
 
 
 //Variables
@@ -120,7 +120,7 @@ llaveCierre = \}
 {registro}          {return ops.unidadRegistro();}
 {incognito}          {return ops.unidadIncognito();}
 {devuelve}          {return ops.unidadDevuelve();}
-{#traficar}          {return ops.unidadTraficar();}
+{traficar}          {return ops.unidadTraficar();}
 
 
 //Variables
