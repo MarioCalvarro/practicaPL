@@ -1,99 +1,215 @@
 El usuario podrá definir sus propios tipos haciendo un alias de tipos
-compuestos (registros o arrays). La estructura para realizar un alias será la
-siguiente: la palabra clave «incognito» seguido del alias y un igual. Tras esto,
-se escribirá la expresión que se abrevia. Por ejemplo:
+compuestos («registros» o «arrays»). La estructura para realizar un alias será la
+siguiente: la palabra clave \lstinline{incognito} seguido del alias y un igual. Tras esto,
+se escribirá la expresión que se abrevia.
 \begin{figure}[H]
     \centering
     \begin{lstlisting}
+//En general
+incognito alias = tipo;
+
+//Ejemplos
 incognito matriz = ent[][];
+incognito estructura = registro {
+    a: ent,
+    b: bin,
+};
     \end{lstlisting}
-    \caption{Ejemplo de uso del alias.}
+    \caption{Declaración de un nuevo alias y ejemplos con arrays y registros.}
 \end{figure}
 
 \section*{Conjunto de instrucciones del lenguaje}
 En nuestro lenguaje habrá presentes multitud de instrucciones de asignación
 dependiendo del tipo de la variable (simples, arrays o registros). Todas ellas
-tendrán en común el uso del operador igual (=) y la siguiente estructura: en el
+tendrán en común el uso del operador igual (\lstinline{=}) y la siguiente estructura: en el
 lado izquierdo de la asignación tendremos una declaración de una variable o su
 identificador y en el derecho una expresión con un valor. Las expresiones
 posibles son las aritméticas y booleanas habituales (con los operadores
 anteriormente definidos), pero también hemos decidido incorporar el operador
-ternario (?) que evalúa una condición y dependiendo de esto asigna un valor u
+ternario (\lstinline{?}) que evalúa una condición y dependiendo de esto asigna un valor u
 otro (que vienen dados, a su vez, por expresiones). 
-
-Los arrays serán asignados elemento a elemento, separando los valores dados por
-comas y todo ello entre corchetes. Por otro lado, los registros se asignarán
-valor a valor, pero de manera recursiva, cada campo individualmente. Por último,
-las asignaciones pueden combinarse con operadores para realizarse sobre sí
-mismas. Para asignar a un array una cantidad de memoria sin inicializar
-simplemente escribimos el tipo de los elementos seguido de, entre corchetes, el
-número de elementos. Para los registros inicializados sin valor inicial
-simplemente escribimos el tipo del registro. Por ejemplo,
 \begin{figure}[H]
     \centering
     \begin{lstlisting}
-ent a = 5;
-a = cond? 3 - 1 : 2 + 2;    //Si se cumple, 2. En caso contrario, 4
-a += 5;                     //a = a + 5
-
-bin b = true;
-bin c = !b;
-c |= b                      //c = b || c
-
-ent arr1[] = [2, 3, 4];
-arr1 = [3, 2, 1];
-ent arr2[] = ent[3];        //Array de size 3, pero sin valores
-
-registro datos reg1 = {a = 2 + 1, b = cond? true : b || c,};
-reg1 = registro datos       //Reservar espacio nuevo
+expr_bin? expr_true : expr_false;
     \end{lstlisting}
-    \caption{Ejemplos de asignaciones.}
+    \caption{Expresión con ramas condicionales.}
 \end{figure}
 
-La ejecución condicional en este lenguaje tendrá como palabras claves «si» y
-«sino». Estos condicionales tendrán $n$ ramas siguiendo la siguiente estructura:
-empezamos con la palabra clave «si» seguida de una expresión condicional que se
+\subsection*{Variables simples}
+La asignación de variables simples simplemente se realizará con el operador
+igual. En el lado izquierdo de la operación se encontrará el identificador de la
+variable y en el derecho una expresión del tipo de la variable (aritmética o
+lógica):
+\begin{figure}[H]
+    \centering
+    \begin{lstlisting}
+id = expr;
+    \end{lstlisting}
+    \caption{Asignación de un valor a una variable.}
+\end{figure}
+A su vez, será posible combinar las distintas declaraciones vistas anteriormente
+con la asignación para declarar y dar valor a la variable en una sola línea.
+\begin{figure}[H]
+    \centering
+    \begin{lstlisting}
+tipo id = expr_tipo;
+tipo id1 = expr_tipo, id2, id3 = expr_tipo...;
+    \end{lstlisting}
+    \caption{Declaración y asignación de múltiples variables de forma
+    simultanea. Cabe destacar que, en este caso, la variable con identificador \lstinline{id2}
+    no tiene valor asignado.}
+\end{figure}
+
+\subsection*{Arrays}
+Los arrays serán asignados elemento a elemento, separando los valores dados por
+comas y todo ello entre corchetes. Para asignar a un array una cantidad de
+memoria sin inicializar simplemente escribimos el tipo de los elementos seguido
+de, entre corchetes, el número de elementos. De nuevo, podemos declarar una
+variable de tipo array y, simultáneamente, asignarle un valor.
+\begin{figure}[H]
+    \centering
+    \begin{lstlisting}
+//Asignacion a un array la lista de elementos eli
+//Los elementos pueden ser, a su vez, arrays
+arr = {el1, ..., eln};
+
+//Declaracion y asignacion
+tipo arr[] = {el1, ..., eln};
+
+//Reserva de memoria para un array de n dimensiones
+tipo arr[]...[] = tipo[i1]...[in] 
+    \end{lstlisting}
+    \caption{Asignación de valores a los arrays.}
+\end{figure}
+
+\subsection*{Registros}
+Por otro lado, los registros se asignarán valor a valor, pero de manera
+recursiva, cada campo individualmente y, de nuevo, se podrá declarar y asignar a
+la vez. Si simplemente queremos reservar memoria, la asignación se hará de
+manera implícita en la declaración.
+\begin{figure}[H]
+    \centering
+    \begin{lstlisting}
+//Asignacion a un array la lista de elementos eli
+//Los elementos pueden ser, a su vez, registros o arrays
+reg = {
+    atributo11 = expr11,
+    atributo12 = expr12,
+    ...
+    atributo21 = expr21,
+    atributo22 = expr22,
+    ...
+};
+
+//Declaracion y asignacion
+registro {
+    atributo11, atributo12, ...: tipo1,
+    atributo21, atributo22, ...: tipo2,
+    ...
+} reg = {
+    atributo11 = expr11,
+    atributo12 = expr12,
+    ...
+    atributo21 = expr21,
+    atributo22 = expr22,
+    ...
+};
+    \end{lstlisting}
+    \caption{Asignación de valores a los registros.}
+\end{figure}
+
+\subsection*{Ejecución condicional}
+La ejecución condicional en este lenguaje tendrá como palabras claves \lstinline{si} y
+\lstinline{sino}. Estos condicionales tendrán $n$ ramas siguiendo la siguiente estructura:
+empezamos con la palabra clave \lstinline{si} seguida de una expresión condicional que se
 evalúa a un «binario» y un bloque anidado de código (que se ejecutará si el
 «binario» se evalúa a $1$. Tras esto, le seguirán $n$ bloques que empezarán con
-la palabra clave «sino» y, opcionalmente, una condición y su correspondiente
+la palabra clave \lstinline{sino} y, opcionalmente, una condición y su correspondiente
 bloque anidado de código. Si no existe condición, se interpretará como un «en
-caso contrario» y se ejecutará si lo anteriores no lo han hecho. Por ejemplo,
+caso contrario» y se ejecutará si lo anteriores no lo han hecho.
 \begin{figure}[H]
     \centering
     \begin{lstlisting}
-si true || false || (3 != 2) {
-    //Codigo
-} sino false && true {
-    //Codigo
-} sino {
-    //Codigo
+si expr_cond1 {
+    //Codigo1
+}
+sino expr_cond2 {
+    //Codigo2
+} 
+//Mas ramas condicionales
+//...
+sino {
+    //CodigoN
 }
     \end{lstlisting}
-    \caption{Ejemplo de la ejecución condicional.}
+    \caption{Ejecución condicional.}
 \end{figure}
 
-Hemos decidido incluir dos tipos de bucles que nombramos por «mientras» y «para»
+\subsection*{Bucles}
+Hemos decidido incluir dos tipos de bucles que nombramos por
+\lstinline{mientras} y \lstinline{para}
 (provenientes de \textit{while} y \textit{for}). La sintaxis que sigue
-«mientras» es: palabra clave seguida de una expresión condicional y el bloque de
+\lstinline{mientras} es: palabra clave seguida de una expresión condicional y el bloque de
 código que se ejecuta mientras se cumpla la condición. Por otro lado, el bucle
-«para» es: palabra clave, la asignación de una nueva variable (que no es
+\lstinline{para} es: palabra clave, la asignación de una nueva variable (que no es
 necesario declarar de forma explícita) a su valor inicial, una flecha y el valor
-final (no inclusivo) que tendrá la variable. Por ejemplo,
+final (no inclusivo) que tendrá la variable.
 \begin{figure}[H]
     \centering
     \begin{lstlisting}
-mientras a || b && !c {
+mientras expr_cond {
     //Codigo
+}
 
-    para i = 0 -> 20 {
-        //Codigo anidado
-    }
+para i = expr_arit_ini -> expr_arit_fin {
+    //Codigo
 }
     \end{lstlisting}
-    \caption{Ejemplo de bucles (anidados).}
+    \caption{Ejecución iterativa.}
 \end{figure}
+
+\subsection*{Entrada/Salida}
+Para realizar la entrada y la salida, el lenguaje contará con una serie de
+funciones predefinidas para permitirlo. Estas simplemente permitirán la lectura
+de enteros y binarios o su escritura. En caso de que se intente leer o escribir
+algo que no coincide con la función llamada, se producirá un error.
+\begin{figure}[H]
+    \centering
+    \begin{lstlisting}
+leerEnt();
+leerBin();
+escribirEnt();
+escribirBin();
+    \end{lstlisting}
+    \caption{Funciones de lectura y escritura.}
+\end{figure}
+
+
+\subsection*{Composición}
+Aunque ya se haya dicho de manera implícita, la composición de instrucciones en
+este lenguaje se hará mediante el símbolo \lstinline{;}.
+
+\section*{Expresiones}
+La expresiones de nuestro lenguaje se dividirán en aquellas que sean aritméticas
+(es decir, que su valor sea un entero) y lógicas (con valor binario). Serán las
+siguientes:
+\begin{itemize}
+    \item \textbf{Constantes}: Serán números enteros habituales (aritméticas) o
+        las palabras clave \lstinline{true} y \lstinline{false} (lógicas).
+    \item \textbf{Variables}: Identificadores de las variables inicializadas
+        anteriormente.
+    \item \textbf{Operadores infijos}: Expresiones compuestas por dos operandos
+        y, entre estos, uno de los anteriormente definidos operadores.
+    \item \textbf{Llamadas a funciones}: Siguiendo la definición del operador
+        \lstinline{()} definido anteriormente, serán simplemente el
+        identificador de la función a llamar y, entre paréntesis, los argumentos
+        con los que se la llama.
+\end{itemize}
+Las expresiones podrán ser, obviamente, una combinación de todas estas y se
+podrán entender semánticamente como el valor que producen como resultado.
 
 \section*{Gestión de errores}
 Para la gestión de errores, el compilador simplemente imprimirá el tipo de error
 que se ha dado y su localización en el fichero de texto. No habrá recuperación
-de errores).
+de errores.

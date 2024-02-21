@@ -5,12 +5,14 @@ apartado.
 
 \section*{Léxico}
 Veamos en primer lugar el léxico, es decir, los \textit{tokens} que manejaremos
-en nuestro lenguaje. Únicamente se manejan símbolos ASCII:
+en nuestro lenguaje. Únicamente se manejan caracteres ASCII:
 \subsection*{Palabras clave}
 Listado de las palabras clave del lenguaje:
 \begin{itemize}
     \item \lstinline{ent}
     \item \lstinline{bin}
+    \item \lstinline{true}
+    \item \lstinline{false}
     \item \lstinline{si}
     \item \lstinline{mientras}
     \item \lstinline{diver}
@@ -70,17 +72,14 @@ tipo arr[]...[];
 Hemos decidido incluir en nuestro lenguaje tanto punteros como registros. La
 declaración de los punteros la realizaremos similarmente a la de las variables,
 pero incluyendo el símbolo (\lstinline{@}) entre el tipo y el identificador. Respecto a los
-registros se hace de manera similar, pero añadiendo la palabra clave
-\lstinline{registro} en primer lugar. Estos datos se definen de la siguiente
-manera: en primer lugar, utilizamos la palabra clave \lstinline{registro},
-seguido del nombre de este nuevo tipo. Tras esto, iniciamos un bloque anidado
+registros se hace de manera similar: primero, utilizamos la palabra clave \lstinline{registro}. Tras esto, iniciamos un bloque anidado
 con los campos del registro y su tipo, separados por comas (el último también
 puede tener coma al final de forma opcional).
 \begin{figure}[H]
     \centering
     \begin{lstlisting}
 //Registros
-registro datos {
+registro {
     atributo11, atributo12, ...: tipo1,
     atributo21, atributo22, ...: tipo2,
     ...
@@ -163,13 +162,13 @@ serán los «enteros» de $32$ bits (que declararemos con la palabra clave
 
 \item Operadores lógicos:
 \begin{enumerate}
-    \item Negación lógica: \lstinline{!}.
-    \item «Y» lógico: \lstinline{&&}.
-    \item «O» inclusivo lógico: \lstinline{||}.
+    \item Negación lógica: \lstinline{!}
+    \item «Y» lógico: \lstinline{&&}
+    \item «O» inclusivo lógico: \lstinline{||}
 \end{enumerate}
 
 \item Otros operadores:
-\begin{enumerate}
+\begin{itemize}
     \item Acceso a atributos de un registro: \lstinline{.}
     \item Acceso a un elemento de un array: \lstinline{[]}
     \item Llamada a una función (identificador de la función a la izquierda,
@@ -177,9 +176,9 @@ serán los «enteros» de $32$ bits (que declararemos con la palabra clave
     \item Opuesto de un entero: \lstinline{-}
     \item Acceso a la dirección de una variable: \lstinline{&}
     \item Acceso al valor apuntado por un puntero: \lstinline{@}
-\end{enumerate}
+\end{itemize}
 Por último, la asignación será \lstinline{=} y se podrá combinar con las
-operaciones aritméticas y de lógicas.
+operaciones aritméticas y lógicas.
 \end{itemize}
 \begin{table}[H]
     \centering
