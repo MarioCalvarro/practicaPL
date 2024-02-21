@@ -26,4 +26,12 @@ public class UnidadLexica extends Symbol {
 	public int columna() {
 		return ((TokenValue) value).columna;
 	}
+
+    public String toString() {
+        if (lexema() == null) {
+            return "[clase:"+clase()+",fila:"+fila()+",col:"+columna()+"]";
+        } else {
+            return "[clase:"+clase()+",fila:"+fila()+",col:"+columna()+",lexema:"+lexema()+"]";
+        }
+    }
 }
