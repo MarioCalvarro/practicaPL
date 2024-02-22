@@ -8,7 +8,22 @@ class LecturaEscritura {
 
 	@Test
 	void test() {
-		fail("Not yet implemented");
+		Reader input = null;
+		try {
+			input = new InputStreamReader(new FileInputStream("src/tests/resources/lecturaEscritura.jaja"));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		AnalizadorLexicoJaja al = new AnalizadorLexicoJaja(input);
+		UnidadLexica unidad = null;
+		do {
+			try {
+				unidad = (UnidadLexica) al.next_token();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			System.out.println(unidad);
+		} while (unidad.clase() != ClaseLexica.EOF);
 	}
 
 }

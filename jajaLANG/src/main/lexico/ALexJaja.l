@@ -54,10 +54,10 @@ traficar = \#traficar
 letra  = ([A-Z]|[a-z])
 digitoPositivo = [1-9]
 digito = ({digitoPositivo}|0)
-parteEntera = {digitoPositivo}{digito}*
+parteEntera = 0|({digitoPositivo}{digito}*)
 
 identificador = ({letra}|\_)({letra}|{digito})*
-numeroEntero = [\+\-]?{parteEntera}
+numeroEntero = [\+]?{parteEntera}
 
 
 //Operadores

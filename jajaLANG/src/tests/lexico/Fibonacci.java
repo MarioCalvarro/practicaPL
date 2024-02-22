@@ -15,7 +15,6 @@ class Fibonacci {
 
 	@Test
 	void test() {
-	    System.out.println("Working Directory = " + System.getProperty("user.dir"));
 		Reader input = null;
 		try {
 			input = new InputStreamReader(new FileInputStream("src/tests/resources/fibonacci.jaja"));
