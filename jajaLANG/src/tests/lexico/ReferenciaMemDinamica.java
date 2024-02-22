@@ -3,6 +3,13 @@ package tests.lexico;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import main.lexico.*;
+import main.sintactico.*;
 
 class ReferenciaMemDinamica {
 
