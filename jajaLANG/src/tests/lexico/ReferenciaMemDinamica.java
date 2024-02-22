@@ -8,6 +8,7 @@ class ReferenciaMemDinamica {
 
 	@Test
 	void test() {
+		StringBuilder test = new StringBuilder();
 		Reader input = null;
 		try {
 			input = new InputStreamReader(new FileInputStream("src/tests/resources/referenciaDinamica.jaja"));
@@ -22,8 +23,9 @@ class ReferenciaMemDinamica {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			System.out.println(unidad);
+			test.append(unidad.toString());
 		} while (unidad.clase() != ClaseLexica.EOF);
+		assertEquals(test.toString(), result);
 	}
 
 }

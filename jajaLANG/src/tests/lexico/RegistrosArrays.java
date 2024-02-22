@@ -8,6 +8,7 @@ class RegistrosArrays {
 
 	@Test
 	void test() {
+		StringBuilder test = new StringBuilder();
 		Reader input = null;
 		try {
 			input = new InputStreamReader(new FileInputStream("src/tests/resources/registrosArrays.jaja"));
@@ -22,8 +23,9 @@ class RegistrosArrays {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			System.out.println(unidad);
+			test.append(unidad.toString());
 		} while (unidad.clase() != ClaseLexica.EOF);
+		assertEquals(test.toString(), result);
 	}
 
 }
