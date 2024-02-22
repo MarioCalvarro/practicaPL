@@ -91,10 +91,10 @@ acceso a sus atributos/elementos y su modificación.
 \begin{figure}[htbp]
     \centering
     \begin{lstlisting}
-incognito dato = struct { arr: ent[] };
+incognito dato = registro { arr: ent[] };
 
 diver tronco() {
-    dato x = struct { arr = [1, 2, 3] };
+    dato x = registro { arr = [1, 2, 3] };
     escribeEnt(x.arr[0]);
     x.arr[0] = 9;
     escribeEnt(x.arr[0]);
