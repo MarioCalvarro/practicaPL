@@ -91,7 +91,7 @@ acceso a sus atributos/elementos y su modificación.
 \begin{figure}[htbp]
     \centering
     \begin{lstlisting}
-incognito dato = registro { arr: ent[] };
+incognito dato = registro { arr[]: ent };
 
 diver tronco() {
     dato x = registro { arr = [1, 2, 3] };
@@ -109,7 +109,7 @@ Programa que pasa por referencia una variable y utiliza memoria dinámica.
 \begin{figure}[htbp]
     \centering
     \begin{lstlisting}
-diver f(&a -> ent) -> ent {
+diver f(&a: ent) -> ent {
     devuelve @a;
 }
 
