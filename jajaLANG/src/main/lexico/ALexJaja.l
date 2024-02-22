@@ -1,6 +1,6 @@
-package lexico;
+package main.lexico;
 
-import errors.GestionErroresJaja;
+import main.errors.GestionErroresJaja;
 
 %%
 %cup

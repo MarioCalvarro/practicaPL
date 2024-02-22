@@ -7,41 +7,42 @@ import main.errors.GestionErroresJaja;
 
 scan with {: return getScanner().next_token(); :};
 parser code {: 
-   private GestionErroresJaja errores;
-   public void syntax_error(Symbol unidadLexica) {
-     errores.errorSintactico((UnidadLexica)unidadLexica);
-   }
+    private GestionErroresJaja errores;
+    public void syntax_error(Symbol unidadLexica) {
+        errores.errorSintactico((UnidadLexica) unidadLexica);
+    }
 :};
+
 init with {: 
-   errores = new GestionErroresJaja();
-   AnalizadorLexicoJaja alex = (AnalizadorLexicoJaja)getScanner();
-   alex.fijaGestionErrores(errores);
+    errores = new GestionErroresJaja();
+    AnalizadorLexicoJaja alex = (AnalizadorLexicoJaja) getScanner();
+    alex.fijaGestionErrores(errores);
 :};
 
 
-terminal    ENT, BIN, FACTO, FAKE, SI, SINO, MIENTRAS, PARA, DIVER, REGISTRO,
-            INCOGNITO, DEVUELVE, TRAFICAR
+terminal    //Palabras clave
+            ENT, BIN, FACTO, FAKE, SI, SINO, MIENTRAS, PARA, DIVER, REGISTRO,
+            INCOGNITO, DEVUELVE, TRAFICAR,
+
+            //Variables
+            ID, ENTERO,
+
+            //Operadores Aritmeticos
+            POT, MUL, DIV, MOD, SUMA, RESTA,
+
+            //Relacionales
+            IGUAL, DESIGUAL, MAYOR, MENOR, MAYORIGUAL, MENORIGUAL,
+
+            //Logicos
+            NEG, CONJ, DISY,
+
+            //Otros
+            DIRECCION, PUNTERO, ASIGNACION, PUNTO, COMA, PUNTOCOMA, DOSPUNTOS, FLECHA,
+
+            //Agrupaciones
+            CAP, CCIERRE, PAP, PCIERRE, LLAP, LLCIERRE;
 
 
+non terminal  S;
 
-
-
-
-
-non terminal  S, L0, L1, L2, CORC, FUNC2, FUNC3, OPAR, OPREL ;
-
-
-
-S   ::= PRINT L0 S | IDEN ASIGNACION L0 S |  ;
-
-L0   ::= L0 CONCATENACION L1 | L1 ;
-L1   ::= FUNC2 | FUNC3 | L2 ; 
-L2   ::= IDEN | CAP CORC CCIERRE | PAP L0 PCIERRE ;
-
-CORC ::= ENT COMA CORC | L0 COMA CORC | ENT | L0 | ;
-
-FUNC2 ::= LREDUCE OPAR L2 ;
-FUNC3 ::= LFILTER OPREL ENT L2 | LMAP OPAR ENT L2 ;
-
-OPAR ::= MAS | MENOS | POR | DIV ;
-OPREL ::= MENOR | MAYOR | IGUAL | DESIGUAL ;
+S   ::= ;
