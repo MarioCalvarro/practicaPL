@@ -43,6 +43,54 @@ terminal    //Palabras clave
             CAP, CCIERRE, PAP, PCIERRE, LLAP, LLCIERRE;
 
 
-non terminal  S;
+non terminal programa, lista_instrucciones, instruccion ;
 
-S   ::= ;
+//Inicio
+programa ::= lista_instrucciones;
+
+lista_instrucciones ::= instruccion
+                    |   lista_instrucciones instruccion;
+
+instruccion ::= declaracion
+            |   asignacion
+            |   decl_asig
+            |   condicional
+            |   bucles
+            |   inst_return
+            ;
+
+tipo ::= ENT | BIN | ID ;       //ID se referirá a los identificadores definidos por el incognito
+
+
+//Declaraciones
+declaracion ::= declaracion_simple | declaracion_reg;
+
+declaracion_simple ::= tipo lista_identificadores PUNTOCOMA;
+
+lista_identificadores ::= ID parejas_corcs
+                |   lista_identificadores COMA ID parejas_corcs
+                ;
+
+parejas_corcs ::= CAP CCIERRE parejas_corcs |  ;
+
+
+declaracion_reg ::= REGISTRO LLAP lista_atributos LLCIERRE lista_identificadores PUNTOCOMA;
+
+lista_atributos ::= lista_identificadores DOSPUNTOS tipo 
+                | lista_identificadores DOSPUNTOS tipo COMA
+                | lista_identificadores DOSPUNTOS tipo COMA lista_atributos
+                ;
+
+
+//Asignaciones
+asignacion_simple ::= ID ASIGNACION expresion PUNTOCOMA;
+
+
+//Declaraciones Asignaciones
+decl_asig_simple ::= tipo ID ASIGNACION expresion PUNTOCOMA;
+
+
+file: [statements] EOF
+interactive: statement_newline 
+eval: expressions NEWLINE* ENDMARKER 
+func_type: '(' [type_expressions] ')' '->' expression NEWLINE* ENDMARKER 
