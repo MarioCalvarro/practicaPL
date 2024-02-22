@@ -83,12 +83,45 @@ lista_atributos ::= lista_identificadores DOSPUNTOS tipo
 
 
 //Asignaciones
-asignacion_simple ::= ID ASIGNACION expresion PUNTOCOMA;
+asignacion ::= ID asignacion_simple PUNTOCOMA | ID asignacion_array PUNTOCOMA | ID asignacion_reg PUNTOCOMA;
+
+asignacion_simple ::= ASIGNACION expresion;
+
+    //Arrays
+asignacion_array ::= ASIGNACION CAP lista_expresiones_array CCIERRE
+                 |   ASIGNACION tipo lista_parejas_corc_cont
+                 ;
+
+lista_expresiones_array ::= 
+                        | expresion_array 
+                        | lista_expresiones_array COMA expresion_array ;
+
+//TODO: Se puede hacer esto (recursion mutua)?
+expresion_array ::= expresion 
+                |   CAP lista_expresiones_array CCIERRE ; 
+
+
+lista_parejas_corc_cont ::= CAP ENTERO CCIERRE
+                        |  lista_parejas_corc_cont CAP ENTERO CCIERRE ;
+
+
+    //Registros
+asignacion_reg ::= ASIGNACION LLAP lista_asignaciones LLCIERRE;
+
+lista_asignaciones ::= asignacion
+                   |   asignacion COMA
+                   |   asignacion COMA lista_asignaciones ;
 
 
 //Declaraciones Asignaciones
-decl_asig_simple ::= tipo ID ASIGNACION expresion PUNTOCOMA;
+decl_asig ::= decl_asig_simple | decl_asig_array | decl_asig_reg ;
 
+decl_asig_simple ::= tipo ID asignacion_simple;
+decl_asig_array ::= tipo ID parejas_corcs asignacion_array;
+decl_asig_reg ::= REGISTRO 
+
+
+//Expresiones
 
 file: [statements] EOF
 interactive: statement_newline 
