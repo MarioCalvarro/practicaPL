@@ -29,7 +29,7 @@ class ParImpar {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			System.out.println(unidad);
+			System.out.print(unidad);
 		} while (unidad.clase() != ClaseLexica.EOF);
 	}
 

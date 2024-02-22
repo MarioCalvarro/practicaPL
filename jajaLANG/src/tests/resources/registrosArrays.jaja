@@ -1,5 +1,5 @@
 diver f(&a -> ent) -> ent {
-    return @a;
+    devuelve @a;
 }
 
 diver tronco() {
