@@ -71,7 +71,7 @@ más.
 \begin{figure}[htbp]
     \centering
     \begin{lstlisting}
-tipo arr[]...[];
+tipo arr[dim1]...[dimN];
     \end{lstlisting}
     \caption{Declaración de arrays de dimensión arbitraria.}
 \end{figure}
@@ -199,9 +199,9 @@ operaciones aritméticas y lógicas.
         \hline
         Operador & Prioridad & Asociatividad \\ 
         \hline
-        \lstinline$[] .$ & $0$ & Izquierda \\ 
+        \lstinline$()$ & $0$ & Izquierda \\ 
         \hline
-        \lstinline$()$ & $1$ & Izquierda \\ 
+        \lstinline$[] .$ & $1$ & Izquierda \\ 
         \hline
         \lstinline$-$ unario & $2$ & Derecha \\ 
         \hline
