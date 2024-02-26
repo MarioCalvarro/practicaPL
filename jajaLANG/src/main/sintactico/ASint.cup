@@ -22,7 +22,7 @@ init with {:
 
 terminal    //Palabras clave
             ENT, BIN, FACTO, FAKE, SI, SINO, MIENTRAS, PARA, DIVER, REGISTRO,
-            INCOGNITO, DEVUELVE, TRAFICAR,
+            NULO, INCOGNITO, DEVUELVE, TRAFICAR, COMO,
 
             //Variables
             ID, ENTERO,
@@ -41,7 +41,6 @@ terminal    //Palabras clave
 
             //Agrupaciones
             CAP, CCIERRE, PAP, PCIERRE, LLAP, LLCIERRE;
-
 
 non terminal programa, lista_instrucciones, instruccion ;
 

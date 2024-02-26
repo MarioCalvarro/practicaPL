@@ -45,9 +45,11 @@ mientras = mientras
 para = para
 diver = diver
 registro = registro
+nulo = nulo
 incognito = incognito
 devuelve = devuelve
 traficar = \#traficar
+como = como
 
 
 //Variables
@@ -118,9 +120,11 @@ llaveCierre = \}
 {para}                    {return ops.unidadPara();}
 {diver}                   {return ops.unidadDiver();}
 {registro}                {return ops.unidadRegistro();}
+{nulo}                    {return ops.unidadNulo();}
 {incognito}               {return ops.unidadIncognito();}
 {devuelve}                {return ops.unidadDevuelve();}
 {traficar}                {return ops.unidadTraficar();}
+{como}                    {return ops.unidadComo();}
 
 
 //Variables

@@ -50,6 +50,10 @@ public class ALexOperaciones {
 		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.REGISTRO, "REGISTRO");
 	}
 
+	public UnidadLexica unidadNulo() {
+		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.NULO, "NULO");
+	}
+
 	public UnidadLexica unidadIncognito() {
 		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.INCOGNITO, "INCOGNITO");
 	}
@@ -60,6 +64,10 @@ public class ALexOperaciones {
 
 	public UnidadLexica unidadTraficar() {
 		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.TRAFICAR, "TRAFICAR");
+	}
+
+	public UnidadLexica unidadComo() {
+		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.COMO, "COMO");
 	}
 
 	// Variables
