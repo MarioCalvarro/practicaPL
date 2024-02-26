@@ -52,6 +52,9 @@ tipo id1 = expr_tipo, id2, id3 = expr_tipo...;
     simultánea. Cabe destacar que, en este caso, la variable con identificador \lstinline{id2}
     no tiene valor asignado.}
 \end{figure}
+Todas las variables se inicializarán implícitamente a \lstinline{0}, en el caso de los
+enteros, \lstinline{fake}, en el caso de los binarios, o a \lstinline{nulo}, en
+el caso de los punteros.
 
 \subsubsection{Arrays}
 Los arrays serán asignados elemento a elemento, separando los valores dados por
@@ -67,10 +70,10 @@ variable de tipo array y, simultáneamente, asignarle un valor.
 arr = [el1, ..., eln];
 
 //Declaracion y asignacion
-tipo arr[] = [el1, ..., eln];
+tipo arr[dim1] = [el1, ..., eln];
 
 //Reserva de memoria para un array de n dimensiones
-tipo arr[]...[] = tipo[i1]...[in];
+tipo arr[dim1]...[dimN] = tipo[i1]...[in];
     \end{lstlisting}
     \caption{Asignación de valores a los arrays.}
 \end{figure}

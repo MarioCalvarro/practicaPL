@@ -19,9 +19,11 @@ Listado de las palabras clave del lenguaje:
     \item \lstinline{para}
     \item \lstinline{diver}
     \item \lstinline{registro}
+    \item \lstinline{nulo}
     \item \lstinline{incognito}
     \item \lstinline{devuelve}
     \item \lstinline{#traficar}
+    \item \lstinline{como}
 \end{itemize}
 
 \subsubsection{Identificadores}
@@ -148,11 +150,13 @@ diver id2 (&par1: tipo1 -> par2: tipo2 -> ... ) -> tipo {
 
 \subsubsection{Importación de código}
 Para importar código procedente de otros ficheros utilizamos la palabra clave
-\lstinline{#traficar} seguido de la localización del otro fichero.
+\lstinline{#traficar} seguido de la localización del otro fichero. Tras esto,
+añadimos la palabra clave \lstinline{como} y el alias del \textit{namespace} del
+fichero importado (para evitar la colisión de nombres).
 \begin{figure}[htbp]
     \centering
     \begin{lstlisting}
-#traficar ruta/a/fichero.jaja
+#traficar ruta/a/fichero.jaja como namespace_id
     \end{lstlisting}
     \caption{Importación de código procedente de otro fichero.}
 \end{figure}
