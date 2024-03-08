@@ -50,17 +50,17 @@ terminal    //Palabras clave
 /////////////////////
 ///Inicio programa///
 /////////////////////
-Programa ::= Lista_Instrucciones: lista_instrucciones
-    {: RESULT = new Programa(lista_instrucciones); :};
+Programa ::= Lista_Instrucciones: lInstrucciones
+    {: RESULT = new Programa(lInstrucciones); :};
 
-Lista_Instrucciones ::= Instruccion: instruccion PUNTOCOMA
+Lista_Instrucciones ::= Instruccion: ins PUNTOCOMA
     {: List<Instruccion> lInstrucciones = new ArrayList<Instruccion>();
-    lInstrucciones.add(instruccion);
+    lInstrucciones.add(ins);
     RESULT = lInstrucciones; :};
 
-Lista_Instrucciones ::= Lista_Instrucciones: lista_instrucciones Instruccion: instruccion PUNTOCOMA
-    {: lista_instrucciones.add(instruccion);
-    RESULT = lista_instrucciones; :};
+                    | Lista_Instrucciones: lInstrucciones Instruccion: ins PUNTOCOMA
+    {: lInstrucciones.add(ins);
+    RESULT = lInstrucciones; :};
 
 Instruccion ::= Declaracion: decl
     {: RESULT = decl; :}
