@@ -42,87 +42,150 @@ terminal    //Palabras clave
             //Agrupaciones
             CAP, CCIERRE, PAP, PCIERRE, LLAP, LLCIERRE;
 
-non terminal programa, lista_instrucciones, instruccion ;
 
-//Inicio
-programa ::= lista_instrucciones;
 
-lista_instrucciones ::= instruccion
-                    |   lista_instrucciones instruccion;
 
-instruccion ::= declaracion
-            |   asignacion
-            |   decl_asig
-            |   condicional
-            |   bucles
-            |   inst_return
+
+
+/////////////////////
+///Inicio programa///
+/////////////////////
+Programa ::= Lista_Instrucciones: lista_instrucciones
+    {: RESULT = new Programa(lista_instrucciones); :};
+
+Lista_Instrucciones ::= Instruccion: instruccion PUNTOCOMA
+    {: List<Instruccion> lInstrucciones = new ArrayList<Instruccion>();
+    lInstrucciones.add(instruccion);
+    RESULT = lInstrucciones; :};
+
+Lista_Instrucciones ::= Lista_Instrucciones: lista_instrucciones Instruccion: instruccion PUNTOCOMA
+    {: lista_instrucciones.add(instruccion);
+    RESULT = lista_instrucciones; :};
+
+Instruccion ::= Declaracion: decl
+    {: RESULT = decl; :}
+            |   Asignacion: as
+    {: RESULT = as; :}
+            |   Decl_asig: dAs
+    {: RESULT = dAs; :}
+            |   Llamada_fun: llamada
+    {: RESULT = llamada; :}
+            |   Alias: aka          //Also known as
+    {: RESULT = aka; :}
+            |   Condicional: cond
+    {: RESULT = cond; :}
+            |   Bucle: buc
+    {: RESULT = buc; :}
+            |   Inst_return: iRet
+    {: RESULT = iRet; :}
             ;
 
-tipo ::= ENT | BIN | ID ;       //ID se referirá a los identificadores definidos por el incognito
 
 
-//Declaraciones
-declaracion ::= declaracion_simple | declaracion_reg;
+/////////////////////
+///     TIPOS     ///
+/////////////////////
 
-declaracion_simple ::= tipo lista_identificadores PUNTOCOMA;
+Tipo ::= T:tipo PUNTERO
+    {: RESULT = new TipoPuntero(tipo); :}
 
-lista_identificadores ::= ID parejas_corcs
-                |   lista_identificadores COMA ID parejas_corcs
-                ;
+Tipo ::= T:tipo
+    {: RESULT = tipo; :}
 
-parejas_corcs ::= CAP CCIERRE parejas_corcs |  ;
+T ::= ENT 
+    {: RESULT = new TipoEntero();  :}
 
+    | BIN 
+    {: RESULT = new TipoBinario(); :}
 
-declaracion_reg ::= REGISTRO LLAP lista_atributos LLCIERRE lista_identificadores PUNTOCOMA;
+    | ID: id             //ID se referirá a los identificadores definidos por el incognito
+    {: RESULT = new TipoAlias(id.getLexema(), id.getFila(), id.getColumna()); :}
 
-lista_atributos ::= lista_identificadores DOSPUNTOS tipo 
-                | lista_identificadores DOSPUNTOS tipo COMA
-                | lista_identificadores DOSPUNTOS tipo COMA lista_atributos
-                ;
-
-
-//Asignaciones
-asignacion ::= ID asignacion_simple PUNTOCOMA | ID asignacion_array PUNTOCOMA | ID asignacion_reg PUNTOCOMA;
-
-asignacion_simple ::= ASIGNACION expresion;
-
-    //Arrays
-asignacion_array ::= ASIGNACION CAP lista_expresiones_array CCIERRE
-                 |   ASIGNACION tipo lista_parejas_corc_cont
-                 ;
-
-lista_expresiones_array ::= 
-                        | expresion_array 
-                        | lista_expresiones_array COMA expresion_array ;
-
-//TODO: Se puede hacer esto (recursion mutua)?
-expresion_array ::= expresion 
-                |   CAP lista_expresiones_array CCIERRE ; 
+    | Tipo_Reg: t_reg
+    {: RESULT = t_reg; :}
+    ;
 
 
-lista_parejas_corc_cont ::= CAP ENTERO CCIERRE
-                        |  lista_parejas_corc_cont CAP ENTERO CCIERRE ;
+Tipo_Reg ::= REGISTRO CAP Matriz_Atributos: mAtrib CCIERRE
+    {: RESULT = new TipoRegistro(mAtrib); :}
 
 
-    //Registros
-asignacion_reg ::= ASIGNACION LLAP lista_asignaciones LLCIERRE;
+//Una sola lista de atributos o varias con la coma de la última opcional
+Matriz_Atributos ::= Lista_Atributos: lAtr
+    {: List<List<Atributo>> mAtr = new ArrayList<List<Atributo>>();
+    mAtr.add(lAtr); RESULT = mAtr; :}
 
-lista_asignaciones ::= asignacion
-                   |   asignacion COMA
-                   |   asignacion COMA lista_asignaciones ;
+                | Lista_Atributos: lAtr COMA
+    {: List<List<Atributo>> mAtr = new ArrayList<List<Atributo>>();
+    mAtr.add(lAtr);
+    RESULT = mAtr; :}
+
+                | Matriz_Atributos': mAtr Lista_Atributos: lAtr
+    {: mAtr.add(lAtr); RESULT = mAtr; :}
+
+                | Matriz_Atributos': mAtr Lista_Atributos: lAtr COMA
+    {: mAtr.add(lAtr); RESULT = mAtr; :}
 
 
-//Declaraciones Asignaciones
-decl_asig ::= decl_asig_simple | decl_asig_array | decl_asig_reg ;
+Matriz_Atributos' ::= Lista_Atributos: lAtr COMA
+    {: List<List<Atributo>> mAtr = new ArrayList<List<Atributo>>();
+    mAtr.add(lAtr); RESULT = mAtr; :}
 
-decl_asig_simple ::= tipo ID asignacion_simple;
-decl_asig_array ::= tipo ID parejas_corcs asignacion_array;
-decl_asig_reg ::= REGISTRO 
+                | Matriz_Atributos': mAtr Lista_Atributos: lAtr COMA
+    {: mAtr.add(lAtr); RESULT = mAtr; :}
 
 
-//Expresiones
+Lista_Atributos ::= Lista_Variables: lVar DOSPUNTOS Tipo: tipo
+    {: RESULT = ast.listaAtributos(lVar, tipo); :}
 
-file: [statements] EOF
-interactive: statement_newline 
-eval: expressions NEWLINE* ENDMARKER 
-func_type: '(' [type_expressions] ')' '->' expression NEWLINE* ENDMARKER 
+
+
+Lista_Variables ::= Variable: var
+    {: List<Variable> lVar = new ArrayList<Variable>();
+    lVar.add(var); RESULT = lVar; :}
+
+                | Lista_Variables': lVar  Variable: var
+    {: lVar.add(var); RESULT = lVar; :}
+
+Lista_Variables' ::= Variable: var COMA
+    {: List<Variable> lVar = new ArrayList<Variable>();
+    lVar.add(var); RESULT = lVar; :}
+
+                | Lista_Variables': lVar  Variable: var COMA
+    {: lVar.add(var); RESULT = lVar; :}
+
+
+
+Variable ::= ID: id Lista_Corchetes: lCor
+    {: RESULT = new Variable(id.lexema(), lCor)); :};
+
+
+Lista_Corchetes ::= //Sin corchetes
+    {: Result = new ArrayList<int>() :}
+
+                | CAP ENTERO: num CCIERRE
+    {: lCor = new ArrayList<int>() 
+    lCor.add(num.lexema()); RESULT = lCor :}
+
+                | Lista_Corchetes: lCor CAP ENTERO: num CCIERRE
+    {: lCor.add(num.lexema()); RESULT = lCor :}
+
+
+
+
+/////////////////////
+////INSTRUCCIONES////
+/////////////////////
+
+///Declaraciones///
+Declaracion ::= Dec_variables: dec_var
+    {: RESULT = dec_var :}
+
+            | Dec_funcion: dec_fun;
+    {: RESULT = dec_fun :}
+            ;
+
+
+Dec_variables ::= Tipo: tipo Lista_Variables: lVar
+    {: RESULT = ast.listaVariables(tipo, lVar); :}
+
