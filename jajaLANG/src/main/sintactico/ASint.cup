@@ -86,7 +86,7 @@ Instruccion ::= Declaracion: decl
 ///     TIPOS     ///
 /////////////////////
 
-Tipo ::= T:tipo PUNTERO
+Tipo ::= Tipo:tipo PUNTERO
     {: RESULT = new TipoPuntero(tipo); :}
 
 Tipo ::= T:tipo
@@ -117,8 +117,7 @@ Matriz_Atributos ::= Lista_Atributos: lAtr
 
                 | Lista_Atributos: lAtr COMA
     {: List<List<Atributo>> mAtr = new ArrayList<List<Atributo>>();
-    mAtr.add(lAtr);
-    RESULT = mAtr; :}
+    mAtr.add(lAtr); RESULT = mAtr; :}
 
                 | Matriz_Atributos': mAtr Lista_Atributos: lAtr
     {: mAtr.add(lAtr); RESULT = mAtr; :}
@@ -144,14 +143,14 @@ Lista_Variables ::= Variable: var
     {: List<Variable> lVar = new ArrayList<Variable>();
     lVar.add(var); RESULT = lVar; :}
 
-                | Lista_Variables': lVar  Variable: var
+                | Lista_Variables': lVar Variable: var
     {: lVar.add(var); RESULT = lVar; :}
 
 Lista_Variables' ::= Variable: var COMA
     {: List<Variable> lVar = new ArrayList<Variable>();
     lVar.add(var); RESULT = lVar; :}
 
-                | Lista_Variables': lVar  Variable: var COMA
+                | Lista_Variables': lVar Variable: var COMA
     {: lVar.add(var); RESULT = lVar; :}
 
 
