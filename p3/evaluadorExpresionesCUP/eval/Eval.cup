@@ -23,7 +23,10 @@ init with {:
 terminal  MAS, POR, PAP, PCIERRE;
 terminal TokenValue NUM;  // Must be of the same type as the "value" in Symbol
 // terminal NUM;        // if nothing is said then it has type Object (same for non-terminals) 
-non terminal  Integer Exp, Term, Fact;
+non terminal Integer Exp, Term, Fact;
+
+S ::= EVALUA Exp: exp DONDE Lista_Dec: lDec
+    {: RESULT = as.evaluate(exp, lDec) :}
 
 Exp ::= Exp: exp1 MAS Term: term 
    // {: RESULT = Integer.valueOf(exp1.intValue() + term.intValue()); :};
@@ -44,3 +47,10 @@ Fact ::= PAP Exp: exp PCIERRE
    {: RESULT = exp; :};
 
 
+Lista_Dec ::= ID: id ASIGNACION NUMERO: num
+    {: Map<String, int> hm = new HashMap<String, int>();
+    hm.insert(id.lexema(), num.lexema());
+    RESULT = hm:}
+
+    | Lista_Dec: lDec ID: id ASIGNACION NUMERO: num
+    {: lDec.insert(id.lexema(), num.lexema()); RESULT = hm:}
