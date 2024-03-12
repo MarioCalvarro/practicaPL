@@ -1,4 +1,4 @@
-package tests.lexico;
+package test.lexico;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,7 +20,7 @@ class ReferenciaMemDinamica {
 		StringBuilder test = new StringBuilder();
 		Reader input = null;
 		try {
-			input = new InputStreamReader(new FileInputStream("src/tests/resources/referenciaDinamica.jaja"));
+			input = new InputStreamReader(new FileInputStream("src/test/resources/referenciaDinamica.jaja"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

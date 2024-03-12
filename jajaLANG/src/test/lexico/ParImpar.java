@@ -1,4 +1,4 @@
-package tests.lexico;
+package test.lexico;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,7 +20,7 @@ class ParImpar {
 		StringBuilder test = new StringBuilder();
 		Reader input = null;
 		try {
-			input = new InputStreamReader(new FileInputStream("src/tests/resources/parImpar.jaja"));
+			input = new InputStreamReader(new FileInputStream("src/test/resources/parImpar.jaja"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
