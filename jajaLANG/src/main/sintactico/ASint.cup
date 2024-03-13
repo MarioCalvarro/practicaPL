@@ -134,6 +134,7 @@ Matriz_Atributos' ::= Lista_Atributos: lAtr COMA
     {: mAtr.add(lAtr); RESULT = mAtr; :}
 
 
+//Iremos recorriendo cada variable para asignarle su correspondiente tipo
 Lista_Atributos ::= Lista_Variables: lVar DOSPUNTOS Tipo: tipo
     {: RESULT = ast.listaAtributos(lVar, tipo); :}
 
@@ -155,10 +156,12 @@ Lista_Variables' ::= Variable: var COMA
 
 
 
+//El tipo de las variables se le puede dar después de construirlas
 Variable ::= ID: id Lista_Corchetes: lCor
     {: RESULT = new Variable(id.lexema(), lCor)); :};
 
 
+//El tipo array lo construimos al enlazarlo con el tipo
 Lista_Corchetes ::= //Sin corchetes
     {: Result = new ArrayList<int>() :}
 
@@ -185,6 +188,17 @@ Declaracion ::= Dec_variables: dec_var
             ;
 
 
+//Iremos recorriendo cada variable para asignarle su correspondiente tipo
 Dec_variables ::= Tipo: tipo Lista_Variables: lVar
     {: RESULT = ast.listaVariables(tipo, lVar); :}
 
+Dec_funcion ::= Dec_funcion_void: fVoid 
+    {: RESULT = fVoid :}
+            | Dec_funcion_ret: fReturn
+    {: RESULT = fReturn :}
+
+Dec_funcion_void ::= DIVER ID: id PAP Lista_Parametros: lPar PCIERRE Bloque_Anidado: bloq
+    {: RESULT = new FuncionVoid(id.lexema(), lPar, bloq) :}
+
+Dec_funcion_ret ::= DIVER ID: id PAP Lista_Parametros: lPAR PCIERRE FLECHA Tipo: t Bloque_Anidado: bloq
+    {: RESULT = new FuncionRet(id.lexema(), lPar, bloq, t) :}
