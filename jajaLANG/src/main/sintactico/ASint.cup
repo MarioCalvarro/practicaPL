@@ -67,17 +67,15 @@ Instruccion ::= Declaracion: decl
     {: RESULT = decl; :}
             |   Asignacion: as
     {: RESULT = as; :}
-            |   Decl_asig: dAs
+            |   Decl_Asig: dAs
     {: RESULT = dAs; :}
-            |   Llamada_fun: llamada
-    {: RESULT = llamada; :}
             |   Alias: aka          //Also known as
     {: RESULT = aka; :}
             |   Condicional: cond
     {: RESULT = cond; :}
             |   Bucle: buc
     {: RESULT = buc; :}
-            |   Inst_return: iRet
+            |   Inst_Return: iRet
     {: RESULT = iRet; :}
             ;
 
@@ -181,25 +179,101 @@ Lista_Corchetes ::= //Sin corchetes
 /////////////////////
 
 ///Declaraciones///
-Declaracion ::= Dec_variables: dec_var
+Declaracion ::= Dec_Variables: dec_var
     {: RESULT = dec_var :}
 
-            | Dec_funcion: dec_fun;
+            | Dec_Funcion: dec_fun;
     {: RESULT = dec_fun :}
             ;
 
 
 //Iremos recorriendo cada variable para asignarle su correspondiente tipo
-Dec_variables ::= Tipo: tipo Lista_Variables: lVar
+Dec_Variables ::= Tipo: tipo Lista_Variables: lVar
     {: RESULT = ast.listaVariables(tipo, lVar); :}
 
-Dec_funcion ::= Dec_funcion_void: fVoid 
+Dec_Funcion ::= Dec_Funcion_Void: fVoid 
     {: RESULT = fVoid :}
-            | Dec_funcion_ret: fReturn
+            | Dec_Funcion_Ret: fReturn
     {: RESULT = fReturn :}
 
-Dec_funcion_void ::= DIVER ID: id PAP Lista_Parametros: lPar PCIERRE Bloque_Anidado: bloq
+Dec_Funcion_Void ::= DIVER ID: id PAP Lista_Parametros: lPar PCIERRE Bloque_Anidado: bloq
     {: RESULT = new FuncionVoid(id.lexema(), lPar, bloq) :}
 
-Dec_funcion_ret ::= DIVER ID: id PAP Lista_Parametros: lPAR PCIERRE FLECHA Tipo: t Bloque_Anidado: bloq
+Dec_Funcion_Ret ::= DIVER ID: id PAP Lista_Parametros: lPAR PCIERRE FLECHA Tipo: t Bloque_Anidado: bloq
     {: RESULT = new FuncionRet(id.lexema(), lPar, bloq, t) :}
+
+
+///Bloque anidado///
+Bloque_Anidado ::= CAP Lista_Instrucciones: LIns CCIERRE
+    {: RESULT = LIns :}
+
+
+///Asignaciones///
+Asignacion ::= Expresion: expr1 ASIGNACION Der_Asig: DAsig
+    {: RESULT = new InsAsig(expr1, DAsig)  :}
+
+Der_Asig ::= Expresion: ASimple
+    {: RESULT = ASimple :}
+    | Asig_Array: AArray
+    {: RESULT = AArray :}
+    | Asig_Struct: AStruct
+    {: RESULT = AStruct :}
+
+
+Asig_Array ::= CAP Lista_Expresiones: LExp CCIERRE
+    {: RESULT = LExp :}
+
+Lista_Expresiones ::= Expresion: exp
+    {: List<Expresion> lExp = new ArrayList<Expresion>();
+    lExp.add(exp); RESULT = lExp; :}
+
+                | Lista_Expresiones': lExp Expresion: exp
+    {: lExp.add(exp); RESULT = lExp; :}
+
+Lista_Variables' ::= Variable: var COMA
+    {: List<Variable> lVar = new ArrayList<Variable>();
+    lVar.add(var); RESULT = lVar; :}
+
+                | Lista_Variables': lVar Variable: var COMA
+    {: lVar.add(var); RESULT = lVar; :}
+
+Lista_Expresiones ::= Expresion: exp COMA
+    {: List<Expresion> lExpresiones = new ArrayList<Expresion>();
+    lExpresiones.add(exp);
+    RESULT = lExpresiones; :};
+
+                    | Lista_Expresiones: lExpresiones Expresion: exp COMA
+    {: lExpresiones.add(exp);
+    RESULT = lExpresiones; :};
+
+
+Asig_Struct ::= LLAP Lista_Asignaciones: LAsig LLCIERRE
+    {: RESULT = lAsig :}
+
+Lista_Asignaciones ::= Asignacion: asig COMA
+    {: List<Asignacion> lAsignaciones = new ArrayList<Asignacion>();
+    lAsignaciones.add(asig);
+    RESULT = lAsignaciones; :};
+
+                    | Lista_Asignaciones: lAsignaciones Asignacion: asig COMA
+    {: lAsignaciones.add(asig);
+    RESULT = lAsignaciones; :};
+
+
+///Declaracion asignación///
+Decl_Asig ::= Tipo: t Lista_Decl_Asig
+
+Lista_Decl_Asignaciones ::= Decl_Asig: decl_asig COMA
+    {: List<DeclAsignacion> lDeclAsignaciones = new ArrayList<DeclAsignacion>();
+    lDeclAsignaciones.add(decl_asig);
+    RESULT = lDeclAsignaciones; :};
+
+                    | Lista_Decl_Asignaciones: lDeclAsignaciones Decl_Asig: decl_asig COMA
+    {: lDeclAsignaciones.add(decl_asig);
+    RESULT = lDeclAsignaciones; :};
+
+Decl_Asig ::= ID: id
+    {: RESULT = new Variable() :}
+    
+    | ID: id ASIGNACION Der_Asig: DAsig
+    {: Result = new Variable() :}
