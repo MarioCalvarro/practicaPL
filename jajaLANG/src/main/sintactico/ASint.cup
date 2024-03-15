@@ -202,3 +202,87 @@ Dec_funcion_void ::= DIVER ID: id PAP Lista_Parametros: lPar PCIERRE Bloque_Anid
 
 Dec_funcion_ret ::= DIVER ID: id PAP Lista_Parametros: lPAR PCIERRE FLECHA Tipo: t Bloque_Anidado: bloq
     {: RESULT = new FuncionRet(id.lexema(), lPar, bloq, t) :}
+    
+    
+    
+///////////////////
+////OPERACIONES////
+///////////////////
+
+
+
+Expresion ::= Expresion: expresion DISY E1: e1
+	{: RESULT = :}
+		  | E1: e1
+	{: RESULT = :}
+		  
+		  
+E1 ::= E1: e1 CONJ E2: e2
+	{: RESULT = :}
+   | E2: e2
+   	{: RESULT = :}
+   
+E2 ::= E2: e2 OP2 E3: e3
+	{: RESULT = :}
+   | E3: e3
+   	{: RESULT = :}
+   
+OP2 ::= DESIGUAL
+	{: RESULT = :}
+   | IGUAL
+   	{: RESULT = :}
+   
+E3 ::= E3: e3 OP3 E4: e4
+   | E4: e4
+   
+OP3 ::= MAYOR
+	{: RESULT = :}
+	 | MENOR
+	{: RESULT = :} 
+	 | MAYORIGUAL
+	{: RESULT = :}
+	 | MENORIGUAL
+	{: RESULT = :}
+	 
+E4 ::= E4: e4 OP4 E5: e5
+   | E5: e5
+   
+OP4 ::= SUMA
+	{: RESULT = :}
+	 | RESTA
+	{: RESULT = :} 
+	
+E5 ::= E5: e5 OP5 E6: e6
+   | E6: e6
+   
+OP5 ::= MUL
+	{: RESULT = :}
+	 | DIV
+	{: RESULT = :}
+	 | MOD
+	{: RESULT = :} 
+	
+E6 ::= E6: e6 POT E7: e7
+   | E7: e7
+   
+E7 ::= E7: e7 OP7 E8: e8
+   | E8: e8
+   
+OP7 ::= DIRECCION
+	{: RESULT = :}
+	 | PUNTERO
+	{: RESULT = :}
+	
+E8 ::= E8: e8 NEG E9: e9
+   | E9: e9
+   
+E9 ::= E9: e9 CAP --- CCIERRE PUNTO E10: e10
+   | E10: e10
+   
+E10 ::= E10: e10 PAP --- PCIERRE  E11: e11
+   | E11: e11
+	
+
+
+
+    
