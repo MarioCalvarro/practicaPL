@@ -53,6 +53,7 @@ terminal    //Palabras clave
 Programa ::= Lista_Instrucciones: lInstrucciones
     {: RESULT = new Programa(lInstrucciones); :};
 
+//Todas las instrucciones acaban en punto y coma
 Lista_Instrucciones ::= Instruccion: ins PUNTOCOMA
     {: List<Instruccion> lInstrucciones = new ArrayList<Instruccion>();
     lInstrucciones.add(ins);
@@ -92,7 +93,7 @@ Tipo ::= Tipo:tipo PUNTERO
 Tipo ::= T:tipo
     {: RESULT = tipo; :}
 
-T ::= ENT 
+T ::= ENT
     {: RESULT = new TipoEntero();  :}
 
     | BIN 
