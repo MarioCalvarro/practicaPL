@@ -50,45 +50,130 @@ terminal    //Palabras clave
 /////////////////////
 ///Inicio programa///
 /////////////////////
-Programa ::= Lista_Instrucciones: lInstrucciones
-    {: RESULT = new Programa(lInstrucciones); :};
+//El programa será las importaciones seguidas de declaraciones de funciones y
+//variables (globales). Las instrucciones solo estarán en las funciones y el
+//main será lo primero que se ejecute
+Programa ::= Lista_Imports: lImp Lista_Declaraciones: lDecl
+    {: RESULT = new Programa(lImp, lDecl); :};
 
-//Todas las instrucciones acaban en punto y coma
-Lista_Instrucciones ::= Instruccion: ins PUNTOCOMA
+Lista_Imports ::= Lista_Imports: lImp TRAFICAR ID: ruta COMO ID: id
+    {: lImp.add(new Import(ruta))); RESULT = lImp; :}
+              |
+    {: RESULT = new ArrayList<Import>(); :}
+
+
+Lista_Declaraciones ::= Lista_Declaraciones: lDecl Declaracion_Alias: dAlias
+                      {: lDecl.add(dAlias); RESULT = lDecl; :}
+
+                    //Variables o Funciones
+                    | Lista_Declaraciones: lDecl Declaracion: dGen
+                      {: lDecl.add(dGen); RESULT = lDecl; :}
+
+                    //No lo hacemos directamente ArrayList porque tenemos que
+                    //extender "add" para insertar una lista de variables con el
+                    //mismo tipo
+                    | 
+                      {: RESULT = new ListaDeclaraciones(); :}
+
+Declaracion_Alias ::= INCOGNITO ID: id ASIGNACION Tipo: t
+    {: RESULT = new DeclaracionAlias(id, t); :}
+
+///Declaraciones///
+Declaracion ::= Decl_Variables: decl_var
+    {: RESULT = decl_var; :}
+
+            | Decl_Funcion: decl_fun;
+    {: RESULT = decl_fun; :}
+            ;
+
+
+//Iremos recorriendo cada variable para asignarle su correspondiente tipo
+Decl_Variables ::= Tipo: tipo Lista_Decl_Asignaciones: lVar
+    {: RESULT = new DeclaracionVariables(tipo, lVar); :}
+
+
+Lista_Decl_Asignaciones ::= Decl_Asig: var
+        {: List<DeclaracionVar> lista_var = new ArrayList<DeclaracionVar>();
+        lista_var.add(var); RESULT = lista_var; :};
+
+                        | Lista_Decl_Asignaciones: lDecl COMA Decl_Asig: var
+        {: lDecl.add(var); RESULT = lDecl; :};
+
+
+Decl_Asig ::= Id: var
+    {: RESULT = new DeclaracionVar(var); :}
+
+          | Id: var ASIGNACION Expresion: expr2
+    {: Result = new DeclaracionVar(var, expr2); :}
+
+
+//Declaracion funciones
+Dec_Funcion ::= DIVER ID: id PAP Lista_Parametros: lPar PCIERRE Bloque_Anidado: bloq        //Función que no devuelve nada 
+    {: RESULT = new DeclaracionFun(id, lPar, bloq); :}
+            | DIVER ID: id PAP Lista_Parametros: lPar PCIERRE FLECHA Tipo: t Bloque_Anidado: bloq   //Función con retorno
+    {: RESULT = new DeclaracionFun(id, lPar, bloq, t) :}
+
+Lista_Parametros ::= //Sin parámetros
+    {: RESULT = new ArrayList<DeclaracionVar>(); :}
+                 | Lista_Parametros': lPar      //Con uno o más
+    {: RESULT = lPar; :}
+
+Lista_Parametros' ::= Parametro: par
+    {: List<DeclaracionVar> lista_par = new ArrayList<DeclaracionVar>();
+    lista_par.add(par); RESULT = lista_par; :}
+                  | Lista_Parametros': lPar FLECHA Parametro: par
+    {: lPar.add(par); RESULT = lPar; :}
+
+
+/////////////////////
+////INSTRUCCIONES////
+/////////////////////
+///Bloque anidado///
+Bloque_Anidado ::= CAP Lista_Instrucciones: LIns CCIERRE
+    {: RESULT = LIns :}
+
+Lista_Instrucciones ::= Instruccion: ins
     {: List<Instruccion> lInstrucciones = new ArrayList<Instruccion>();
     lInstrucciones.add(ins);
     RESULT = lInstrucciones; :};
 
-                    | Lista_Instrucciones: lInstrucciones Instruccion: ins PUNTOCOMA
+                    | Lista_Instrucciones: lInstrucciones Instruccion: ins
     {: lInstrucciones.add(ins);
     RESULT = lInstrucciones; :};
 
-Instruccion ::= Declaracion: decl
+
+///Tipos de instrucciones///
+Instruccion ::= Dec_Variables: decl PUNTOCOMA       //Solo la declaracion de variables (no dejamos que se puedan definir funciones dentro de otras)
     {: RESULT = decl; :}
-            |   Asignacion: as
+            |   Asignacion: as PUNTOCOMA
     {: RESULT = as; :}
-            |   Decl_Asig: dAs
-    {: RESULT = dAs; :}
-            |   Alias: aka          //Also known as
-    {: RESULT = aka; :}
+            |   Expresion: exp PUNTOCOMA        //Llamadas a funcion
+    {: RESULT = exp; :}
             |   Condicional: cond
     {: RESULT = cond; :}
             |   Bucle: buc
     {: RESULT = buc; :}
-            |   Inst_Return: iRet
+            |   Inst_Return: iRet PUNTOCOMA
     {: RESULT = iRet; :}
-            ;
 
+
+///Asignaciones///
+Asignacion ::= Expresion: expr1 ASIGNACION Expresion: expr2
+    {: RESULT = new InsAsig(expr1, expr2);  :};
 
 
 /////////////////////
 ///     TIPOS     ///
 /////////////////////
-
-Tipo ::= Tipo:tipo PUNTERO
+Tipo ::= Tipo: tipo PUNTERO
     {: RESULT = new TipoPuntero(tipo); :}
 
-Tipo ::= T:tipo
+//Leemos todos los corchetes a la vez para evitar que las dimensiones esten
+//invertidas (en java se construirán el tipo correctamente)
+        | Tipo: tipo Lista_Dimensiones: lDim
+    {: RESULT = new TipoArray(tipo, lDim); :}
+
+        | T: tipo
     {: RESULT = tipo; :}
 
 T ::= ENT
@@ -98,24 +183,32 @@ T ::= ENT
     {: RESULT = new TipoBinario(); :}
 
     | ID: id             //ID se referirá a los identificadores definidos por el incognito
-    {: RESULT = new TipoAlias(id.getLexema(), id.getFila(), id.getColumna()); :}
+    {: RESULT = new TipoAlias(); :}
 
     | Tipo_Reg: t_reg
     {: RESULT = t_reg; :}
     ;
 
+//Arrays
+Lista_Dimensiones ::= CAP Entero: dim CCIERRE
+    {: RESULT = new ArrayList<Integer>(dim); :}
 
+                  | Lista_Dimensiones: lDim CAP ENTERO: dim CCIERRE
+    {: lDim.add(dim); RESULT = lDim; :}
+
+
+//Registros
 Tipo_Reg ::= REGISTRO CAP Matriz_Atributos: mAtrib CCIERRE
     {: RESULT = new TipoRegistro(mAtrib); :}
 
 
 //Una sola lista de atributos o varias con la coma de la última opcional
 Matriz_Atributos ::= Lista_Atributos: lAtr
-    {: List<List<Atributo>> mAtr = new ArrayList<List<Atributo>>();
+    {: ListaDeclaraciones mAtr = new ListaDeclaraciones();
     mAtr.add(lAtr); RESULT = mAtr; :}
 
                 | Lista_Atributos: lAtr COMA
-    {: List<List<Atributo>> mAtr = new ArrayList<List<Atributo>>();
+    {: ListaDeclaraciones mAtr = new ListaDeclaraciones();
     mAtr.add(lAtr); RESULT = mAtr; :}
 
                 | Matriz_Atributos': mAtr Lista_Atributos: lAtr
@@ -126,7 +219,7 @@ Matriz_Atributos ::= Lista_Atributos: lAtr
 
 
 Matriz_Atributos' ::= Lista_Atributos: lAtr COMA
-    {: List<List<Atributo>> mAtr = new ArrayList<List<Atributo>>();
+    {: ListaDeclaraciones mAtr = new ListaDeclaraciones();
     mAtr.add(lAtr); RESULT = mAtr; :}
 
                 | Matriz_Atributos': mAtr Lista_Atributos: lAtr COMA
@@ -134,146 +227,6 @@ Matriz_Atributos' ::= Lista_Atributos: lAtr COMA
 
 
 //Iremos recorriendo cada variable para asignarle su correspondiente tipo
-Lista_Atributos ::= Lista_Variables: lVar DOSPUNTOS Tipo: tipo
-    {: RESULT = ast.listaAtributos(lVar, tipo); :}
-
-
-
-Lista_Variables ::= Variable: var
-    {: List<Variable> lVar = new ArrayList<Variable>();
-    lVar.add(var); RESULT = lVar; :}
-
-                | Lista_Variables': lVar Variable: var
-    {: lVar.add(var); RESULT = lVar; :}
-
-Lista_Variables' ::= Variable: var COMA
-    {: List<Variable> lVar = new ArrayList<Variable>();
-    lVar.add(var); RESULT = lVar; :}
-
-                | Lista_Variables': lVar Variable: var COMA
-    {: lVar.add(var); RESULT = lVar; :}
-
-
-
-//El tipo de las variables se le puede dar después de construirlas
-Variable ::= ID: id Lista_Corchetes: lCor
-    {: RESULT = new Variable(id.lexema(), lCor)); :};
-
-
-//El tipo array lo construimos al enlazarlo con el tipo
-Lista_Corchetes ::= //Sin corchetes
-    {: Result = new ArrayList<int>() :}
-
-                | CAP ENTERO: num CCIERRE
-    {: lCor = new ArrayList<int>() 
-    lCor.add(num.lexema()); RESULT = lCor :}
-
-                | Lista_Corchetes: lCor CAP ENTERO: num CCIERRE
-    {: lCor.add(num.lexema()); RESULT = lCor :}
-
-
-
-
-/////////////////////
-////INSTRUCCIONES////
-/////////////////////
-
-///Declaraciones///
-Declaracion ::= Dec_Variables: dec_var
-    {: RESULT = dec_var :}
-
-            | Dec_Funcion: dec_fun;
-    {: RESULT = dec_fun :}
-            ;
-
-
-//Iremos recorriendo cada variable para asignarle su correspondiente tipo
-Dec_Variables ::= Tipo: tipo Lista_Variables: lVar
-    {: RESULT = ast.listaVariables(tipo, lVar); :}
-
-Dec_Funcion ::= Dec_Funcion_Void: fVoid 
-    {: RESULT = fVoid :}
-            | Dec_Funcion_Ret: fReturn
-    {: RESULT = fReturn :}
-
-Dec_Funcion_Void ::= DIVER ID: id PAP Lista_Parametros: lPar PCIERRE Bloque_Anidado: bloq
-    {: RESULT = new FuncionVoid(id.lexema(), lPar, bloq) :}
-
-Dec_Funcion_Ret ::= DIVER ID: id PAP Lista_Parametros: lPAR PCIERRE FLECHA Tipo: t Bloque_Anidado: bloq
-    {: RESULT = new FuncionRet(id.lexema(), lPar, bloq, t) :}
-
-
-///Bloque anidado///
-Bloque_Anidado ::= CAP Lista_Instrucciones: LIns CCIERRE
-    {: RESULT = LIns :}
-
-
-///Asignaciones///
-Asignacion ::= Expresion: expr1 ASIGNACION Der_Asig: DAsig
-    {: RESULT = new InsAsig(expr1, DAsig)  :}
-
-Der_Asig ::= Expresion: ASimple
-    {: RESULT = ASimple :}
-    | Asig_Array: AArray
-    {: RESULT = AArray :}
-    | Asig_Struct: AStruct
-    {: RESULT = AStruct :}
-
-
-Asig_Array ::= CAP Lista_Expresiones: LExp CCIERRE
-    {: RESULT = LExp :}
-
-Lista_Expresiones ::= Expresion: exp
-    {: List<Expresion> lExp = new ArrayList<Expresion>();
-    lExp.add(exp); RESULT = lExp; :}
-
-                | Lista_Expresiones': lExp Expresion: exp
-    {: lExp.add(exp); RESULT = lExp; :}
-
-Lista_Variables' ::= Variable: var COMA
-    {: List<Variable> lVar = new ArrayList<Variable>();
-    lVar.add(var); RESULT = lVar; :}
-
-                | Lista_Variables': lVar Variable: var COMA
-    {: lVar.add(var); RESULT = lVar; :}
-
-Lista_Expresiones ::= Expresion: exp COMA
-    {: List<Expresion> lExpresiones = new ArrayList<Expresion>();
-    lExpresiones.add(exp);
-    RESULT = lExpresiones; :};
-
-                    | Lista_Expresiones: lExpresiones Expresion: exp COMA
-    {: lExpresiones.add(exp);
-    RESULT = lExpresiones; :};
-
-
-Asig_Struct ::= LLAP Lista_Asignaciones: LAsig LLCIERRE
-    {: RESULT = lAsig :}
-
-Lista_Asignaciones ::= Asignacion: asig COMA
-    {: List<Asignacion> lAsignaciones = new ArrayList<Asignacion>();
-    lAsignaciones.add(asig);
-    RESULT = lAsignaciones; :};
-
-                    | Lista_Asignaciones: lAsignaciones Asignacion: asig COMA
-    {: lAsignaciones.add(asig);
-    RESULT = lAsignaciones; :};
-
-
-///Declaracion asignación///
-Decl_Asig ::= Tipo: t Lista_Decl_Asig
-
-Lista_Decl_Asignaciones ::= Decl_Asig: decl_asig COMA
-    {: List<DeclAsignacion> lDeclAsignaciones = new ArrayList<DeclAsignacion>();
-    lDeclAsignaciones.add(decl_asig);
-    RESULT = lDeclAsignaciones; :};
-
-                    | Lista_Decl_Asignaciones: lDeclAsignaciones Decl_Asig: decl_asig COMA
-    {: lDeclAsignaciones.add(decl_asig);
-    RESULT = lDeclAsignaciones; :};
-
-Decl_Asig ::= ID: id
-    {: RESULT = new Variable() :}
-    
-    | ID: id ASIGNACION Der_Asig: DAsig
-    {: Result = new Variable() :}
+//Pueden tener un valor por defecto
+Lista_Atributos ::= Lista_Decl_Asignaciones: lVar DOSPUNTOS Tipo: tipo
+    {: RESULT = new DeclaracionVariables(tipo, lVar); :}
