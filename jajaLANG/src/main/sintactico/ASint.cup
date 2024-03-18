@@ -155,12 +155,43 @@ Instruccion ::= Dec_Variables: decl PUNTOCOMA       //Solo la declaracion de var
     {: RESULT = buc; :}
             |   Inst_Return: iRet PUNTOCOMA
     {: RESULT = iRet; :}
+            ;
 
 
 ///Asignaciones///
 Asignacion ::= Expresion: expr1 ASIGNACION Expresion: expr2
     {: RESULT = new InsAsig(expr1, expr2);  :};
 
+
+///Condicionales///
+Condicional ::= SI Expresion: expr Bloque_Anidado: bloq Cond_Else: cond_else
+    {: RESULT = new InsCond(expr, bloq, cond_else); :};
+
+Cond_Else ::= //No hay else final
+    {: RESULT = new InsCond(); :}
+          | SINO Bloque_Anidado: bloq       //Else final
+    {: RESULT = new InsCond(bloq); :}
+          | SINO Expresion: expr Bloque_Anidado: bloq Cond_Else: cond_else
+    {: RESULT = new InsCond(expr, bloq, cond_else); :}
+          ;
+
+///Bucles///
+Bucle ::= Bucle_While: bWhile
+    {: RESULT = bWhile; :}
+      | Bucle_For: bFor
+    {: RESULT = bFor; :}
+      ;
+
+Bucle_While ::= MIENTRAS Expresion: expr Bloque_Anidado: bloq
+    {: RESULT = new InsBucleWhile(expr, bloq); :}
+
+Bucle_For ::= PARA ID: id Expresion: exprIni FLECHA Expresion: exprFin
+Bloque_Anidado: bloq
+    {: RESULT = new InsBucleFor(id, exprIni, exprFin, bloq); :};
+
+///Return///
+Inst_Return ::= DEVUELVE Expresion: expr;
+    {: RESULT = new InsReturn(expr); :}
 
 /////////////////////
 ///     TIPOS     ///

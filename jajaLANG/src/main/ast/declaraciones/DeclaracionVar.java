@@ -24,6 +24,12 @@ public class DeclaracionVar extends Declaracion {
         this.valor = expr;
     }
 
+    //Declaracion con valor y tipo
+    public DeclaracionVar(String id, Tipo tipo, Expresion expr) {
+        this(id, tipo); 
+        this.valor = expr;
+    }
+
     public void setTipo(Tipo tipo) {
         this.tipo = tipo;
     }
