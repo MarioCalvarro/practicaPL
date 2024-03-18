@@ -56,7 +56,7 @@ Programa ::= Lista_Instrucciones: lInstrucciones
 Lista_Instrucciones ::= Instruccion: ins PUNTOCOMA
     {: List<Instruccion> lInstrucciones = new ArrayList<Instruccion>();
     lInstrucciones.add(ins);
-    RESULT = lInstrucciones; :};
+    RESULT = lInstrucciones; :}
 
                     | Lista_Instrucciones: lInstrucciones Instruccion: ins PUNTOCOMA
     {: lInstrucciones.add(ins);
@@ -87,10 +87,10 @@ Instruccion ::= Declaracion: decl
 /////////////////////
 
 Tipo ::= Tipo:tipo PUNTERO
-    {: RESULT = new TipoPuntero(tipo); :}
+    {: RESULT = new TipoPuntero(tipo); :};
 
 Tipo ::= T:tipo
-    {: RESULT = tipo; :}
+   {: RESULT = tipo; :};
 
 T ::= ENT 
     {: RESULT = new TipoEntero();  :}
@@ -106,8 +106,8 @@ T ::= ENT
     ;
 
 
-Tipo_Reg ::= REGISTRO CAP Matriz_Atributos: mAtrib CCIERRE
-    {: RESULT = new TipoRegistro(mAtrib); :}
+Tipo_Reg ::= REGISTRO LLAP Matriz_Atributos: mAtrib LLCIERRE
+    {: RESULT = new TipoRegistro(mAtrib); :};
 
 
 //Una sola lista de atributos o varias con la coma de la última opcional
@@ -123,7 +123,7 @@ Matriz_Atributos ::= Lista_Atributos: lAtr
     {: mAtr.add(lAtr); RESULT = mAtr; :}
 
                 | Matriz_Atributos': mAtr Lista_Atributos: lAtr COMA
-    {: mAtr.add(lAtr); RESULT = mAtr; :}
+    {: mAtr.add(lAtr); RESULT = mAtr; :};
 
 
 Matriz_Atributos' ::= Lista_Atributos: lAtr COMA
@@ -131,12 +131,12 @@ Matriz_Atributos' ::= Lista_Atributos: lAtr COMA
     mAtr.add(lAtr); RESULT = mAtr; :}
 
                 | Matriz_Atributos': mAtr Lista_Atributos: lAtr COMA
-    {: mAtr.add(lAtr); RESULT = mAtr; :}
+    {: mAtr.add(lAtr); RESULT = mAtr; :};
 
 
 //Iremos recorriendo cada variable para asignarle su correspondiente tipo
 Lista_Atributos ::= Lista_Variables: lVar DOSPUNTOS Tipo: tipo
-    {: RESULT = ast.listaAtributos(lVar, tipo); :}
+    {: RESULT = ast.listaAtributos(lVar, tipo); :};
 
 
 
@@ -145,32 +145,32 @@ Lista_Variables ::= Variable: var
     lVar.add(var); RESULT = lVar; :}
 
                 | Lista_Variables': lVar Variable: var
-    {: lVar.add(var); RESULT = lVar; :}
+    {: lVar.add(var); RESULT = lVar; :};
 
 Lista_Variables' ::= Variable: var COMA
     {: List<Variable> lVar = new ArrayList<Variable>();
     lVar.add(var); RESULT = lVar; :}
 
                 | Lista_Variables': lVar Variable: var COMA
-    {: lVar.add(var); RESULT = lVar; :}
+    {: lVar.add(var); RESULT = lVar; :};
 
 
 
 //El tipo de las variables se le puede dar después de construirlas
 Variable ::= ID: id Lista_Corchetes: lCor
-    {: RESULT = new Variable(id.lexema(), lCor)); :};
+    {: RESULT = new Variable(id.lexema(), lCor); :};
 
 
 //El tipo array lo construimos al enlazarlo con el tipo
 Lista_Corchetes ::= //Sin corchetes
-    {: Result = new ArrayList<int>() :}
+    {: Result = new ArrayList<int>(); :}
 
                 | CAP ENTERO: num CCIERRE
     {: lCor = new ArrayList<int>() 
-    lCor.add(num.lexema()); RESULT = lCor :}
+    lCor.add(num.lexema()); RESULT = lCor; :}
 
                 | Lista_Corchetes: lCor CAP ENTERO: num CCIERRE
-    {: lCor.add(num.lexema()); RESULT = lCor :}
+    {: lCor.add(num.lexema()); RESULT = lCor; :};
 
 
 
@@ -181,27 +181,27 @@ Lista_Corchetes ::= //Sin corchetes
 
 ///Declaraciones///
 Declaracion ::= Dec_variables: dec_var
-    {: RESULT = dec_var :}
+    {: RESULT = dec_var; :}
 
             | Dec_funcion: dec_fun;
-    {: RESULT = dec_fun :}
+    {: RESULT = dec_fun; :}
             ;
 
 
 //Iremos recorriendo cada variable para asignarle su correspondiente tipo
 Dec_variables ::= Tipo: tipo Lista_Variables: lVar
-    {: RESULT = ast.listaVariables(tipo, lVar); :}
+    {: RESULT = ast.listaVariables(tipo, lVar); :};
 
 Dec_funcion ::= Dec_funcion_void: fVoid 
-    {: RESULT = fVoid :}
+    {: RESULT = fVoid; :}
             | Dec_funcion_ret: fReturn
-    {: RESULT = fReturn :}
+    {: RESULT = fReturn; :};
 
 Dec_funcion_void ::= DIVER ID: id PAP Lista_Parametros: lPar PCIERRE Bloque_Anidado: bloq
-    {: RESULT = new FuncionVoid(id.lexema(), lPar, bloq) :}
+    {: RESULT = new FuncionVoid(id.lexema(), lPar, bloq); :};
 
 Dec_funcion_ret ::= DIVER ID: id PAP Lista_Parametros: lPAR PCIERRE FLECHA Tipo: t Bloque_Anidado: bloq
-    {: RESULT = new FuncionRet(id.lexema(), lPar, bloq, t) :}
+    {: RESULT = new FuncionRet(id.lexema(), lPar, bloq, t); :};
     
     
     
