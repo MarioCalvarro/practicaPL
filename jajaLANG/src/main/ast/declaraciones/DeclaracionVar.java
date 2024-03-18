@@ -1,15 +1,22 @@
 package main.ast.declaraciones;
 
 import main.ast.expresiones.Expresion;
+import main.ast.instrucciones.Instruccion;
 import main.ast.tipos.Tipo;
 
-public class DeclaracionVar extends Declaracion {
+public class DeclaracionVar extends Instruccion implements Declaracion{
+    private String id;
     private Expresion valor;
     private Tipo tipo;
 
+    //Solo debería cambiar el tipo DeclaracionVariables
+    protected void setTipo(Tipo tipo) {
+        this.tipo = tipo;
+    }
+
     //Declaración sin valor
     public DeclaracionVar(String id) {
-        super(id);
+        this.id = id;
     }
 
     //Parámetro función
@@ -30,7 +37,22 @@ public class DeclaracionVar extends Declaracion {
         this.valor = expr;
     }
 
-    public void setTipo(Tipo tipo) {
-        this.tipo = tipo;
+    @Override
+    public String getId() {
+        return this.id;
+    }
+
+    @Override
+    public String toString() {
+        if (tipo == null) {
+            System.err.println("Error si variable sin tipo\n");
+            return "";
+        }
+        else if (valor == null) {
+            return tipo + " " + id; 
+        }
+        else {
+            return tipo + " " + id + " = " + valor;
+        }
     }
 }

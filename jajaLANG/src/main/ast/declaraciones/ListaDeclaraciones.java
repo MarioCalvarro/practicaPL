@@ -29,4 +29,13 @@ public class ListaDeclaraciones {
     public List<Declaracion> getList() {
         return declaraciones;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for(Declaracion d : declaraciones) {
+            sb.append(d.toString()).append('\n');
+        }
+        return sb.toString();
+    }
 }

@@ -103,27 +103,34 @@ Lista_Decl_Asignaciones ::= Decl_Asig: var
 Decl_Asig ::= Id: var
     {: RESULT = new DeclaracionVar(var); :}
 
-          | Id: var ASIGNACION Expresion: expr2
-    {: Result = new DeclaracionVar(var, expr2); :}
+          | Id: var ASIGNACION Expresion: expr
+    {: Result = new DeclaracionVar(var, expr); :}
 
 
-//Declaracion funciones
+///Declaracion funciones///
 Dec_Funcion ::= DIVER ID: id PAP Lista_Parametros: lPar PCIERRE Bloque_Anidado: bloq        //Función que no devuelve nada 
     {: RESULT = new DeclaracionFun(id, lPar, bloq); :}
             | DIVER ID: id PAP Lista_Parametros: lPar PCIERRE FLECHA Tipo: t Bloque_Anidado: bloq   //Función con retorno
-    {: RESULT = new DeclaracionFun(id, lPar, bloq, t) :}
+    {: RESULT = new DeclaracionFun(id, lPar, bloq, t); :}
 
 Lista_Parametros ::= //Sin parámetros
     {: RESULT = new ArrayList<DeclaracionVar>(); :}
                  | Lista_Parametros': lPar      //Con uno o más
     {: RESULT = lPar; :}
+                 ;
 
 Lista_Parametros' ::= Parametro: par
     {: List<DeclaracionVar> lista_par = new ArrayList<DeclaracionVar>();
     lista_par.add(par); RESULT = lista_par; :}
                   | Lista_Parametros': lPar FLECHA Parametro: par
     {: lPar.add(par); RESULT = lPar; :}
+                  ;
 
+Parametro ::=  ID: var DOSPUNTOS Tipo: t
+    {: RESULT = new DeclaracionFun.DeclaracionPar(var, t, false); :}   //No es por referencia
+          | DIRECCION ID: var DOSPUNTOS Tipo: t
+    {: RESULT = new DeclaracionFun.DeclaracionPar(var, t, true); :}    //Por referencia
+          ;
 
 /////////////////////
 ////INSTRUCCIONES////
@@ -221,15 +228,15 @@ T ::= ENT
     ;
 
 //Arrays
-Lista_Dimensiones ::= CAP Entero: dim CCIERRE
-    {: RESULT = new ArrayList<Integer>(dim); :}
+Lista_Dimensiones ::= CAP ENTERO: dim CCIERRE
+    {: RESULT = (new ArrayList<Integer>()).add(dim); :}
 
                   | Lista_Dimensiones: lDim CAP ENTERO: dim CCIERRE
     {: lDim.add(dim); RESULT = lDim; :}
 
 
 //Registros
-Tipo_Reg ::= REGISTRO CAP Matriz_Atributos: mAtrib CCIERRE
+Tipo_Reg ::= REGISTRO LLAP Matriz_Atributos: mAtrib LLIERRE
     {: RESULT = new TipoRegistro(mAtrib); :}
 
 
