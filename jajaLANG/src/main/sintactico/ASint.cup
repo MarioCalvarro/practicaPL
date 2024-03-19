@@ -283,7 +283,7 @@ T ::= ENT
   {: RESULT = new TipoBinario(); :}
 
   | ID: id             //ID se referirá a los identificadores definidos por el incognito
-  {: RESULT = new TipoAlias(); :}
+  {: RESULT = new TipoAlias(id); :}
 
   | Tipo_Reg: t_reg
   {: RESULT = t_reg; :}

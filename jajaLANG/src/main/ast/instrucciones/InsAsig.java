@@ -1,5 +1,5 @@
 package main.ast.instrucciones;
 
-public class InsAsig {
+public class InsAsig extends Instruccion {
 
 }

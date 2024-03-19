@@ -1,5 +1,5 @@
 package main.ast.tipos;
 
-public class TipoRegistro {
+public class TipoRegistro extends Tipo {
 
 }

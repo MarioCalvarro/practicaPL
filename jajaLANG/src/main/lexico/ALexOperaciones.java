@@ -76,7 +76,7 @@ public class ALexOperaciones {
 
 	// Variables
 	public UnidadLexica unidadId() {
-		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.ID, alex.lexema(), "ID");
+		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.ID, alex.lexema(), "ID", alex.lexema());
 	}
 
 	public UnidadLexica unidadEntero() {

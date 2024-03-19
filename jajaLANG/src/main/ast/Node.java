@@ -1,5 +1,5 @@
 package main.ast;
 
-public class Node {
+public abstract class Node {
 
 }
