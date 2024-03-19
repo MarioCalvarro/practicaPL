@@ -63,10 +63,9 @@ non terminal ListaDeclaraciones Lista_Declaraciones;
 non terminal DeclaracionAlias Declaracion_Alias;
 //Variables
 non terminal DeclaracionVar Decl_Asig;
-non terminal Declaracion Decl_Variables;
+non terminal DeclaracionVariables Decl_Variables;
 non terminal List<DeclaracionVar> Lista_Decl_Asignaciones;
 non terminal DeclaracionVariables Decl_Variables;
-non terminal DeclaracionVar Decl_Asig;
 //Funciones
 non terminal DeclaracionFun Decl_Funcion;
 non terminal List<DeclaracionPar> Lista_Parametros, Lista_Parametros';
@@ -89,7 +88,8 @@ non terminal Lista_Atributos DeclaracionVariables;
 ///Expresiones
 non terminal Expresion Expresion, E1, E2, E3, E4, E5, E6, E7, E8, E9, E10;
 non terminal List<Expresion> Lista_Expresiones, Lista_Expresiones';
-non terminal Operador OP2, OP3, OP4, OP5, OP7;
+non terminal OperadorBin.Operadores OP2, OP3, OP4, OP5;
+non terminal OperadorUn.Operadores OP7;
 
 //Literales
 terminal Entero ENTERO;
@@ -116,7 +116,7 @@ Programa ::= Lista_Imports: lImp Lista_Declaraciones: lDecl
 
 
 Lista_Imports ::= Lista_Imports: lImp TRAFICAR ID: ruta COMO ID: id
-              {: lImp.add(new Import(ruta))); RESULT = lImp; :}
+              {: lImp.add(new Import(ruta)); RESULT = lImp; :}
               |
               {: RESULT = new ArrayList<Import>(); :}
               ;

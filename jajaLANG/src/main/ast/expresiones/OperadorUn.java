@@ -1,7 +1,5 @@
 package main.ast.expresiones;
 
-import main.ast.expresiones.OperadorBin.Operadores;
-
 public class OperadorUn extends Expresion{
 	public enum Operadores {
 		NEG, DIRECCION, PUNTERO, MENOS;
@@ -10,12 +8,12 @@ public class OperadorUn extends Expresion{
 			switch (this) {
 			case NEG:
 				return "+";
-			case DIRECCION:
-				return "&";
-			case PUNTERO:
-				return "@";
 			case MENOS:
 				return "-";
+            case DIRECCION:
+                return "&";
+            case PUNTERO:
+                return "@";
 			default:
 				throw new IllegalArgumentException("Invalid operator");
 			}
@@ -23,17 +21,11 @@ public class OperadorUn extends Expresion{
 	}
 
 	private  Operadores op;
-	private  Expresion izquierda;
 	private  Expresion derecha;
 
-	public OperadorUn(Operadores op, Expresion izquierda, Expresion derecha) {
+	public OperadorUn(Operadores op, Expresion derecha) {
 		this.op = op;
-		this.izquierda = izquierda;
 		this.derecha = derecha;
-	}
-
-	public Expresion getLeft() {
-		return izquierda;
 	}
 
 	public Expresion getRight() {
@@ -45,6 +37,6 @@ public class OperadorUn extends Expresion{
 	}
 
 	public String toString() {
-		return izquierda + op.toString() + derecha;
+		return op.toString() + derecha;
 	}
 }

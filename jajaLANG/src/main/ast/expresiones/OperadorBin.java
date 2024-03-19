@@ -2,8 +2,7 @@ package main.ast.expresiones;
 
 public class OperadorBin extends Expresion{
     public enum Operadores {
-        SUMA, RESTA, MUL, DIV, MOD, IGUAL, DESIGUAL, MENOR, MAYOR, MANORIGUAL, MAYORIGUAL, DISY, CONJ, POT, NEG,
-        DIRECCION, PUNTERO;
+        SUMA, RESTA, MUL, DIV, MOD, IGUAL, DESIGUAL, MENOR, MAYOR, MANORIGUAL, MAYORIGUAL, DISY, CONJ, POT, NEG;
 
         public String toString() {
             switch (this) {
@@ -35,10 +34,6 @@ public class OperadorBin extends Expresion{
                     return "||";
                 case POT:
                     return "^";
-                case DIRECCION:
-                    return "&";
-                case PUNTERO:
-                    return "@";
                 default:
                     throw new IllegalArgumentException("Invalid operator");
             }

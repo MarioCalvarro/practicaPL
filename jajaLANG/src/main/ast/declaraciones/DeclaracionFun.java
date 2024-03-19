@@ -7,19 +7,19 @@ import main.ast.instrucciones.Instruccion;
 
 public class DeclaracionFun implements Declaracion {
 	private String id;
-	private List<DeclaracionVar> parametros;
+	private List<DeclaracionPar> parametros;
 	private List<Instruccion> cuerpo;
 	private Tipo tipo;
 
 	// Función void
-	public DeclaracionFun(String id, List<DeclaracionVar> parametros, List<Instruccion> cuerpo) {
+	public DeclaracionFun(String id, List<DeclaracionPar> parametros, List<Instruccion> cuerpo) {
 		this.id = id;
 		this.parametros = parametros;
 		this.cuerpo = cuerpo;
 	}
 
 	// Funcion con retorno
-	public DeclaracionFun(String id, List<DeclaracionVar> parametros, List<Instruccion> cuerpo, Tipo tipo) {
+	public DeclaracionFun(String id, List<DeclaracionPar> parametros, List<Instruccion> cuerpo, Tipo tipo) {
 		this(id, parametros, cuerpo);
 		this.tipo = tipo;
 	}
