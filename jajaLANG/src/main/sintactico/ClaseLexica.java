@@ -35,7 +35,7 @@ public class ClaseLexica {
 	public static final int COMO = 16;
 	public static final int SUMA = 23;
 	public static final int DISY = 33;
-	public static final int ID = 17;
+	public static final int IDEN = 17;
 	public static final int MAYORIGUAL = 29;
 	public static final int EOF = 0;
 	public static final int FACTO = 4;
