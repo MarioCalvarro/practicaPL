@@ -450,6 +450,8 @@ E9 ::= Literal: e
    {: RESULT = expr; :}
    | E10: izquierda PAP Lista_Expresiones: lExpr PCIERRE
    {: RESULT = new Llamada(izquierda, lExpr); :}
+   | E10: izquierda PAP PCIERRE
+   {: RESULT = new Llamada(izquierda, new ArrayList<Expresion>()); :}
    | E10: expr
    {: RESULT = expr; :}
    ;
@@ -496,14 +498,8 @@ E10 ::= E10: izquierda CAP Expresion:derecha CCIERRE
     ;
 
 
-Lista_Expresiones ::= //Lista vacía
-                  {: RESULT = new ArrayList<Expresion>(); :}
-                  | Lista_Expresiones2: lExpr
-                  {: RESULT = lExpr; :}
-                  ;
-
-Lista_Expresiones2 ::= Expresion: expr
+Lista_Expresiones ::= Expresion: expr
                    {: RESULT = (new ArrayList<Expresion>()).add(expr); :}
-                   | Lista_Expresiones2: lExpr COMA Expresion: expr
+                   | Lista_Expresiones: lExpr COMA Expresion: expr
                    {: RESULT = lExpr.add(expr); :}
                    ;
