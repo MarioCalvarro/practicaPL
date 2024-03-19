@@ -3,7 +3,6 @@ package main.ast.literales;
 import main.ast.expresiones.Expresion;
 
 public class AccesoStruct extends Literal {
-
 	private Expresion exp;
 	private String id;
 	
