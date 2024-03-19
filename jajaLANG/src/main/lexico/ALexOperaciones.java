@@ -1,5 +1,9 @@
 package main.lexico;
 
+import main.ast.literales.Entero;
+import main.ast.literales.False;
+import main.ast.literales.Nulo;
+import main.ast.literales.True;
 import main.sintactico.ClaseLexica;
 
 public class ALexOperaciones {
@@ -19,11 +23,11 @@ public class ALexOperaciones {
 	}
 
 	public UnidadLexica unidadFacto() {
-		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.FACTO, "FACTO");
+		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.FACTO, "FACTO", True.instancia());
 	}
 
 	public UnidadLexica unidadFake() {
-		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.FAKE, "FAKE");
+		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.FAKE, "FAKE", False.instancia());
 	}
 
 	public UnidadLexica unidadSi() {
@@ -51,7 +55,7 @@ public class ALexOperaciones {
 	}
 
 	public UnidadLexica unidadNulo() {
-		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.NULO, "NULO");
+		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.NULO, "NULO", Nulo.instancia());
 	}
 
 	public UnidadLexica unidadIncognito() {
@@ -76,7 +80,7 @@ public class ALexOperaciones {
 	}
 
 	public UnidadLexica unidadEntero() {
-		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.ENTERO, alex.lexema(), "ENTERO");
+		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.ENTERO, alex.lexema(), "ENTERO", new Entero(alex.lexema()));
 	}
 
 	// Operadores

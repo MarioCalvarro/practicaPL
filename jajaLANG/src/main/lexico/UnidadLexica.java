@@ -3,16 +3,37 @@ package main.lexico;
 import java_cup.runtime.Symbol;
 
 public class UnidadLexica extends Symbol {
-	String tipo;
+	private String tipo, lexema;
+    private int fila, columna;
 
 	public UnidadLexica(int fila, int columna, int clase, String tipo) {
-		super(clase, new TokenValue(fila, columna));
+		super(clase, null);
 		this.tipo = tipo;
+        this.fila = fila;
+        this.columna = columna;
 	}
 
 	public UnidadLexica(int fila, int columna, int clase, String lexema, String tipo) {
-		super(clase, new TokenValue(lexema, fila, columna));
+		super(clase, null);
 		this.tipo = tipo;
+        this.fila = fila;
+        this.columna = columna;
+        this.lexema = lexema;
+	}
+
+	public UnidadLexica(int fila, int columna, int clase, String tipo, Object terminal) {
+		super(clase, terminal);
+		this.tipo = tipo;
+        this.fila = fila;
+        this.columna = columna;
+	}
+
+	public UnidadLexica(int fila, int columna, int clase, String lexema, String tipo, Object terminal) {
+		super(clase, terminal);
+		this.tipo = tipo;
+        this.fila = fila;
+        this.columna = columna;
+        this.lexema = lexema;
 	}
 
 	public int clase() {
@@ -20,15 +41,15 @@ public class UnidadLexica extends Symbol {
 	}
 
 	public String lexema() {
-		return ((TokenValue) value).lexema;
+		return lexema;
 	}
 
 	public int fila() {
-		return ((TokenValue) value).fila;
+		return fila;
 	}
 
 	public int columna() {
-		return ((TokenValue) value).columna;
+		return columna;
 	}
 
 	public String toString() {

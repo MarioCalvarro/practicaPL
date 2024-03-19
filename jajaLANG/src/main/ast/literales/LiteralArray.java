@@ -1,5 +1,5 @@
 package main.ast.literales;
 
-public class LiteralArray {
+public class LiteralArray extends Literal {
 
 }

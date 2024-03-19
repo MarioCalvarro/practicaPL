@@ -1,5 +1,5 @@
 package main.ast.literales;
 
-public class LiteralStruct {
+public class LiteralStruct extends Literal {
 
 }
