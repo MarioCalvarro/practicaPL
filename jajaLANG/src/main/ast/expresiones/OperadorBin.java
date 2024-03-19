@@ -1,8 +1,7 @@
 package main.ast.expresiones;
 
-public class OperadorBin {
+public class OperadorBin extends Expresion{
 
-	public class OperBin extends Expresion {
 		public enum Operadores {
 			SUMA, RESTA, MUL, DIV, MOD, IGUAL, DESIGUAL, MENOR, MAYOR, MANORIGUAL, MAYORIGUAL, DISY, CONJ, POT, NEG,
 			DIRECCION, PUNTERO;
@@ -47,11 +46,11 @@ public class OperadorBin {
 			}
 		}
 
-		private final Operadores op;
-		private final Expresion izquierda;
-		private final Expresion derecha;
+		private  Operadores op;
+		private  Expresion izquierda;
+		private  Expresion derecha;
 
-		public OperBin(Operadores op, Expresion izquierda, Expresion derecha) {
+		public OperadorBin(Operadores op, Expresion izquierda, Expresion derecha) {
 			this.op = op;
 			this.izquierda = izquierda;
 			this.derecha = derecha;
@@ -73,5 +72,5 @@ public class OperadorBin {
 			return izquierda + op.toString() + derecha;
 		}
 
-	}
+	
 }

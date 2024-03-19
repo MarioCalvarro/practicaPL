@@ -47,7 +47,7 @@ terminal    //Palabras clave
             NEG, CONJ, DISY,
 
             //Otros
-            DIRECCION, PUNTERO, ASIGNACION, PUNTO, COMA, PUNTOCOMA, DOSPUNTOS, FLECHA,
+            DIRECCION, PUNTERO, ASIGNACION, PUNTO, COMA, PUNTOCOMA, DOSPUNTOS, FLECHA, MENOS
 
             //Agrupaciones
             CAP, CCIERRE, PAP, PCIERRE, LLAP, LLCIERRE;
@@ -431,13 +431,19 @@ OP7 ::= DIRECCION
     {: RESULT = OperadorBin.Operadores.PUNTERO; :}
     ;
 
-//negación
-E8 ::= NEG E8: derecha
-   {: RESULT = new OperadorUn(OperadorUn.NEG, derecha); :}
+//negación y menos unario
+E8 ::= OP8:op8 E8: derecha
+   {: RESULT = new OperadorUn(op8, derecha); :}
    | E9: e9
    {: RESULT = e9; :}
    ;
-
+   
+OP8 ::= NEG
+    {: RESULT = OperadorUn.Operadores.NEG; :}	 	 
+    | MENOS
+    {: RESULT = OperadorUn.Operadores.MENOS; :}
+    ;
+    
 //Literales y paréntesis
 E9 ::= Literal: e
    {: RESULT = e; :}
