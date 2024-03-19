@@ -179,7 +179,7 @@ Instruccion ::= Dec_Variables: decl PUNTOCOMA       //Solo la declaracion de var
 
 
 ///Asignaciones///
-Asignacion ::= Expresion: expr1 ASIGNACION Expresion: expr2
+Asignacion ::= e10: expr1 ASIGNACION Expresion: expr2
            {: RESULT = new InsAsig(expr1, expr2);  :}
            ;
 
@@ -395,29 +395,16 @@ E8 ::= NEG E8: derecha
    {: RESULT = e9; :}
    ;
 
-//corchete, punto
-E9 ::= E9: izquierda CAP Expresion:derecha CCIERRE
-   {: RESULT = new OperadorBin(OperadorBin.CORCHETE, izquierda, derecha); :}
-   | E9: izquierda PUNTO E10: derecha
-   {: RESULT = new OperadorBin(OperadorBin.PUNTO, izquierda, derecha); :}
-   | E10: e10
-   {: RESULT = e10; :}
+//Literales y paréntesis
+E9 ::= Literal: e
+   {: RESULT = e; :}
+   | PAP Expresion: expr PCIERRE
+   {: RESULT = expr; :}
+   | E10: izquierda PAP Lista_Expresiones: lExpr PCIERRE
+   {: RESULT = new Llamada(izquierda, lExpr); :}
+   | E10: expr
+   {: RESULT = expr; :}
    ;
-
-//paréntesis
-E10 ::= Literal: e
-    {: RESULT = e; :}
-
-    | ID: id
-    {: RESULT = new Identificador(id); :}
-
-    //Llamada a función
-    | E10: e10 PAP Lista_Expresiones: lExpr PCIERRE
-    {: RESULT = new Call(e10, lExpr); :}
-
-    | E10: izquierda PAP Expresion: expr PCIERRE 
-    {: RESULT = expr;  :}
-    ;
 
 Literal ::= ENTERO: e
         {: RESULT = e; :}
@@ -449,6 +436,17 @@ Lista_Asig_Atributos ::= ID: id ASIGNACION Expresion: expr
                      | Lista_Asig_Atributos: lAtr COMA ID: id ASIGNACION Expresion: expr
                      {: valores.put(id, expr); :}
                      ;
+
+
+//Accesos a array y structs
+E10 ::= E10: izquierda CAP Expresion:derecha CCIERRE
+    {: RESULT = new AccesoArray(izquierda, derecha); :}
+    | E10: izquierda PUNTO ID: id
+    {: RESULT = new AccesoStruct(izquierda, id); :}
+    | ID: id
+    {: RESULT = new Identificador(id); :}
+    ;
+
 
 Lista_Expresiones ::= //Lista vacía
                   {: RESULT = new ArrayList<Expresion>() :}
