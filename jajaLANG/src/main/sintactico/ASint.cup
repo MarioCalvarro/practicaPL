@@ -1,9 +1,22 @@
 package main.sintactico;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 import java_cup.runtime.*;
+
 import main.lexico.AnalizadorLexicoJaja;
 import main.lexico.UnidadLexica;
 import main.errors.GestionErroresJaja;
+
+import main.ast.Nodo;
+import main.ast.Identificador;
+import main.ast.declaraciones.*;
+import main.ast.expresiones.*;
+import main.ast.literales.*;
+import main.ast.instrucciones.*;
+import main.ast.tipos.*;
 
 scan with {: return getScanner().next_token(); :};
 parser code {: 
@@ -21,11 +34,8 @@ init with {:
 
 
 terminal    //Palabras clave
-            ENT, BIN, FACTO, FAKE, SI, SINO, MIENTRAS, PARA, DIVER, REGISTRO,
-            NULO, INCOGNITO, DEVUELVE, TRAFICAR, COMO,
-
-            //Variables
-            ID, ENTERO,
+            ENT, BIN, SI, SINO, MIENTRAS, PARA, DIVER, REGISTRO,
+            INCOGNITO, DEVUELVE, TRAFICAR, COMO,
 
             //Operadores Aritmeticos
             POT, MUL, DIV, MOD, SUMA, RESTA,
@@ -42,9 +52,54 @@ terminal    //Palabras clave
             //Agrupaciones
             CAP, CCIERRE, PAP, PCIERRE, LLAP, LLCIERRE;
 
+//Inicio Programa
+non terminal Programa Programa;
+non terminal List<Import> Lista_Imports;
+non terminal ListaDeclaraciones Lista_Declaraciones;
+
+///Declaraciones
+non terminal DeclaracionAlias Declaracion_Alias;
+//Variables
+non terminal DeclaracionVar Decl_Asig;
+non terminal Declaracion Decl_Variables;
+non terminal List<DeclaracionVar> Lista_Decl_Asignaciones;
+non terminal DeclaracionVariables Decl_Variables;
+non terminal DeclaracionVar Decl_Asig;
+//Funciones
+non terminal DeclaracionFun Decl_Funcion;
+non terminal List<DeclaracionPar> Lista_Parametros, Lista_Parametros';
+non terminal DeclaracionPar Parametro;
 
 
+///Instrucciones
+non terminal List<Instruccion> Bloque_Anidado, Lista_Instrucciones;
+non terminal Instruccion Instruccion, Asignacion, Condicional, Cond_Else, Bucle, Inst_Return;
 
+///Tipos
+non terminal Tipo Tipo, T, Tipo_Reg;
+//Array
+non terminal List<Integer> Lista_Dimensiones;
+//Registros
+non terminal ListaDeclaraciones Matriz_Atributos, Matriz_Atributos';
+non terminal Lista_Atributos DeclaracionVariables;
+
+
+///Expresiones
+non terminal Expresion Expresion, E1, E2, E3, E4, E5, E6, E7, E8, E9, E10;
+non terminal List<Expresion> Lista_Expresiones, Lista_Expresiones';
+non terminal Operador OP2, OP3, OP4, OP5, OP7;
+
+//Literales
+terminal Entero ENTERO;
+terminal True FACTO;
+terminal False FAKE;
+terminal Nulo NULO;
+terminal String ID;
+
+non terminal Literal Literal;
+non terminal LiteralArray Array_Literal;
+non terminal LiteralStruct Struct_Literal;
+non terminal Map<String, Expresion> Lista_Asig_Atributos;
 
 
 /////////////////////
@@ -67,8 +122,12 @@ Lista_Imports ::= Lista_Imports: lImp TRAFICAR ID: ruta COMO ID: id
 Lista_Declaraciones ::= Lista_Declaraciones: lDecl Declaracion_Alias: dAlias
                     {: lDecl.add(dAlias); RESULT = lDecl; :}
 
-                    //Variables o Funciones
-                    | Lista_Declaraciones: lDecl Declaracion: dGen
+                    //Variables
+                    | Lista_Declaraciones: lDecl Decl_Variables: dGen
+                    {: lDecl.add(dGen); RESULT = lDecl; :}
+
+                    //Funciones
+                    | Lista_Declaraciones: lDecl Decl_Funcion: dGen
                     {: lDecl.add(dGen); RESULT = lDecl; :}
 
                     //No lo hacemos directamente ArrayList porque tenemos que
@@ -82,15 +141,7 @@ Declaracion_Alias ::= INCOGNITO ID: id ASIGNACION Tipo: t
                   {: RESULT = new DeclaracionAlias(id, t); :}
                   ;
 
-///Declaraciones///
-Declaracion ::= Decl_Variables: decl_var
-            {: RESULT = decl_var; :}
-
-            | Decl_Funcion: decl_fun;
-            {: RESULT = decl_fun; :}
-            ;
-
-
+///Declaraciones variables///
 //Iremos recorriendo cada variable para asignarle su correspondiente tipo
 Decl_Variables ::= Tipo: tipo Lista_Decl_Asignaciones: lVar
                {: RESULT = new DeclaracionVariables(tipo, lVar); :}
@@ -115,7 +166,7 @@ Decl_Asig ::= Id: var
 
 
 ///Declaracion funciones///
-Dec_Funcion ::= DIVER ID: id PAP Lista_Parametros: lPar PCIERRE Bloque_Anidado: bloq        //Función que no devuelve nada 
+Decl_Funcion ::= DIVER ID: id PAP Lista_Parametros: lPar PCIERRE Bloque_Anidado: bloq        //Función que no devuelve nada 
             {: RESULT = new DeclaracionFun(id, lPar, bloq); :}
 
             | DIVER ID: id PAP Lista_Parametros: lPar PCIERRE FLECHA Tipo: t Bloque_Anidado: bloq   //Función con retorno
@@ -124,23 +175,23 @@ Dec_Funcion ::= DIVER ID: id PAP Lista_Parametros: lPar PCIERRE Bloque_Anidado: 
 
 //Lo separamos para evitar que la sentencia: (Vacío) -> Param -> ... sea válida
 Lista_Parametros ::= //Sin parámetros
-                 {: RESULT = new ArrayList<DeclaracionVar>(); :}
+                 {: RESULT = new ArrayList<DeclaracionPar>(); :}
 
                  | Lista_Parametros': lPar      //Con uno o más
                  {: RESULT = lPar; :}
                  ;
 
 Lista_Parametros' ::= Parametro: par
-                  {: List<DeclaracionVar> lista_par = new ArrayList<DeclaracionVar>();
+                  {: List<DeclaracionPar> lista_par = new ArrayList<DeclaracionPar>();
                   lista_par.add(par); RESULT = lista_par; :}
                   | Lista_Parametros': lPar FLECHA Parametro: par
                   {: lPar.add(par); RESULT = lPar; :}
                   ;
 
 Parametro ::=  ID: var DOSPUNTOS Tipo: t
-          {: RESULT = new DeclaracionFun.DeclaracionPar(var, t, false); :}   //No es por referencia
+          {: RESULT = new DeclaracionPar(var, t, false); :}   //No es por referencia
           | DIRECCION ID: var DOSPUNTOS Tipo: t
-          {: RESULT = new DeclaracionFun.DeclaracionPar(var, t, true); :}    //Por referencia
+          {: RESULT = new DeclaracionPar(var, t, true); :}    //Por referencia
           ;
 
 /////////////////////
@@ -163,7 +214,7 @@ Lista_Instrucciones ::= Instruccion: ins
 
 
 ///Tipos de instrucciones///
-Instruccion ::= Dec_Variables: decl PUNTOCOMA       //Solo la declaracion de variables (no dejamos que se puedan definir funciones dentro de otras)
+Instruccion ::= Decl_Variables: decl PUNTOCOMA       //Solo la declaracion de variables (no dejamos que se puedan definir funciones dentro de otras)
             {: RESULT = decl; :}
             |   Asignacion: as PUNTOCOMA
             {: RESULT = as; :}
@@ -198,19 +249,11 @@ Cond_Else ::= //No hay else final
           ;
 
 ///Bucles///
-Bucle ::= Bucle_While: bWhile
-      {: RESULT = bWhile; :}
-      | Bucle_For: bFor
-      {: RESULT = bFor; :}
+Bucle ::= MIENTRAS Expresion: expr Bloque_Anidado: bloq
+      {: RESULT = new InsBucleWhile(expr, bloq); :}
+      | PARA ID: id Expresion: exprIni FLECHA Expresion: exprFin Bloque_Anidado: bloq
+      {: RESULT = new InsBucleFor(id, exprIni, exprFin, bloq); :}
       ;
-
-Bucle_While ::= MIENTRAS Expresion: expr Bloque_Anidado: bloq
-            {: RESULT = new InsBucleWhile(expr, bloq); :}
-            ;   
-
-Bucle_For ::= PARA ID: id Expresion: exprIni FLECHA Expresion: exprFin Bloque_Anidado: bloq
-          {: RESULT = new InsBucleFor(id, exprIni, exprFin, bloq); :}
-          ;
 
 ///Return///
 Inst_Return ::= DEVUELVE Expresion: expr;

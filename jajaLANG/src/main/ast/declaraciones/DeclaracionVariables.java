@@ -2,9 +2,10 @@ package main.ast.declaraciones;
 
 import java.util.List;
 
+import main.ast.instrucciones.Instruccion;
 import main.ast.tipos.Tipo;
 
-public class DeclaracionVariables {
+public class DeclaracionVariables extends Instruccion {
     private List<DeclaracionVar> lista_var; 
 
     DeclaracionVariables(Tipo type, List<DeclaracionVar> lista_var) {
