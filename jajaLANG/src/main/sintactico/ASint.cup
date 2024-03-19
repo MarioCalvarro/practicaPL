@@ -12,10 +12,11 @@ import main.errors.GestionErroresJaja;
 
 import main.ast.Nodo;
 import main.ast.Identificador;
+import main.ast.Programa;
 import main.ast.declaraciones.*;
 import main.ast.expresiones.*;
-import main.ast.literales.*;
 import main.ast.instrucciones.*;
+import main.ast.literales.*;
 import main.ast.tipos.*;
 
 scan with {: return getScanner().next_token(); :};
@@ -51,6 +52,7 @@ terminal    //Palabras clave
 
             //Agrupaciones
             CAP, CCIERRE, PAP, PCIERRE, LLAP, LLCIERRE;
+
 
 //Inicio Programa
 non terminal Programa Programa;
@@ -109,8 +111,9 @@ non terminal Map<String, Expresion> Lista_Asig_Atributos;
 //variables (globales). Las instrucciones solo estarán en las funciones y el
 //main será lo primero que se ejecute
 Programa ::= Lista_Imports: lImp Lista_Declaraciones: lDecl
-    {: RESULT = new Programa(lImp, lDecl); :}
+         {: RESULT = new Programa(lImp, lDecl); :}
          ;
+
 
 Lista_Imports ::= Lista_Imports: lImp TRAFICAR ID: ruta COMO ID: id
               {: lImp.add(new Import(ruta))); RESULT = lImp; :}
@@ -150,7 +153,7 @@ Decl_Variables ::= Tipo: tipo Lista_Decl_Asignaciones: lVar
 
 Lista_Decl_Asignaciones ::= Decl_Asig: var
                         {: List<DeclaracionVar> lista_var = new ArrayList<DeclaracionVar>();
-                        lista_var.add(var); RESULT = lista_var; :};
+                        lista_var.add(var); RESULT = lista_var; :}
 
                         | Lista_Decl_Asignaciones: lDecl COMA Decl_Asig: var
                         {: lDecl.add(var); RESULT = lDecl; :}
@@ -199,17 +202,15 @@ Parametro ::=  ID: var DOSPUNTOS Tipo: t
 /////////////////////
 ///Bloque anidado///
 Bloque_Anidado ::= CAP Lista_Instrucciones: LIns CCIERRE
-               {: RESULT = LIns :}
+               {: RESULT = LIns; :}
                ;
 
 Lista_Instrucciones ::= Instruccion: ins
                     {: List<Instruccion> lInstrucciones = new ArrayList<Instruccion>();
-                    lInstrucciones.add(ins);
-                    RESULT = lInstrucciones; :}
+                    lInstrucciones.add(ins); RESULT = lInstrucciones; :}
 
                     | Lista_Instrucciones: lInstrucciones Instruccion: ins
-                    {: lInstrucciones.add(ins);
-                    RESULT = lInstrucciones; :}
+                    {: lInstrucciones.add(ins); RESULT = lInstrucciones; :}
                     ;
 
 
@@ -476,12 +477,12 @@ Array_Literal ::= CAP CCIERRE
               ;
 
 Struct_Literal ::= LLAP Lista_Asig_Atributos: lAtr LLCIERRE
-               {: RESULT = new LiteralStruct(lAtr) :}
+               {: RESULT = new LiteralStruct(lAtr); :}
                ;
 
 Lista_Asig_Atributos ::= ID: id ASIGNACION Expresion: expr
                      {: Map<String, Expresion> valores = new HashMap<String, Expresion>();
-                     valores.put(id, expr); RESULT = valores :}
+                     valores.put(id, expr); RESULT = valores; :}
                      | Lista_Asig_Atributos: lAtr COMA ID: id ASIGNACION Expresion: expr
                      {: valores.put(id, expr); :}
                      ;
@@ -498,7 +499,7 @@ E10 ::= E10: izquierda CAP Expresion:derecha CCIERRE
 
 
 Lista_Expresiones ::= //Lista vacía
-                  {: RESULT = new ArrayList<Expresion>() :}
+                  {: RESULT = new ArrayList<Expresion>(); :}
                   | Lista_Expresiones': lExpr
                   {: RESULT = lExpr; :}
                   ;
