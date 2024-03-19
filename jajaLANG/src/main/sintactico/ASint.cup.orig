@@ -54,14 +54,12 @@ terminal    //Palabras clave
 //variables (globales). Las instrucciones solo estarán en las funciones y el
 //main será lo primero que se ejecute
 Programa ::= Lista_Imports: lImp Lista_Declaraciones: lDecl
-    {: RESULT = new Programa(lImp, lDecl); :}
-        ;
+    {: RESULT = new Programa(lImp, lDecl); :};
 
 Lista_Imports ::= Lista_Imports: lImp TRAFICAR ID: ruta COMO ID: id
     {: lImp.add(new Import(ruta))); RESULT = lImp; :}
               |
     {: RESULT = new ArrayList<Import>(); :}
-              ;
 
 
 Lista_Declaraciones ::= Lista_Declaraciones: lDecl Declaracion_Alias: dAlias
@@ -76,11 +74,9 @@ Lista_Declaraciones ::= Lista_Declaraciones: lDecl Declaracion_Alias: dAlias
                     //mismo tipo
                     | 
                       {: RESULT = new ListaDeclaraciones(); :}
-                    ;
 
 Declaracion_Alias ::= INCOGNITO ID: id ASIGNACION Tipo: t
     {: RESULT = new DeclaracionAlias(id, t); :}
-                    ;
 
 ///Declaraciones///
 Declaracion ::= Decl_Variables: decl_var
@@ -94,7 +90,6 @@ Declaracion ::= Decl_Variables: decl_var
 //Iremos recorriendo cada variable para asignarle su correspondiente tipo
 Decl_Variables ::= Tipo: tipo Lista_Decl_Asignaciones: lVar
     {: RESULT = new DeclaracionVariables(tipo, lVar); :}
-                ;
 
 
 Lista_Decl_Asignaciones ::= Decl_Asig: var
@@ -102,8 +97,7 @@ Lista_Decl_Asignaciones ::= Decl_Asig: var
         lista_var.add(var); RESULT = lista_var; :};
 
                         | Lista_Decl_Asignaciones: lDecl COMA Decl_Asig: var
-        {: lDecl.add(var); RESULT = lDecl; :}
-                        ;
+        {: lDecl.add(var); RESULT = lDecl; :};
 
 
 Decl_Asig ::= Id: var
@@ -111,7 +105,6 @@ Decl_Asig ::= Id: var
 
           | Id: var ASIGNACION Expresion: expr
     {: Result = new DeclaracionVar(var, expr); :}
-          ;
 
 
 ///Declaracion funciones///
@@ -119,7 +112,6 @@ Dec_Funcion ::= DIVER ID: id PAP Lista_Parametros: lPar PCIERRE Bloque_Anidado: 
     {: RESULT = new DeclaracionFun(id, lPar, bloq); :}
             | DIVER ID: id PAP Lista_Parametros: lPar PCIERRE FLECHA Tipo: t Bloque_Anidado: bloq   //Función con retorno
     {: RESULT = new DeclaracionFun(id, lPar, bloq, t); :}
-            ;
 
 Lista_Parametros ::= //Sin parámetros
     {: RESULT = new ArrayList<DeclaracionVar>(); :}
@@ -146,7 +138,6 @@ Parametro ::=  ID: var DOSPUNTOS Tipo: t
 ///Bloque anidado///
 Bloque_Anidado ::= CAP Lista_Instrucciones: LIns CCIERRE
     {: RESULT = LIns :}
-                ;
 
 Lista_Instrucciones ::= Instruccion: ins
     {: List<Instruccion> lInstrucciones = new ArrayList<Instruccion>();
@@ -155,8 +146,7 @@ Lista_Instrucciones ::= Instruccion: ins
 
                     | Lista_Instrucciones: lInstrucciones Instruccion: ins
     {: lInstrucciones.add(ins);
-    RESULT = lInstrucciones; :}
-                    ;
+    RESULT = lInstrucciones; :};
 
 
 ///Tipos de instrucciones///
@@ -177,14 +167,12 @@ Instruccion ::= Dec_Variables: decl PUNTOCOMA       //Solo la declaracion de var
 
 ///Asignaciones///
 Asignacion ::= Expresion: expr1 ASIGNACION Expresion: expr2
-    {: RESULT = new InsAsig(expr1, expr2);  :}
-            ;
+    {: RESULT = new InsAsig(expr1, expr2);  :};
 
 
 ///Condicionales///
 Condicional ::= SI Expresion: expr Bloque_Anidado: bloq Cond_Else: cond_else
-    {: RESULT = new InsCond(expr, bloq, cond_else); :}
-            ;
+    {: RESULT = new InsCond(expr, bloq, cond_else); :};
 
 Cond_Else ::= //No hay else final
     {: RESULT = new InsCond(); :}
@@ -203,24 +191,28 @@ Bucle ::= Bucle_While: bWhile
 
 Bucle_While ::= MIENTRAS Expresion: expr Bloque_Anidado: bloq
     {: RESULT = new InsBucleWhile(expr, bloq); :}
-            ;   
 
 Bucle_For ::= PARA ID: id Expresion: exprIni FLECHA Expresion: exprFin
 Bloque_Anidado: bloq
-    {: RESULT = new InsBucleFor(id, exprIni, exprFin, bloq); :}
-    ;
+    {: RESULT = new InsBucleFor(id, exprIni, exprFin, bloq); :};
 
 ///Return///
 Inst_Return ::= DEVUELVE Expresion: expr;
     {: RESULT = new InsReturn(expr); :}
-            ;
 
 /////////////////////
 ///     TIPOS     ///
 /////////////////////
+<<<<<<< HEAD
+
+Tipo ::= Tipo:tipo PUNTERO
+    {: RESULT = new TipoPuntero(tipo); :};
+
+Tipo ::= T:tipo
+   {: RESULT = tipo; :};
+=======
 Tipo ::= Tipo: tipo PUNTERO
     {: RESULT = new TipoPuntero(tipo); :}
-    ;
 
 //Leemos todos los corchetes a la vez para evitar que las dimensiones esten
 //invertidas (en java se construirán el tipo correctamente)
@@ -229,7 +221,7 @@ Tipo ::= Tipo: tipo PUNTERO
 
         | T: tipo
     {: RESULT = tipo; :}
-        ;
+>>>>>>> maven-m
 
 T ::= ENT
     {: RESULT = new TipoEntero();  :}
@@ -248,15 +240,18 @@ T ::= ENT
 Lista_Dimensiones ::= CAP ENTERO: dim CCIERRE
     {: RESULT = (new ArrayList<Integer>()).add(dim); :}
 
+<<<<<<< HEAD
+Tipo_Reg ::= REGISTRO LLAP Matriz_Atributos: mAtrib LLCIERRE
+    {: RESULT = new TipoRegistro(mAtrib); :};
+=======
                   | Lista_Dimensiones: lDim CAP ENTERO: dim CCIERRE
     {: lDim.add(dim); RESULT = lDim; :}
-                  ;
 
 
 //Registros
 Tipo_Reg ::= REGISTRO LLAP Matriz_Atributos: mAtrib LLIERRE
     {: RESULT = new TipoRegistro(mAtrib); :}
-        ;
+>>>>>>> maven-m
 
 
 //Una sola lista de atributos o varias con la coma de la última opcional
@@ -272,8 +267,7 @@ Matriz_Atributos ::= Lista_Atributos: lAtr
     {: mAtr.add(lAtr); RESULT = mAtr; :}
 
                 | Matriz_Atributos': mAtr Lista_Atributos: lAtr COMA
-    {: mAtr.add(lAtr); RESULT = mAtr; :}
-                ;
+    {: mAtr.add(lAtr); RESULT = mAtr; :};
 
 
 Matriz_Atributos' ::= Lista_Atributos: lAtr COMA
@@ -281,50 +275,114 @@ Matriz_Atributos' ::= Lista_Atributos: lAtr COMA
     mAtr.add(lAtr); RESULT = mAtr; :}
 
                 | Matriz_Atributos': mAtr Lista_Atributos: lAtr COMA
-    {: mAtr.add(lAtr); RESULT = mAtr; :}
-                ;
+    {: mAtr.add(lAtr); RESULT = mAtr; :};
 
-//Pueden tener un valor por defecto
-Lista_Atributos ::= Lista_Decl_Asignaciones: lVar DOSPUNTOS Tipo: tipo
-    {: RESULT = new DeclaracionVariables(tipo, lVar); :}
-    ;
 
+//Iremos recorriendo cada variable para asignarle su correspondiente tipo
+<<<<<<< HEAD
+Lista_Atributos ::= Lista_Variables: lVar DOSPUNTOS Tipo: tipo
+    {: RESULT = ast.listaAtributos(lVar, tipo); :};
+
+
+
+Lista_Variables ::= Variable: var
+    {: List<Variable> lVar = new ArrayList<Variable>();
+    lVar.add(var); RESULT = lVar; :}
+
+                | Lista_Variables': lVar Variable: var
+    {: lVar.add(var); RESULT = lVar; :};
+
+Lista_Variables' ::= Variable: var COMA
+    {: List<Variable> lVar = new ArrayList<Variable>();
+    lVar.add(var); RESULT = lVar; :}
+
+                | Lista_Variables': lVar Variable: var COMA
+    {: lVar.add(var); RESULT = lVar; :};
+
+
+
+//El tipo de las variables se le puede dar después de construirlas
+Variable ::= ID: id Lista_Corchetes: lCor
+    {: RESULT = new Variable(id.lexema(), lCor); :};
+
+
+//El tipo array lo construimos al enlazarlo con el tipo
+Lista_Corchetes ::= //Sin corchetes
+    {: Result = new ArrayList<int>(); :}
+
+                | CAP ENTERO: num CCIERRE
+    {: lCor = new ArrayList<int>() 
+    lCor.add(num.lexema()); RESULT = lCor; :}
+
+                | Lista_Corchetes: lCor CAP ENTERO: num CCIERRE
+    {: lCor.add(num.lexema()); RESULT = lCor; :};
+
+
+
+
+/////////////////////
+////INSTRUCCIONES////
+/////////////////////
+
+///Declaraciones///
+Declaracion ::= Dec_variables: dec_var
+    {: RESULT = dec_var; :}
+
+            | Dec_funcion: dec_fun;
+    {: RESULT = dec_fun; :}
+            ;
+
+
+//Iremos recorriendo cada variable para asignarle su correspondiente tipo
+Dec_variables ::= Tipo: tipo Lista_Variables: lVar
+    {: RESULT = ast.listaVariables(tipo, lVar); :};
+
+Dec_funcion ::= Dec_funcion_void: fVoid 
+    {: RESULT = fVoid; :}
+            | Dec_funcion_ret: fReturn
+    {: RESULT = fReturn; :};
+
+Dec_funcion_void ::= DIVER ID: id PAP Lista_Parametros: lPar PCIERRE Bloque_Anidado: bloq
+    {: RESULT = new FuncionVoid(id.lexema(), lPar, bloq); :};
+
+Dec_funcion_ret ::= DIVER ID: id PAP Lista_Parametros: lPAR PCIERRE FLECHA Tipo: t Bloque_Anidado: bloq
+    {: RESULT = new FuncionRet(id.lexema(), lPar, bloq, t); :};
+    
+    
+    
 ///////////////////
-////EXPRESIONES////
+////OPERACIONES////
 ///////////////////
+
+
 //disyuncion
 Expresion ::= Expresion: izquierda DISY E1: derecha
 	{: RESULT = new OperadorBin(OperadorBin.Operadores.DISY, izquierda, derecha); :}
 		  | E1: e1
-	{: RESULT = e1; :}
-          ;
+	{: RESULT = e1; :};
 		  
 //conjunción 
 E1 ::= E1: izquierda CONJ E2: dercha
 	{: RESULT = new OperadorBin(OperadorBin.Operadores.CONJ, izquierda, derecha); :}
    | E2: e2
-   	{: RESULT = e2; :}
-   ;
+   	{: RESULT = e2; :};
 
 //igual o desigual
 E2 ::= E2:izquierda  OP2:op2 E3: derecha
 	{: RESULT = new OperadorBin(op2, izquierda, derecha); :}
    | E3: e3
-   	{: RESULT = e3; :}
-   ;
+   	{: RESULT = e3; :};
    
 OP2 ::= DESIGUAL
 	{: RESULT = OperadorBin.Operadores.DESIGUAL; :}
    | IGUAL
-   	{: RESULT = OperadorBin.Operadores.IGUAL; :}
-   ;
+   	{: RESULT = OperadorBin.Operadores.IGUAL; :};
 
 //mayor, menor, mayorigual, menorigual
 E3 ::= E3: izquierda OP3:op3 E4: derecha
     {: RESULT = new OperadorBin(op3, izquierda, derecha); :}
    | E4: e4
-    {: RESULT = e4; :}
-   ;
+    {: RESULT = e4; :};
    
 OP3 ::= MAYOR
 	{: RESULT = OperadorBin.Operadores.MAYOR; :}
@@ -333,65 +391,56 @@ OP3 ::= MAYOR
 	 | MAYORIGUAL
 	{: RESULT = OperadorBin.Operadores.MAYORIGUAL; :}
 	 | MENORIGUAL
-	{: RESULT = OperadorBin.Operadores.MENORIGUAL; :}
-     ;
+	{: RESULT = OperadorBin.Operadores.MENORIGUAL; :};
 
 //suma, resta
 E4 ::= E4: izquierda OP4:op4 E5: derecha
     {: RESULT = new OperadorBin(op4, izquierda, derecha); :}
    | E5: e5
-    {: RESULT = e5; :}
-   ;
+    {: RESULT = e5; :};
    
 OP4 ::= SUMA
     {: RESULT = OperadorBin.Operadores.SUMA; :}	 
     | RESTA
-    {: RESULT = OperadorBin.Operadores.RESTA; :}
-    ;
+    {: RESULT = OperadorBin.Operadores.RESTA; :};
 
 //multiplicación, división, módulo
 E5 ::= E5: izquierda OP5:op5 E6: derecha
     {: RESULT = new OperadorBin(op5, izquierda, derecha); :}
    | E6: e6
-    {: RESULT = e6; :}
-   ;
+    {: RESULT = e6; :};
    
 OP5 ::= MUL
     {: RESULT = OperadorBin.Operadores.MUL; :}	 
  	 | DIV
 	{: RESULT = OperadorBin.Operadores.DIV; :}	 
 	 | MOD
-	{: RESULT = OperadorBin.Operadores.MOD; :}
-     ; 
+	{: RESULT = OperadorBin.Operadores.MOD; :}; 
 
 
 //potencia
 E6 ::= E6: izquierda POT E7: derecha
     {: RESULT = new OperadorBin(OperadorBin.POT, izquierda, derecha); :}
    | E7: e7
-    {: RESULT = e7; :}
-   ;
+    {: RESULT = e7; :};
 
 //dirección, puntero
 E7 ::= E7: izquierda OP7:op7 E8: derecha
     {: RESULT = new OperadorBin(op7, izquierda, derecha); :}
    | E8: e8
-    {: RESULT = e8; :}
-   ;
+    {: RESULT = e8; :};
 
    
 OP7 ::= DIRECCION
     {: RESULT = OperadorBin.Operadores.DIRECCION; :}	 	 
     | PUNTERO
-    {: RESULT = OperadorBin.Operadores.PUNTERO; :}
-    ;
+    {: RESULT = OperadorBin.Operadores.PUNTERO; :};
 
 //negación
 E8 ::= NEG E8: e8
     {: RESULT = new OperadorUn(OperadorUn.NEG, e8); :}
    | E9: e9
-    {: RESULT = e9; :}
-   ;
+    {: RESULT = e9; :};
 
 //corchete, punto
 E9 ::= E9: izquierda CAP Expresion:derecha CCIERRE
@@ -399,12 +448,20 @@ E9 ::= E9: izquierda CAP Expresion:derecha CCIERRE
    | E9: izquierda PUNTO E10: derecha
     {: RESULT = new OperadorBin(OperadorBin.PUNTO, izquierda, derecha); :}
    | E10: e10
-    {: RESULT = e10; :}
-   ;
+    {: RESULT = e10; :};
 
 //paréntesis
 E10 ::= E10: izquierda PAP Expresion: derecha PCIERRE 
     {: RESULT = new OperadorBin(OperadorBin.PARENTESIS, izquierda, derecha); :}
    | E10: e10 PAP PCIERRE
-    {: RESULT = e10; :}
-   ;
+    {: RESULT = e10; :};
+	
+
+
+
+    
+=======
+//Pueden tener un valor por defecto
+Lista_Atributos ::= Lista_Decl_Asignaciones: lVar DOSPUNTOS Tipo: tipo
+    {: RESULT = new DeclaracionVariables(tipo, lVar); :}
+>>>>>>> maven-m
