@@ -48,7 +48,7 @@ terminal    //Palabras clave
             NEG, CONJ, DISY,
 
             //Otros
-            DIRECCION, PUNTERO, ASIGNACION, PUNTO, COMA, PUNTOCOMA, DOSPUNTOS, FLECHA, MENOS
+            DIRECCION, PUNTERO, ASIGNACION, PUNTO, COMA, PUNTOCOMA, DOSPUNTOS, FLECHA, MENOS,
 
             //Agrupaciones
             CAP, CCIERRE, PAP, PCIERRE, LLAP, LLCIERRE;
@@ -63,12 +63,11 @@ non terminal ListaDeclaraciones Lista_Declaraciones;
 non terminal DeclaracionAlias Declaracion_Alias;
 //Variables
 non terminal DeclaracionVar Decl_Asig;
-non terminal DeclaracionVariables Decl_Variables;
 non terminal List<DeclaracionVar> Lista_Decl_Asignaciones;
 non terminal DeclaracionVariables Decl_Variables;
 //Funciones
 non terminal DeclaracionFun Decl_Funcion;
-non terminal List<DeclaracionPar> Lista_Parametros, Lista_Parametros';
+non terminal List<DeclaracionPar> Lista_Parametros, Lista_Parametros2;
 non terminal DeclaracionPar Parametro;
 
 
@@ -81,22 +80,22 @@ non terminal Tipo Tipo, T, Tipo_Reg;
 //Array
 non terminal List<Integer> Lista_Dimensiones;
 //Registros
-non terminal ListaDeclaraciones Matriz_Atributos, Matriz_Atributos';
-non terminal Lista_Atributos DeclaracionVariables;
+non terminal ListaDeclaraciones Matriz_Atributos, Matriz_Atributos2;
+non terminal DeclaracionVariables Lista_Atributos ;
 
 
 ///Expresiones
 non terminal Expresion Expresion, E1, E2, E3, E4, E5, E6, E7, E8, E9, E10;
-non terminal List<Expresion> Lista_Expresiones, Lista_Expresiones';
+non terminal List<Expresion> Lista_Expresiones, Lista_Expresiones2;
 non terminal OperadorBin.Operadores OP2, OP3, OP4, OP5;
-non terminal OperadorUn.Operadores OP7;
+non terminal OperadorUn.Operadores OP7, OP8;
 
 //Literales
 terminal Entero ENTERO;
 terminal True FACTO;
 terminal False FAKE;
 terminal Nulo NULO;
-terminal String ID;
+terminal String IDEN;
 
 non terminal Literal Literal;
 non terminal LiteralArray Array_Literal;
@@ -115,7 +114,7 @@ Programa ::= Lista_Imports: lImp Lista_Declaraciones: lDecl
          ;
 
 
-Lista_Imports ::= Lista_Imports: lImp TRAFICAR ID: ruta COMO ID: id
+Lista_Imports ::= Lista_Imports: lImp TRAFICAR IDEN: ruta COMO IDEN: id
               {: lImp.add(new Import(ruta)); RESULT = lImp; :}
               |
               {: RESULT = new ArrayList<Import>(); :}
@@ -140,7 +139,7 @@ Lista_Declaraciones ::= Lista_Declaraciones: lDecl Declaracion_Alias: dAlias
                     {: RESULT = new ListaDeclaraciones(); :}
                     ;
 
-Declaracion_Alias ::= INCOGNITO ID: id ASIGNACION Tipo: t
+Declaracion_Alias ::= INCOGNITO IDEN: id ASIGNACION Tipo: t
                   {: RESULT = new DeclaracionAlias(id, t); :}
                   ;
 
@@ -160,19 +159,19 @@ Lista_Decl_Asignaciones ::= Decl_Asig: var
                         ;
 
 
-Decl_Asig ::= Id: var
+Decl_Asig ::= IDEN: var
           {: RESULT = new DeclaracionVar(var); :}
 
-          | Id: var ASIGNACION Expresion: expr
+          | IDEN: var ASIGNACION Expresion: expr
           {: Result = new DeclaracionVar(var, expr); :}
           ;
 
 
 ///Declaracion funciones///
-Decl_Funcion ::= DIVER ID: id PAP Lista_Parametros: lPar PCIERRE Bloque_Anidado: bloq        //Función que no devuelve nada 
+Decl_Funcion ::= DIVER IDEN: id PAP Lista_Parametros: lPar PCIERRE Bloque_Anidado: bloq        //Función que no devuelve nada 
             {: RESULT = new DeclaracionFun(id, lPar, bloq); :}
 
-            | DIVER ID: id PAP Lista_Parametros: lPar PCIERRE FLECHA Tipo: t Bloque_Anidado: bloq   //Función con retorno
+            | DIVER IDEN: id PAP Lista_Parametros: lPar PCIERRE FLECHA Tipo: t Bloque_Anidado: bloq   //Función con retorno
             {: RESULT = new DeclaracionFun(id, lPar, bloq, t); :}
             ;
 
@@ -180,20 +179,20 @@ Decl_Funcion ::= DIVER ID: id PAP Lista_Parametros: lPar PCIERRE Bloque_Anidado:
 Lista_Parametros ::= //Sin parámetros
                  {: RESULT = new ArrayList<DeclaracionPar>(); :}
 
-                 | Lista_Parametros': lPar      //Con uno o más
+                 | Lista_Parametros2: lPar      //Con uno o más
                  {: RESULT = lPar; :}
                  ;
 
-Lista_Parametros' ::= Parametro: par
+Lista_Parametros2 ::= Parametro: par
                   {: List<DeclaracionPar> lista_par = new ArrayList<DeclaracionPar>();
                   lista_par.add(par); RESULT = lista_par; :}
-                  | Lista_Parametros': lPar FLECHA Parametro: par
+                  | Lista_Parametros2: lPar FLECHA Parametro: par
                   {: lPar.add(par); RESULT = lPar; :}
                   ;
 
-Parametro ::=  ID: var DOSPUNTOS Tipo: t
+Parametro ::=  IDEN: var DOSPUNTOS Tipo: t
           {: RESULT = new DeclaracionPar(var, t, false); :}   //No es por referencia
-          | DIRECCION ID: var DOSPUNTOS Tipo: t
+          | DIRECCION IDEN: var DOSPUNTOS Tipo: t
           {: RESULT = new DeclaracionPar(var, t, true); :}    //Por referencia
           ;
 
@@ -231,7 +230,7 @@ Instruccion ::= Decl_Variables: decl PUNTOCOMA       //Solo la declaracion de va
 
 
 ///Asignaciones///
-Asignacion ::= e10: expr1 ASIGNACION Expresion: expr2
+Asignacion ::= E10: expr1 ASIGNACION Expresion: expr2
            {: RESULT = new InsAsig(expr1, expr2);  :}
            ;
 
@@ -252,12 +251,12 @@ Cond_Else ::= //No hay else final
 ///Bucles///
 Bucle ::= MIENTRAS Expresion: expr Bloque_Anidado: bloq
       {: RESULT = new InsBucleWhile(expr, bloq); :}
-      | PARA ID: id Expresion: exprIni FLECHA Expresion: exprFin Bloque_Anidado: bloq
+      | PARA IDEN: id Expresion: exprIni FLECHA Expresion: exprFin Bloque_Anidado: bloq
       {: RESULT = new InsBucleFor(id, exprIni, exprFin, bloq); :}
       ;
 
 ///Return///
-Inst_Return ::= DEVUELVE Expresion: expr;
+Inst_Return ::= DEVUELVE Expresion: expr
             {: RESULT = new InsReturn(expr); :}
             ;
 
@@ -266,16 +265,15 @@ Inst_Return ::= DEVUELVE Expresion: expr;
 /////////////////////
 Tipo ::= Tipo: tipo PUNTERO
      {: RESULT = new TipoPuntero(tipo); :}
-     ;
 
 //Leemos todos los corchetes a la vez para evitar que las dimensiones esten
 //invertidas (en java se construirán el tipo correctamente)
-    | Tipo: tipo Lista_Dimensiones: lDim
-    {: RESULT = new TipoArray(tipo, lDim); :}
+     | Tipo: tipo Lista_Dimensiones: lDim
+     {: RESULT = new TipoArray(tipo, lDim); :}
 
-    | T: tipo
-    {: RESULT = tipo; :}
-    ;
+     | T: tipo
+     {: RESULT = tipo; :}
+     ;
 
 T ::= ENT
   {: RESULT = TipoEntero.instancia();  :}
@@ -283,7 +281,7 @@ T ::= ENT
   | BIN 
   {: RESULT = TipoBinario.instancia(); :}
 
-  | ID: id             //ID se referirá a los identificadores definidos por el incognito
+  | IDEN: id             //IDEN se referirá a los identificadores definidos por el incognito
   {: RESULT = new TipoAlias(id); :}
 
   | Tipo_Reg: t_reg
@@ -300,7 +298,7 @@ Lista_Dimensiones ::= CAP ENTERO: dim CCIERRE
 
 
 //Registros
-Tipo_Reg ::= REGISTRO LLAP Matriz_Atributos: mAtrib LLIERRE
+Tipo_Reg ::= REGISTRO LLAP Matriz_Atributos: mAtrib LLCIERRE
          {: RESULT = new TipoRegistro(mAtrib); :}
          ;
 
@@ -314,19 +312,19 @@ Matriz_Atributos ::= Lista_Atributos: lAtr
                  {: ListaDeclaraciones mAtr = new ListaDeclaraciones();
                  mAtr.add(lAtr); RESULT = mAtr; :}
 
-                 | Matriz_Atributos': mAtr Lista_Atributos: lAtr
+                 | Matriz_Atributos2: mAtr Lista_Atributos: lAtr
                  {: mAtr.add(lAtr); RESULT = mAtr; :}
 
-                 | Matriz_Atributos': mAtr Lista_Atributos: lAtr COMA
+                 | Matriz_Atributos2: mAtr Lista_Atributos: lAtr COMA
                  {: mAtr.add(lAtr); RESULT = mAtr; :}
                  ;
 
 
-Matriz_Atributos' ::= Lista_Atributos: lAtr COMA
+Matriz_Atributos2 ::= Lista_Atributos: lAtr COMA
                   {: ListaDeclaraciones mAtr = new ListaDeclaraciones();
                   mAtr.add(lAtr); RESULT = mAtr; :}
 
-                  | Matriz_Atributos': mAtr Lista_Atributos: lAtr COMA
+                  | Matriz_Atributos2: mAtr Lista_Atributos: lAtr COMA
                   {: mAtr.add(lAtr); RESULT = mAtr; :}
                   ;
 
@@ -480,10 +478,10 @@ Struct_Literal ::= LLAP Lista_Asig_Atributos: lAtr LLCIERRE
                {: RESULT = new LiteralStruct(lAtr); :}
                ;
 
-Lista_Asig_Atributos ::= ID: id ASIGNACION Expresion: expr
+Lista_Asig_Atributos ::= IDEN: id ASIGNACION Expresion: expr
                      {: Map<String, Expresion> valores = new HashMap<String, Expresion>();
                      valores.put(id, expr); RESULT = valores; :}
-                     | Lista_Asig_Atributos: lAtr COMA ID: id ASIGNACION Expresion: expr
+                     | Lista_Asig_Atributos: lAtr COMA IDEN: id ASIGNACION Expresion: expr
                      {: valores.put(id, expr); :}
                      ;
 
@@ -491,21 +489,21 @@ Lista_Asig_Atributos ::= ID: id ASIGNACION Expresion: expr
 //Accesos a array y structs
 E10 ::= E10: izquierda CAP Expresion:derecha CCIERRE
     {: RESULT = new AccesoArray(izquierda, derecha); :}
-    | E10: izquierda PUNTO ID: id
+    | E10: izquierda PUNTO IDEN: id
     {: RESULT = new AccesoStruct(izquierda, id); :}
-    | ID: id
+    | IDEN: id
     {: RESULT = new Identificador(id); :}
     ;
 
 
 Lista_Expresiones ::= //Lista vacía
                   {: RESULT = new ArrayList<Expresion>(); :}
-                  | Lista_Expresiones': lExpr
+                  | Lista_Expresiones2: lExpr
                   {: RESULT = lExpr; :}
                   ;
 
-Lista_Expresiones' ::= Expresion: expr
+Lista_Expresiones2 ::= Expresion: expr
                    {: RESULT = (new ArrayList<Expresion>()).add(expr); :}
-                   | Lista_Expresiones': lExpr COMA Expresion: expr
+                   | Lista_Expresiones2: lExpr COMA Expresion: expr
                    {: RESULT = lExpr.add(expr); :}
                    ;
