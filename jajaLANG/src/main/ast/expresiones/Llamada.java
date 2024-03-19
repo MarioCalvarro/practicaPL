@@ -2,12 +2,9 @@ package main.ast.expresiones;
 
 import java.util.List;
 
-import main.ast.declaraciones.DeclaracionVar;
-
 public class Llamada extends Expresion {
-
-	private List<Expresion> listaExpresiones;
 	private Expresion exp;
+    private List<Expresion> listaExpresiones;
 
 	public Llamada(Expresion exp, List<Expresion> listaExpresiones) {
 		this.exp = exp;

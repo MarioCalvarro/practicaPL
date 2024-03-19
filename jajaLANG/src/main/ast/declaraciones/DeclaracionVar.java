@@ -5,7 +5,7 @@ import main.ast.instrucciones.Instruccion;
 import main.ast.tipos.Tipo;
 
 public class DeclaracionVar extends Instruccion implements Declaracion {
-	private String id;
+	protected String id;
 	private Expresion valor;
 	private Tipo tipo;
 

@@ -9,6 +9,9 @@ public class InsCond extends Instruccion {
 	private List<Instruccion> cuerpo;
 	private InsCond instElse;
 
+    //Sin else 
+    public InsCond() {}
+
 	// Constructor del else final
 	public InsCond(List<Instruccion> cuerpo) {
 		this.cuerpo = cuerpo;

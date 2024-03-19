@@ -3,7 +3,6 @@ package main.ast.expresiones;
 import main.ast.expresiones.OperadorBin.Operadores;
 
 public class OperadorUn extends Expresion{
-	
 	public enum Operadores {
 		NEG, DIRECCION, PUNTERO, MENOS;
 
@@ -48,6 +47,4 @@ public class OperadorUn extends Expresion{
 	public String toString() {
 		return izquierda + op.toString() + derecha;
 	}
-
-
 }

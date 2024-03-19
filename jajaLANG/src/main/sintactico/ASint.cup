@@ -277,10 +277,10 @@ Tipo ::= Tipo: tipo PUNTERO
     ;
 
 T ::= ENT
-  {: RESULT = new TipoEntero();  :}
+  {: RESULT = TipoEntero.instancia();  :}
 
   | BIN 
-  {: RESULT = new TipoBinario(); :}
+  {: RESULT = TipoBinario.instancia(); :}
 
   | ID: id             //ID se referirá a los identificadores definidos por el incognito
   {: RESULT = new TipoAlias(id); :}

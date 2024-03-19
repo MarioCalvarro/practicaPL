@@ -1,5 +1,12 @@
 package main.ast.instrucciones;
 
-public class InsAsig extends Instruccion {
+import main.ast.expresiones.Expresion;
 
+public class InsAsig extends Instruccion {
+    private Expresion left, right;
+
+    public InsAsig(Expresion left, Expresion right) {
+        this.left = left;
+        this.right = right;
+    }
 }

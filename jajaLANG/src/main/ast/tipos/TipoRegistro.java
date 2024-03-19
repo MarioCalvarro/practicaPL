@@ -1,5 +1,11 @@
 package main.ast.tipos;
 
-public class TipoRegistro extends Tipo {
+import main.ast.declaraciones.ListaDeclaraciones;
 
+public class TipoRegistro extends Tipo {
+    ListaDeclaraciones atributos;
+
+    public TipoRegistro(ListaDeclaraciones atributos) {
+        this.atributos = atributos;
+    }
 }
