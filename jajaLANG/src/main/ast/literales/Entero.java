@@ -3,7 +3,7 @@ package main.ast.literales;
 public class Entero extends Literal {
 	private int value;
 
-	Entero(int value) {
+	public Entero(int value) {
 		this.value = value;
 	}
 

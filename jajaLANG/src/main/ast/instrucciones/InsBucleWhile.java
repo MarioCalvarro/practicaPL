@@ -8,7 +8,7 @@ public class InsBucleWhile extends Instruccion {
 	private Expresion condicion;
 	private List<Instruccion> cuerpo;
 
-	InsBucleWhile(Expresion condicion, List<Instruccion> cuerpo) {
+	public InsBucleWhile(Expresion condicion, List<Instruccion> cuerpo) {
 		this.condicion = condicion;
 		this.cuerpo = cuerpo;
 	}

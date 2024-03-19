@@ -12,7 +12,7 @@ public class InsBucleFor extends Instruccion {
 	private Expresion fin;
 	private List<Instruccion> cuerpo;
 
-	InsBucleFor(String id, Expresion ini, Expresion fin, List<Instruccion> cuerpo) {
+	public InsBucleFor(String id, Expresion ini, Expresion fin, List<Instruccion> cuerpo) {
 		this.indice = new DeclaracionVar(id, new TipoEntero(), ini);
 		this.ini = ini;
 		this.fin = fin;

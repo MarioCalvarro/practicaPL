@@ -5,7 +5,7 @@ import main.ast.expresiones.Expresion;
 public class InsReturn extends Instruccion {
 	private Expresion expr;
 
-	InsReturn(Expresion expr) {
+	public InsReturn(Expresion expr) {
 		this.expr = expr;
 	}
 }
