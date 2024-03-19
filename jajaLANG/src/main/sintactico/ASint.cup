@@ -55,89 +55,92 @@ terminal    //Palabras clave
 //main será lo primero que se ejecute
 Programa ::= Lista_Imports: lImp Lista_Declaraciones: lDecl
     {: RESULT = new Programa(lImp, lDecl); :}
-        ;
+         ;
 
 Lista_Imports ::= Lista_Imports: lImp TRAFICAR ID: ruta COMO ID: id
-    {: lImp.add(new Import(ruta))); RESULT = lImp; :}
+              {: lImp.add(new Import(ruta))); RESULT = lImp; :}
               |
-    {: RESULT = new ArrayList<Import>(); :}
+              {: RESULT = new ArrayList<Import>(); :}
               ;
 
 
 Lista_Declaraciones ::= Lista_Declaraciones: lDecl Declaracion_Alias: dAlias
-                      {: lDecl.add(dAlias); RESULT = lDecl; :}
+                    {: lDecl.add(dAlias); RESULT = lDecl; :}
 
                     //Variables o Funciones
                     | Lista_Declaraciones: lDecl Declaracion: dGen
-                      {: lDecl.add(dGen); RESULT = lDecl; :}
+                    {: lDecl.add(dGen); RESULT = lDecl; :}
 
                     //No lo hacemos directamente ArrayList porque tenemos que
                     //extender "add" para insertar una lista de variables con el
                     //mismo tipo
                     | 
-                      {: RESULT = new ListaDeclaraciones(); :}
+                    {: RESULT = new ListaDeclaraciones(); :}
                     ;
 
 Declaracion_Alias ::= INCOGNITO ID: id ASIGNACION Tipo: t
-    {: RESULT = new DeclaracionAlias(id, t); :}
-                    ;
+                  {: RESULT = new DeclaracionAlias(id, t); :}
+                  ;
 
 ///Declaraciones///
 Declaracion ::= Decl_Variables: decl_var
-    {: RESULT = decl_var; :}
+            {: RESULT = decl_var; :}
 
             | Decl_Funcion: decl_fun;
-    {: RESULT = decl_fun; :}
+            {: RESULT = decl_fun; :}
             ;
 
 
 //Iremos recorriendo cada variable para asignarle su correspondiente tipo
 Decl_Variables ::= Tipo: tipo Lista_Decl_Asignaciones: lVar
-    {: RESULT = new DeclaracionVariables(tipo, lVar); :}
-                ;
+               {: RESULT = new DeclaracionVariables(tipo, lVar); :}
+               ;
 
 
 Lista_Decl_Asignaciones ::= Decl_Asig: var
-        {: List<DeclaracionVar> lista_var = new ArrayList<DeclaracionVar>();
-        lista_var.add(var); RESULT = lista_var; :};
+                        {: List<DeclaracionVar> lista_var = new ArrayList<DeclaracionVar>();
+                        lista_var.add(var); RESULT = lista_var; :};
 
                         | Lista_Decl_Asignaciones: lDecl COMA Decl_Asig: var
-        {: lDecl.add(var); RESULT = lDecl; :}
+                        {: lDecl.add(var); RESULT = lDecl; :}
                         ;
 
 
 Decl_Asig ::= Id: var
-    {: RESULT = new DeclaracionVar(var); :}
+          {: RESULT = new DeclaracionVar(var); :}
 
           | Id: var ASIGNACION Expresion: expr
-    {: Result = new DeclaracionVar(var, expr); :}
+          {: Result = new DeclaracionVar(var, expr); :}
           ;
 
 
 ///Declaracion funciones///
 Dec_Funcion ::= DIVER ID: id PAP Lista_Parametros: lPar PCIERRE Bloque_Anidado: bloq        //Función que no devuelve nada 
-    {: RESULT = new DeclaracionFun(id, lPar, bloq); :}
+            {: RESULT = new DeclaracionFun(id, lPar, bloq); :}
+
             | DIVER ID: id PAP Lista_Parametros: lPar PCIERRE FLECHA Tipo: t Bloque_Anidado: bloq   //Función con retorno
-    {: RESULT = new DeclaracionFun(id, lPar, bloq, t); :}
+            {: RESULT = new DeclaracionFun(id, lPar, bloq, t); :}
             ;
 
+//Lo separamos para evitar que la sentencia: (Vacío) -> Param -> ... sea válida
 Lista_Parametros ::= //Sin parámetros
-    {: RESULT = new ArrayList<DeclaracionVar>(); :}
+                 {: RESULT = new ArrayList<DeclaracionVar>(); :}
+
                  | Lista_Parametros': lPar      //Con uno o más
-    {: RESULT = lPar; :}
+                 {: RESULT = lPar; :}
                  ;
 
 Lista_Parametros' ::= Parametro: par
-    {: List<DeclaracionVar> lista_par = new ArrayList<DeclaracionVar>();
-    lista_par.add(par); RESULT = lista_par; :}
+                  {: List<DeclaracionVar> lista_par = new ArrayList<DeclaracionVar>();
+                  lista_par.add(par); RESULT = lista_par; :}
                   | Lista_Parametros': lPar FLECHA Parametro: par
-    {: lPar.add(par); RESULT = lPar; :}
+                  {: lPar.add(par); RESULT = lPar; :}
                   ;
 
 Parametro ::=  ID: var DOSPUNTOS Tipo: t
-    {: RESULT = new DeclaracionFun.DeclaracionPar(var, t, false); :}   //No es por referencia
+          {: RESULT = new DeclaracionFun.DeclaracionPar(var, t, false); :}   //No es por referencia
           | DIRECCION ID: var DOSPUNTOS Tipo: t
-    {: RESULT = new DeclaracionFun.DeclaracionPar(var, t, true); :}    //Por referencia
+          {: RESULT = new DeclaracionFun.DeclaracionPar(var, t, true); :}    //Por referencia
           ;
 
 /////////////////////
@@ -145,202 +148,201 @@ Parametro ::=  ID: var DOSPUNTOS Tipo: t
 /////////////////////
 ///Bloque anidado///
 Bloque_Anidado ::= CAP Lista_Instrucciones: LIns CCIERRE
-    {: RESULT = LIns :}
-                ;
+               {: RESULT = LIns :}
+               ;
 
 Lista_Instrucciones ::= Instruccion: ins
-    {: List<Instruccion> lInstrucciones = new ArrayList<Instruccion>();
-    lInstrucciones.add(ins);
-    RESULT = lInstrucciones; :}
+                    {: List<Instruccion> lInstrucciones = new ArrayList<Instruccion>();
+                    lInstrucciones.add(ins);
+                    RESULT = lInstrucciones; :}
 
                     | Lista_Instrucciones: lInstrucciones Instruccion: ins
-    {: lInstrucciones.add(ins);
-    RESULT = lInstrucciones; :}
+                    {: lInstrucciones.add(ins);
+                    RESULT = lInstrucciones; :}
                     ;
 
 
 ///Tipos de instrucciones///
 Instruccion ::= Dec_Variables: decl PUNTOCOMA       //Solo la declaracion de variables (no dejamos que se puedan definir funciones dentro de otras)
-    {: RESULT = decl; :}
+            {: RESULT = decl; :}
             |   Asignacion: as PUNTOCOMA
-    {: RESULT = as; :}
+            {: RESULT = as; :}
             |   Expresion: exp PUNTOCOMA        //Llamadas a funcion
-    {: RESULT = exp; :}
+            {: RESULT = exp; :}
             |   Condicional: cond
-    {: RESULT = cond; :}
+            {: RESULT = cond; :}
             |   Bucle: buc
-    {: RESULT = buc; :}
+            {: RESULT = buc; :}
             |   Inst_Return: iRet PUNTOCOMA
-    {: RESULT = iRet; :}
+            {: RESULT = iRet; :}
             ;
 
 
 ///Asignaciones///
 Asignacion ::= Expresion: expr1 ASIGNACION Expresion: expr2
-    {: RESULT = new InsAsig(expr1, expr2);  :}
-            ;
+           {: RESULT = new InsAsig(expr1, expr2);  :}
+           ;
 
 
 ///Condicionales///
 Condicional ::= SI Expresion: expr Bloque_Anidado: bloq Cond_Else: cond_else
-    {: RESULT = new InsCond(expr, bloq, cond_else); :}
+            {: RESULT = new InsCond(expr, bloq, cond_else); :}
             ;
 
 Cond_Else ::= //No hay else final
-    {: RESULT = new InsCond(); :}
+          {: RESULT = new InsCond(); :}
           | SINO Bloque_Anidado: bloq       //Else final
-    {: RESULT = new InsCond(bloq); :}
+          {: RESULT = new InsCond(bloq); :}
           | SINO Expresion: expr Bloque_Anidado: bloq Cond_Else: cond_else
-    {: RESULT = new InsCond(expr, bloq, cond_else); :}
+          {: RESULT = new InsCond(expr, bloq, cond_else); :}
           ;
 
 ///Bucles///
 Bucle ::= Bucle_While: bWhile
-    {: RESULT = bWhile; :}
+      {: RESULT = bWhile; :}
       | Bucle_For: bFor
-    {: RESULT = bFor; :}
+      {: RESULT = bFor; :}
       ;
 
 Bucle_While ::= MIENTRAS Expresion: expr Bloque_Anidado: bloq
-    {: RESULT = new InsBucleWhile(expr, bloq); :}
+            {: RESULT = new InsBucleWhile(expr, bloq); :}
             ;   
 
-Bucle_For ::= PARA ID: id Expresion: exprIni FLECHA Expresion: exprFin
-Bloque_Anidado: bloq
-    {: RESULT = new InsBucleFor(id, exprIni, exprFin, bloq); :}
-    ;
+Bucle_For ::= PARA ID: id Expresion: exprIni FLECHA Expresion: exprFin Bloque_Anidado: bloq
+          {: RESULT = new InsBucleFor(id, exprIni, exprFin, bloq); :}
+          ;
 
 ///Return///
 Inst_Return ::= DEVUELVE Expresion: expr;
-    {: RESULT = new InsReturn(expr); :}
+            {: RESULT = new InsReturn(expr); :}
             ;
 
 /////////////////////
 ///     TIPOS     ///
 /////////////////////
 Tipo ::= Tipo: tipo PUNTERO
-    {: RESULT = new TipoPuntero(tipo); :}
-    ;
+     {: RESULT = new TipoPuntero(tipo); :}
+     ;
 
 //Leemos todos los corchetes a la vez para evitar que las dimensiones esten
 //invertidas (en java se construirán el tipo correctamente)
-        | Tipo: tipo Lista_Dimensiones: lDim
+    | Tipo: tipo Lista_Dimensiones: lDim
     {: RESULT = new TipoArray(tipo, lDim); :}
 
-        | T: tipo
+    | T: tipo
     {: RESULT = tipo; :}
-        ;
+    ;
 
 T ::= ENT
-    {: RESULT = new TipoEntero();  :}
+  {: RESULT = new TipoEntero();  :}
 
-    | BIN 
-    {: RESULT = new TipoBinario(); :}
+  | BIN 
+  {: RESULT = new TipoBinario(); :}
 
-    | ID: id             //ID se referirá a los identificadores definidos por el incognito
-    {: RESULT = new TipoAlias(); :}
+  | ID: id             //ID se referirá a los identificadores definidos por el incognito
+  {: RESULT = new TipoAlias(); :}
 
-    | Tipo_Reg: t_reg
-    {: RESULT = t_reg; :}
-    ;
+  | Tipo_Reg: t_reg
+  {: RESULT = t_reg; :}
+  ;
 
 //Arrays
 Lista_Dimensiones ::= CAP ENTERO: dim CCIERRE
-    {: RESULT = (new ArrayList<Integer>()).add(dim); :}
+                  {: RESULT = (new ArrayList<Integer>()).add(dim); :}
 
                   | Lista_Dimensiones: lDim CAP ENTERO: dim CCIERRE
-    {: lDim.add(dim); RESULT = lDim; :}
+                  {: lDim.add(dim); RESULT = lDim; :}
                   ;
 
 
 //Registros
 Tipo_Reg ::= REGISTRO LLAP Matriz_Atributos: mAtrib LLIERRE
-    {: RESULT = new TipoRegistro(mAtrib); :}
-        ;
+         {: RESULT = new TipoRegistro(mAtrib); :}
+         ;
 
 
 //Una sola lista de atributos o varias con la coma de la última opcional
 Matriz_Atributos ::= Lista_Atributos: lAtr
-    {: ListaDeclaraciones mAtr = new ListaDeclaraciones();
-    mAtr.add(lAtr); RESULT = mAtr; :}
+                 {: ListaDeclaraciones mAtr = new ListaDeclaraciones();
+                 mAtr.add(lAtr); RESULT = mAtr; :}
 
-                | Lista_Atributos: lAtr COMA
-    {: ListaDeclaraciones mAtr = new ListaDeclaraciones();
-    mAtr.add(lAtr); RESULT = mAtr; :}
+                 | Lista_Atributos: lAtr COMA
+                 {: ListaDeclaraciones mAtr = new ListaDeclaraciones();
+                 mAtr.add(lAtr); RESULT = mAtr; :}
 
-                | Matriz_Atributos': mAtr Lista_Atributos: lAtr
-    {: mAtr.add(lAtr); RESULT = mAtr; :}
+                 | Matriz_Atributos': mAtr Lista_Atributos: lAtr
+                 {: mAtr.add(lAtr); RESULT = mAtr; :}
 
-                | Matriz_Atributos': mAtr Lista_Atributos: lAtr COMA
-    {: mAtr.add(lAtr); RESULT = mAtr; :}
-                ;
+                 | Matriz_Atributos': mAtr Lista_Atributos: lAtr COMA
+                 {: mAtr.add(lAtr); RESULT = mAtr; :}
+                 ;
 
 
 Matriz_Atributos' ::= Lista_Atributos: lAtr COMA
-    {: ListaDeclaraciones mAtr = new ListaDeclaraciones();
-    mAtr.add(lAtr); RESULT = mAtr; :}
+                  {: ListaDeclaraciones mAtr = new ListaDeclaraciones();
+                  mAtr.add(lAtr); RESULT = mAtr; :}
 
-                | Matriz_Atributos': mAtr Lista_Atributos: lAtr COMA
-    {: mAtr.add(lAtr); RESULT = mAtr; :}
-                ;
+                  | Matriz_Atributos': mAtr Lista_Atributos: lAtr COMA
+                  {: mAtr.add(lAtr); RESULT = mAtr; :}
+                  ;
 
 //Pueden tener un valor por defecto
 Lista_Atributos ::= Lista_Decl_Asignaciones: lVar DOSPUNTOS Tipo: tipo
-    {: RESULT = new DeclaracionVariables(tipo, lVar); :}
-    ;
+                {: RESULT = new DeclaracionVariables(tipo, lVar); :}
+                ;
 
 ///////////////////
 ////EXPRESIONES////
 ///////////////////
 //disyuncion
 Expresion ::= Expresion: izquierda DISY E1: derecha
-	{: RESULT = new OperadorBin(OperadorBin.Operadores.DISY, izquierda, derecha); :}
+          {: RESULT = new OperadorBin(OperadorBin.Operadores.DISY, izquierda, derecha); :}
 		  | E1: e1
-	{: RESULT = e1; :}
+          {: RESULT = e1; :}
           ;
 		  
 //conjunción 
-E1 ::= E1: izquierda CONJ E2: dercha
-	{: RESULT = new OperadorBin(OperadorBin.Operadores.CONJ, izquierda, derecha); :}
+E1 ::= E1: izquierda CONJ E2: derecha
+   {: RESULT = new OperadorBin(OperadorBin.Operadores.CONJ, izquierda, derecha); :}
    | E2: e2
-   	{: RESULT = e2; :}
+   {: RESULT = e2; :}
    ;
 
 //igual o desigual
 E2 ::= E2:izquierda  OP2:op2 E3: derecha
-	{: RESULT = new OperadorBin(op2, izquierda, derecha); :}
+   {: RESULT = new OperadorBin(op2, izquierda, derecha); :}
    | E3: e3
-   	{: RESULT = e3; :}
+   {: RESULT = e3; :}
    ;
    
 OP2 ::= DESIGUAL
 	{: RESULT = OperadorBin.Operadores.DESIGUAL; :}
-   | IGUAL
+    | IGUAL
    	{: RESULT = OperadorBin.Operadores.IGUAL; :}
-   ;
+    ;
 
 //mayor, menor, mayorigual, menorigual
 E3 ::= E3: izquierda OP3:op3 E4: derecha
-    {: RESULT = new OperadorBin(op3, izquierda, derecha); :}
+   {: RESULT = new OperadorBin(op3, izquierda, derecha); :}
    | E4: e4
-    {: RESULT = e4; :}
+   {: RESULT = e4; :}
    ;
    
 OP3 ::= MAYOR
 	{: RESULT = OperadorBin.Operadores.MAYOR; :}
-	 | MENOR
+	| MENOR
 	{: RESULT = OperadorBin.Operadores.MENOR; :} 
-	 | MAYORIGUAL
+	| MAYORIGUAL
 	{: RESULT = OperadorBin.Operadores.MAYORIGUAL; :}
-	 | MENORIGUAL
+	| MENORIGUAL
 	{: RESULT = OperadorBin.Operadores.MENORIGUAL; :}
-     ;
+    ;
 
 //suma, resta
 E4 ::= E4: izquierda OP4:op4 E5: derecha
-    {: RESULT = new OperadorBin(op4, izquierda, derecha); :}
+   {: RESULT = new OperadorBin(op4, izquierda, derecha); :}
    | E5: e5
-    {: RESULT = e5; :}
+   {: RESULT = e5; :}
    ;
    
 OP4 ::= SUMA
@@ -351,32 +353,32 @@ OP4 ::= SUMA
 
 //multiplicación, división, módulo
 E5 ::= E5: izquierda OP5:op5 E6: derecha
-    {: RESULT = new OperadorBin(op5, izquierda, derecha); :}
+   {: RESULT = new OperadorBin(op5, izquierda, derecha); :}
    | E6: e6
-    {: RESULT = e6; :}
+   {: RESULT = e6; :}
    ;
    
 OP5 ::= MUL
     {: RESULT = OperadorBin.Operadores.MUL; :}	 
- 	 | DIV
+ 	| DIV
 	{: RESULT = OperadorBin.Operadores.DIV; :}	 
-	 | MOD
+	| MOD
 	{: RESULT = OperadorBin.Operadores.MOD; :}
-     ; 
+    ; 
 
 
 //potencia
 E6 ::= E6: izquierda POT E7: derecha
-    {: RESULT = new OperadorBin(OperadorBin.POT, izquierda, derecha); :}
+   {: RESULT = new OperadorBin(OperadorBin.POT, izquierda, derecha); :}
    | E7: e7
-    {: RESULT = e7; :}
+   {: RESULT = e7; :}
    ;
 
 //dirección, puntero
-E7 ::= E7: izquierda OP7:op7 E8: derecha
-    {: RESULT = new OperadorBin(op7, izquierda, derecha); :}
+E7 ::= OP7:op7 E7: derecha
+   {: RESULT = new OperadorUn(op7, derecha); :}
    | E8: e8
-    {: RESULT = e8; :}
+   {: RESULT = e8; :}
    ;
 
    
@@ -387,24 +389,75 @@ OP7 ::= DIRECCION
     ;
 
 //negación
-E8 ::= NEG E8: e8
-    {: RESULT = new OperadorUn(OperadorUn.NEG, e8); :}
+E8 ::= NEG E8: derecha
+   {: RESULT = new OperadorUn(OperadorUn.NEG, derecha); :}
    | E9: e9
-    {: RESULT = e9; :}
+   {: RESULT = e9; :}
    ;
 
 //corchete, punto
 E9 ::= E9: izquierda CAP Expresion:derecha CCIERRE
-    {: RESULT = new OperadorBin(OperadorBin.CORCHETE, izquierda, derecha); :}
+   {: RESULT = new OperadorBin(OperadorBin.CORCHETE, izquierda, derecha); :}
    | E9: izquierda PUNTO E10: derecha
-    {: RESULT = new OperadorBin(OperadorBin.PUNTO, izquierda, derecha); :}
+   {: RESULT = new OperadorBin(OperadorBin.PUNTO, izquierda, derecha); :}
    | E10: e10
-    {: RESULT = e10; :}
+   {: RESULT = e10; :}
    ;
 
 //paréntesis
-E10 ::= E10: izquierda PAP Expresion: derecha PCIERRE 
-    {: RESULT = new OperadorBin(OperadorBin.PARENTESIS, izquierda, derecha); :}
-   | E10: e10 PAP PCIERRE
-    {: RESULT = e10; :}
-   ;
+E10 ::= Literal: e
+    {: RESULT = e; :}
+
+    | ID: id
+    {: RESULT = new Identificador(id); :}
+
+    //Llamada a función
+    | E10: e10 PAP Lista_Expresiones: lExpr PCIERRE
+    {: RESULT = new Call(e10, lExpr); :}
+
+    | E10: izquierda PAP Expresion: expr PCIERRE 
+    {: RESULT = expr;  :}
+    ;
+
+Literal ::= ENTERO: e
+        {: RESULT = e; :}
+        | FACTO: t
+        {: RESULT = t; :}
+        | FAKE: f
+        {: RESULT = f; :}
+        | NULO: n
+        {: RESULT = n; :}
+        | Array_Literal: aL
+        {: RESULT = aL; :}
+        | Struct_Literal: sL
+        {: RESULT = sL; :}
+        ;
+
+Array_Literal ::= CAP CCIERRE
+              {: RESULT = new LiteralArray(new ArrayList<Expresion>()); :}
+              | CAP Lista_Expresiones: lExpr CCIERRE
+              {: RESULT = new LiteralArray(lExpr); :}
+              ;
+
+Struct_Literal ::= LLAP Lista_Asig_Atributos: lAtr LLCIERRE
+               {: RESULT = new LiteralStruct(lAtr) :}
+               ;
+
+Lista_Asig_Atributos ::= ID: id ASIGNACION Expresion: expr
+                     {: Map<String, Expresion> valores = new HashMap<String, Expresion>();
+                     valores.put(id, expr); RESULT = valores :}
+                     | Lista_Asig_Atributos: lAtr COMA ID: id ASIGNACION Expresion: expr
+                     {: valores.put(id, expr); :}
+                     ;
+
+Lista_Expresiones ::= //Lista vacía
+                  {: RESULT = new ArrayList<Expresion>() :}
+                  | Lista_Expresiones': lExpr
+                  {: RESULT = lExpr; :}
+                  ;
+
+Lista_Expresiones' ::= Expresion: expr
+                   {: RESULT = (new ArrayList<Expresion>()).add(expr); :}
+                   | Lista_Expresiones': lExpr COMA Expresion: expr
+                   {: RESULT = lExpr.add(expr); :}
+                   ;
