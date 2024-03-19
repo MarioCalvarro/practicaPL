@@ -1,5 +1,7 @@
 package main.ast.expresiones;
 
-public class Expresion {
+import main.ast.instrucciones.Instruccion;
 
+public abstract class Expresion extends Instruccion{
+	
 }
