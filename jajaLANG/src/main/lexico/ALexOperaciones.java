@@ -80,7 +80,8 @@ public class ALexOperaciones {
 	}
 
 	public UnidadLexica unidadEntero() {
-		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.ENTERO, alex.lexema(), "ENTERO", new Entero(alex.lexema()));
+		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.ENTERO, alex.lexema(), "ENTERO",
+				new Entero(alex.lexema()));
 	}
 
 	// Operadores
