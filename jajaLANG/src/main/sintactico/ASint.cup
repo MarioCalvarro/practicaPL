@@ -86,7 +86,7 @@ non terminal DeclaracionVariables Lista_Atributos ;
 
 ///Expresiones
 non terminal Expresion Expresion, E1, E2, E3, E4, E5, E6, E7, E8, E9, E10;
-non terminal List<Expresion> Lista_Expresiones, Lista_Expresiones2;
+non terminal List<Expresion> Lista_Expresiones;
 non terminal OperadorBin.Operadores OP2, OP3, OP4, OP5;
 non terminal OperadorUn.Operadores OP7, OP8;
 
