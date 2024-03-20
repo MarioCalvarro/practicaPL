@@ -1,7 +1,7 @@
 package main.ast.instrucciones;
 
-import main.ast.Node;
+import main.ast.Nodo;
 
-public abstract class Instruccion extends Node {
+public abstract class Instruccion extends Nodo {
 
 }
