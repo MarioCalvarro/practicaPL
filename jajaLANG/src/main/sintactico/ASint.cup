@@ -13,6 +13,7 @@ import main.errors.GestionErroresJaja;
 import main.ast.Nodo;
 import main.ast.Identificador;
 import main.ast.Programa;
+import main.ast.Import;
 import main.ast.declaraciones.*;
 import main.ast.expresiones.*;
 import main.ast.instrucciones.*;
@@ -74,6 +75,7 @@ non terminal DeclaracionPar Parametro;
 ///Instrucciones
 non terminal List<Instruccion> Bloque_Anidado, Lista_Instrucciones;
 non terminal Instruccion Instruccion, Asignacion, Condicional, Cond_Else, Bucle, Inst_Return;
+non terminal Llamada Llamada_Fun;
 
 ///Tipos
 non terminal Tipo Tipo, T, Tipo_Reg;
@@ -162,7 +164,7 @@ Decl_Asig ::= IDEN: var
           {: RESULT = new DeclaracionVar(var); :}
 
           | IDEN: var ASIGNACION Expresion: expr
-          {: Result = new DeclaracionVar(var, expr); :}
+          {: RESULT = new DeclaracionVar(var, expr); :}
           ;
 
 
@@ -217,7 +219,7 @@ Instruccion ::= Decl_Variables: decl PUNTOCOMA       //Solo la declaracion de va
             {: RESULT = decl; :}
             |   Asignacion: as PUNTOCOMA
             {: RESULT = as; :}
-            |   Expresion: exp PUNTOCOMA        //Llamadas a funcion
+            |   Llamada_Fun: llamada PUNTOCOMA        //Llamadas a funcion
             {: RESULT = exp; :}
             |   Condicional: cond
             {: RESULT = cond; :}
@@ -280,7 +282,7 @@ Tipo ::= Tipo: tipo PUNTERO
      ;
 
 Lista_Enteros ::= ENTERO: ent
-              {: RESULT = (new ArrayList<Integer>()).add(ent); :}
+              {: RESULT = (new ArrayList<Entero>()).add(ent); :}
               | Lista_Enteros: lEnt COMA ENTERO: ent
               {: lEnt.add(ent); RESULT = lEnt; :}
               ;
@@ -413,7 +415,7 @@ OP5 ::= MUL
 
 //potencia
 E6 ::= E6: izquierda POT E7: derecha
-   {: RESULT = new OperadorBin(OperadorBin.POT, izquierda, derecha); :}
+   {: RESULT = new OperadorBin(OperadorBin.Operadores.POT, izquierda, derecha); :}
    | E7: e7
    {: RESULT = e7; :}
    ;
@@ -427,9 +429,9 @@ E7 ::= OP7:op7 E7: derecha
 
    
 OP7 ::= DIRECCION
-    {: RESULT = OperadorBin.Operadores.DIRECCION; :}	 	 
+    {: RESULT = OperadorUn.Operadores.DIRECCION; :}	 	 
     | PUNTERO
-    {: RESULT = OperadorBin.Operadores.PUNTERO; :}
+    {: RESULT = OperadorUn.Operadores.PUNTERO; :}
     ;
 
 //negación y menos unario
@@ -450,13 +452,18 @@ E9 ::= Literal: e
    {: RESULT = e; :}
    | PAP Expresion: expr PCIERRE
    {: RESULT = expr; :}
-   | E10: izquierda PAP Lista_Expresiones: lExpr PCIERRE
-   {: RESULT = new Llamada(izquierda, lExpr); :}
-   | E10: izquierda PAP PCIERRE
-   {: RESULT = new Llamada(izquierda, new ArrayList<Expresion>()); :}
+   | Llamada_Fun: ll
+   {: RESULT = ll; :}
    | E10: expr
    {: RESULT = expr; :}
    ;
+
+//Los array y registros no pueden tener funciones
+Llamada_Fun ::= IDEN: izquierda PAP Lista_Expresiones: lExpr PCIERRE
+            {: RESULT = new Llamada(izquierda, lExpr); :}
+            | IDEN: izquierda PAP PCIERRE
+            {: RESULT = new Llamada(izquierda, new ArrayList<Expresion>()); :}
+            ;
 
 Literal ::= ENTERO: e
         {: RESULT = e; :}
@@ -486,7 +493,7 @@ Lista_Asig_Atributos ::= IDEN: id ASIGNACION Expresion: expr
                      {: Map<String, Expresion> valores = new HashMap<String, Expresion>();
                      valores.put(id, expr); RESULT = valores; :}
                      | Lista_Asig_Atributos: lAtr COMA IDEN: id ASIGNACION Expresion: expr
-                     {: valores.put(id, expr); :}
+                     {: lAtr.put(id, expr); :}
                      ;
 
 
@@ -501,7 +508,8 @@ E10 ::= E10: izquierda CAP Expresion:derecha CCIERRE
 
 
 Lista_Expresiones ::= Expresion: expr
-                   {: RESULT = (new ArrayList<Expresion>()).add(expr); :}
+                   {: List<Expresion> lExpr = new ArrayList<Expresion>();
+                   lExpr.add(expr); RESULT = lExpr; :}
                    | Lista_Expresiones: lExpr COMA Expresion: expr
-                   {: RESULT = lExpr.add(expr); :}
+                   {: lExpr.add(expr); RESULT = lExpr; :}
                    ;
