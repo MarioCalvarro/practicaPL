@@ -36,7 +36,7 @@ init with {:
 
 
 terminal    //Palabras clave
-            ENT, BIN, SI, SINO, MIENTRAS, PARA, DIVER, REGISTRO,
+            ENT, BIN, SI, SINO, MIENTRAS, PARA, DIVER, REGISTRO, VECTOR,
             INCOGNITO, DEVUELVE, TRAFICAR, COMO,
 
             //Operadores Aritmeticos
@@ -274,19 +274,15 @@ Tipo ::= Tipo: tipo PUNTERO
 //- Cambiar el acceso a arrays (poco habitual)
 //- Quitar las expresiones de instrucciones → ¿Las llamadas a función como se
 //  harían entonces?
-     | Tipo: tipo CAP Lista_Enteros: lEnt CCIERRE
-     {: RESULT = new TipoArray(tipo, lEnt); :}
+     | VECTOR PAP Tipo: t ENTERO: ent PCIERRE 
+     {: RESULT = new TipoArray(tipo, ent); :}
+
+    // | Tipo: tipo CAP Lista_Enteros: lEnt CCIERRE
+    // {: RESULT = new TipoArray(tipo, lEnt); :}
 
      | T: tipo
      {: RESULT = tipo; :}
      ;
-
-Lista_Enteros ::= ENTERO: ent
-              {: RESULT = (new ArrayList<Entero>()).add(ent); :}
-              | Lista_Enteros: lEnt COMA ENTERO: ent
-              {: lEnt.add(ent); RESULT = lEnt; :}
-              ;
-
 
 T ::= ENT
   {: RESULT = TipoEntero.instancia();  :}
@@ -450,8 +446,6 @@ OP8 ::= NEG
 //Literales y paréntesis
 E9 ::= Literal: e
    {: RESULT = e; :}
-   | PAP Expresion: expr PCIERRE
-   {: RESULT = expr; :}
    | Llamada_Fun: ll
    {: RESULT = ll; :}
    | E10: expr
@@ -502,6 +496,8 @@ E10 ::= E10: izquierda CAP Expresion:derecha CCIERRE
     {: RESULT = new AccesoArray(izquierda, derecha); :}
     | E10: izquierda PUNTO IDEN: id
     {: RESULT = new AccesoStruct(izquierda, id); :}
+    | PAP Expresion: expr PCIERRE
+    {: RESULT = expr; :}
     | IDEN: id
     {: RESULT = new Identificador(id); :}
     ;

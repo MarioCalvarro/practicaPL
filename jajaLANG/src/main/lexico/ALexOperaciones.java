@@ -54,6 +54,10 @@ public class ALexOperaciones {
 		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.REGISTRO, "REGISTRO");
 	}
 
+	public UnidadLexica unidadVector() {
+		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.VECTOR, "VECTOR");
+	}
+
 	public UnidadLexica unidadNulo() {
 		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.NULO, "NULO", Nulo.instancia());
 	}

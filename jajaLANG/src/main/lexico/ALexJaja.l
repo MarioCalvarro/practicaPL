@@ -50,6 +50,7 @@ incognito = incognito
 devuelve = devuelve
 traficar = \#traficar
 como = como
+vector = vector
 
 
 //Variables
@@ -125,6 +126,7 @@ llaveCierre = \}
 {devuelve}                {return ops.unidadDevuelve();}
 {traficar}                {return ops.unidadTraficar();}
 {como}                    {return ops.unidadComo();}
+{vector}                  {return ops.unidadVector();}
 
 
 //Variables
