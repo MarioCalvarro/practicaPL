@@ -199,7 +199,7 @@ Parametro ::=  IDEN: var DOSPUNTOS Tipo: t
 ////INSTRUCCIONES////
 /////////////////////
 ///Bloque anidado///
-Bloque_Anidado ::= CAP Lista_Instrucciones: LIns CCIERRE
+Bloque_Anidado ::= LLAP Lista_Instrucciones: LIns LLCIERRE
                {: RESULT = LIns; :}
                ;
 
@@ -459,9 +459,9 @@ Literal ::= ENTERO: e
         {: RESULT = f; :}
         | NULO: n
         {: RESULT = n; :}
-        | Array_Literal: aL
+        | DEVUELVE Array_Literal: aL
         {: RESULT = aL; :}
-        | Struct_Literal: sL
+        | DEVUELVE Struct_Literal: sL
         {: RESULT = sL; :}
         ;
 
