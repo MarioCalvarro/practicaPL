@@ -265,6 +265,13 @@ Inst_Return ::= DEVUELVE Expresion: expr
 Tipo ::= Tipo: tipo PUNTERO
      {: RESULT = new TipoPuntero(tipo); :}
 
+//TODO: Problema porque si las expresiones son instrucciones
+//el acceso a arrays es igual a la declaración de un array de dimensión 1
+//→ Ambigüedad. Posibilidades:
+//- Cambiar esto a corchetes (poco habitual)
+//- Cambiar el acceso a arrays (poco habitual)
+//- Quitar las expresiones de instrucciones → ¿Las llamadas a función como se
+//  harían entonces?
      | Tipo: tipo CAP Lista_Enteros: lEnt CCIERRE
      {: RESULT = new TipoArray(tipo, lEnt); :}
 
