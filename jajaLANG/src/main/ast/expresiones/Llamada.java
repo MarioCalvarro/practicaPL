@@ -3,10 +3,10 @@ package main.ast.expresiones;
 import java.util.List;
 
 public class Llamada extends Expresion {
-	private Expresion exp;
+	private String exp;
     private List<Expresion> listaExpresiones;
 
-	public Llamada(Expresion exp, List<Expresion> listaExpresiones) {
+	public Llamada(String exp, List<Expresion> listaExpresiones) {
 		this.exp = exp;
 		this.listaExpresiones = listaExpresiones;
 

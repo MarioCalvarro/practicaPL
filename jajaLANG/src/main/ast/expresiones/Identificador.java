@@ -1,6 +1,6 @@
-package main.ast;
+package main.ast.expresiones;
 
-public class Identificador {
+public class Identificador extends Expresion {
     private String id;
 
     public Identificador(String id) {
