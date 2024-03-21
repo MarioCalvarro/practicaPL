@@ -120,11 +120,11 @@ Lista_Imports ::= Lista_Imports: lImp TRAFICAR IDEN: ruta COMO IDEN: id
               ;
 
 
-Lista_Declaraciones ::= Lista_Declaraciones: lDecl Declaracion_Alias: dAlias
+Lista_Declaraciones ::= Lista_Declaraciones: lDecl Declaracion_Alias: dAlias PUNTOCOMA
                     {: lDecl.add(dAlias); RESULT = lDecl; :}
 
                     //Variables
-                    | Lista_Declaraciones: lDecl Decl_Variables: dGen
+                    | Lista_Declaraciones: lDecl Decl_Variables: dGen PUNTOCOMA
                     {: lDecl.add(dGen); RESULT = lDecl; :}
 
                     //Funciones
