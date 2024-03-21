@@ -13,6 +13,7 @@ public class InsBucleWhile extends Instruccion {
 		this.cuerpo = cuerpo;
 	}
 	
+    @Override
 	public String toString() {
 
     	StringBuilder sb = new StringBuilder();

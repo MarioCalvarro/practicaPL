@@ -10,17 +10,9 @@ public class TipoArray extends Tipo {
 		tipoElementos = base;
 		this.tam = tam;
 	}
-	//
-	// public TipoArray(Tipo base, List<Integer> lista_tam) {
-	// 	tipoElementos = base;
-	// 	// El último no lo recorremos porque es el base
-	// 	for (int i = lista_tam.size() - 1; i > 0; i--) {
-	// 		tipoElementos = new TipoArray(tipoElementos, lista_tam.get(i).intValue());
-	// 	}
-	// 	this.tam = lista_tam.get(0);
-	// }
 	
+	@Override
 	public String toString() {
-		return "vector" + "(" + tipoElementos + ", " + tam +")" +'\n'; 
+		return "vector" + "(" + tipoElementos + ", " + tam +")"; 
 	}
 }

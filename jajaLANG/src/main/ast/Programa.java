@@ -15,6 +15,7 @@ public class Programa {
         this.lista_declaraciones = lista_declaraciones;
     }
     
+    @Override
     public String toString() {
     	StringBuilder sb = new StringBuilder();
 		for (Import imp : lista_imports) {

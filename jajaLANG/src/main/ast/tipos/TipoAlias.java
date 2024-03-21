@@ -6,7 +6,8 @@ public class TipoAlias extends Tipo {
         this.id = id;
     }
     
+    @Override
     public String toString() {
-		return id + '\n';
+		return id;
 	}
 }

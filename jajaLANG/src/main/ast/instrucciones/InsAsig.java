@@ -10,6 +10,7 @@ public class InsAsig extends Instruccion {
         this.right = right;
     }
     
+    @Override
     public String toString() {
     	return left + " = " + right;
     }

@@ -9,6 +9,7 @@ public class InsReturn extends Instruccion {
 		this.expr = expr;
 	}
 	
+    @Override
 	public String toString() {
 		return "devuelve" + " " + expr;
 	}

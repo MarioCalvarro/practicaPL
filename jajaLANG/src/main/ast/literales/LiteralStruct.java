@@ -13,6 +13,7 @@ public class LiteralStruct extends Literal {
 		this.lExpr=lExpr;
 	}
 	
+    @Override
 	public String toString() {
 		int contador=0, capacidad=lExpr.size();
 		

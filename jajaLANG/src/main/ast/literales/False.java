@@ -7,7 +7,8 @@ public class False extends Literal {
 		return instancia;
 	}
 	
+    @Override
 	public String toString() {
-		return "fake" + '\n';
+		return "fake";
 	}
 }

@@ -7,7 +7,8 @@ public class Nulo extends Literal {
 		return instancia;
 	}
 	
+	@Override
 	public String toString() {
-		return "nulo" + '\n';
+		return "nulo";
 	}
 }

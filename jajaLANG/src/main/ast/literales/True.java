@@ -7,7 +7,8 @@ public class True extends Literal {
 		return instancia;
 	}
 	
+	@Override
 	public String toString() {
-		return "facto" + '\n';
+		return "facto";
 	}
 }

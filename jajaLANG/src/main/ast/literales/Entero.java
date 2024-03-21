@@ -11,7 +11,8 @@ public class Entero extends Literal {
 		this(Integer.parseInt(lexema));
 	}
 	
+    @Override
 	public String toString() {
-		return String.valueOf(value) + '\n';
+		return String.valueOf(value);
 	}
 }

@@ -10,6 +10,7 @@ public class Import {
         this.namespace = namespace;
     }
     
+    @Override
     public String toString() {
     	return "#traficar " + ruta + " COMO " + namespace +'\n';
     }

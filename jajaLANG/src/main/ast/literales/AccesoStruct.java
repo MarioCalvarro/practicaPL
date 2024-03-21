@@ -11,7 +11,8 @@ public class AccesoStruct extends Literal {
 		this.id = id;
 	}
 	
+    @Override
 	public String toString() {
-		return exp + "." + id + '\n';
+		return exp + "." + id;
 	}
 }

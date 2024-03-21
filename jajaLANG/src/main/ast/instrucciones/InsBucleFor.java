@@ -21,9 +21,8 @@ public class InsBucleFor extends Instruccion {
 		this.id=id;
 	}
 	
-    // PARA IDEN: id ASIGNACION Expresion: exprIni FLECHA Expresion: exprFin Bloque_Anidado: bloq
 
-	
+    @Override
 	public String toString() {
 
     	StringBuilder sb = new StringBuilder();
