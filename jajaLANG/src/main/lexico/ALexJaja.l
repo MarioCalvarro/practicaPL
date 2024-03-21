@@ -51,6 +51,7 @@ devuelve = devuelve
 traficar = \#traficar
 como = como
 vector = vector
+nuevo = nuevo
 
 
 //Variables
@@ -127,6 +128,7 @@ llaveCierre = \}
 {traficar}                {return ops.unidadTraficar();}
 {como}                    {return ops.unidadComo();}
 {vector}                  {return ops.unidadVector();}
+{nuevo}                   {return ops.unidadNuevo();}
 
 
 //Variables

@@ -35,7 +35,7 @@ init with {:
 
 terminal    //Palabras clave
             ENT, BIN, SI, SINO, MIENTRAS, PARA, DIVER, REGISTRO, VECTOR,
-            INCOGNITO, DEVUELVE, TRAFICAR, COMO,
+            INCOGNITO, DEVUELVE, TRAFICAR, COMO, NUEVO,
 
             //Operadores Aritmeticos
             POT, MUL, DIV, MOD, SUMA, RESTA,
@@ -462,9 +462,9 @@ Literal ::= ENTERO: e
         {: RESULT = f; :}
         | NULO: n
         {: RESULT = n; :}
-        | DEVUELVE Array_Literal: aL
+        | NUEVO Array_Literal: aL
         {: RESULT = aL; :}
-        | DEVUELVE Struct_Literal: sL
+        | NUEVO Struct_Literal: sL
         {: RESULT = sL; :}
         ;
 

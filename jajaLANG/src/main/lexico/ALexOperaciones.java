@@ -70,6 +70,10 @@ public class ALexOperaciones {
 		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.DEVUELVE, "DEVUELVE");
 	}
 
+	public UnidadLexica unidadNuevo() {
+		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.NUEVO, "NUEVO");
+	}
+
 	public UnidadLexica unidadTraficar() {
 		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.TRAFICAR, "TRAFICAR");
 	}
