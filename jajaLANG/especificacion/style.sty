@@ -24,14 +24,8 @@
     framexleftmargin=0.9em,    
     framexbottommargin=6pt, 
     frame=l,
-%    frame=single,        
-%    frame=tb, framerule=0pt,    
     framesep=6.5mm,
     fillcolor=\color{white},
-%    numbers=left,
-    numberstyle=\normalfont\color{red},
-%    numberstyle=\footnotesize,    
-    numbersep=10pt,
     abovecaptionskip=10pt, %space above the caption
     belowcaptionskip=10pt, %space below the caption
     extendedchars=true,
@@ -50,3 +44,33 @@
 %% Inclusion de referencias cruzadas por defecto y específicas
 \usepackage[colorlinks=true]{hyperref}
 \hypersetup{linkcolor = blue}
+
+\usepackage{xcolor}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinelanguage{jajaLANG}{
+    morecomment=[l]{//}, % l is for line comment
+    morecomment=[s]{/*}{*/}, % s is for start and end delimiter
+    morestring=[b]"
+    keywords = {
+        ent, bin, facto, fake, nulo, si, sino, mientras, para, diver, vector, registro,
+        incognito, devuelve, traficar, como, nuevo,
+    },
+}
+
+\lstset{language=jajaLANG,
+    basicstyle=\ttfamily,
+    keywordstyle=\bfseries,
+    showstringspaces=false,
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    morekeywords={tipo, tipo1, tipo2,ent, bin, facto, fake, nulo, si, sino,
+        mientras, para, diver, vector, registro, incognito, devuelve, traficar,
+        como, nuevo,},
+}
+

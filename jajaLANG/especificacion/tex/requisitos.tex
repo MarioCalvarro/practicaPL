@@ -24,6 +24,8 @@ Listado de las palabras clave del lenguaje:
     \item \lstinline{devuelve}
     \item \lstinline{#traficar}
     \item \lstinline{como}
+    \item \lstinline{vector}
+    \item \lstinline{nuevo}
 \end{itemize}
 
 \subsubsection{Identificadores}
@@ -57,34 +59,32 @@ comas.
 \begin{figure}[htbp]
     \centering
     \begin{lstlisting}
-tipo id1, id2;
+tipo id1, id2...;
     \end{lstlisting}
     \caption{Declaración de múltiples variables.}
 \end{figure}
 
 
 \subsubsection{Arrays}
-Respecto a los arrays, permitiremos la creación de arrays de dimensión
-arbitraria cuyo tamaño puede venir dado en tiempo de ejecución por una variable
-o en compilación de forma constante. La sintaxis para declarar estos arrays será
-el tipo de los elementos del array, seguido del identificador del mismo y
-corchetes que abren y cierran. Cada pareja de corchetes indicará una dimensión
-más.
+Respecto a los arrays, permitiremos crear arrays de un tipo genérico, pero
+tamaño dado en tipo de compilación mediante la palabra clave \lstinline{vector}.
+Con esto permitiremos crear arrays de un número genérico de dimensiones
+(simplemente en tipo ponemos otro array).
 \begin{figure}[htbp]
     \centering
     \begin{lstlisting}
-tipo arr[dim1]...[dimN];
+vector(tipo, tam) arr;
     \end{lstlisting}
-    \caption{Declaración de arrays de dimensión arbitraria.}
+    \caption{Declaración de arrays.}
 \end{figure}
 
 \subsubsection{Registros y punteros}
 Hemos decidido incluir en nuestro lenguaje tanto punteros como registros. La
 declaración de los punteros la realizaremos similarmente a la de las variables,
 pero incluyendo el símbolo (\lstinline{@}) entre el tipo y el identificador. Respecto a los
-registros se hace de manera similar: primero, utilizamos la palabra clave \lstinline{registro}. Tras esto, iniciamos un bloque anidado
-con los campos del registro y su tipo, separados por comas (el último también
-puede tener coma al final de forma opcional).
+registros se hace de manera similar a los arrays. Primero, utilizamos la palabra clave \lstinline{registro}. Tras esto, iniciamos un bloque anidado
+con los campos del registro, separados por comas (el último también
+puede tener coma al final de forma opcional), y, separado por punto y coma, su tipo.
 \begin{figure}[htbp]
     \centering
     \begin{lstlisting}
@@ -131,7 +131,7 @@ de la función y un bloque anidado con el cuerpo de la función. El tipo de
 retorno es opcional en el caso de que únicamente se modifique el estado del
 programa. En el caso de que queramos devolver un valor, utilizaremos la
 sentencia \lstinline{devuelve valor;} que, además, hará que la ejecución del
-programa vuelva al lugar desde el que se ha llamado a la función.
+programa vuelva al lugar desde el que se llamó a la función.
 \begin{figure}[htbp]
     \centering
     \begin{lstlisting}
@@ -161,7 +161,7 @@ fichero importado (para evitar la colisión de nombres).
     \caption{Importación de código procedente de otro fichero.}
 \end{figure}
 Para llamar a las funciones y acceder a las variables declaradas en este otro
-fichero, usaremos el operador \lstinline{.} precedido del identificador del
+fichero, usaremos el operador \lstinline{::} precedido del identificador del
 \textit{namespace} y seguido de aquello a lo que queremos acceder.
 
 \subsection{Tipos}

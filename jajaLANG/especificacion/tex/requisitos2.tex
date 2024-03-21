@@ -1,7 +1,7 @@
 El usuario podrá definir sus propios tipos haciendo un alias de tipos
 compuestos («registros» o «arrays»). La estructura para realizar un alias será la
 siguiente: la palabra clave \lstinline{incognito} seguido del alias y un igual. Tras esto,
-se escribirá la expresión que se abrevia.
+se escribirá el tipo que se abrevia.
 \begin{figure}[htbp]
     \centering
     \begin{lstlisting}
@@ -13,20 +13,11 @@ incognito alias = tipo;
 \subsection{Conjunto de instrucciones del lenguaje}
 En nuestro lenguaje habrá presentes multitud de instrucciones de asignación
 dependiendo del tipo de la variable (simples, arrays o registros). Todas ellas
-tendrán en común el uso del operador igual (\lstinline{=}) y la siguiente estructura: en el
-lado izquierdo de la asignación tendremos una declaración de una variable o su
-identificador y en el derecho una expresión con un valor. Las expresiones
-posibles son las aritméticas y booleanas habituales (con los operadores
-anteriormente definidos), pero también hemos decidido incorporar el operador
-ternario (\lstinline{?}) que evalúa una condición y dependiendo de esto asigna un valor u
-otro (que vienen dados, a su vez, por expresiones). 
-\begin{figure}[htbp]
-    \centering
-    \begin{lstlisting}
-expr_bin? expr_true : expr_false;
-    \end{lstlisting}
-    \caption{Expresión con ramas condicionales.}
-\end{figure}
+tendrán en común el uso del operador asignación (\lstinline{=}) y la siguiente
+estructura: en el lado izquierdo de la asignación tendremos una declaración de
+una variable o una expresión de acceso a una variable, array o registro y en el
+derecho una expresión con un valor. Las expresiones posibles son las aritméticas
+y booleanas habituales (con los operadores anteriormente definidos). 
 
 \subsubsection{Variables simples}
 La asignación de variables simples simplemente se realizará con el operador
@@ -70,10 +61,10 @@ variable de tipo array y, simultáneamente, asignarle un valor.
 arr = [el1, ..., eln];
 
 //Declaracion y asignacion
-tipo arr[dim1] = [el1, ..., eln];
+vector(tipo, n) arr = [el1, ..., eln];
 
 //Reserva de memoria para un array de n dimensiones
-tipo arr[dim1]...[dimN] = tipo[i1]...[in];
+vector(vector(.., dim2), dim1) arr = nuevo vector(vector(.., dim2), dim1);
     \end{lstlisting}
     \caption{Asignación de valores a los arrays.}
 \end{figure}
@@ -86,8 +77,7 @@ manera implícita en la declaración.
 \begin{figure}[htbp]
     \centering
     \begin{lstlisting}
-//Asignacion a un array la lista de elementos eli
-//Los elementos pueden ser, a su vez, registros o arrays
+//Los elementos pueden ser, a su vez, registros o arrays recursivamente
 reg = {
     atributo11 = expr11,
     atributo12 = expr12,
@@ -187,21 +177,22 @@ escribirBin();
 \end{figure}
 
 \subsubsection{Memoria dinámica}
-Para reservar reservar memoria localizada en el \textit{heap} y luego liberarla
-hemos decidido incluir dos funciones para estas dos tareas. Para la reserva
-tenemos la función \lstinline{reservar} que tiene como argumento el tamaño que
-queremos reservar. Debido a que los registros tienen un tamaño heterogéneo,
-debemos incluir a su vez una función que devuelva el tamaño de un tipo, que
-hemos llamado \lstinline{capacidad} (su argumento es el tipo considerado). Esta
-función \lstinline{reservar} devolverá la primera dirección de la memoria
-reservada, es decir, se tendrá que asignar a un puntero. A la hora de liberar
-esta memoria utilizaremos la función \lstinline{liberar} que tiene como
-argumento el puntero que apunta a la memoria reservada.
+Para reservar memoria localizada en el \textit{heap} y luego liberarla
+hemos decidido la palabra clave \lstinline{nuevo} para la reserva y la función
+\lstinline{liberar} para liberarla. 
+
+Esta reserva consistirá simplemente en una expresión utilizando la palabra clave
+\lstinline{nuevo} seguida del tipo que queremos reservar (por ejemplo, para
+reservar memoria dinámica para un entero sería \lstinline{nuevo ent}). Esto hará
+que se reserve en el \textit{heap} la cantidad de memoria que ocupe este tipo.
+La liberación consiste simplemente en llamar a \lstinline{liberar} y como
+parámetro el puntero que señala el inicio de la región de memoria reservada
+anteriormente.
 \begin{figure}[htbp]
     \centering
     \begin{lstlisting}
 //Reserva de memoria
-tipo @ punt = reservar(capacidad(tipo));
+tipo @ punt = nuevo tipo;
 
 //Liberar memoria
 liberar(punt);
