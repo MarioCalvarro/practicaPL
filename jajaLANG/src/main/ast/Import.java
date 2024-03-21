@@ -1,7 +1,6 @@
 package main.ast;
 
 public class Import {
-	
     private String ruta;
     private String namespace;
 
@@ -12,6 +11,6 @@ public class Import {
     
     @Override
     public String toString() {
-    	return "#traficar " + ruta + " COMO " + namespace +'\n';
+    	return "#traficar " + ruta + " COMO " + namespace;
     }
 }

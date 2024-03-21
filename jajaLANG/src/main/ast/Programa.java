@@ -2,11 +2,9 @@ package main.ast;
 
 import java.util.List;
 
-import main.ast.declaraciones.DeclaracionVar;
 import main.ast.declaraciones.ListaDeclaraciones;
 
 public class Programa {
-	
     private List<Import> lista_imports;
     private ListaDeclaraciones lista_declaraciones;
     
@@ -19,7 +17,7 @@ public class Programa {
     public String toString() {
     	StringBuilder sb = new StringBuilder();
 		for (Import imp : lista_imports) {
-			sb.append(imp);
+			sb.append(imp).append('\n');
 		}
 		sb.append(lista_declaraciones);
 		return sb.toString();		 	

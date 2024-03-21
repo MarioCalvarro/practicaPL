@@ -13,6 +13,6 @@ public class TipoArray extends Tipo {
 	
 	@Override
 	public String toString() {
-		return "vector" + "(" + tipoElementos + ", " + tam +")"; 
+		return "vector" + "(" + tipoElementos + ", " + tam + ")"; 
 	}
 }
