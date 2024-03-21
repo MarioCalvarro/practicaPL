@@ -8,7 +8,7 @@ public class InsCond extends Instruccion {
 	private Expresion condicion;
 	private List<Instruccion> cuerpo;
 	private InsCond instElse;
-	private Boolean isfirst;
+	private Boolean esPrimero;
 
     //Sin else 
     public InsCond() {}
@@ -16,6 +16,7 @@ public class InsCond extends Instruccion {
 	// Constructor del else final
 	public InsCond(List<Instruccion> cuerpo) {
 		this.cuerpo = cuerpo;
+        this.esPrimero = false;
 	}
 
 	public InsCond(Expresion condicion, List<Instruccion> cuerpo, InsCond instElse) {
@@ -28,16 +29,16 @@ public class InsCond extends Instruccion {
 		this.condicion = condicion;
 		this.cuerpo = cuerpo;
 		this.instElse = instElse;
-		this.isfirst=isfirst;
+		this.esPrimero=isfirst;
 		
 	}
 	
     @Override
 	public String toString() {
-
     	StringBuilder sb = new StringBuilder();
+
     	if(cuerpo != null) {
-    		if(isfirst == true )
+    		if(esPrimero == true )
         		sb.append("si");
         	else
         		sb.append("sino");
@@ -48,10 +49,14 @@ public class InsCond extends Instruccion {
     		sb.append(" {\n");
     		
     		for (Instruccion ins : cuerpo) {		
-				sb.append('\t').append(ins).append('\n');			
+				sb.append(ins).append('\n');			
     		}
-    		
-    		sb.append("}");
+
+    		sb.append("} ");
+
+            if (instElse != null) {
+                sb.append(instElse);
+            }
     	}
     	
 		return sb.toString();	

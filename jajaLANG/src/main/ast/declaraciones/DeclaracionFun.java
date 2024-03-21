@@ -32,15 +32,20 @@ public class DeclaracionFun implements Declaracion {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("DIVER ").append(id).append("(");
+        int contador = 0;
+		sb.append("diver ").append(id).append("(");
 		for (DeclaracionVar dv : parametros) {
-			sb.append(dv).append("->");
+            sb.append(dv);
+            contador += 1;
+            if (contador < parametros.size()) {
+                sb.append("->");
+            }
 		}
 		sb.append(")");
 		if (tipo != null) {
 			sb.append(" -> ").append(tipo);
 		}
-		sb.append("{\n");
+		sb.append(" {\n");
         for (Instruccion ins : cuerpo) {
             sb.append(ins).append("\n");
         }
