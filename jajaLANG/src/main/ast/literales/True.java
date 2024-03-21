@@ -6,4 +6,8 @@ public class True extends Literal {
 	public static True instancia() {
 		return instancia;
 	}
+	
+	public String toString() {
+		return "facto" + '\n';
+	}
 }

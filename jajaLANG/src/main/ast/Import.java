@@ -11,6 +11,6 @@ public class Import {
     }
     
     public String toString() {
-    	return "traficar " + ruta + " COMO " + namespace +'\n';
+    	return "#traficar " + ruta + " COMO " + namespace +'\n';
     }
 }

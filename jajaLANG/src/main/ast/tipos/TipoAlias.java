@@ -5,4 +5,8 @@ public class TipoAlias extends Tipo {
     public TipoAlias(String id) {
         this.id = id;
     }
+    
+    public String toString() {
+		return id + '\n';
+	}
 }

@@ -9,4 +9,6 @@ public class TipoBinario extends Tipo {
     public static TipoBinario instancia() {
         return instancia;
     }
+    
+    
 }

@@ -10,4 +10,8 @@ public class Entero extends Literal {
 	public Entero(String lexema) {
 		this(Integer.parseInt(lexema));
 	}
+	
+	public String toString() {
+		return String.valueOf(value) + '\n';
+	}
 }

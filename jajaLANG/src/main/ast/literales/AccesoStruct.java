@@ -10,4 +10,8 @@ public class AccesoStruct extends Literal {
 		this.exp = exp;
 		this.id = id;
 	}
+	
+	public String toString() {
+		return exp + "." + id + '\n';
+	}
 }

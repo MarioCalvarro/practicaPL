@@ -11,7 +11,8 @@ public class AccesoArray extends Literal{
 		this.indice = indice;
 	}
 	
+	
 	public String toString() {
-		return null;
+		return array + " [" + indice + " ]" + '\n';
 	}
 }

@@ -6,4 +6,8 @@ public class Nulo extends Literal {
 	public static Nulo instancia() {
 		return instancia;
 	}
+	
+	public String toString() {
+		return "nulo" + '\n';
+	}
 }

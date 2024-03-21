@@ -6,4 +6,8 @@ public class False extends Literal {
 	public static False instancia() {
 		return instancia;
 	}
+	
+	public String toString() {
+		return "fake" + '\n';
+	}
 }

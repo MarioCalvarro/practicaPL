@@ -19,4 +19,8 @@ public class TipoArray extends Tipo {
 	// 	}
 	// 	this.tam = lista_tam.get(0);
 	// }
+	
+	public String toString() {
+		return "vector" + "(" + tipoElementos + ", " + tam +")" +'\n'; 
+	}
 }
