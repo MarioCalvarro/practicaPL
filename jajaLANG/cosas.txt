@@ -1,3 +1,0 @@
-- Marcar en negrita palabras clave en los documentos
-- Cuidado reservar y arrays con tamaño fijo
-- Cuidado con el incógnito y los namespaces
