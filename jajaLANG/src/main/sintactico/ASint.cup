@@ -272,7 +272,7 @@ Tipo ::= Tipo: tipo PUNTERO
 //- Cambiar el acceso a arrays (poco habitual)
 //- Quitar las expresiones de instrucciones → ¿Las llamadas a función como se
 //  harían entonces?
-     | VECTOR PAP Tipo: tipo ENTERO: ent PCIERRE 
+     | VECTOR PAP Tipo: tipo COMA ENTERO: ent PCIERRE 
      {: RESULT = new TipoArray(tipo, ent); :}
 
      | T: tipo
