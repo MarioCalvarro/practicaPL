@@ -467,7 +467,7 @@ Literal ::= ENTERO: e
         | NUEVO Struct_Literal: sL
         {: RESULT = sL; :}
         | NUEVO Tipo: t
-        {: RESULT = new DirDinamica(t); }
+        {: RESULT = new DirDinamica(t); :}
         ;
 
 Array_Literal ::= CAP CCIERRE
@@ -484,7 +484,7 @@ Lista_Asig_Atributos ::= IDEN: id ASIGNACION Expresion: expr
                      {: Map<String, Expresion> valores = new HashMap<String, Expresion>();
                      valores.put(id, expr); RESULT = valores; :}
                      | Lista_Asig_Atributos: lAtr COMA IDEN: id ASIGNACION Expresion: expr
-                     {: lAtr.put(id, expr); :}
+                     {: lAtr.put(id, expr); RESULT = lAtr; :}
                      ;
 
 

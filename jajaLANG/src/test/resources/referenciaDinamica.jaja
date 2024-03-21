@@ -18,11 +18,11 @@ diver tronco() {
     //Ejemplo complicado de punteros
     //registros y arrays con mem. dinamica
     dato_t @ d = nuevo dato_t;
-    @d = {
+    @d = nuevo {
         atr1 = nuevo ent,
-        atr2 = [nuevo ent, nuevo ent],
-    }
+        atr2 = nuevo [nuevo ent, nuevo ent]
+    };
     @(@d).atr1 = 4;
-    (@d).atr2[0] = 1;
-    (@d).atr2[1] = 2;
+    @(@d).atr2[0] = 1;
+    @(@d).atr2[1] = 2;
 }

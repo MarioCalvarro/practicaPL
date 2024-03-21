@@ -38,6 +38,6 @@ public class OperadorUn extends Expresion{
 
     @Override
 	public String toString() {
-		return op.toString() + derecha;
+		return op.toString() + "(" + derecha + ")";
 	}
 }

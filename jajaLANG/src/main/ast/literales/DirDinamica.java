@@ -2,7 +2,7 @@ package main.ast.literales;
 
 import main.ast.tipos.Tipo;
 
-public class DirDinamica {
+public class DirDinamica extends Literal {
     private Tipo t;
 
     public DirDinamica(Tipo t) {
@@ -11,6 +11,6 @@ public class DirDinamica {
 
     @Override
     public String toString() {
-        return "nuevo" + t.toString();
+        return "nuevo " + t.toString();
     }
 }

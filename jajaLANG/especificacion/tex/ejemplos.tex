@@ -94,7 +94,7 @@ acceso a sus atributos/elementos y su modificación.
 incognito dato = registro { arr: vector(ent, 3), };
 
 diver tronco() {
-    dato x = nuevo { arr = nuevo [1, 2, 3] };
+    dato x = nuevo { arr = nuevo [1, 2, 3], a = 3 };
     escribeEnt(x.arr[0]);
     x.arr[0] = 9;       //Asociativo por la izquierda
     escribeEnt(x.arr[0]);
@@ -129,13 +129,13 @@ diver tronco() {
     //Ejemplo complicado de punteros
     //registros y arrays con mem. dinamica
     dato_t @ d = nuevo dato_t;
-    @d = {
+    @d = nuevo {
         atr1 = nuevo ent,
-        atr2 = [nuevo ent, nuevo ent],
-    }
+        atr2 = nuevo [nuevo ent, nuevo ent]
+    };
     @(@d).atr1 = 4;
-    (@d).atr2[0] = 1;
-    (@d).atr2[1] = 2;
+    @(@d).atr2[0] = 1;
+    @(@d).atr2[1] = 2;
 }
     \end{lstlisting}
     \caption{Programa que contiene una función con un parámetro que se pasa por

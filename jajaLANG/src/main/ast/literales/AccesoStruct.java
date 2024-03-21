@@ -13,6 +13,6 @@ public class AccesoStruct extends Literal {
 	
     @Override
 	public String toString() {
-		return exp + "." + id;
+		return "(" + exp + ")" + "." + id;
 	}
 }
