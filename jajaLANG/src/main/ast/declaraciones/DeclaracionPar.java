@@ -17,9 +17,9 @@ public class DeclaracionPar extends DeclaracionVar {
     
     @Override
     public String toString(){
-    	if(porReferencia)
-    		return id + ": " + tipo.toString() + 'n';
+    	if(!porReferencia)
+    		return id + ": " + tipo.toString();
     	else
-    		return "&" + id + ": " + tipo.toString() + '\n';
+    		return "&" + id + ": " + tipo.toString();
     }
 }

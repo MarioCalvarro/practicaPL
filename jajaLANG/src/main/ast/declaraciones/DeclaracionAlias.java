@@ -3,7 +3,6 @@ package main.ast.declaraciones;
 import main.ast.tipos.Tipo;
 
 public class DeclaracionAlias implements Declaracion {
-
 	private String id;
 	private Tipo t;
 
@@ -19,6 +18,6 @@ public class DeclaracionAlias implements Declaracion {
 
 	@Override
 	public String toString() {
-		return "INCOGNITO " + id + " = " + t;
+		return "INCOGNITO " + id + " = " + t + ";";
 	}
 }

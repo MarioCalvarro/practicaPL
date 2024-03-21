@@ -40,7 +40,11 @@ public class DeclaracionFun implements Declaracion {
 		if (tipo != null) {
 			sb.append(" -> ").append(tipo);
 		}
-		sb.append("{\n").append(cuerpo).append("}");
+		sb.append("{\n");
+        for (Instruccion ins : cuerpo) {
+            sb.append(ins).append(";\n");
+        }
+        sb.append("}");
 		return sb.toString();
 	}
 }

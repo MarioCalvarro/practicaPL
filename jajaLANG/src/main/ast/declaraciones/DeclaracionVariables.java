@@ -21,23 +21,12 @@ public class DeclaracionVariables extends Instruccion {
         return lista_var;
     }
     
-    //No debería llamarse nunca
     @Override
     public String toString() {
-    	
-		int size = lista_var.size(), contador=0;
-
     	StringBuilder sb = new StringBuilder();
-		sb.append(tipo).append(" ");
-		
 		
 		for (DeclaracionVar dv : lista_var) {
-			contador++;
-			if(contador!=size)
-				sb.append(dv).append(", ");
-			else
-				sb.append(dv).append('\n');	
-			
+            sb.append(dv).append(";\n");
 		}
 		
 		return sb.toString();
