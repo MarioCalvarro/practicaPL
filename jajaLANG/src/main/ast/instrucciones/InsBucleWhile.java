@@ -21,7 +21,7 @@ public class InsBucleWhile extends Instruccion {
 		
 		
 		for (Instruccion ins : cuerpo) {		
-				sb.append(ins).append(";").append('\n');			
+            sb.append(ins).append('\n');			
 		}
 		
 		sb.append("}");
