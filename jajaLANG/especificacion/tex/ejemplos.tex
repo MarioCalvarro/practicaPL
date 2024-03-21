@@ -91,12 +91,12 @@ acceso a sus atributos/elementos y su modificación.
 \begin{figure}[htbp]
     \centering
     \begin{lstlisting}
-incognito dato = registro { arr[3]: ent };
+incognito dato = registro { arr: vector(ent, 3), };
 
 diver tronco() {
     dato x = registro { arr = [1, 2, 3] };
     escribeEnt(x.arr[0]);
-    x.arr[0] = 9;
+    x.arr[0] = 9;       //Asociativo por la izquierda
     escribeEnt(x.arr[0]);
 }
     \end{lstlisting}
@@ -109,18 +109,35 @@ Programa que pasa por referencia una variable y utiliza memoria dinámica.
 \begin{figure}[htbp]
     \centering
     \begin{lstlisting}
+incognito dato_t = registro {
+    atr1: ent @,
+    atr2: vector(ent @, 2),
+};
+
 diver f(&a: ent) -> ent {
     devuelve @a;
 }
 
 diver tronco() {
-    ent @ punt = reservar(capacidad(ent));
+    ent @ punt = nuevo ent;
     @punt = 10;
     ent b = f(punt);
     escribeEnt(b); //Tiene que dar 10
     liberar(punt);
+
+
+    //Ejemplo complicado de punteros
+    //registros y arrays con mem. dinamica
+    dato_t @ d = nuevo dato_t;
+    @d = {
+        atr1 = nuevo ent,
+        atr2 = [nuevo ent, nuevo ent],
+    }
+    @(@d).atr1 = 4;
+    (@d).atr2[0] = 1;
+    (@d).atr2[1] = 2;
 }
     \end{lstlisting}
     \caption{Programa que contiene una función con un parámetro que se pasa por
-    referencia y un puntero que hace uso de memoria dinámica.}
+    referencia y punteros que hacen uso de memoria dinámica.}
 \end{figure}

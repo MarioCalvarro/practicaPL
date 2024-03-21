@@ -62,9 +62,6 @@ arr = [el1, ..., eln];
 
 //Declaracion y asignacion
 vector(tipo, n) arr = [el1, ..., eln];
-
-//Reserva de memoria para un array de n dimensiones
-vector(vector(.., dim2), dim1) arr = nuevo vector(vector(.., dim2), dim1);
     \end{lstlisting}
     \caption{Asignación de valores a los arrays.}
 \end{figure}
@@ -170,8 +167,8 @@ escribir algo que no coincide con la función llamada, se producirá un error.
     \begin{lstlisting}
 leerEnt();
 leerBin();
-escribirEnt();
-escribirBin();
+escribirEnt(num);
+escribirBin(var);
     \end{lstlisting}
     \caption{Funciones de lectura y escritura.}
 \end{figure}
