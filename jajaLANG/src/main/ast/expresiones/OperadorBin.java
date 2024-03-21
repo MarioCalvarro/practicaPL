@@ -64,6 +64,6 @@ public class OperadorBin extends Expresion{
 
     @Override
     public String toString() {
-        return izquierda + " " + op.toString() + " " + derecha;
+        return izquierda + op.toString() + derecha;
     }
 }

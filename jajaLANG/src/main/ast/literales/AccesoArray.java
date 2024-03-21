@@ -13,6 +13,6 @@ public class AccesoArray extends Literal{
 	
     @Override
 	public String toString() {
-		return array + " [" + indice + " ]";
+		return array + "[" + indice + "]";
 	}
 }

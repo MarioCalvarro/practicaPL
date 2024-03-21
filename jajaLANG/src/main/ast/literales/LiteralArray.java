@@ -3,7 +3,6 @@ package main.ast.literales;
 import java.util.List;
 
 import main.ast.expresiones.Expresion;
-import main.ast.instrucciones.Instruccion;
 
 public class LiteralArray extends Literal {
 	private List<Expresion> lExpr;
