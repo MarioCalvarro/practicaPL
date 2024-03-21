@@ -11,6 +11,6 @@ public class TipoRegistro extends Tipo {
 
     @Override
     public String toString() {
-        return "registro {" + atributos.toString() + "}";
+        return "registro {\n" + atributos.toString() + "\n}";
     }
 }

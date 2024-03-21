@@ -45,14 +45,13 @@ public class InsCond extends Instruccion {
     		if(condicion != null)
     			sb.append(" ").append(condicion);
     		
-    		sb.append(" {").append('\n');
+    		sb.append(" {\n");
     		
     		for (Instruccion ins : cuerpo) {		
-    				sb.append(ins).append(";").append('\n');			
+				sb.append('\t').append(ins).append('\n');			
     		}
     		
     		sb.append("}");
-    		
     	}
     	
 		return sb.toString();	

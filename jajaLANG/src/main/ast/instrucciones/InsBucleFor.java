@@ -26,11 +26,11 @@ public class InsBucleFor extends Instruccion {
 	public String toString() {
 
     	StringBuilder sb = new StringBuilder();
-		sb.append("para").append(" ").append(id).append(" = ").append(ini).append(" -> ").append(fin).append(" {");
+		sb.append("para").append(" ").append(id).append(" = ").append(ini).append(" -> ").append(fin).append(" {\n");
 		
 		
 		for (Instruccion ins : cuerpo) {		
-				sb.append(ins).append(";").append('\n');			
+				sb.append('\t').append(ins).append(";").append('\n');			
 		}
 		
 		sb.append("}");
@@ -38,7 +38,4 @@ public class InsBucleFor extends Instruccion {
 		return sb.toString();	
 		
 	}
-	
-	
-	
 }

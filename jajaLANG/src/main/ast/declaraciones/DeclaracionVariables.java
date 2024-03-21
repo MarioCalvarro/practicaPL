@@ -26,7 +26,7 @@ public class DeclaracionVariables extends Instruccion {
     	StringBuilder sb = new StringBuilder();
 		
 		for (DeclaracionVar dv : lista_var) {
-            sb.append(dv).append(";\n");
+            sb.append(dv).append(";");
 		}
 		
 		return sb.toString();

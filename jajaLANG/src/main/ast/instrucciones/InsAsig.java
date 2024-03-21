@@ -12,6 +12,6 @@ public class InsAsig extends Instruccion {
     
     @Override
     public String toString() {
-    	return left + " = " + right;
+    	return left + " = " + right + ";";
     }
 }
