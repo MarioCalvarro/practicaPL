@@ -236,7 +236,7 @@ Asignacion ::= Expresion: expr1 ASIGNACION Expresion: expr2
 
 ///Condicionales///
 Condicional ::= SI Expresion: expr Bloque_Anidado: bloq Cond_Else: cond_else
-            {: RESULT = new InsCond(expr, bloq, cond_else); :}
+            {: RESULT = new InsCond(expr, bloq, cond_else, true); :}    //Es el primero
             ;
 
 Cond_Else ::= //No hay else final
@@ -244,7 +244,7 @@ Cond_Else ::= //No hay else final
           | SINO Bloque_Anidado: bloq       //Else final
           {: RESULT = new InsCond(bloq); :}
           | SINO Expresion: expr Bloque_Anidado: bloq Cond_Else: cond_else
-          {: RESULT = new InsCond(expr, bloq, cond_else); :}
+          {: RESULT = new InsCond(expr, bloq, cond_else, false); :}     //No es el primero
           ;
 
 ///Bucles///
