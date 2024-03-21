@@ -1,0 +1,3 @@
+- Hacer imports
+- Asignadores-operadores
+- Errores
