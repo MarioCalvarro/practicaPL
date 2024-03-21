@@ -48,20 +48,19 @@ enteros, \lstinline{fake}, en el caso de los binarios, o a \lstinline{nulo}, en
 el caso de los punteros.
 
 \subsubsection{Arrays}
-Los arrays serán asignados elemento a elemento, separando los valores dados por
-comas y todo ello entre corchetes. Para asignar a un array una cantidad de
-memoria sin inicializar simplemente escribimos el tipo de los elementos seguido
-de, entre corchetes, el número de elementos. De nuevo, podemos declarar una
-variable de tipo array y, simultáneamente, asignarle un valor.
+Los arrays serán asignados elemento a elemento, iniciando con la palabra clave
+\lstinline{nuevo} seguido de los valores entre comas, entre corchetes. De nuevo,
+podemos declarar una variable de tipo array y, simultáneamente, asignarle un
+valor.
 \begin{figure}[htbp]
     \centering
     \begin{lstlisting}
 //Asignacion a un array la lista de elementos eli
 //Los elementos pueden ser, a su vez, arrays
-arr = [el1, ..., eln];
+arr = nuevo [el1, ..., eln];
 
 //Declaracion y asignacion
-vector(tipo, n) arr = [el1, ..., eln];
+vector(tipo, n) arr = nuevo [el1, ..., eln];
     \end{lstlisting}
     \caption{Asignación de valores a los arrays.}
 \end{figure}
@@ -69,13 +68,14 @@ vector(tipo, n) arr = [el1, ..., eln];
 \subsubsection{Registros}
 Por otro lado, los registros se asignarán valor a valor, pero de manera
 recursiva, cada campo individualmente y, de nuevo, se podrá declarar y asignar a
-la vez. Si simplemente queremos reservar memoria, la asignación se hará de
-manera implícita en la declaración.
+la vez. El literal vendrá precedido de nuevo por la palabra clave
+\lstinline{nuevo}.Si simplemente queremos reservar memoria, la asignación se
+hará de manera implícita en la declaración.
 \begin{figure}[htbp]
     \centering
     \begin{lstlisting}
 //Los elementos pueden ser, a su vez, registros o arrays recursivamente
-reg = {
+reg = nuevo {
     atributo11 = expr11,
     atributo12 = expr12,
     ...
@@ -95,7 +95,7 @@ registro {
     atributo11, atributo12, ...: tipo1,
     atributo21, atributo22, ...: tipo2,
     ...
-} reg = {
+} reg = nuevo {
     atributo11 = expr11,
     atributo12 = expr12,
     ...
