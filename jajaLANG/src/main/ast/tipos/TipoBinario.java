@@ -9,6 +9,9 @@ public class TipoBinario extends Tipo {
     public static TipoBinario instancia() {
         return instancia;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "bin";
+    }
 }

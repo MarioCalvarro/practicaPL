@@ -15,6 +15,7 @@ public class DeclaracionPar extends DeclaracionVar {
         return id;
 	}
     
+    @Override
     public String toString(){
     	if(porReferencia)
     		return id + ": " + tipo.toString() + 'n';

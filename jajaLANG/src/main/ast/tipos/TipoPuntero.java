@@ -6,4 +6,9 @@ public class TipoPuntero extends Tipo {
     public TipoPuntero(Tipo tElemento) {
         this.tElemento = tElemento;
     }
+
+    @Override
+    public String toString() {
+        return tElemento.toString() + " @";
+    }
 }

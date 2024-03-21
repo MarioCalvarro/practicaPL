@@ -9,4 +9,9 @@ public class TipoEntero extends Tipo {
     public static TipoEntero instancia() {
         return instancia;
     }
+
+    @Override
+    public String toString() {
+        return "ent";
+    }
 }

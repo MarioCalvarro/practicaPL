@@ -6,7 +6,6 @@ import main.ast.instrucciones.Instruccion;
 import main.ast.tipos.Tipo;
 
 public class DeclaracionVariables extends Instruccion {
-	
     private List<DeclaracionVar> lista_var; 
     private Tipo tipo;
 
@@ -22,6 +21,8 @@ public class DeclaracionVariables extends Instruccion {
         return lista_var;
     }
     
+    //No debería llamarse nunca
+    @Override
     public String toString() {
     	
 		int size = lista_var.size(), contador=0;

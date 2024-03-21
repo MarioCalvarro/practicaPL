@@ -8,4 +8,9 @@ public class TipoRegistro extends Tipo {
     public TipoRegistro(ListaDeclaraciones atributos) {
         this.atributos = atributos;
     }
+
+    @Override
+    public String toString() {
+        return "registro {" + atributos.toString() + "}";
+    }
 }
