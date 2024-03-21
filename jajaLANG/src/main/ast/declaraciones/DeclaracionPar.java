@@ -14,4 +14,11 @@ public class DeclaracionPar extends DeclaracionVar {
 	public String getId() {
         return id;
 	}
+    
+    public String toString(){
+    	if(porReferencia)
+    		return id + ": " + tipo.toString() + 'n';
+    	else
+    		return "&" + id + ": " + tipo.toString() + '\n';
+    }
 }

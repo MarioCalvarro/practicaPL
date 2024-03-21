@@ -1,5 +1,5 @@
 package main.ast.tipos;
 
-public class Tipo {
+public abstract class Tipo {
 
 }

@@ -7,6 +7,7 @@ import main.ast.expresiones.Expresion;
 import main.ast.tipos.TipoEntero;
 
 public class InsBucleFor extends Instruccion {
+	private String id;
 	private DeclaracionVar indice;
 	private Expresion ini;
 	private Expresion fin;
@@ -17,5 +18,28 @@ public class InsBucleFor extends Instruccion {
 		this.ini = ini;
 		this.fin = fin;
 		this.cuerpo = cuerpo;
+		this.id=id;
 	}
+	
+    // PARA IDEN: id ASIGNACION Expresion: exprIni FLECHA Expresion: exprFin Bloque_Anidado: bloq
+
+	
+	public String toString() {
+
+    	StringBuilder sb = new StringBuilder();
+		sb.append("para").append(" ").append(id).append(" = ").append(ini).append(" -> ").append(fin).append(" {");
+		
+		
+		for (Instruccion ins : cuerpo) {		
+				sb.append(ins).append(";").append('\n');			
+		}
+		
+		sb.append("}");
+		
+		return sb.toString();	
+		
+	}
+	
+	
+	
 }

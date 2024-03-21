@@ -7,7 +7,7 @@ import main.ast.tipos.Tipo;
 public class DeclaracionVar extends Instruccion implements Declaracion {
 	protected String id;
 	private Expresion valor;
-	private Tipo tipo;
+	protected Tipo tipo;
 
 	// Solo debería cambiar el tipo DeclaracionVariables
 	protected void setTipo(Tipo tipo) {

@@ -63,6 +63,6 @@ public class OperadorBin extends Expresion{
     }
 
     public String toString() {
-        return izquierda + op.toString() + derecha;
+        return izquierda + " " + op.toString() + " " + derecha;
     }
 }

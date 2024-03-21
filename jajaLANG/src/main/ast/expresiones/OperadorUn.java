@@ -37,6 +37,6 @@ public class OperadorUn extends Expresion{
 	}
 
 	public String toString() {
-		return op.toString() + derecha;
+		return op.toString() + " " + derecha;
 	}
 }

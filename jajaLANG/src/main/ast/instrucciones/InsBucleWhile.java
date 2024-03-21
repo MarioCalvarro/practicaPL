@@ -12,4 +12,20 @@ public class InsBucleWhile extends Instruccion {
 		this.condicion = condicion;
 		this.cuerpo = cuerpo;
 	}
+	
+	public String toString() {
+
+    	StringBuilder sb = new StringBuilder();
+		sb.append("mientras").append(" ").append(condicion).append(" {");
+		
+		
+		for (Instruccion ins : cuerpo) {		
+				sb.append(ins).append(";").append('\n');			
+		}
+		
+		sb.append("}");
+		
+		return sb.toString();	
+		
+	}
 }

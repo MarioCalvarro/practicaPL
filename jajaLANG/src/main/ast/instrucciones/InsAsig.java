@@ -9,4 +9,8 @@ public class InsAsig extends Instruccion {
         this.left = left;
         this.right = right;
     }
+    
+    public String toString() {
+    	return left + " = " + right;
+    }
 }

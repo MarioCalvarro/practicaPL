@@ -114,7 +114,7 @@ Programa ::= Lista_Imports: lImp Lista_Declaraciones: lDecl
 
 
 Lista_Imports ::= Lista_Imports: lImp TRAFICAR IDEN: ruta COMO IDEN: id
-              {: lImp.add(new Import(ruta)); RESULT = lImp; :}
+              {: lImp.add(new Import(ruta, id)); RESULT = lImp; :}
               |
               {: RESULT = new ArrayList<Import>(); :}
               ;
@@ -250,7 +250,7 @@ Cond_Else ::= //No hay else final
 ///Bucles///
 Bucle ::= MIENTRAS Expresion: expr Bloque_Anidado: bloq
       {: RESULT = new InsBucleWhile(expr, bloq); :}
-      | PARA IDEN: id Expresion: exprIni FLECHA Expresion: exprFin Bloque_Anidado: bloq
+      | PARA IDEN: id ASIGNACION Expresion: exprIni FLECHA Expresion: exprFin Bloque_Anidado: bloq
       {: RESULT = new InsBucleFor(id, exprIni, exprFin, bloq); :}
       ;
 
