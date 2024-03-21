@@ -8,4 +8,8 @@ public class InsReturn extends Instruccion {
 	public InsReturn(Expresion expr) {
 		this.expr = expr;
 	}
+	
+	public String toString() {
+		return "devuelve" + " " + expr;
+	}
 }

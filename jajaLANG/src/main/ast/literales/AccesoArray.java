@@ -10,4 +10,8 @@ public class AccesoArray extends Literal{
 		this.array = array;
 		this.indice = indice;
 	}
+	
+	public String toString() {
+		return null;
+	}
 }
