@@ -13,7 +13,14 @@ import main.lexico.AnalizadorLexicoJaja;
 import main.sintactico.AnalizadorSintacticoJaja;
 
 class LecturaEscritura {
-	private static String result = "";
+	private static String result = "diver tronco() {\n"
+			+ "ent num = leerEnt();\n"
+			+ "bin cond = leerBin();\n"
+			+ "si cond {\n"
+			+ "escribirEnt(num)\n"
+			+ "} \n"
+			+ "}\n"
+			+ "";
 			
 	@Test
 	void test() {

@@ -13,7 +13,19 @@ import main.lexico.AnalizadorLexicoJaja;
 import main.sintactico.AnalizadorSintacticoJaja;
 
 class RegistrosArrays {
-	private static String result = "";
+	private static String result = "INCOGNITO dato = registro {\n"
+			+ "vector(ent, 3) arr\n"
+			+ "};\n"
+			+ "diver tronco() {\n"
+			+ "dato x = {\n"
+			+ "arr = [1, 2, 3],\n"
+			+ "a = 3\n"
+			+ "};\n"
+			+ "escribeEnt((x).arr[0])\n"
+			+ "(x).arr[0] = 9;\n"
+			+ "escribeEnt((x).arr[0])\n"
+			+ "}\n"
+			+ "";
 			
 	@Test
 	void test() {

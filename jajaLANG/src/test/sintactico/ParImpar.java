@@ -13,7 +13,29 @@ import main.lexico.AnalizadorLexicoJaja;
 import main.sintactico.AnalizadorSintacticoJaja;
 
 class ParImpar {
-	private static String result = "";
+	private static String result = "diver par(x: ent) -> bin {\n"
+			+ "si (x)==(0) {\n"
+			+ "devuelve facto;\n"
+			+ "} sino (x)==(1) {\n"
+			+ "devuelve fake;\n"
+			+ "} sino {\n"
+			+ "devuelve impar((x)-(1));\n"
+			+ "} \n"
+			+ "}\n"
+			+ "diver impar(x: ent) -> bin {\n"
+			+ "si (x)==(0) {\n"
+			+ "devuelve fake;\n"
+			+ "} sino (x)==(1) {\n"
+			+ "devuelve facto;\n"
+			+ "} sino {\n"
+			+ "devuelve par((x)-(1));\n"
+			+ "} \n"
+			+ "}\n"
+			+ "diver tronco() {\n"
+			+ "escribeBin(impar(9))\n"
+			+ "escribeBin(par(12))\n"
+			+ "}\n"
+			+ "";
 			
 	@Test
 	void test() {
