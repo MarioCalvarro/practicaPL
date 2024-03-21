@@ -55,12 +55,12 @@ nuevo = nuevo
 
 
 //Variables
-letra  = ([A-Z]|[a-z])
+letra  = ([A-Z]|[a-z]|\_)
 digitoPositivo = [1-9]
 digito = ({digitoPositivo}|0)
 parteEntera = 0|({digitoPositivo}{digito}*)
 
-identificador = ({letra}|\_)({letra}|{digito})*
+identificador = ({letra})({letra}|{digito})*
 numeroEntero = [\+]?{parteEntera}
 
 

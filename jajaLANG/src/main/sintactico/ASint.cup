@@ -466,6 +466,8 @@ Literal ::= ENTERO: e
         {: RESULT = aL; :}
         | NUEVO Struct_Literal: sL
         {: RESULT = sL; :}
+        | NUEVO Tipo: t
+        {: RESULT = new DirDinamica(t); }
         ;
 
 Array_Literal ::= CAP CCIERRE
