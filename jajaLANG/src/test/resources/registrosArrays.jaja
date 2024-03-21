@@ -1,11 +1,8 @@
-diver f(&a -> ent) -> ent {
-    devuelve @a;
-}
+incognito dato = registro { arr: vector(ent, 3), };
 
 diver tronco() {
-    ent @ punt = reservar(capacidad(ent));
-    @punt = 10;
-    ent b = f(punt);
-    escribeEnt(b); //Tiene que dar 10
-    liberar(punt);
+    dato x = registro { arr = [1, 2, 3] };
+    escribeEnt(x.arr[0]);
+    x.arr[0] = 9;       //Asociativo por la izquierda
+    escribeEnt(x.arr[0]);
 }
