@@ -24,6 +24,14 @@ parser code {:
     public void syntax_error(Symbol unidadLexica) {
         errores.errorSintactico((UnidadLexica) unidadLexica);
     }
+
+    public Symbol iniciarParseo() throws Exception {
+    	Symbol res = this.parse();
+        if (errores.hayErrores()) {
+            throw Exception("El programa contiene errores sintácticos. Abortando...");
+        }
+        return res;
+    }
 :};
 
 init with {: 
@@ -126,6 +134,16 @@ Lista_Imports ::= Lista_Imports: lImp TRAFICAR RUTA: ruta COMO IDEN: id
               {: lImp.add(new Import(ruta, id)); RESULT = lImp; :}
               |
               {: RESULT = new ArrayList<Import>(); :}
+              //Errores
+              | Lista_Imports: lImp TRAFICAR error COMO IDEN: id
+              {: System.err.println("Error al importar un archivo, ruta incorrecta. Usa \"ruta/relativa/a/fichero.jaja\".");
+                 RESULT = lImp; :}
+              | Lista_Imports: lImp TRAFICAR RUTA: ruta COMO error
+              {: System.err.println("Error al importar un archivo, identificador incorrecto.");
+                 RESULT = lImp; :}
+              | Lista_Imports: lImp error
+              {: System.err.println("Sintaxis de importación incorrecta. Utiliza \"#traficar ruta/relativa/a/fichero.jaja como identificador\".");
+                 RESULT = lImp; :}
               ;
 
 
@@ -149,6 +167,10 @@ Lista_Declaraciones ::= Lista_Declaraciones: lDecl Declaracion_Alias: dAlias PUN
 
 Declaracion_Alias ::= INCOGNITO IDEN: id ASIGNACION Tipo: t
                   {: RESULT = new DeclaracionAlias(id, t); :}
+                  //Errores
+                  | INCOGNITO error ASIGNACION Tipo: t
+                  {: System.err.println("Declaración de alias incorrecta. Identificador no válido.");
+                     RESULT = null; :}
                   ;
 
 ///Declaraciones variables///
@@ -234,6 +256,7 @@ Instruccion ::= Decl_Variables: decl PUNTOCOMA       //Solo la declaracion de va
             {: RESULT = buc; :}
             |   Inst_Return: iRet PUNTOCOMA
             {: RESULT = iRet; :}
+            |   error
             ;
 
 

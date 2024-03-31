@@ -1,0 +1,6 @@
+1) Lista imports
+  - Ruta incorrecta
+  - Identificador incorrecto
+  - Completamente incorrecto
+2) Declaracion alias
+  - Alias incorrecto

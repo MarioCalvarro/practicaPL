@@ -3,21 +3,26 @@ package main.errors;
 import main.lexico.UnidadLexica;
 
 public class GestionErroresJaja {
+    private int numErrores = 0;
 
 	public void errorLexico(int fila, int columna, String lexema) {
-		System.out.println("ERROR fila " + fila + " columna " + columna + ": Caracter inesperado: " + lexema);
-		System.exit(1);
+        numErrores += 1;
+		System.err.println("ERROR línea " + fila + ", columna " + columna + ": Caracter inesperado: " + lexema);
 	}
 
 	public void errorSintactico(UnidadLexica unidadLexica) {
-		if (unidadLexica.lexema() != null) {
-			System.out.println("ERROR fila " + unidadLexica.fila() + " columna " + unidadLexica.columna()
-					+ ": Elemento inesperado \"" + unidadLexica.lexema() + "\"");
-		} else {
-			System.out.println("ERROR fila " + unidadLexica.fila() + " columna " + unidadLexica.columna()
-					+ ": Elemento inesperado");
-		}
-		System.exit(1);
+        numErrores += 1;
+        System.err.print("ERROR línea " + unidadLexica.fila() + ", columna " + unidadLexica.columna() + ": ");
+		// if (unidadLexica.lexema() != null) {
+		// 	System.err.println("ERROR fila " + unidadLexica.fila() + " columna " + unidadLexica.columna()
+		// 			+ ": Elemento inesperado \"" + unidadLexica.lexema() + "\"");
+		// } else {
+		// 	System.err.println("ERROR fila " + unidadLexica.fila() + " columna " + unidadLexica.columna()
+		// 			+ ": Elemento inesperado");
+		// }
 	}
 
+    public boolean hayErrores() {
+        return numErrores > 0;
+    }
 }
