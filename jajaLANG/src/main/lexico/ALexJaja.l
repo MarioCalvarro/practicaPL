@@ -48,11 +48,15 @@ registro = registro
 nulo = nulo
 incognito = incognito
 devuelve = devuelve
-traficar = \#traficar
+traficar = #traficar
 como = como
 vector = vector
 nuevo = nuevo
 
+//Ruta de un fichero. Explicación:
+//1. Tenemos varios directorios opcionales (palabras [\w ó '-'] separadas por '/')
+//2. Tenemos una palabra final (fichero) que acaba en ".jaja"
+ruta = (([\w\-]+\/)*([\w-]+))\.jaja
 
 //Variables
 letra  = ([A-Z]|[a-z]|\_)
@@ -93,6 +97,7 @@ operadorAsignacion = \=
 punto = \.
 coma = ,
 puntoComa = \;
+cuatroPuntos = \:\:
 dosPuntos = \:
 flecha = \-\>
 
@@ -132,6 +137,7 @@ llaveCierre = \}
 
 
 //Variables
+{ruta}                    {return ops.unidadRuta();}
 {identificador}           {return ops.unidadId();}
 {numeroEntero}            {return ops.unidadEntero();}
 
@@ -164,6 +170,7 @@ llaveCierre = \}
 {punto}                   {return ops.unidadPunto();}
 {coma}                    {return ops.unidadComa();}
 {puntoComa}               {return ops.unidadPuntoComa();}
+{cuatroPuntos}            {return ops.unidadCuatroPuntos();}
 {dosPuntos}               {return ops.unidadDosPuntos();}
 {flecha}                  {return ops.unidadFlecha();}
 

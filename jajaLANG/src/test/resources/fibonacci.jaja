@@ -1,3 +1,5 @@
+#traficar test.jaja como r
+
 diver fibonacci(r: ent) -> ent {
     si c == 0 {
         devuelve 1; 
@@ -9,6 +11,9 @@ diver fibonacci(r: ent) -> ent {
 }
 
 diver tronco() {
+    //Imprime algo por pantalla
+    r::prueba();
+
     para i = 0 -> 10 {
         escribirEntero(fibonacci(i));
     } 

@@ -13,7 +13,8 @@ import main.lexico.AnalizadorLexicoJaja;
 import main.sintactico.AnalizadorSintacticoJaja;
 
 class Fibonacci {
-	private static String result = "diver fibonacci(r: ent) -> ent {\n"
+	private static String result = "#traficar test.jaja como r\n"
+			+ "diver fibonacci(r: ent) -> ent {\n"
 			+ "si (c)==(0) {\n"
 			+ "devuelve 1;\n"
 			+ "} \n"
@@ -23,12 +24,12 @@ class Fibonacci {
 			+ "devuelve (fibonacci((c)-(1)))+(fibonacci((c)-(2)));\n"
 			+ "}\n"
 			+ "diver tronco() {\n"
+			+ "r::prueba()\n"
 			+ "para i = 0 -> 10 {\n"
 			+ "escribirEntero(fibonacci(i))\n"
 			+ "}\n"
-			+ "}\n"
-			+ "";
-			
+			+ "}\n";
+	
 	@Test
 	void test() {
 		String test1 = new String();

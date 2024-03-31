@@ -47,7 +47,8 @@ terminal    //Palabras clave
             NEG, CONJ, DISY,
 
             //Otros
-            DIRECCION, PUNTERO, ASIGNACION, PUNTO, COMA, PUNTOCOMA, DOSPUNTOS, FLECHA, MENOS,
+            DIRECCION, PUNTERO, ASIGNACION, PUNTO, COMA, PUNTOCOMA,
+            CUATROPUNTOS, DOSPUNTOS, FLECHA, MENOS,
 
             //Agrupaciones
             CAP, CCIERRE, PAP, PCIERRE, LLAP, LLCIERRE;
@@ -95,11 +96,15 @@ terminal True FACTO;
 terminal False FAKE;
 terminal Nulo NULO;
 terminal String IDEN;
+terminal String RUTA;
 
 non terminal Literal Literal;
 non terminal LiteralArray Array_Literal;
 non terminal LiteralStruct Struct_Literal;
 non terminal Map<String, Expresion> Lista_Asig_Atributos;
+
+//Identificador
+non terminal Identificador Identificador;
 
 
 /////////////////////
@@ -113,7 +118,7 @@ Programa ::= Lista_Imports: lImp Lista_Declaraciones: lDecl
          ;
 
 
-Lista_Imports ::= Lista_Imports: lImp TRAFICAR IDEN: ruta COMO IDEN: id
+Lista_Imports ::= Lista_Imports: lImp TRAFICAR RUTA: ruta COMO IDEN: id
               {: lImp.add(new Import(ruta, id)); RESULT = lImp; :}
               |
               {: RESULT = new ArrayList<Import>(); :}
@@ -285,7 +290,7 @@ T ::= ENT
   | BIN 
   {: RESULT = TipoBinario.instancia(); :}
 
-  | IDEN: id             //IDEN se referirá a los identificadores definidos por el incognito
+  | Identificador: id             //Identificador se referirá a los identificadores definidos por el incognito en este u otro fichero
   {: RESULT = new TipoAlias(id); :}
 
   | Tipo_Reg: t_reg
@@ -448,9 +453,9 @@ E9 ::= Literal: e
    ;
 
 //Los array y registros no pueden tener funciones
-Llamada_Fun ::= IDEN: izquierda PAP Lista_Expresiones: lExpr PCIERRE
+Llamada_Fun ::= Identificador: izquierda PAP Lista_Expresiones: lExpr PCIERRE
             {: RESULT = new Llamada(izquierda, lExpr); :}
-            | IDEN: izquierda PAP PCIERRE
+            | Identificador: izquierda PAP PCIERRE
             {: RESULT = new Llamada(izquierda, new ArrayList<Expresion>()); :}
             ;
 
@@ -495,8 +500,8 @@ E10 ::= E10: izquierda CAP Expresion:derecha CCIERRE
     {: RESULT = new AccesoStruct(izquierda, id); :}
     | PAP Expresion: expr PCIERRE
     {: RESULT = expr; :}
-    | IDEN: id
-    {: RESULT = new Identificador(id); :}
+    | Identificador: id
+    {: RESULT = id; :}
     ;
 
 
@@ -506,3 +511,11 @@ Lista_Expresiones ::= Expresion: expr
                    | Lista_Expresiones: lExpr COMA Expresion: expr
                    {: lExpr.add(expr); RESULT = lExpr; :}
                    ;
+
+
+///Identificadores con import
+Identificador ::= IDEN: lib CUATROPUNTOS IDEN: id
+              {: RESULT = new Identificador(id, lib); :}
+              | IDEN: id
+              {: RESULT = new Identificador(id); :}
+              ;

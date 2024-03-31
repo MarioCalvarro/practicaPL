@@ -11,6 +11,6 @@ public class Import {
     
     @Override
     public String toString() {
-    	return "#traficar " + ruta + " COMO " + namespace;
+    	return "#traficar " + ruta + " como " + namespace;
     }
 }

@@ -1,13 +1,16 @@
 package main.ast.tipos;
 
+import main.ast.expresiones.Identificador;
+
 public class TipoAlias extends Tipo {
-    private String id;
-    public TipoAlias(String id) {
+    private Identificador id;
+
+    public TipoAlias(Identificador id) {
         this.id = id;
     }
     
     @Override
     public String toString() {
-		return id;
+		return id.toString();
 	}
 }

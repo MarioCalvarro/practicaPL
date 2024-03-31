@@ -9,6 +9,8 @@ recursiva, y los muestra por pantalla.
 \begin{figure}[htbp]
     \centering
     \begin{lstlisting}
+#traficar test.jaja como r
+
 diver fibonacci(r: ent) -> ent {
     si c == 0 {
         devuelve 1; 
@@ -20,12 +22,15 @@ diver fibonacci(r: ent) -> ent {
 }
 
 diver tronco() {
+    //Imprime algo por pantalla
+    r::prueba();
+
     para i = 0 -> 10 {
         escribirEntero(fibonacci(i));
     } 
 }
     \end{lstlisting}
-    \caption{Programa que calcula la serie de Fibonacci.}
+    \caption{Programa que calcula la serie de Fibonacci e importa otro fichero.}
 \end{figure}
 
 \subsection{Lectura/Escritura}

@@ -83,6 +83,10 @@ public class ALexOperaciones {
 	}
 
 	// Variables
+	public UnidadLexica unidadRuta() {
+		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.RUTA, alex.lexema(), "RUTA", alex.lexema());
+	}
+
 	public UnidadLexica unidadId() {
 		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.IDEN, alex.lexema(), "ID", alex.lexema());
 	}
@@ -179,6 +183,10 @@ public class ALexOperaciones {
 
 	public UnidadLexica unidadPuntoComa() {
 		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.PUNTOCOMA, "PUNTOCOMA");
+	}
+
+	public UnidadLexica unidadCuatroPuntos() {
+		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.CUATROPUNTOS, "DOSPUNTOS");
 	}
 
 	public UnidadLexica unidadDosPuntos() {
