@@ -173,6 +173,38 @@ public class ALexOperaciones {
 		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.ASIGNACION, "ASIGNACION");
 	}
 
+	public UnidadLexica unidadPotAsig() {
+		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.POTASIG, "POTASIG");
+	}
+
+	public UnidadLexica unidadMulAsig() {
+		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.MULASIG, "MULASIG");
+	}
+
+	public UnidadLexica unidadDivAsig() {
+		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.DIVASIG, "DIVASIG");
+	}
+
+	public UnidadLexica unidadModAsig() {
+		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.MODASIG, "MODASIG");
+	}
+
+	public UnidadLexica unidadSumaAsig() {
+		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.SUMAASIG, "SUMAASIG");
+	}
+
+	public UnidadLexica unidadRestaAsig() {
+		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.RESTAASIG, "RESTAASIG");
+	}
+
+	public UnidadLexica unidadConjAsig() {
+		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.CONJASIG, "CONJASIG");
+	}
+
+	public UnidadLexica unidadDisyAsig() {
+		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.DISYASIG, "DISYASIG");
+	}
+
 	public UnidadLexica unidadPunto() {
 		return new UnidadLexica(alex.fila(), alex.columna(), ClaseLexica.PUNTO, "PUNTO");
 	}

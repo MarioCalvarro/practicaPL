@@ -69,6 +69,16 @@ numeroEntero = [\+]?{parteEntera}
 
 
 //Operadores
+//Asignación
+operadorPotenciaAsig = \^\=
+operadorMultiplicacionAsig = \*\=
+operadorDivisionAsig = \/\=
+operadorModuloAsig = \%\=
+operadorSumaAsig = \+\=
+operadorRestaAsig = \-\=
+operadorConjAsig = \&\=
+operadorDisyAsig = \|\=
+
 //Aritmeticos
 operadorPotencia = \^
 operadorMultiplicacion = \*
@@ -142,6 +152,16 @@ llaveCierre = \}
 {numeroEntero}            {return ops.unidadEntero();}
 
 //Operadores
+//Asignacion
+{operadorPotenciaAsig}        {return ops.unidadPotAsig();}
+{operadorMultiplicacionAsig}  {return ops.unidadMulAsig();}
+{operadorDivisionAsig}        {return ops.unidadDivAsig();}
+{operadorModuloAsig}          {return ops.unidadModAsig();}
+{operadorSumaAsig}            {return ops.unidadSumaAsig();}
+{operadorRestaAsig}           {return ops.unidadRestaAsig();}
+{operadorConjAsig}            {return ops.unidadConjAsig();}
+{operadorDisyAsig}            {return ops.unidadDisyAsig();}
+
 //Aritmeticos
 {operadorPotencia}        {return ops.unidadPot();}
 {operadorMultiplicacion}  {return ops.unidadMul();}

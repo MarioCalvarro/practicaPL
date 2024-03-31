@@ -23,6 +23,12 @@ class RegistrosArrays {
 			+ "escribeEnt((x).arr[0])\n"
 			+ "(x).arr[0] = 9;\n"
 			+ "escribeEnt((x).arr[0])\n"
+			+ "ent x = 3;\n"
+			+ "x = (x)+(2);\n"
+			+ "x = (x)-(2);\n"
+			+ "bool a = facto;\n"
+			+ "a = (a)||(fake);\n"
+			+ "a = (a)&&(facto);\n"
 			+ "}\n"
 			+ "";
 			

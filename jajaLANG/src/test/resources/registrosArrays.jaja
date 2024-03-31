@@ -5,4 +5,13 @@ diver tronco() {
     escribeEnt(x.arr[0]);
     x.arr[0] = 9;       //Asociativo por la izquierda
     escribeEnt(x.arr[0]);
+
+    //Asignaciones con operadores
+    ent x = 3;
+    x += 2;
+    x -= 2;
+
+    bool a = facto;
+    a |= fake;
+    a &= facto;
 }

@@ -37,6 +37,10 @@ terminal    //Palabras clave
             ENT, BIN, SI, SINO, MIENTRAS, PARA, DIVER, REGISTRO, VECTOR,
             INCOGNITO, DEVUELVE, TRAFICAR, COMO, NUEVO,
 
+            //Operadores Asignacion
+            POTASIG, MULASIG, DIVASIG, MODASIG, SUMAASIG, RESTAASIG,
+            CONJASIG, DISYASIG,
+
             //Operadores Aritmeticos
             POT, MUL, DIV, MOD, SUMA, RESTA,
 
@@ -87,7 +91,7 @@ non terminal DeclaracionVariables Lista_Atributos ;
 ///Expresiones
 non terminal Expresion Expresion, E1, E2, E3, E4, E5, E6, E7, E8, E9, E10;
 non terminal List<Expresion> Lista_Expresiones;
-non terminal OperadorBin.Operadores OP2, OP3, OP4, OP5;
+non terminal OperadorBin.Operadores OpBin, OP2, OP3, OP4, OP5;
 non terminal OperadorUn.Operadores OP7, OP8;
 
 //Literales
@@ -235,9 +239,30 @@ Instruccion ::= Decl_Variables: decl PUNTOCOMA       //Solo la declaracion de va
 
 ///Asignaciones///
 Asignacion ::= Expresion: expr1 ASIGNACION Expresion: expr2
-           {: RESULT = new InsAsig(expr1, expr2);  :}
+           {: RESULT = new InsAsig(expr1, expr2); :}
+           //En la representación del ast se verán sin "el azúcar sintáctico"
+           | Expresion: expr1 OpBin:op Expresion: expr2
+           {: RESULT = new InsAsig(expr1, new OperadorBin(op, expr1, expr2)); :}
            ;
 
+// POTASIG, MULASIG, DIVASIG, MODASIG, SUMAASIG, RESTAASIG, CONJASIG, DISYASIG,
+OpBin ::= POTASIG
+      {: RESULT = OperadorBin.Operadores.POT; :}
+      | MULASIG
+      {: RESULT = OperadorBin.Operadores.MUL; :}
+      | DIVASIG
+      {: RESULT = OperadorBin.Operadores.DIV; :}
+      | MODASIG
+      {: RESULT = OperadorBin.Operadores.MOD; :}
+      | SUMAASIG
+      {: RESULT = OperadorBin.Operadores.SUMA; :}
+      | RESTAASIG
+      {: RESULT = OperadorBin.Operadores.RESTA; :}
+      | CONJASIG
+      {: RESULT = OperadorBin.Operadores.CONJ; :}
+      | DISYASIG
+      {: RESULT = OperadorBin.Operadores.DISY; :}
+      ;
 
 ///Condicionales///
 Condicional ::= SI Expresion: expr Bloque_Anidado: bloq Cond_Else: cond_else
