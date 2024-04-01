@@ -9,3 +9,6 @@
   - Tipo incorrecto
   - Expresión incorrecta
   - Identificador incorrecto
+4) Declaración de funciones
+  - Identificador no válido
+  - Parámetros no válidos

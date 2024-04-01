@@ -222,18 +222,18 @@ Decl_Funcion ::= DIVER IDEN: id PAP Lista_Parametros: lPar PCIERRE Bloque_Anidad
             | DIVER IDEN: id PAP Lista_Parametros: lPar PCIERRE FLECHA Tipo: t Bloque_Anidado: bloq   //Función con retorno
             {: RESULT = new DeclaracionFun(id, lPar, bloq, t); :}
             //Errores
-//            | DIVER error PAP Lista_Parametros: lPar PCIERRE Bloque_Anidado: bloq 
-//            {: System.err.println("Declaración de función incorrecta. Identificador no válido.");
-//               RESULT = null; :}
-//            | DIVER error PAP Lista_Parametros: lPar PCIERRE FLECHA Tipo: t Bloque_Anidado: bloq
-//            {: System.err.println("Declaración de función incorrecta. Identificador no válido.");
-//               RESULT = null; :}
-//            | DIVER IDEN: id PAP error PCIERRE Bloque_Anidado: bloq 
-//            {: System.err.println("Declaración de función incorrecta. Parámetros no válidos.");
-//               RESULT = null; :}
-//            | DIVER IDEN: id PAP Lista_Parametros: lPar PCIERRE FLECHA Tipo: t Bloque_Anidado: bloq
-//            {: System.err.println("Declaración de función incorrecta. Parámetros no válidos.");
-//               RESULT = null; :}
+            | DIVER error PAP Lista_Parametros: lPar PCIERRE Bloque_Anidado: bloq 
+            {: System.err.println("Declaración de función incorrecta. Identificador no válido.");
+               RESULT = null; :}
+            | DIVER error PAP Lista_Parametros: lPar PCIERRE FLECHA Tipo: t Bloque_Anidado: bloq
+            {: System.err.println("Declaración de función incorrecta. Identificador no válido.");
+               RESULT = null; :}
+            | DIVER IDEN: id PAP error PCIERRE Bloque_Anidado: bloq 
+            {: System.err.println("Declaración de función incorrecta. Parámetros no válidos.");
+               RESULT = null; :}
+            | DIVER IDEN: id PAP error PCIERRE FLECHA Tipo: t Bloque_Anidado: bloq
+            {: System.err.println("Declaración de función incorrecta. Parámetros no válidos.");
+               RESULT = null; :}
 //            | DIVER IDEN: id PAP Lista_Parametros: lPar PCIERRE FLECHA error Bloque_Anidado: bloq
 //            {: System.err.println("Declaración de función incorrecta. Tipo de retorno no válido.");
 //               RESULT = null; :}
