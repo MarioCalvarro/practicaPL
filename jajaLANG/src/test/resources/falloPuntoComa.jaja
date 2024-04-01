@@ -1,9 +1,13 @@
-diver af(lqkejrpoq: 1234) {
-    test();
-}
-
 diver tronco() {
-    ent x, y = ª;
+    si a {
+        devuelve facto;
+    }
+    sino | {
+        devuelve fake;
+    }
+    sino {
+        devuelve impar(x-1);
+    }
 
     //Imprime algo por pantalla
     r::prueba();

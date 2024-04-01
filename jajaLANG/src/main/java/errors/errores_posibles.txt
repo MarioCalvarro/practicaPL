@@ -12,3 +12,21 @@
 4) Declaración de funciones
   - Identificador no válido
   - Parámetros no válidos
+6) Asignaciones
+  - Expresión izquierda incorrecta
+  - Expresión derecha incorrecta
+7) Condicionales
+  - Condición no válida
+8) Bucles
+  - Mientras, condición no válida
+  - For, Identificador no válido
+  - For, expresión inicio no válida
+  - For, expresión final no válida
+9) Devuelve
+  - Expresión no válida
+10) Tipos
+  - Vector, tipo elementos inválido
+  - Registro, atributos inválidos
+    -- Atributos, tipo inválido
+11) Llamadas
+  - Lista argumentos inválida

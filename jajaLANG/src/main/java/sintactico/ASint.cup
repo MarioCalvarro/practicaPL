@@ -234,15 +234,9 @@ Decl_Funcion ::= DIVER IDEN: id PAP Lista_Parametros: lPar PCIERRE Bloque_Anidad
             | DIVER IDEN: id PAP error PCIERRE FLECHA Tipo: t Bloque_Anidado: bloq
             {: System.err.println("Declaración de función incorrecta. Parámetros no válidos.");
                RESULT = null; :}
-//            | DIVER IDEN: id PAP Lista_Parametros: lPar PCIERRE FLECHA error Bloque_Anidado: bloq
-//            {: System.err.println("Declaración de función incorrecta. Tipo de retorno no válido.");
-//               RESULT = null; :}
-//            | DIVER IDEN: id PAP Lista_Parametros: lPar PCIERRE error
-//            {: System.err.println("Declaración de función incorrecta. Cuerpo no válido.");
-//               RESULT = null; :}
-//            | DIVER IDEN: id PAP Lista_Parametros: lPar PCIERRE FLECHA Tipo: t error
-//            {: System.err.println("Declaración de función incorrecta. Cuerpo no válido.");
-//               RESULT = null; :}
+            | DIVER IDEN: id PAP Lista_Parametros: lPar PCIERRE FLECHA error Bloque_Anidado: bloq
+            {: System.err.println("Declaración de función incorrecta. Tipo de retorno no válido.");
+               RESULT = null; :}
             ;
 
 //Lo separamos para evitar que la sentencia: (Vacío) -> Param -> ... sea válida
@@ -305,6 +299,12 @@ Asignacion ::= Expresion: expr1 ASIGNACION Expresion: expr2
            //En la representación del ast se verán sin "el azúcar sintáctico"
            | Expresion: expr1 OpBin:op Expresion: expr2
            {: RESULT = new InsAsig(expr1, new OperadorBin(op, expr1, expr2)); :}
+           | error ASIGNACION Expresion: expr2
+           {: System.err.println("Asignación incorrecta. La expresión izquierda no es válida.");
+              RESULT = null; :}
+           | Expresion: expr1 ASIGNACION error
+           {: System.err.println("Asignación incorrecta. La expresión derecha no es válida.");
+              RESULT = null; :}
            ;
 
 // POTASIG, MULASIG, DIVASIG, MODASIG, SUMAASIG, RESTAASIG, CONJASIG, DISYASIG,
@@ -329,6 +329,10 @@ OpBin ::= POTASIG
 ///Condicionales///
 Condicional ::= SI Expresion: expr Bloque_Anidado: bloq Cond_Else: cond_else
             {: RESULT = new InsCond(expr, bloq, cond_else, true); :}    //Es el primero
+            //Errores
+            | SI error Bloque_Anidado: bloq Cond_Else: cond_else
+            {: System.err.println("Condicional incorrecto. La condición no es válida.");
+               RESULT = null; :}
             ;
 
 Cond_Else ::= //No hay else final
@@ -337,6 +341,10 @@ Cond_Else ::= //No hay else final
           {: RESULT = new InsCond(bloq); :}
           | SINO Expresion: expr Bloque_Anidado: bloq Cond_Else: cond_else
           {: RESULT = new InsCond(expr, bloq, cond_else, false); :}     //No es el primero
+          //Errores
+          | SINO error Bloque_Anidado: bloq Cond_Else: cond_else
+          {: System.err.println("Condicional incorrecto. La condición no es válida.");
+             RESULT = null; :}
           ;
 
 ///Bucles///
@@ -344,11 +352,27 @@ Bucle ::= MIENTRAS Expresion: expr Bloque_Anidado: bloq
       {: RESULT = new InsBucleWhile(expr, bloq); :}
       | PARA IDEN: id ASIGNACION Expresion: exprIni FLECHA Expresion: exprFin Bloque_Anidado: bloq
       {: RESULT = new InsBucleFor(id, exprIni, exprFin, bloq); :}
+      //Errores
+      | MIENTRAS error Bloque_Anidado: bloq
+      {: System.err.println("Bucle incorrecto. La condición no es válida.");
+         RESULT = null; :}
+      | PARA error ASIGNACION Expresion: exprIni FLECHA Expresion: exprFin Bloque_Anidado: bloq
+      {: System.err.println("Bucle incorrecto. Identificador de iterador no válido.");
+         RESULT = null; :}
+      | PARA IDEN: id ASIGNACION error FLECHA Expresion: exprFin Bloque_Anidado: bloq
+      {: System.err.println("Bucle incorrecto. Expresión de inicio no válida.");
+         RESULT = null; :}
+      | PARA IDEN: id ASIGNACION Expresion: exprIni FLECHA error Bloque_Anidado: bloq
+      {: System.err.println("Bucle incorrecto. Expresión final no válida.");
+         RESULT = null; :}
       ;
 
 ///Return///
 Inst_Return ::= DEVUELVE Expresion: expr
             {: RESULT = new InsReturn(expr); :}
+            | DEVUELVE error
+            {: System.err.println("Retorno incorrecto. Expresión de devolución no válida.");
+               RESULT = null; :}
             ;
 
 /////////////////////
@@ -369,6 +393,10 @@ Tipo ::= Tipo: tipo PUNTERO
 
      | T: tipo
      {: RESULT = tipo; :}
+     //Errores
+     | VECTOR PAP error COMA ENTERO: ent PCIERRE 
+     {: System.err.println("Tipo vector inválido. Tipo de los elementos incorrecto.");
+        RESULT = null; :}
      ;
 
 T ::= ENT
@@ -387,6 +415,10 @@ T ::= ENT
 //Registros
 Tipo_Reg ::= REGISTRO LLAP Matriz_Atributos: mAtrib LLCIERRE
          {: RESULT = new TipoRegistro(mAtrib); :}
+         //Errores
+         | REGISTRO LLAP error LLCIERRE
+         {: System.err.println("Tipo registro incorrecto. Atributos inválidos.");
+            RESULT = null; :}
          ;
 
 
@@ -418,6 +450,9 @@ Matriz_Atributos2 ::= Lista_Atributos: lAtr COMA
 //Pueden tener un valor por defecto
 Lista_Atributos ::= Lista_Decl_Asignaciones: lVar DOSPUNTOS Tipo: tipo
                 {: RESULT = new DeclaracionVariables(tipo, lVar); :}
+                | Lista_Decl_Asignaciones: lVar DOSPUNTOS error
+                {: System.err.println("Lista de atributos incorrecta. Tipo inválido.");
+                   RESULT = null; :}
                 ;
 
 ///////////////////
@@ -544,6 +579,10 @@ Llamada_Fun ::= Identificador: izquierda PAP Lista_Expresiones: lExpr PCIERRE
             {: RESULT = new Llamada(izquierda, lExpr); :}
             | Identificador: izquierda PAP PCIERRE
             {: RESULT = new Llamada(izquierda, new ArrayList<Expresion>()); :}
+            //Errores
+            | Identificador: izquierda PAP error PCIERRE
+            {: System.err.println("Llamada a función incorrecta. Argumentos inválidos.");
+               RESULT = null; :}
             ;
 
 Literal ::= ENTERO: e
@@ -560,6 +599,10 @@ Literal ::= ENTERO: e
         {: RESULT = sL; :}
         | NUEVO Tipo: t
         {: RESULT = new DirDinamica(t); :}
+        //Errores
+        | NUEVO error
+        {: System.err.println("Literal inválido.");
+           RESULT = null; :}
         ;
 
 Array_Literal ::= CAP CCIERRE

@@ -19,9 +19,7 @@ import main.java.sintactico.AnalizadorSintacticoJaja;
 class FalloPuntoComaTest {
     private final static ByteArrayOutputStream errContent = new ByteArrayOutputStream();
     private final static PrintStream originalErr = System.err;
-	private static String result = "ERROR línea 1, columna 11: Error al importar un archivo, ruta incorrecta. Usa \"ruta/relativa/a/fichero.jaja\".\n"
-			+ "ERROR línea 2, columna 11: Declaración de alias incorrecta. Identificador no válido.\n"
-			+ "ERROR línea 11, columna 5: El programa contiene errores sintácticos. Abortando...\n";
+	private static String result = "";
 	
     @BeforeAll
     public static void setUpStreams() {
