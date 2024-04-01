@@ -1,0 +1,569 @@
+package main.sintactico;
+
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import java_cup.runtime.*;
+
+import main.lexico.AnalizadorLexicoJaja;
+import main.lexico.UnidadLexica;
+import main.errors.GestionErroresJaja;
+
+import main.ast.Programa;
+import main.ast.Import;
+import main.ast.declaraciones.*;
+import main.ast.expresiones.*;
+import main.ast.instrucciones.*;
+import main.ast.literales.*;
+import main.ast.tipos.*;
+
+scan with {: return getScanner().next_token(); :};
+parser code {: 
+    private GestionErroresJaja errores;
+    public void syntax_error(Symbol unidadLexica) {
+        errores.errorSintactico((UnidadLexica) unidadLexica);
+    }
+
+    public Symbol iniciarParseo() throws Exception {
+    	Symbol res = this.parse();
+        if (errores.hayErrores()) {
+            throw new Exception("El programa contiene errores sintácticos. Abortando...");
+        }
+        return res;
+    }
+:};
+
+init with {: 
+    errores = new GestionErroresJaja();
+    AnalizadorLexicoJaja alex = (AnalizadorLexicoJaja) getScanner();
+    alex.fijaGestionErrores(errores);
+:};
+
+
+terminal    //Palabras clave
+            ENT, BIN, SI, SINO, MIENTRAS, PARA, DIVER, REGISTRO, VECTOR,
+            INCOGNITO, DEVUELVE, TRAFICAR, COMO, NUEVO,
+
+            //Operadores Asignacion
+            POTASIG, MULASIG, DIVASIG, MODASIG, SUMAASIG, RESTAASIG,
+            CONJASIG, DISYASIG,
+
+            //Operadores Aritmeticos
+            POT, MUL, DIV, MOD, SUMA, RESTA,
+
+            //Relacionales
+            IGUAL, DESIGUAL, MAYOR, MENOR, MAYORIGUAL, MENORIGUAL,
+
+            //Logicos
+            NEG, CONJ, DISY,
+
+            //Otros
+            DIRECCION, PUNTERO, ASIGNACION, PUNTO, COMA, PUNTOCOMA,
+            CUATROPUNTOS, DOSPUNTOS, FLECHA, MENOS,
+
+            //Agrupaciones
+            CAP, CCIERRE, PAP, PCIERRE, LLAP, LLCIERRE;
+
+
+//Inicio Programa
+non terminal Programa Programa;
+non terminal List<Import> Lista_Imports;
+non terminal ListaDeclaraciones Lista_Declaraciones;
+
+///Declaraciones
+non terminal DeclaracionAlias Declaracion_Alias;
+//Variables
+non terminal DeclaracionVar Decl_Asig;
+non terminal List<DeclaracionVar> Lista_Decl_Asignaciones;
+non terminal DeclaracionVariables Decl_Variables;
+//Funciones
+non terminal DeclaracionFun Decl_Funcion;
+non terminal List<DeclaracionPar> Lista_Parametros, Lista_Parametros2;
+non terminal DeclaracionPar Parametro;
+
+
+///Instrucciones
+non terminal List<Instruccion> Bloque_Anidado, Lista_Instrucciones;
+non terminal Instruccion Instruccion, Asignacion, Condicional, Bucle, Inst_Return;
+non terminal InsCond Cond_Else;
+non terminal Llamada Llamada_Fun;
+
+///Tipos
+non terminal Tipo Tipo, T, Tipo_Reg;
+//Registros
+non terminal ListaDeclaraciones Matriz_Atributos, Matriz_Atributos2;
+non terminal DeclaracionVariables Lista_Atributos ;
+
+
+///Expresiones
+non terminal Expresion Expresion, E1, E2, E3, E4, E5, E6, E7, E8, E9, E10;
+non terminal List<Expresion> Lista_Expresiones;
+non terminal OperadorBin.Operadores OpBin, OP2, OP3, OP4, OP5;
+non terminal OperadorUn.Operadores OP7, OP8;
+
+//Literales
+terminal Entero ENTERO;
+terminal True FACTO;
+terminal False FAKE;
+terminal Nulo NULO;
+terminal String IDEN;
+terminal String RUTA;
+
+non terminal Literal Literal;
+non terminal LiteralArray Array_Literal;
+non terminal LiteralStruct Struct_Literal;
+non terminal Map<String, Expresion> Lista_Asig_Atributos;
+
+//Identificador
+non terminal Identificador Identificador;
+
+
+/////////////////////
+///Inicio programa///
+/////////////////////
+//El programa será las importaciones seguidas de declaraciones de funciones y
+//variables (globales). Las instrucciones solo estarán en las funciones y el
+//main será lo primero que se ejecute
+Programa ::= Lista_Imports: lImp Lista_Declaraciones: lDecl
+         {: RESULT = new Programa(lImp, lDecl); :}
+         ;
+
+
+Lista_Imports ::= Lista_Imports: lImp TRAFICAR RUTA: ruta COMO IDEN: id
+              {: lImp.add(new Import(ruta, id)); RESULT = lImp; :}
+              |
+              {: RESULT = new ArrayList<Import>(); :}
+              //Errores
+              | Lista_Imports: lImp TRAFICAR error COMO IDEN: id
+              {: System.err.println("Error al importar un archivo, ruta incorrecta. Usa \"ruta/relativa/a/fichero.jaja\".");
+                 RESULT = lImp; :}
+              | Lista_Imports: lImp TRAFICAR RUTA: ruta COMO error
+              {: System.err.println("Error al importar un archivo, identificador incorrecto.");
+                 RESULT = lImp; :}
+              | Lista_Imports: lImp error
+              {: System.err.println("Sintaxis de importación incorrecta. Utiliza \"#traficar ruta/relativa/a/fichero.jaja como identificador\".");
+                 RESULT = lImp; :}
+              ;
+
+
+Lista_Declaraciones ::= Lista_Declaraciones: lDecl Declaracion_Alias: dAlias PUNTOCOMA
+                    {: lDecl.add(dAlias); RESULT = lDecl; :}
+
+                    //Variables
+                    | Lista_Declaraciones: lDecl Decl_Variables: dGen PUNTOCOMA
+                    {: lDecl.add(dGen); RESULT = lDecl; :}
+
+                    //Funciones
+                    | Lista_Declaraciones: lDecl Decl_Funcion: dGen
+                    {: lDecl.add(dGen); RESULT = lDecl; :}
+
+                    //No lo hacemos directamente ArrayList porque tenemos que
+                    //extender "add" para insertar una lista de variables con el
+                    //mismo tipo
+                    | 
+                    {: RESULT = new ListaDeclaraciones(); :}
+                    ;
+
+Declaracion_Alias ::= INCOGNITO IDEN: id ASIGNACION Tipo: t
+                  {: RESULT = new DeclaracionAlias(id, t); :}
+                  //Errores
+                  | INCOGNITO error ASIGNACION Tipo: t
+                  {: System.err.println("Declaración de alias incorrecta. Identificador no válido.");
+                     RESULT = null; :}
+                  ;
+
+///Declaraciones variables///
+//Iremos recorriendo cada variable para asignarle su correspondiente tipo
+Decl_Variables ::= Tipo: tipo Lista_Decl_Asignaciones: lVar
+               {: RESULT = new DeclaracionVariables(tipo, lVar); :}
+               ;
+
+
+Lista_Decl_Asignaciones ::= Decl_Asig: var
+                        {: List<DeclaracionVar> lista_var = new ArrayList<DeclaracionVar>();
+                        lista_var.add(var); RESULT = lista_var; :}
+
+                        | Lista_Decl_Asignaciones: lDecl COMA Decl_Asig: var
+                        {: lDecl.add(var); RESULT = lDecl; :}
+                        ;
+
+
+Decl_Asig ::= IDEN: var
+          {: RESULT = new DeclaracionVar(var); :}
+
+          | IDEN: var ASIGNACION Expresion: expr
+          {: RESULT = new DeclaracionVar(var, expr); :}
+          ;
+
+
+///Declaracion funciones///
+Decl_Funcion ::= DIVER IDEN: id PAP Lista_Parametros: lPar PCIERRE Bloque_Anidado: bloq        //Función que no devuelve nada 
+            {: RESULT = new DeclaracionFun(id, lPar, bloq); :}
+
+            | DIVER IDEN: id PAP Lista_Parametros: lPar PCIERRE FLECHA Tipo: t Bloque_Anidado: bloq   //Función con retorno
+            {: RESULT = new DeclaracionFun(id, lPar, bloq, t); :}
+            ;
+
+//Lo separamos para evitar que la sentencia: (Vacío) -> Param -> ... sea válida
+Lista_Parametros ::= //Sin parámetros
+                 {: RESULT = new ArrayList<DeclaracionPar>(); :}
+
+                 | Lista_Parametros2: lPar      //Con uno o más
+                 {: RESULT = lPar; :}
+                 ;
+
+Lista_Parametros2 ::= Parametro: par
+                  {: List<DeclaracionPar> lista_par = new ArrayList<DeclaracionPar>();
+                  lista_par.add(par); RESULT = lista_par; :}
+                  | Lista_Parametros2: lPar FLECHA Parametro: par
+                  {: lPar.add(par); RESULT = lPar; :}
+                  ;
+
+Parametro ::=  IDEN: var DOSPUNTOS Tipo: t
+          {: RESULT = new DeclaracionPar(var, t, false); :}   //No es por referencia
+          | DIRECCION IDEN: var DOSPUNTOS Tipo: t
+          {: RESULT = new DeclaracionPar(var, t, true); :}    //Por referencia
+          ;
+
+/////////////////////
+////INSTRUCCIONES////
+/////////////////////
+///Bloque anidado///
+Bloque_Anidado ::= LLAP Lista_Instrucciones: LIns LLCIERRE
+               {: RESULT = LIns; :}
+               ;
+
+Lista_Instrucciones ::= Instruccion: ins
+                    {: List<Instruccion> lInstrucciones = new ArrayList<Instruccion>();
+                    lInstrucciones.add(ins); RESULT = lInstrucciones; :}
+
+                    | Lista_Instrucciones: lInstrucciones Instruccion: ins
+                    {: lInstrucciones.add(ins); RESULT = lInstrucciones; :}
+                    ;
+
+
+///Tipos de instrucciones///
+Instruccion ::= Decl_Variables: decl PUNTOCOMA       //Solo la declaracion de variables (no dejamos que se puedan definir funciones dentro de otras)
+            {: RESULT = decl; :}
+            |   Asignacion: as PUNTOCOMA
+            {: RESULT = as; :}
+            |   Llamada_Fun: llamada PUNTOCOMA        //Llamadas a funcion
+            {: RESULT = llamada; :}
+            |   Condicional: cond
+            {: RESULT = cond; :}
+            |   Bucle: buc
+            {: RESULT = buc; :}
+            |   Inst_Return: iRet PUNTOCOMA
+            {: RESULT = iRet; :}
+            |   error
+            ;
+
+
+///Asignaciones///
+Asignacion ::= Expresion: expr1 ASIGNACION Expresion: expr2
+           {: RESULT = new InsAsig(expr1, expr2); :}
+           //En la representación del ast se verán sin "el azúcar sintáctico"
+           | Expresion: expr1 OpBin:op Expresion: expr2
+           {: RESULT = new InsAsig(expr1, new OperadorBin(op, expr1, expr2)); :}
+           ;
+
+// POTASIG, MULASIG, DIVASIG, MODASIG, SUMAASIG, RESTAASIG, CONJASIG, DISYASIG,
+OpBin ::= POTASIG
+      {: RESULT = OperadorBin.Operadores.POT; :}
+      | MULASIG
+      {: RESULT = OperadorBin.Operadores.MUL; :}
+      | DIVASIG
+      {: RESULT = OperadorBin.Operadores.DIV; :}
+      | MODASIG
+      {: RESULT = OperadorBin.Operadores.MOD; :}
+      | SUMAASIG
+      {: RESULT = OperadorBin.Operadores.SUMA; :}
+      | RESTAASIG
+      {: RESULT = OperadorBin.Operadores.RESTA; :}
+      | CONJASIG
+      {: RESULT = OperadorBin.Operadores.CONJ; :}
+      | DISYASIG
+      {: RESULT = OperadorBin.Operadores.DISY; :}
+      ;
+
+///Condicionales///
+Condicional ::= SI Expresion: expr Bloque_Anidado: bloq Cond_Else: cond_else
+            {: RESULT = new InsCond(expr, bloq, cond_else, true); :}    //Es el primero
+            ;
+
+Cond_Else ::= //No hay else final
+          {: RESULT = new InsCond(); :}
+          | SINO Bloque_Anidado: bloq       //Else final
+          {: RESULT = new InsCond(bloq); :}
+          | SINO Expresion: expr Bloque_Anidado: bloq Cond_Else: cond_else
+          {: RESULT = new InsCond(expr, bloq, cond_else, false); :}     //No es el primero
+          ;
+
+///Bucles///
+Bucle ::= MIENTRAS Expresion: expr Bloque_Anidado: bloq
+      {: RESULT = new InsBucleWhile(expr, bloq); :}
+      | PARA IDEN: id ASIGNACION Expresion: exprIni FLECHA Expresion: exprFin Bloque_Anidado: bloq
+      {: RESULT = new InsBucleFor(id, exprIni, exprFin, bloq); :}
+      ;
+
+///Return///
+Inst_Return ::= DEVUELVE Expresion: expr
+            {: RESULT = new InsReturn(expr); :}
+            ;
+
+/////////////////////
+///     TIPOS     ///
+/////////////////////
+Tipo ::= Tipo: tipo PUNTERO
+     {: RESULT = new TipoPuntero(tipo); :}
+
+//TODO: Problema porque si las expresiones son instrucciones
+//el acceso a arrays es igual a la declaración de un array de dimensión 1
+//→ Ambigüedad. Posibilidades:
+//- Cambiar esto a corchetes (poco habitual)
+//- Cambiar el acceso a arrays (poco habitual)
+//- Quitar las expresiones de instrucciones → ¿Las llamadas a función como se
+//  harían entonces?
+     | VECTOR PAP Tipo: tipo COMA ENTERO: ent PCIERRE 
+     {: RESULT = new TipoArray(tipo, ent); :}
+
+     | T: tipo
+     {: RESULT = tipo; :}
+     ;
+
+T ::= ENT
+  {: RESULT = TipoEntero.instancia();  :}
+
+  | BIN 
+  {: RESULT = TipoBinario.instancia(); :}
+
+  | Identificador: id             //Identificador se referirá a los identificadores definidos por el incognito en este u otro fichero
+  {: RESULT = new TipoAlias(id); :}
+
+  | Tipo_Reg: t_reg
+  {: RESULT = t_reg; :}
+  ;
+
+//Registros
+Tipo_Reg ::= REGISTRO LLAP Matriz_Atributos: mAtrib LLCIERRE
+         {: RESULT = new TipoRegistro(mAtrib); :}
+         ;
+
+
+//Una sola lista de atributos o varias con la coma de la última opcional
+Matriz_Atributos ::= Lista_Atributos: lAtr
+                 {: ListaDeclaraciones mAtr = new ListaDeclaraciones();
+                 mAtr.add(lAtr); RESULT = mAtr; :}
+
+                 | Lista_Atributos: lAtr COMA
+                 {: ListaDeclaraciones mAtr = new ListaDeclaraciones();
+                 mAtr.add(lAtr); RESULT = mAtr; :}
+
+                 | Matriz_Atributos2: mAtr Lista_Atributos: lAtr
+                 {: mAtr.add(lAtr); RESULT = mAtr; :}
+
+                 | Matriz_Atributos2: mAtr Lista_Atributos: lAtr COMA
+                 {: mAtr.add(lAtr); RESULT = mAtr; :}
+                 ;
+
+
+Matriz_Atributos2 ::= Lista_Atributos: lAtr COMA
+                  {: ListaDeclaraciones mAtr = new ListaDeclaraciones();
+                  mAtr.add(lAtr); RESULT = mAtr; :}
+
+                  | Matriz_Atributos2: mAtr Lista_Atributos: lAtr COMA
+                  {: mAtr.add(lAtr); RESULT = mAtr; :}
+                  ;
+
+//Pueden tener un valor por defecto
+Lista_Atributos ::= Lista_Decl_Asignaciones: lVar DOSPUNTOS Tipo: tipo
+                {: RESULT = new DeclaracionVariables(tipo, lVar); :}
+                ;
+
+///////////////////
+////EXPRESIONES////
+///////////////////
+//disyuncion
+Expresion ::= Expresion: izquierda DISY E1: derecha
+          {: RESULT = new OperadorBin(OperadorBin.Operadores.DISY, izquierda, derecha); :}
+		  | E1: e1
+          {: RESULT = e1; :}
+          ;
+		  
+//conjunción 
+E1 ::= E1: izquierda CONJ E2: derecha
+   {: RESULT = new OperadorBin(OperadorBin.Operadores.CONJ, izquierda, derecha); :}
+   | E2: e2
+   {: RESULT = e2; :}
+   ;
+
+//igual o desigual
+E2 ::= E2:izquierda  OP2:op2 E3: derecha
+   {: RESULT = new OperadorBin(op2, izquierda, derecha); :}
+   | E3: e3
+   {: RESULT = e3; :}
+   ;
+   
+OP2 ::= DESIGUAL
+	{: RESULT = OperadorBin.Operadores.DESIGUAL; :}
+    | IGUAL
+   	{: RESULT = OperadorBin.Operadores.IGUAL; :}
+    ;
+
+//mayor, menor, mayorigual, menorigual
+E3 ::= E3: izquierda OP3:op3 E4: derecha
+   {: RESULT = new OperadorBin(op3, izquierda, derecha); :}
+   | E4: e4
+   {: RESULT = e4; :}
+   ;
+   
+OP3 ::= MAYOR
+	{: RESULT = OperadorBin.Operadores.MAYOR; :}
+	| MENOR
+	{: RESULT = OperadorBin.Operadores.MENOR; :} 
+	| MAYORIGUAL
+	{: RESULT = OperadorBin.Operadores.MAYORIGUAL; :}
+	| MENORIGUAL
+	{: RESULT = OperadorBin.Operadores.MENORIGUAL; :}
+    ;
+
+//suma, resta
+E4 ::= E4: izquierda OP4:op4 E5: derecha
+   {: RESULT = new OperadorBin(op4, izquierda, derecha); :}
+   | E5: e5
+   {: RESULT = e5; :}
+   ;
+   
+OP4 ::= SUMA
+    {: RESULT = OperadorBin.Operadores.SUMA; :}	 
+    | RESTA
+    {: RESULT = OperadorBin.Operadores.RESTA; :}
+    ;
+
+//multiplicación, división, módulo
+E5 ::= E5: izquierda OP5:op5 E6: derecha
+   {: RESULT = new OperadorBin(op5, izquierda, derecha); :}
+   | E6: e6
+   {: RESULT = e6; :}
+   ;
+   
+OP5 ::= MUL
+    {: RESULT = OperadorBin.Operadores.MUL; :}	 
+ 	| DIV
+	{: RESULT = OperadorBin.Operadores.DIV; :}	 
+	| MOD
+	{: RESULT = OperadorBin.Operadores.MOD; :}
+    ; 
+
+
+//potencia
+E6 ::= E6: izquierda POT E7: derecha
+   {: RESULT = new OperadorBin(OperadorBin.Operadores.POT, izquierda, derecha); :}
+   | E7: e7
+   {: RESULT = e7; :}
+   ;
+
+//dirección, puntero
+E7 ::= OP7:op7 E7: derecha
+   {: RESULT = new OperadorUn(op7, derecha); :}
+   | E8: e8
+   {: RESULT = e8; :}
+   ;
+
+   
+OP7 ::= DIRECCION
+    {: RESULT = OperadorUn.Operadores.DIRECCION; :}	 	 
+    | PUNTERO
+    {: RESULT = OperadorUn.Operadores.PUNTERO; :}
+    ;
+
+//negación y menos unario
+E8 ::= OP8:op8 E8: derecha
+   {: RESULT = new OperadorUn(op8, derecha); :}
+   | E9: e9
+   {: RESULT = e9; :}
+   ;
+   
+OP8 ::= NEG
+    {: RESULT = OperadorUn.Operadores.NEG; :}	 	 
+    | MENOS
+    {: RESULT = OperadorUn.Operadores.MENOS; :}
+    ;
+    
+//Literales y paréntesis
+E9 ::= Literal: e
+   {: RESULT = e; :}
+   | Llamada_Fun: ll
+   {: RESULT = ll; :}
+   | E10: expr
+   {: RESULT = expr; :}
+   ;
+
+//Los array y registros no pueden tener funciones
+Llamada_Fun ::= Identificador: izquierda PAP Lista_Expresiones: lExpr PCIERRE
+            {: RESULT = new Llamada(izquierda, lExpr); :}
+            | Identificador: izquierda PAP PCIERRE
+            {: RESULT = new Llamada(izquierda, new ArrayList<Expresion>()); :}
+            ;
+
+Literal ::= ENTERO: e
+        {: RESULT = e; :}
+        | FACTO: t
+        {: RESULT = t; :}
+        | FAKE: f
+        {: RESULT = f; :}
+        | NULO: n
+        {: RESULT = n; :}
+        | NUEVO Array_Literal: aL
+        {: RESULT = aL; :}
+        | NUEVO Struct_Literal: sL
+        {: RESULT = sL; :}
+        | NUEVO Tipo: t
+        {: RESULT = new DirDinamica(t); :}
+        ;
+
+Array_Literal ::= CAP CCIERRE
+              {: RESULT = new LiteralArray(new ArrayList<Expresion>()); :}
+              | CAP Lista_Expresiones: lExpr CCIERRE
+              {: RESULT = new LiteralArray(lExpr); :}
+              ;
+
+Struct_Literal ::= LLAP Lista_Asig_Atributos: lAtr LLCIERRE
+               {: RESULT = new LiteralStruct(lAtr); :}
+               ;
+
+Lista_Asig_Atributos ::= IDEN: id ASIGNACION Expresion: expr
+                     {: Map<String, Expresion> valores = new HashMap<String, Expresion>();
+                     valores.put(id, expr); RESULT = valores; :}
+                     | Lista_Asig_Atributos: lAtr COMA IDEN: id ASIGNACION Expresion: expr
+                     {: lAtr.put(id, expr); RESULT = lAtr; :}
+                     ;
+
+
+//Accesos a array y structs
+E10 ::= E10: izquierda CAP Expresion:derecha CCIERRE
+    {: RESULT = new AccesoArray(izquierda, derecha); :}
+    | E10: izquierda PUNTO IDEN: id
+    {: RESULT = new AccesoStruct(izquierda, id); :}
+    | PAP Expresion: expr PCIERRE
+    {: RESULT = expr; :}
+    | Identificador: id
+    {: RESULT = id; :}
+    ;
+
+
+Lista_Expresiones ::= Expresion: expr
+                   {: List<Expresion> lExpr = new ArrayList<Expresion>();
+                   lExpr.add(expr); RESULT = lExpr; :}
+                   | Lista_Expresiones: lExpr COMA Expresion: expr
+                   {: lExpr.add(expr); RESULT = lExpr; :}
+                   ;
+
+
+///Identificadores con import
+Identificador ::= IDEN: lib CUATROPUNTOS IDEN: id
+              {: RESULT = new Identificador(id, lib); :}
+              | IDEN: id
+              {: RESULT = new Identificador(id); :}
+              ;
