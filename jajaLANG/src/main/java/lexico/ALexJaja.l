@@ -1,6 +1,6 @@
-package main.lexico;
+package main.java.lexico;
 
-import main.errors.GestionErroresJaja;
+import main.java.errors.GestionErroresJaja;
 
 %%
 %cup

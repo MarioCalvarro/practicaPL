@@ -1,12 +1,11 @@
-#traficar alkfja. como alkdfj
-incognito 12 = ent;
-
 diver tronco() {
+    ent x, y = ª;
+
     //Imprime algo por pantalla
     r::prueba();
     
     //Falta punto y coma
-    escribirEntero()
+    escribirEntero();
 
     para i = 0 -> 10 {
         escribirEntero(i);

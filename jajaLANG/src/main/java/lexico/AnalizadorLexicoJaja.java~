@@ -4,7 +4,7 @@
 
 package main.java.lexico;
 
-import main.java.errors.GestionErroresJaja;
+import main.errors.GestionErroresJaja;
 
 
 // See https://github.com/jflex-de/jflex/issues/222

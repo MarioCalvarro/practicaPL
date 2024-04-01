@@ -11,7 +11,9 @@ public class DeclaracionVariables extends Instruccion {
 
     public DeclaracionVariables(Tipo tipo, List<DeclaracionVar> lista_var) {
         for (DeclaracionVar decl : lista_var) {
-            decl.setTipo(tipo);
+            if (decl != null && tipo != null) {
+                decl.setTipo(tipo);
+            }
         }
         this.tipo = tipo;
         this.lista_var = lista_var;

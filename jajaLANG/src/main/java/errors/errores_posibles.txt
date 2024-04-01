@@ -4,3 +4,8 @@
   - Completamente incorrecto
 2) Declaracion alias
   - Alias incorrecto
+  - Tipo incorrecto
+3) Declaración de variables
+  - Tipo incorrecto
+  - Expresión incorrecta
+  - Identificador incorrecto

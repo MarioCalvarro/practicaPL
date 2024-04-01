@@ -7,7 +7,7 @@ public class GestionErroresJaja {
 
 	public void errorLexico(int fila, int columna, String lexema) {
         numErrores += 1;
-		System.err.println("ERROR línea " + fila + ", columna " + columna + ": Caracter inesperado: " + lexema);
+		System.err.println("ERROR línea " + fila + ", columna " + columna + ": Caracter inesperado: \'" + lexema + "\'.");
 	}
 
 	public void errorSintactico(UnidadLexica unidadLexica) {
