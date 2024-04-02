@@ -7,14 +7,14 @@ public class UnidadLexica extends Symbol {
 	private int fila, columna;
 
 	public UnidadLexica(int fila, int columna, int clase, String tipo) {
-		super(clase, null);
+		super(clase, new TokenValue(fila, columna));
 		this.tipo = tipo;
 		this.fila = fila;
 		this.columna = columna;
 	}
 
 	public UnidadLexica(int fila, int columna, int clase, String lexema, String tipo) {
-		super(clase, null);
+		super(clase, new TokenValue(fila, columna, lexema));
 		this.tipo = tipo;
 		this.fila = fila;
 		this.columna = columna;

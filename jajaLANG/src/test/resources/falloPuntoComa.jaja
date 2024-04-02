@@ -1,8 +1,8 @@
 diver tronco() {
-    si a {
+    si @ {
         devuelve facto;
     }
-    sino | {
+    sino ] {
         devuelve fake;
     }
     sino {

@@ -8,6 +8,7 @@ import java_cup.runtime.*;
 
 import main.java.lexico.AnalizadorLexicoJaja;
 import main.java.lexico.UnidadLexica;
+import main.java.lexico.TokenValue;
 import main.java.errors.GestionErroresJaja;
 
 import main.java.ast.Programa;
@@ -21,6 +22,17 @@ import main.java.ast.tipos.*;
 scan with {: return getScanner().next_token(); :};
 parser code {: 
     private GestionErroresJaja errores;
+
+    public void reportError(String error) {
+        System.err.print("Error: ");
+        System.err.println(error);
+    }
+
+    public void reportError(int fila, String error) {
+        System.err.print("Error fila: " + fila + ": ");
+        System.err.println(error);
+    }
+
     public void syntax_error(Symbol unidadLexica) {
         errores.errorSintactico((UnidadLexica) unidadLexica);
     }
@@ -41,7 +53,7 @@ init with {:
 :};
 
 
-terminal    //Palabras clave
+terminal TokenValue    //Palabras clave
             ENT, BIN, SI, SINO, MIENTRAS, PARA, DIVER, REGISTRO, VECTOR,
             INCOGNITO, DEVUELVE, TRAFICAR, COMO, NUEVO,
 
@@ -135,11 +147,11 @@ Lista_Imports ::= Lista_Imports: lImp TRAFICAR RUTA: ruta COMO IDEN: id
               |
               {: RESULT = new ArrayList<Import>(); :}
               //Errores
-              | Lista_Imports: lImp TRAFICAR error COMO IDEN: id
-              {: System.err.println("Error al importar un archivo, ruta incorrecta. Usa \"ruta/relativa/a/fichero.jaja\".");
+              | Lista_Imports: lImp TRAFICAR:t error COMO IDEN: id
+              {: parser.reportError(t.fila(), "Error al importar un archivo, ruta incorrecta. Usa \"ruta/relativa/a/fichero.jaja\".");
                  RESULT = lImp; :}
-              | Lista_Imports: lImp TRAFICAR RUTA: ruta COMO error
-              {: System.err.println("Error al importar un archivo, identificador incorrecto.");
+              | Lista_Imports: lImp TRAFICAR RUTA: ruta COMO:c error
+              {: parser.reportError(c.fila(), "Error al importar un archivo, identificador incorrecto.");
                  RESULT = lImp; :}
               ;
 
@@ -165,11 +177,11 @@ Lista_Declaraciones ::= Lista_Declaraciones: lDecl Declaracion_Alias: dAlias PUN
 Declaracion_Alias ::= INCOGNITO IDEN: id ASIGNACION Tipo: t
                   {: RESULT = new DeclaracionAlias(id, t); :}
                   //Errores
-                  | INCOGNITO error ASIGNACION Tipo: t
-                  {: System.err.println("Declaración de alias incorrecta. Identificador no válido.");
+                  | INCOGNITO:i error ASIGNACION Tipo: t
+                  {: parser.reportError(i.fila(), "Declaración de alias incorrecta. Identificador no válido.");
                      RESULT = null; :}
-                  | INCOGNITO IDEN: id ASIGNACION error
-                  {: System.err.println("Declaración de alias incorrecta. Tipo no válido.");
+                  | INCOGNITO IDEN: id ASIGNACION:a error
+                  {: parser.reportError(a.fila(), "Declaración de alias incorrecta. Tipo no válido.");
                      RESULT = null; :}
                   ;
 
@@ -179,10 +191,10 @@ Decl_Variables ::= Tipo: tipo Lista_Decl_Asignaciones: lVar
                {: RESULT = new DeclaracionVariables(tipo, lVar); :}
                //Errores
                | Tipo: tipo error
-               {: System.err.println("Declaración de variables incorrecta. Lista de variables no válida.");
+               {: parser.reportError("Declaración de variables incorrecta. Lista de variables no válida.");
                   RESULT = null; :}
                | error Lista_Decl_Asignaciones: lVar
-               {: System.err.println("Declaración de variables incorrecta. Tipo no válido.");
+               {: parser.reportError("Declaración de variables incorrecta. Tipo no válido.");
                   RESULT = null; :}
                ;
 
@@ -194,8 +206,8 @@ Lista_Decl_Asignaciones ::= Decl_Asig: var
                         | Lista_Decl_Asignaciones: lDecl COMA Decl_Asig: var
                         {: lDecl.add(var); RESULT = lDecl; :}
                         //Errores
-                        | Lista_Decl_Asignaciones: lDecl COMA error
-                        {: System.err.println("Declaración de variable incorrecta. Identificador no válido.");
+                        | Lista_Decl_Asignaciones: lDecl COMA:c error
+                        {: parser.reportError(c.fila(), "Declaración de variable incorrecta. Identificador no válido.");
                            RESULT = lDecl; :}
                         ;
 
@@ -206,11 +218,11 @@ Decl_Asig ::= IDEN: var
           | IDEN: var ASIGNACION Expresion: expr
           {: RESULT = new DeclaracionVar(var, expr); :}
           //Errores
-          | IDEN: var ASIGNACION error
-          {: System.err.println("Declaración de variable incorrecta. Expresión no válida.");
+          | IDEN: var ASIGNACION:a error
+          {: parser.reportError(a.fila(), "Declaración de variable incorrecta. Expresión no válida.");
              RESULT = null; :}
-          | error ASIGNACION Expresion: expr
-          {: System.err.println("Declaración de variable incorrecta. Identificador no válido.");
+          | error ASIGNACION:a Expresion: expr
+          {: parser.reportError(a.fila(), "Declaración de variable incorrecta. Identificador no válido.");
              RESULT = null; :}
           ;
 
@@ -222,20 +234,20 @@ Decl_Funcion ::= DIVER IDEN: id PAP Lista_Parametros: lPar PCIERRE Bloque_Anidad
             | DIVER IDEN: id PAP Lista_Parametros: lPar PCIERRE FLECHA Tipo: t Bloque_Anidado: bloq   //Función con retorno
             {: RESULT = new DeclaracionFun(id, lPar, bloq, t); :}
             //Errores
-            | DIVER error PAP Lista_Parametros: lPar PCIERRE Bloque_Anidado: bloq 
-            {: System.err.println("Declaración de función incorrecta. Identificador no válido.");
+            | DIVER:d error PAP Lista_Parametros: lPar PCIERRE Bloque_Anidado: bloq 
+            {: parser.reportError(d.fila(), "Declaración de función incorrecta. Identificador no válido.");
                RESULT = null; :}
-            | DIVER error PAP Lista_Parametros: lPar PCIERRE FLECHA Tipo: t Bloque_Anidado: bloq
-            {: System.err.println("Declaración de función incorrecta. Identificador no válido.");
+            | DIVER:d error PAP Lista_Parametros: lPar PCIERRE FLECHA Tipo: t Bloque_Anidado: bloq
+            {: parser.reportError(d.fila(), "Declaración de función incorrecta. Identificador no válido.");
                RESULT = null; :}
-            | DIVER IDEN: id PAP error PCIERRE Bloque_Anidado: bloq 
-            {: System.err.println("Declaración de función incorrecta. Parámetros no válidos.");
+            | DIVER IDEN: id PAP:p error PCIERRE Bloque_Anidado: bloq 
+            {: parser.reportError(p.fila(), "Declaración de función incorrecta. Parámetros no válidos.");
                RESULT = null; :}
-            | DIVER IDEN: id PAP error PCIERRE FLECHA Tipo: t Bloque_Anidado: bloq
-            {: System.err.println("Declaración de función incorrecta. Parámetros no válidos.");
+            | DIVER IDEN: id PAP:p error PCIERRE FLECHA Tipo: t Bloque_Anidado: bloq
+            {: parser.reportError(p.fila(), "Declaración de función incorrecta. Parámetros no válidos.");
                RESULT = null; :}
-            | DIVER IDEN: id PAP Lista_Parametros: lPar PCIERRE FLECHA error Bloque_Anidado: bloq
-            {: System.err.println("Declaración de función incorrecta. Tipo de retorno no válido.");
+            | DIVER IDEN: id PAP Lista_Parametros: lPar PCIERRE FLECHA:f error Bloque_Anidado: bloq
+            {: parser.reportError(f.fila(), "Declaración de función incorrecta. Tipo de retorno no válido.");
                RESULT = null; :}
             ;
 
@@ -299,11 +311,11 @@ Asignacion ::= Expresion: expr1 ASIGNACION Expresion: expr2
            //En la representación del ast se verán sin "el azúcar sintáctico"
            | Expresion: expr1 OpBin:op Expresion: expr2
            {: RESULT = new InsAsig(expr1, new OperadorBin(op, expr1, expr2)); :}
-           | error ASIGNACION Expresion: expr2
-           {: System.err.println("Asignación incorrecta. La expresión izquierda no es válida.");
+           | error ASIGNACION:a Expresion: expr2
+           {: parser.reportError(a.fila(), "Asignación incorrecta. La expresión izquierda no es válida.");
               RESULT = null; :}
-           | Expresion: expr1 ASIGNACION error
-           {: System.err.println("Asignación incorrecta. La expresión derecha no es válida.");
+           | Expresion: expr1 ASIGNACION:a error
+           {: parser.reportError(a.fila(), "Asignación incorrecta. La expresión derecha no es válida.");
               RESULT = null; :}
            ;
 
@@ -330,8 +342,8 @@ OpBin ::= POTASIG
 Condicional ::= SI Expresion: expr Bloque_Anidado: bloq Cond_Else: cond_else
             {: RESULT = new InsCond(expr, bloq, cond_else, true); :}    //Es el primero
             //Errores
-            | SI error Bloque_Anidado: bloq Cond_Else: cond_else
-            {: System.err.println("Condicional incorrecto. La condición no es válida.");
+            | SI:s error Bloque_Anidado: bloq Cond_Else: cond_else
+            {: parser.reportError(s.fila(), "Condicional incorrecto. La condición no es válida.");
                RESULT = null; :}
             ;
 
@@ -342,8 +354,8 @@ Cond_Else ::= //No hay else final
           | SINO Expresion: expr Bloque_Anidado: bloq Cond_Else: cond_else
           {: RESULT = new InsCond(expr, bloq, cond_else, false); :}     //No es el primero
           //Errores
-          | SINO error Bloque_Anidado: bloq Cond_Else: cond_else
-          {: System.err.println("Condicional incorrecto. La condición no es válida.");
+          | SINO:s error Bloque_Anidado: bloq Cond_Else: cond_else
+          {: parser.reportError(s.fila(), "Condicional incorrecto. La condición no es válida.");
              RESULT = null; :}
           ;
 
@@ -353,25 +365,25 @@ Bucle ::= MIENTRAS Expresion: expr Bloque_Anidado: bloq
       | PARA IDEN: id ASIGNACION Expresion: exprIni FLECHA Expresion: exprFin Bloque_Anidado: bloq
       {: RESULT = new InsBucleFor(id, exprIni, exprFin, bloq); :}
       //Errores
-      | MIENTRAS error Bloque_Anidado: bloq
-      {: System.err.println("Bucle incorrecto. La condición no es válida.");
+      | MIENTRAS:m error Bloque_Anidado: bloq
+      {: parser.reportError(m.fila(), "Bucle incorrecto. La condición no es válida.");
          RESULT = null; :}
-      | PARA error ASIGNACION Expresion: exprIni FLECHA Expresion: exprFin Bloque_Anidado: bloq
-      {: System.err.println("Bucle incorrecto. Identificador de iterador no válido.");
+      | PARA:p error ASIGNACION Expresion: exprIni FLECHA Expresion: exprFin Bloque_Anidado: bloq
+      {: parser.reportError(p.fila(), "Bucle incorrecto. Identificador de iterador no válido.");
          RESULT = null; :}
-      | PARA IDEN: id ASIGNACION error FLECHA Expresion: exprFin Bloque_Anidado: bloq
-      {: System.err.println("Bucle incorrecto. Expresión de inicio no válida.");
+      | PARA IDEN: id ASIGNACION:a error FLECHA Expresion: exprFin Bloque_Anidado: bloq
+      {: parser.reportError(a.fila(), "Bucle incorrecto. Expresión de inicio no válida.");
          RESULT = null; :}
-      | PARA IDEN: id ASIGNACION Expresion: exprIni FLECHA error Bloque_Anidado: bloq
-      {: System.err.println("Bucle incorrecto. Expresión final no válida.");
+      | PARA IDEN: id ASIGNACION Expresion: exprIni FLECHA:f error Bloque_Anidado: bloq
+      {: parser.reportError(f.fila(), "Bucle incorrecto. Expresión final no válida.");
          RESULT = null; :}
       ;
 
 ///Return///
 Inst_Return ::= DEVUELVE Expresion: expr
             {: RESULT = new InsReturn(expr); :}
-            | DEVUELVE error
-            {: System.err.println("Retorno incorrecto. Expresión de devolución no válida.");
+            | DEVUELVE:d error
+            {: parser.reportError(d.fila(), "Retorno incorrecto. Expresión de devolución no válida.");
                RESULT = null; :}
             ;
 
@@ -394,8 +406,8 @@ Tipo ::= Tipo: tipo PUNTERO
      | T: tipo
      {: RESULT = tipo; :}
      //Errores
-     | VECTOR PAP error COMA ENTERO: ent PCIERRE 
-     {: System.err.println("Tipo vector inválido. Tipo de los elementos incorrecto.");
+     | VECTOR PAP:p error COMA ENTERO: ent PCIERRE 
+     {: parser.reportError(p.fila(), "Tipo vector inválido. Tipo de los elementos incorrecto.");
         RESULT = null; :}
      ;
 
@@ -416,8 +428,8 @@ T ::= ENT
 Tipo_Reg ::= REGISTRO LLAP Matriz_Atributos: mAtrib LLCIERRE
          {: RESULT = new TipoRegistro(mAtrib); :}
          //Errores
-         | REGISTRO LLAP error LLCIERRE
-         {: System.err.println("Tipo registro incorrecto. Atributos inválidos.");
+         | REGISTRO LLAP:l error LLCIERRE
+         {: parser.reportError(l.fila(), "Tipo registro incorrecto. Atributos inválidos.");
             RESULT = null; :}
          ;
 
@@ -450,8 +462,8 @@ Matriz_Atributos2 ::= Lista_Atributos: lAtr COMA
 //Pueden tener un valor por defecto
 Lista_Atributos ::= Lista_Decl_Asignaciones: lVar DOSPUNTOS Tipo: tipo
                 {: RESULT = new DeclaracionVariables(tipo, lVar); :}
-                | Lista_Decl_Asignaciones: lVar DOSPUNTOS error
-                {: System.err.println("Lista de atributos incorrecta. Tipo inválido.");
+                | Lista_Decl_Asignaciones: lVar DOSPUNTOS:d error
+                {: parser.reportError(d.fila(), "Lista de atributos incorrecta. Tipo inválido.");
                    RESULT = null; :}
                 ;
 
@@ -580,8 +592,8 @@ Llamada_Fun ::= Identificador: izquierda PAP Lista_Expresiones: lExpr PCIERRE
             | Identificador: izquierda PAP PCIERRE
             {: RESULT = new Llamada(izquierda, new ArrayList<Expresion>()); :}
             //Errores
-            | Identificador: izquierda PAP error PCIERRE
-            {: System.err.println("Llamada a función incorrecta. Argumentos inválidos.");
+            | Identificador: izquierda PAP:p error PCIERRE
+            {: parser.reportError(p.fila(), "Llamada a función incorrecta. Argumentos inválidos.");
                RESULT = null; :}
             ;
 
@@ -600,8 +612,8 @@ Literal ::= ENTERO: e
         | NUEVO Tipo: t
         {: RESULT = new DirDinamica(t); :}
         //Errores
-        | NUEVO error
-        {: System.err.println("Literal inválido.");
+        | NUEVO:n error
+        {: parser.reportError(n.fila(), "Literal inválido.");
            RESULT = null; :}
         ;
 
