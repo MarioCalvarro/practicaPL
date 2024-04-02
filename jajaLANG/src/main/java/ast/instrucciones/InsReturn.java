@@ -8,8 +8,8 @@ public class InsReturn extends Instruccion {
 	public InsReturn(Expresion expr) {
 		this.expr = expr;
 	}
-	
-    @Override
+
+	@Override
 	public String toString() {
 		return "devuelve" + " " + expr + ";";
 	}

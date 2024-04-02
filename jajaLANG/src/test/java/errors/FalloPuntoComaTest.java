@@ -17,20 +17,20 @@ import main.java.lexico.AnalizadorLexicoJaja;
 import main.java.sintactico.AnalizadorSintacticoJaja;
 
 class FalloPuntoComaTest {
-    private final static ByteArrayOutputStream errContent = new ByteArrayOutputStream();
-    private final static PrintStream originalErr = System.err;
+	private final static ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+	private final static PrintStream originalErr = System.err;
 	private static String result = "";
-	
-    @BeforeAll
-    public static void setUpStreams() {
-        System.setErr(new PrintStream(errContent));
-    }
 
-    @AfterAll
-    public static void restoreStreams() {
-        System.setErr(originalErr);
-    }
-	
+	@BeforeAll
+	public static void setUpStreams() {
+		System.setErr(new PrintStream(errContent));
+	}
+
+	@AfterAll
+	public static void restoreStreams() {
+		System.setErr(originalErr);
+	}
+
 	@Test
 	void test() {
 		Reader input = null;
@@ -40,20 +40,20 @@ class FalloPuntoComaTest {
 			e.printStackTrace();
 		}
 		AnalizadorLexicoJaja al = new AnalizadorLexicoJaja(input);
-        AnalizadorSintacticoJaja as = new AnalizadorSintacticoJaja(al);
-        try {
+		AnalizadorSintacticoJaja as = new AnalizadorSintacticoJaja(al);
+		try {
 			as.iniciarParseo();
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-        System.out.println("Finalizado el parseo.");
-        
-        // Get the error output
-        String errorOutput = errContent.toString();
+		System.out.println("Finalizado el parseo.");
 
-        System.out.println(errorOutput);
+		// Get the error output
+		String errorOutput = errContent.toString();
 
-        // Assert that the error output matches what you expect
-        assertEquals(result, errorOutput);
+		System.out.println(errorOutput);
+
+		// Assert that the error output matches what you expect
+		assertEquals(result, errorOutput);
 	}
 }

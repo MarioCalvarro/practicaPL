@@ -1,17 +1,17 @@
 package main.java.ast.tipos;
 
 public class TipoBinario extends Tipo {
-    private static TipoBinario instancia = new TipoBinario();
+	private static TipoBinario instancia = new TipoBinario();
 
-    private TipoBinario() {
-    }
-    
-    public static TipoBinario instancia() {
-        return instancia;
-    }
+	private TipoBinario() {
+	}
 
-    @Override
-    public String toString() {
-        return "bin";
-    }
+	public static TipoBinario instancia() {
+		return instancia;
+	}
+
+	@Override
+	public String toString() {
+		return "bin";
+	}
 }

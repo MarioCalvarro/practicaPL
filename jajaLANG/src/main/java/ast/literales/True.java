@@ -6,7 +6,7 @@ public class True extends Literal {
 	public static True instancia() {
 		return instancia;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "facto";

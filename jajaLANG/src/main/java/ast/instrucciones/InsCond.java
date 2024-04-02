@@ -10,13 +10,14 @@ public class InsCond extends Instruccion {
 	private InsCond instElse;
 	private Boolean esPrimero;
 
-    //Sin else 
-    public InsCond() {}
+	// Sin else
+	public InsCond() {
+	}
 
 	// Constructor del else final
 	public InsCond(List<Instruccion> cuerpo) {
 		this.cuerpo = cuerpo;
-        this.esPrimero = false;
+		this.esPrimero = false;
 	}
 
 	public InsCond(Expresion condicion, List<Instruccion> cuerpo, InsCond instElse) {
@@ -24,42 +25,42 @@ public class InsCond extends Instruccion {
 		this.cuerpo = cuerpo;
 		this.instElse = instElse;
 	}
-	
+
 	public InsCond(Expresion condicion, List<Instruccion> cuerpo, InsCond instElse, Boolean isfirst) {
 		this.condicion = condicion;
 		this.cuerpo = cuerpo;
 		this.instElse = instElse;
-		this.esPrimero=isfirst;
-		
+		this.esPrimero = isfirst;
+
 	}
-	
-    @Override
+
+	@Override
 	public String toString() {
-    	StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 
-    	if(cuerpo != null) {
-    		if(esPrimero == true )
-        		sb.append("si");
-        	else
-        		sb.append("sino");
-        	
-    		if(condicion != null)
-    			sb.append(" ").append(condicion);
-    		
-    		sb.append(" {\n");
-    		
-    		for (Instruccion ins : cuerpo) {		
-				sb.append(ins).append('\n');			
-    		}
+		if (cuerpo != null) {
+			if (esPrimero == true)
+				sb.append("si");
+			else
+				sb.append("sino");
 
-    		sb.append("} ");
+			if (condicion != null)
+				sb.append(" ").append(condicion);
 
-            if (instElse != null) {
-                sb.append(instElse);
-            }
-    	}
-    	
-		return sb.toString();	
-		
+			sb.append(" {\n");
+
+			for (Instruccion ins : cuerpo) {
+				sb.append(ins).append('\n');
+			}
+
+			sb.append("} ");
+
+			if (instElse != null) {
+				sb.append(instElse);
+			}
+		}
+
+		return sb.toString();
+
 	}
 }

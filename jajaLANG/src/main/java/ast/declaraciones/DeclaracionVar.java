@@ -46,7 +46,7 @@ public class DeclaracionVar extends Instruccion implements Declaracion {
 	public String toString() {
 		if (tipo == null) {
 			System.err.println("Error si variable sin tipo!");
-            System.exit(1);
+			System.exit(1);
 			return "";
 		} else if (valor == null) {
 			return tipo + " " + id;

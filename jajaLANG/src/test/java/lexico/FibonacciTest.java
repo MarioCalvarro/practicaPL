@@ -34,7 +34,7 @@ class FibonacciTest {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-            System.out.print(unidad.toString());
+			System.out.print(unidad.toString());
 			test.append(unidad.toString());
 		} while (unidad.clase() != ClaseLexica.EOF);
 		assertEquals(test.toString(), result);

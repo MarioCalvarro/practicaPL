@@ -18,24 +18,22 @@ public class InsBucleFor extends Instruccion {
 		this.ini = ini;
 		this.fin = fin;
 		this.cuerpo = cuerpo;
-		this.id=id;
+		this.id = id;
 	}
-	
 
-    @Override
+	@Override
 	public String toString() {
 
-    	StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 		sb.append("para").append(" ").append(id).append(" = ").append(ini).append(" -> ").append(fin).append(" {\n");
-		
-		
-		for (Instruccion ins : cuerpo) {		
-            sb.append(ins).append('\n');			
+
+		for (Instruccion ins : cuerpo) {
+			sb.append(ins).append('\n');
 		}
-		
+
 		sb.append("}");
-		
-		return sb.toString();	
-		
+
+		return sb.toString();
+
 	}
 }

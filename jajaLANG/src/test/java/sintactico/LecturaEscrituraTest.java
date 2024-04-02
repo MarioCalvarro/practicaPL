@@ -13,15 +13,9 @@ import main.java.lexico.AnalizadorLexicoJaja;
 import main.java.sintactico.AnalizadorSintacticoJaja;
 
 class LecturaEscrituraTest {
-	private static String result = "diver tronco() {\n"
-			+ "ent num = leerEnt();\n"
-			+ "bin cond = leerBin();\n"
-			+ "si cond {\n"
-			+ "escribirEnt(num)\n"
-			+ "} \n"
-			+ "}\n"
-			+ "";
-			
+	private static String result = "diver tronco() {\n" + "ent num = leerEnt();\n" + "bin cond = leerBin();\n"
+			+ "si cond {\n" + "escribirEnt(num)\n" + "} \n" + "}\n" + "";
+
 	@Test
 	void test() {
 		String test1 = new String();
@@ -32,13 +26,13 @@ class LecturaEscrituraTest {
 			e.printStackTrace();
 		}
 		AnalizadorLexicoJaja al = new AnalizadorLexicoJaja(input);
-        AnalizadorSintacticoJaja as = new AnalizadorSintacticoJaja(al);
-        try {
-            test1 = as.parse().value.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.print(test1);
-        assertEquals(test1, result);
+		AnalizadorSintacticoJaja as = new AnalizadorSintacticoJaja(al);
+		try {
+			test1 = as.parse().value.toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.print(test1);
+		assertEquals(test1, result);
 	}
 }
