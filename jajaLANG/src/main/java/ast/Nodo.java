@@ -1,5 +1,7 @@
 package main.java.ast;
 
-public abstract class Nodo {
+import main.java.ast.tipos.Tipo;
 
+public abstract class Nodo {
+    protected Tipo tipo;
 }

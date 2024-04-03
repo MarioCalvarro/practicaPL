@@ -1,8 +1,6 @@
-package main.java.ast.literales;
+package main.java.ast.expresiones;
 
-import main.java.ast.expresiones.Expresion;
-
-public class AccesoArray extends Literal {
+public class AccesoArray extends Expresion {
 	private Expresion array;
 	private Expresion indice;
 

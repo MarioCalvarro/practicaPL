@@ -34,4 +34,9 @@ public class LiteralStruct extends Literal {
 
 		return sb.toString();
 	}
+
+    @Override
+    public Object valor() {
+        return lExpr;
+    }
 }

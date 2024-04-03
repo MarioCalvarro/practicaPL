@@ -30,4 +30,9 @@ public class LiteralArray extends Literal {
 
 		return sb.toString();
 	}
+
+    @Override
+    public Object valor() {
+        return lExpr;
+    }
 }

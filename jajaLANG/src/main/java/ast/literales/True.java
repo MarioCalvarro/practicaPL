@@ -11,4 +11,9 @@ public class True extends Literal {
 	public String toString() {
 		return "facto";
 	}
+
+    @Override
+    public Object valor() {
+        return true;
+    }
 }

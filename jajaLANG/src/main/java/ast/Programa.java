@@ -4,7 +4,7 @@ import java.util.List;
 
 import main.java.ast.declaraciones.ListaDeclaraciones;
 
-public class Programa {
+public class Programa extends Nodo {
 	private List<Import> lista_imports;
 	private ListaDeclaraciones lista_declaraciones;
 

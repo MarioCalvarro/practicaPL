@@ -15,4 +15,9 @@ public class Entero extends Literal {
 	public String toString() {
 		return String.valueOf(value);
 	}
+
+    @Override
+    public Object valor() {
+        return value;
+    }
 }

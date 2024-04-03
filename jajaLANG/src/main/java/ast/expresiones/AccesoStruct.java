@@ -1,8 +1,6 @@
-package main.java.ast.literales;
+package main.java.ast.expresiones;
 
-import main.java.ast.expresiones.Expresion;
-
-public class AccesoStruct extends Literal {
+public class AccesoStruct extends Expresion {
 	private Expresion exp;
 	private String id;
 

@@ -11,4 +11,9 @@ public class False extends Literal {
 	public String toString() {
 		return "fake";
 	}
+
+    @Override
+    public Object valor() {
+        return false;
+    }
 }

@@ -1,6 +1,6 @@
 package main.java.ast;
 
-public class Import {
+public class Import extends Nodo {
 	private String ruta;
 	private String namespace;
 

@@ -11,4 +11,9 @@ public class Nulo extends Literal {
 	public String toString() {
 		return "nulo";
 	}
+
+    @Override
+    public Object valor() {
+        return null;
+    }
 }

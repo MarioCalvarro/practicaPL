@@ -1,4 +1,6 @@
 package main.java.ast.tipos;
 
-public abstract class Tipo {
+import main.java.ast.Nodo;
+
+public abstract class Tipo extends Nodo {
 }
