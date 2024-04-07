@@ -34,8 +34,9 @@ public class ListaDeclaraciones {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		for (Declaracion d : declaraciones) {
-			sb.append(d.toString()).append('\n');
+			sb.append(d.toString()).append(",\n");
 		}
+        sb.append(")");
 		return sb.toString();
 	}
 }

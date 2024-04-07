@@ -47,7 +47,7 @@ public class DeclaracionFun implements Declaracion {
 		}
 		sb.append(" {\n");
 		for (Instruccion ins : cuerpo) {
-			sb.append(ins).append("\n");
+			sb.append(ins).append(";\n");
 		}
 		sb.append("}");
 		return sb.toString();

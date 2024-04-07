@@ -13,10 +13,29 @@ import main.java.lexico.AnalizadorLexicoJaja;
 import main.java.sintactico.AnalizadorSintacticoJaja;
 
 class RegistrosArraysTest {
-	private static String result = "INCOGNITO dato = registro {\n" + "vector(ent, 3) arr\n" + "};\n"
-			+ "diver tronco() {\n" + "dato x = {\n" + "arr = [1, 2, 3]\n" + "};\n" + "escribeEnt((x).arr[0])\n"
-			+ "(x).arr[0] = 9;\n" + "escribeEnt((x).arr[0])\n" + "ent x = 3;\n" + "x = (x)+(2);\n" + "x = (x)-(2);\n"
-			+ "bool a = facto;\n" + "a = (a)||(fake);\n" + "a = (a)&&(facto);\n" + "}\n" + "";
+	private static String result = "Programa(\n"
+			+ "Importaciones(\n"
+			+ "),\n"
+			+ "Declaraciones(\n"
+			+ "INCOGNITO dato = registro {\n"
+			+ "vector(ent, 3) arr,\n"
+			+ ")},\n"
+			+ "diver tronco() {\n"
+			+ "dato x = {\n"
+			+ "arr = [1, 2, 3]\n"
+			+ "};\n"
+			+ "escribeEnt(((x).arr)[0]);\n"
+			+ "((x).arr)[0] = 9;\n"
+			+ "escribeEnt(((x).arr)[0]);\n"
+			+ "ent x = 3;\n"
+			+ "x = (x)+(2);\n"
+			+ "x = (x)-(2);\n"
+			+ "bool a = facto;\n"
+			+ "a = (a)||(fake);\n"
+			+ "a = (a)&&(facto);\n"
+			+ "},\n"
+			+ ")\n"
+			+ ")";
 
 	@Test
 	void test() {

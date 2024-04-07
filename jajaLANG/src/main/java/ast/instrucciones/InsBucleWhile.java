@@ -17,10 +17,10 @@ public class InsBucleWhile extends Instruccion {
 	public String toString() {
 
 		StringBuilder sb = new StringBuilder();
-		sb.append("mientras").append(" ").append(condicion).append(" {");
+		sb.append("mientras").append(" ").append(condicion).append(" {\n");
 
 		for (Instruccion ins : cuerpo) {
-			sb.append(ins).append('\n');
+			sb.append(ins).append(";\n");
 		}
 
 		sb.append("}");

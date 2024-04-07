@@ -18,6 +18,6 @@ public class DeclaracionAlias implements Declaracion {
 
 	@Override
 	public String toString() {
-		return "INCOGNITO " + id + " = " + t + ";";
+		return "INCOGNITO " + id + " = " + t;
 	}
 }

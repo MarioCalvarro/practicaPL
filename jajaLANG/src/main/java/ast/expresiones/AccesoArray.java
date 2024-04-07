@@ -11,6 +11,6 @@ public class AccesoArray extends Expresion {
 
 	@Override
 	public String toString() {
-		return array + "[" + indice + "]";
+		return "(" + array + ")" + "[" + indice + "]";
 	}
 }

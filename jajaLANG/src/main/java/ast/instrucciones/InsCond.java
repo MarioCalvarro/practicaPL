@@ -39,10 +39,10 @@ public class InsCond extends Instruccion {
 		StringBuilder sb = new StringBuilder();
 
 		if (cuerpo != null) {
-			if (esPrimero == true)
+			if (esPrimero)
 				sb.append("si");
 			else
-				sb.append("sino");
+				sb.append(" sino");
 
 			if (condicion != null)
 				sb.append(" ").append(condicion);
@@ -50,10 +50,10 @@ public class InsCond extends Instruccion {
 			sb.append(" {\n");
 
 			for (Instruccion ins : cuerpo) {
-				sb.append(ins).append('\n');
+				sb.append(ins).append(";\n");
 			}
 
-			sb.append("} ");
+			sb.append("}");
 
 			if (instElse != null) {
 				sb.append(instElse);

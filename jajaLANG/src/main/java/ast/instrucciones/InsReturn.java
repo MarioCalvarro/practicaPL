@@ -11,6 +11,6 @@ public class InsReturn extends Instruccion {
 
 	@Override
 	public String toString() {
-		return "devuelve" + " " + expr + ";";
+		return "devuelve " + expr;
 	}
 }

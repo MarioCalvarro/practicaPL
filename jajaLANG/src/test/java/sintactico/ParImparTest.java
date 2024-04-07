@@ -13,11 +13,34 @@ import main.java.lexico.AnalizadorLexicoJaja;
 import main.java.sintactico.AnalizadorSintacticoJaja;
 
 class ParImparTest {
-	private static String result = "diver par(x: ent) -> bin {\n" + "si (x)==(0) {\n" + "devuelve facto;\n"
-			+ "} sino (x)==(1) {\n" + "devuelve fake;\n" + "} sino {\n" + "devuelve impar((x)-(1));\n" + "} \n" + "}\n"
-			+ "diver impar(x: ent) -> bin {\n" + "si (x)==(0) {\n" + "devuelve fake;\n" + "} sino (x)==(1) {\n"
-			+ "devuelve facto;\n" + "} sino {\n" + "devuelve par((x)-(1));\n" + "} \n" + "}\n" + "diver tronco() {\n"
-			+ "escribeBin(impar(9))\n" + "escribeBin(par(12))\n" + "}\n" + "";
+	private static String result = "Programa(\n"
+			+ "Importaciones(\n"
+			+ "),\n"
+			+ "Declaraciones(\n"
+			+ "diver par(x: ent) -> bin {\n"
+			+ "si (x)==(0) {\n"
+			+ "devuelve facto;\n"
+			+ "} sino (x)==(1) {\n"
+			+ "devuelve fake;\n"
+			+ "} sino {\n"
+			+ "devuelve impar((x)-(1));\n"
+			+ "};\n"
+			+ "},\n"
+			+ "diver impar(x: ent) -> bin {\n"
+			+ "si (x)==(0) {\n"
+			+ "devuelve fake;\n"
+			+ "} sino (x)==(1) {\n"
+			+ "devuelve facto;\n"
+			+ "} sino {\n"
+			+ "devuelve par((x)-(1));\n"
+			+ "};\n"
+			+ "},\n"
+			+ "diver tronco() {\n"
+			+ "escribeBin(impar(9));\n"
+			+ "escribeBin(par(12));\n"
+			+ "},\n"
+			+ ")\n"
+			+ ")";
 
 	@Test
 	void test() {

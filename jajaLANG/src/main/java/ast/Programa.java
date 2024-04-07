@@ -16,10 +16,16 @@ public class Programa extends Nodo {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+        sb.append("Programa(\n");
+        sb.append("Importaciones(\n");
 		for (Import imp : lista_imports) {
 			sb.append(imp).append('\n');
 		}
-		sb.append(lista_declaraciones);
+        sb.append("),\n");
+
+        sb.append("Declaraciones(\n");
+		sb.append(lista_declaraciones).append('\n');
+        sb.append(")");
 		return sb.toString();
 	}
 }

@@ -13,12 +13,34 @@ import main.java.lexico.AnalizadorLexicoJaja;
 import main.java.sintactico.AnalizadorSintacticoJaja;
 
 class ReferenciaDinamicaTest {
-	private static String result = "INCOGNITO dato_t = registro {\n" + "ent @ atr1\n" + "vector(ent @, 2) atr2\n"
-			+ "};\n" + "diver f(&a: ent) -> ent {\n" + "devuelve @(a);\n" + "}\n" + "diver tronco() {\n"
-			+ "ent @ punt = nuevo ent;\n" + "@(punt) = 10;\n" + "ent b = f(punt);\n" + "escribeEnt(b)\n"
-			+ "liberar(punt)\n" + "dato_t @ d = nuevo dato_t;\n" + "@(d) = {\n" + "atr2 = [nuevo ent, nuevo ent],\n"
-			+ "atr1 = nuevo ent\n" + "};\n" + "@((@(d)).atr1) = 4;\n" + "@((@(d)).atr2[0]) = 1;\n"
-			+ "@((@(d)).atr2[1]) = 2;\n" + "}\n";
+	private static String result = "Programa(\n"
+			+ "Importaciones(\n"
+			+ "),\n"
+			+ "Declaraciones(\n"
+			+ "INCOGNITO dato_t = registro {\n"
+			+ "ent @ atr1,\n"
+			+ "vector(ent @, 2) atr2,\n"
+			+ ")},\n"
+			+ "diver f(&a: ent) -> ent {\n"
+			+ "devuelve @(a);\n"
+			+ "},\n"
+			+ "diver tronco() {\n"
+			+ "ent @ punt = nuevo ent;\n"
+			+ "@(punt) = 10;\n"
+			+ "ent b = f(punt);\n"
+			+ "escribeEnt(b);\n"
+			+ "liberar(punt);\n"
+			+ "dato_t @ d = nuevo dato_t;\n"
+			+ "@(d) = {\n"
+			+ "atr2 = [nuevo ent, nuevo ent],\n"
+			+ "atr1 = nuevo ent\n"
+			+ "};\n"
+			+ "@((@(d)).atr1) = 4;\n"
+			+ "@(((@(d)).atr2)[0]) = 1;\n"
+			+ "@(((@(d)).atr2)[1]) = 2;\n"
+			+ "},\n"
+			+ ")\n"
+			+ ")";
 
 	@Test
 	void test() {

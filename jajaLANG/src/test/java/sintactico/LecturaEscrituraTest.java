@@ -13,8 +13,20 @@ import main.java.lexico.AnalizadorLexicoJaja;
 import main.java.sintactico.AnalizadorSintacticoJaja;
 
 class LecturaEscrituraTest {
-	private static String result = "diver tronco() {\n" + "ent num = leerEnt();\n" + "bin cond = leerBin();\n"
-			+ "si cond {\n" + "escribirEnt(num)\n" + "} \n" + "}\n" + "";
+	private static String result = "Programa(\n"
+			+ "Importaciones(\n"
+			+ "),\n"
+			+ "Declaraciones(\n"
+			+ "ent num,\n"
+			+ "diver tronco() {\n"
+			+ "num = leerEnt();\n"
+			+ "bin cond = leerBin();\n"
+			+ "si cond {\n"
+			+ "escribirEnt(num);\n"
+			+ "};\n"
+			+ "},\n"
+			+ ")\n"
+			+ ")";
 
 	@Test
 	void test() {

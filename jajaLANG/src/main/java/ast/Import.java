@@ -11,6 +11,6 @@ public class Import extends Nodo {
 
 	@Override
 	public String toString() {
-		return "#traficar " + ruta + " como " + namespace;
+		return "#traficar " + ruta + " como " + namespace + ",";
 	}
 }
