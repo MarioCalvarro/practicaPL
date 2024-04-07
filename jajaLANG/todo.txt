@@ -1,4 +1,0 @@
-@ Hacer imports 
-@ Asignadores-operadores
-- Errores
-  * Crear tests para todos ellos
