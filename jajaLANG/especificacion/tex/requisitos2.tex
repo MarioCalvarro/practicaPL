@@ -165,8 +165,8 @@ escribir algo que no coincide con la función llamada, se producirá un error.
 \begin{figure}[htbp]
     \centering
     \begin{lstlisting}
-leerEnt();
-leerBin();
+ent a = leerEnt();
+bin b = leerBin();
 escribirEnt(num);
 escribirBin(var);
     \end{lstlisting}
@@ -222,5 +222,4 @@ podrán entender semánticamente como el valor que producen como resultado.
 
 \subsection{Gestión de errores}
 Para la gestión de errores, el compilador simplemente imprimirá el tipo de error
-que se ha dado y su localización en el fichero de texto. No habrá recuperación
-de errores.
+que se ha dado y su localización en el fichero de texto.

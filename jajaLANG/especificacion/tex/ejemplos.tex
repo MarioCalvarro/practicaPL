@@ -5,144 +5,56 @@ afronta diversas situaciones.
 
 \subsection{Fibonacci}
 Programa que calcula los primeros $10$ elementos de la serie de Fibonacci, de forma
-recursiva, y los muestra por pantalla.
+recursiva, y los muestra por pantalla (figura~\ref{fig:fibo}).
 \begin{figure}[htbp]
     \centering
-    \begin{lstlisting}
-#traficar test.jaja como r
-
-diver fibonacci(r: ent) -> ent {
-    si c == 0 {
-        devuelve 1; 
-    }
-    si c == 1 {
-        devuelve 1;
-    }
-    devuelve fibonacci(c-1) + fibonacci(c-2);
-}
-
-diver tronco() {
-    //Imprime algo por pantalla
-    r::prueba();
-
-    para i = 0 -> 10 {
-        escribirEntero(fibonacci(i));
-    } 
-}
-    \end{lstlisting}
+    \lstinputlisting{../src/test/resources/fibonacci.jaja}
     \caption{Programa que calcula la serie de Fibonacci e importa otro fichero.}
+    \label{fig:fibo}
 \end{figure}
 
 \subsection{Lectura/Escritura}
 Programa que lee un entero y un binario. Si el binario es \lstinline{facto}, se
-imprimirá el entero. En caso contrario, no se hará nada.
+imprimirá el entero. En caso contrario, no se hará nada
+(figura~\ref{fig:lecesc}).
 \begin{figure}[htbp]
     \centering
-    \begin{lstlisting}
-diver tronco() {
-    ent num = leerEnt();
-    bin cond = leerBin();
-    si cond {
-        escribirEnt(num);
-    }
-}
-    \end{lstlisting}
+    \lstinputlisting{../src/test/resources/lecturaEscritura.jaja}
     \caption{Programa que lee un número y una condición que, si se cumple, hace
     que se imprima el entero.}
+    \label{fig:lecesc}
 \end{figure}
 
 \subsection{Par/Impar}
 Programa que calcula si un número es par (\lstinline{facto}) o impar
 (\lstinline{fake}). Para ello se hace uso de una recursión mutua.
+(figura~\ref{fig:parimpar})
 \begin{figure}[htbp]
     \centering
-    \begin{lstlisting}
-diver par(x: ent) -> bin {
-    si x == 0 {
-        devuelve facto;
-    }
-    sino x == 1 {
-        devuelve fake;
-    }
-    sino {
-        devuelve impar(x-1);
-    }
-}
-
-diver impar(x: ent) -> bin {
-    si x == 0 {
-        devuelve fake;
-    }
-    sino x == 1 {
-        devuelve facto;
-    }
-    sino {
-        devuelve par(x-1);
-    }
-}
-
-diver tronco() {
-    escribeBin(impar(9));
-    escribeBin(par(12));
-}
-    \end{lstlisting}
+    \lstinputlisting{../src/test/resources/parImpar.jaja}
     \caption{Programa determina si un número es par o impar, usando recursión
     mutua entre dos funciones.}
+    \label{fig:parimpar}
 \end{figure}
 
 \subsection{Registros y arrays}
 Programa que comprueba el funcionamiento de los registros y los arrays, el
-acceso a sus atributos/elementos y su modificación.
+acceso a sus atributos/elementos y su modificación (figura~\ref{fig:regarray}).
 \begin{figure}[htbp]
     \centering
-    \begin{lstlisting}
-incognito dato = registro { arr: vector(ent, 3), };
-
-diver tronco() {
-    dato x = nuevo { arr = nuevo [1, 2, 3] };
-    escribeEnt(x.arr[0]);
-    x.arr[0] = 9;       //Asociativo por la izquierda
-    escribeEnt(x.arr[0]);
-}
-    \end{lstlisting}
+    \lstinputlisting{../src/test/resources/registrosArrays.jaja}
     \caption{Programa que trata con los atributos/elementos de los
-    registros/arrays.}
+    registros/arrays. Además, hace uso de las asignaciones/operadores.}
+    \label{fig:regarray}
 \end{figure}
 
 \subsection{Paso por referencia y memoria dinámica}
-Programa que pasa por referencia una variable y utiliza memoria dinámica.
+Programa que pasa por referencia una variable y utiliza memoria dinámica
+(figura~\ref{fig:refdin}).
 \begin{figure}[htbp]
     \centering
-    \begin{lstlisting}
-incognito dato_t = registro {
-    atr1: ent @,
-    atr2: vector(ent @, 2),
-};
-
-diver f(&a: ent) -> ent {
-    devuelve @a;
-}
-
-diver tronco() {
-    ent @ punt = nuevo ent;
-    @punt = 10;
-    ent b = f(punt);
-    escribeEnt(b); //Tiene que dar 10
-    liberar(punt);
-
-
-    //Ejemplo complicado de punteros
-    //registros y arrays con mem. dinamica
-    dato_t @ d = nuevo dato_t;
-    @d = nuevo {
-        atr1 = nuevo ent,
-        atr2 = nuevo [nuevo ent, nuevo ent]
-    };
-    @(@d).atr1 = 4;
-    @(@d).atr2[0] = 1;
-    @(@d).atr2[1] = 2;
-}
-    \end{lstlisting}
+    \lstinputlisting{../src/test/resources/referenciaDinamica.jaja}
     \caption{Programa que contiene una función con un parámetro que se pasa por
     referencia y punteros que hacen uso de memoria dinámica.}
+    \label{fig:refdin}
 \end{figure}
