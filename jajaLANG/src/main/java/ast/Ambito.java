@@ -12,6 +12,11 @@ public class Ambito extends Nodo {
         decls.put(dec.getId(), dec);
     }
 
+    public void remove(String id) {
+        assert(decls.containsKey(id));
+
+    }
+
     public Declaracion get(String id) {
         return decls.get(id);
     }
