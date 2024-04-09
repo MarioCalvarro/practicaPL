@@ -4,6 +4,7 @@ import java.util.List;
 
 import main.java.ast.instrucciones.Instruccion;
 import main.java.ast.tipos.Tipo;
+import main.java.ast.tipos.TipoVacio;
 
 public class DeclaracionFun implements Declaracion {
 	private String id;
@@ -16,6 +17,7 @@ public class DeclaracionFun implements Declaracion {
 		this.id = id;
 		this.parametros = parametros;
 		this.cuerpo = cuerpo;
+        this.tipo = TipoVacio.instancia();
 	}
 
 	// Funcion con retorno

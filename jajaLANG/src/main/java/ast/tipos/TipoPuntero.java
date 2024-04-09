@@ -1,14 +1,14 @@
 package main.java.ast.tipos;
 
 public class TipoPuntero extends Tipo {
-	private Tipo tElemento;
+	private Tipo tipoElemento;
 
-	public TipoPuntero(Tipo tElemento) {
-		this.tElemento = tElemento;
+	public TipoPuntero(Tipo tipoElemento) {
+		this.tipoElemento = tipoElemento;
 	}
 
 	@Override
 	public String toString() {
-		return tElemento.toString() + " @";
+		return tipoElemento.toString() + " @";
 	}
 }
