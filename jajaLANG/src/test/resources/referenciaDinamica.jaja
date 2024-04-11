@@ -11,7 +11,7 @@ diver tronco() {
     ent @ punt = nuevo ent;
     @punt = 10;
     ent b = f(punt);
-    escribeEnt(b); //Tiene que dar 10
+    escribirEnt(b); //Tiene que dar 10
     liberar(punt);
 
 
