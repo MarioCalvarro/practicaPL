@@ -24,6 +24,4 @@ public class Ambito extends Nodo {
     public boolean pertenece(String id) {
         return decls.containsKey(id);
     }
-
-
 }

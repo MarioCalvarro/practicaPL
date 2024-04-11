@@ -17,7 +17,7 @@ public class Contexto {
         ambitos = new ArrayList<>(Collections.singletonList(global));
     }
 
-    public Import getModulo() {
+    public Programa getPrograma() {
         return programa;
     }
 
