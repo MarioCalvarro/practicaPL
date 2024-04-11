@@ -9,15 +9,15 @@ import main.java.ast.expresiones.Identificador;
 
 public class Contexto {
 	  private final List<Ambito> ambitos;
-	    private final Import imp;
+	    private final Programa programa;
 
-	    public Contexto(Import imp, Ambito global) {
-	        this.imp = imp;
+	    public Contexto(Programa programa, Ambito global) {
+	        this.programa = programa;
 	        ambitos = new ArrayList<>(Arrays.asList(global));
 	    }
 
 	    public Import getModulo() {
-	        return imp;
+	        return programa;
 	    }
 
 	    public void apilarAmbito() {
@@ -47,7 +47,7 @@ public class Contexto {
 
 	    public Declaracion get(Identificador iden) {
 	        if (iden.hasModule()) {
-	            return imp.getDefinition(iden);
+	            return programa.getDefinition(iden);
 	        } else {
 	            return get(iden.getName());
 	        }
