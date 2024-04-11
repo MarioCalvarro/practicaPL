@@ -26,10 +26,6 @@ public class Ambito extends Nodo {
         return decls.containsKey(id);
     }
 
-	@Override
-	public List<Nodo> getAstHijo() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 }

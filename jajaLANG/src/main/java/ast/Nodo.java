@@ -12,13 +12,13 @@ public abstract class Nodo {
         return progreso;
     }
     
-    public abstract List<Nodo> getAstHijo();
+   // public abstract List<Nodo> getAstHijo();
     
  // Vincularmos cada uso de una definición con su definición
     public void bind(Contexto ctx) {
         progreso = FaseCompilacion.BIND;
         for (Nodo child : getAstHijo()) {
-            if (child.getProgreso().lessThan(FaseCompilacion.BIND))
+            if (child.getProgreso().menor(FaseCompilacion.BIND))
                 child.bind(ctx);
         }
     }

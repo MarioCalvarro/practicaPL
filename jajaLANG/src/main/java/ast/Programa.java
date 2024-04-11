@@ -29,9 +29,5 @@ public class Programa extends Nodo {
 		return sb.toString();
 	}
 
-	@Override
-	public List<Nodo> getAstHijo() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 }

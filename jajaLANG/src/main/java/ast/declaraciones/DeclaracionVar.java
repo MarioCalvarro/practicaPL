@@ -66,11 +66,7 @@ public class DeclaracionVar extends Instruccion implements Declaracion {
         esGlobal = ctx.isGlobal(this.getId());
     }
 
-	@Override
-	public List<Nodo> getAstHijo() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 		
 }

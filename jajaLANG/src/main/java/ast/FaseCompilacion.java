@@ -9,12 +9,12 @@ public enum FaseCompilacion {
     FUNC_SIZE_AND_DELTAS,
     COMPILE;
 
-    public boolean lessThan(FaseCompilacion otro) {
+    public boolean menor(FaseCompilacion otro) {
         return this.ordinal() < otro.ordinal();
     }
 
-    public boolean atLeast(FaseCompilacion otro) {
-        return !(this.lessThan(otro));
+    public boolean alMenos(FaseCompilacion otro) {
+        return !(this.menor(otro));
     }
 
 }

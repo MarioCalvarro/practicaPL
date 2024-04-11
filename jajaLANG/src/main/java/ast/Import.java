@@ -16,9 +16,5 @@ public class Import extends Nodo {
 		return "#traficar " + ruta + " como " + namespace + ",";
 	}
 
-	@Override
-	public List<Nodo> getAstHijo() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 }

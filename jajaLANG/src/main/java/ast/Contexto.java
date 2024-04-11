@@ -1,6 +1,7 @@
 package main.java.ast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import main.java.ast.declaraciones.Declaracion;
@@ -10,38 +11,38 @@ public class Contexto {
 	  private final List<Ambito> ambitos;
 	    private final Modulo modulo;
 
-	    public Contexto(Module modulo, Ambito global) {
+	    public Contexto(Modulo modulo, Ambito global) {
 	        this.modulo = modulo;
 	        ambitos = new ArrayList<>(Arrays.asList(global));
 	    }
 
-	    public Module getModule() {
+	    public Modulo getModulo() {
 	        return modulo;
 	    }
 
-	    public void pushScope() {
+	    public void apilarAmbito() {
 	    	ambitos.add(new Ambito());
 	    }
 
-	    public void popScope() {
+	    public void desapilarAmbito() {
 	        assert (ambitos.size() > 1);
 	        ambitos.remove(ambitos.size() - 1);
 	    }
 
 	    public void add(Declaracion var) {
-	    	Ambito actualScope = ambitos.get(ambitos.size() - 1);
-	        if (actualScope.pertenece(var.getId()))
-	            throw new BindingError("Definition " + var.getId() + " already defined in this scope: " + actualScope);
+	    	Ambito ambitoActual = ambitos.get(ambitos.size() - 1);
+	        if (ambitoActual.pertenece(var.getId()))
+	            throw new BindingError("La definicion " + var.getId() + " ya ha sido definido en el siguiente ambito: " + ambitoActual);
 
 	        ambitos.get(ambitos.size() - 1).add(var);
 	    }
 
-	    public Definition get(String iden) {
-	        Definition def = null;
-	        for (int i = ambitos.size() - 1; i >= 0 && def == null; i--) {
-	            def = ambitos.get(i).get(iden);
+	    public Declaracion get(String iden) {
+	    	Declaracion dec = null;
+	        for (int i = ambitos.size() - 1; i >= 0 && dec == null; i--) {
+	            dec = ambitos.get(i).get(iden);
 	        }
-	        return def;
+	        return dec;
 	    }
 
 	    public Declaracion get(Identificador iden) {
