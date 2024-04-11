@@ -1,22 +1,21 @@
 package main.java.ast;
 
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.util.List;
-
 import main.java.lexico.AnalizadorLexicoJaja;
 import main.java.sintactico.AnalizadorSintacticoJaja;
 
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+
 public class Import extends Nodo {
-	private String ruta;
-	private String namespace;
+    private final String ruta;
+    private final String namespace;
     private Programa nuevoAST;
 
-	public Import(String ruta, String namespace) {
-		this.ruta = ruta;
-		this.namespace = namespace;
-	}
+    public Import(String ruta, String namespace) {
+        this.ruta = ruta;
+        this.namespace = namespace;
+    }
 
     public Thread iniciarParseo() {
         Thread thread = new Thread(new Runnable() {
@@ -39,12 +38,10 @@ public class Import extends Nodo {
         return thread;
     }
 
-	@Override
-	public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("#traficar ").append(ruta).append(" como ").append(namespace).append(",\n").append(nuevoAST.toString());
-		return sb.toString();
-	}
+    @Override
+    public String toString() {
+        return "#traficar " + ruta + " como " + namespace + ",\n" + nuevoAST.toString();
+    }
 
 
 }

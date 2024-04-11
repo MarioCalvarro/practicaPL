@@ -1,35 +1,35 @@
 package main.java.ast.literales;
 
-import java.util.List;
-
 import main.java.ast.expresiones.Expresion;
 
+import java.util.List;
+
 public class LiteralArray extends Literal {
-	private List<Expresion> lExpr;
+    private final List<Expresion> lExpr;
 
-	public LiteralArray(List<Expresion> lExpr) {
-		this.lExpr = lExpr;
-	}
+    public LiteralArray(List<Expresion> lExpr) {
+        this.lExpr = lExpr;
+    }
 
-	@Override
-	public String toString() {
-		int contador = 0, capacidad = lExpr.size();
+    @Override
+    public String toString() {
+        int contador = 0, capacidad = lExpr.size();
 
-		StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
 
-		sb.append("[");
+        sb.append("[");
 
-		for (Expresion exp : lExpr) {
-			contador++;
-			sb.append(exp);
-			if (contador != capacidad)
-				sb.append(", ");
-		}
+        for (Expresion exp : lExpr) {
+            contador++;
+            sb.append(exp);
+            if (contador != capacidad)
+                sb.append(", ");
+        }
 
-		sb.append("]");
+        sb.append("]");
 
-		return sb.toString();
-	}
+        return sb.toString();
+    }
 
     @Override
     public Object valor() {

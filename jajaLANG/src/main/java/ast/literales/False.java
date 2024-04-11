@@ -1,16 +1,16 @@
 package main.java.ast.literales;
 
 public class False extends Literal {
-	private static False instancia = new False();
+    private static final False instancia = new False();
 
-	public static False instancia() {
-		return instancia;
-	}
+    public static False instancia() {
+        return instancia;
+    }
 
-	@Override
-	public String toString() {
-		return "fake";
-	}
+    @Override
+    public String toString() {
+        return "fake";
+    }
 
     @Override
     public Object valor() {

@@ -1,17 +1,17 @@
 package main.java.ast.tipos;
 
 public class TipoEntero extends Tipo {
-	private static TipoEntero instancia = new TipoEntero();
+    private static final TipoEntero instancia = new TipoEntero();
 
-	private TipoEntero() {
-	}
+    private TipoEntero() {
+    }
 
-	public static TipoEntero instancia() {
-		return instancia;
-	}
+    public static TipoEntero instancia() {
+        return instancia;
+    }
 
-	@Override
-	public String toString() {
-		return "ent";
-	}
+    @Override
+    public String toString() {
+        return "ent";
+    }
 }

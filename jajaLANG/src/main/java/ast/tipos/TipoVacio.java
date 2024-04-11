@@ -1,17 +1,17 @@
 package main.java.ast.tipos;
 
 public class TipoVacio extends Tipo {
-	private static TipoVacio instancia = new TipoVacio();
+    private static final TipoVacio instancia = new TipoVacio();
 
-	private TipoVacio() {
-	}
+    private TipoVacio() {
+    }
 
-	public static TipoVacio instancia() {
-		return instancia;
-	}
+    public static TipoVacio instancia() {
+        return instancia;
+    }
 
-	@Override
-	public String toString() {
-		return "vacio";
-	}
+    @Override
+    public String toString() {
+        return "vacio";
+    }
 }

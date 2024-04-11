@@ -1,7 +1,8 @@
 package main.java.lexico;
 
 public class TokenValue {
-    private int fila, columna;
+    private final int fila;
+    private final int columna;
     private String lexema;
 
     public TokenValue(int fila, int columna) {

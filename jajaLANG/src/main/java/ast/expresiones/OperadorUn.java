@@ -1,43 +1,42 @@
 package main.java.ast.expresiones;
 
 public class OperadorUn extends Expresion {
-	public enum Operadores {
-		NEG, DIRECCION, PUNTERO, MENOS;
+    private final Operadores op;
+    private final Expresion derecha;
+    public OperadorUn(Operadores op, Expresion derecha) {
+        this.op = op;
+        this.derecha = derecha;
+    }
 
-		public String toString() {
-			switch (this) {
-			case NEG:
-				return "+";
-			case MENOS:
-				return "-";
-			case DIRECCION:
-				return "&";
-			case PUNTERO:
-				return "@";
-			default:
-				throw new IllegalArgumentException("Invalid operator");
-			}
-		}
-	}
+    public Expresion getRight() {
+        return derecha;
+    }
 
-	private Operadores op;
-	private Expresion derecha;
+    public Operadores getOp() {
+        return op;
+    }
 
-	public OperadorUn(Operadores op, Expresion derecha) {
-		this.op = op;
-		this.derecha = derecha;
-	}
+    @Override
+    public String toString() {
+        return op.toString() + "(" + derecha + ")";
+    }
 
-	public Expresion getRight() {
-		return derecha;
-	}
+    public enum Operadores {
+        NEG, DIRECCION, PUNTERO, MENOS;
 
-	public Operadores getOp() {
-		return op;
-	}
-
-	@Override
-	public String toString() {
-		return op.toString() + "(" + derecha + ")";
-	}
+        public String toString() {
+            switch (this) {
+                case NEG:
+                    return "+";
+                case MENOS:
+                    return "-";
+                case DIRECCION:
+                    return "&";
+                case PUNTERO:
+                    return "@";
+                default:
+                    throw new IllegalArgumentException("Invalid operator");
+            }
+        }
+    }
 }
