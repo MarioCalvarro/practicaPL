@@ -2,6 +2,7 @@ package main.java.ast.declaraciones;
 
 import java.util.List;
 
+import main.java.ast.Nodo;
 import main.java.ast.instrucciones.Instruccion;
 import main.java.ast.tipos.Tipo;
 
@@ -32,5 +33,11 @@ public class DeclaracionVariables extends Instruccion {
 		}
 
 		return sb.toString();
+	}
+
+	@Override
+	public List<Nodo> getAstHijo() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

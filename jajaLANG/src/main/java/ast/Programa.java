@@ -28,4 +28,10 @@ public class Programa extends Nodo {
         sb.append(")");
 		return sb.toString();
 	}
+
+	@Override
+	public List<Nodo> getAstHijo() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

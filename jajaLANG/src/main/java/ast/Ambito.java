@@ -1,6 +1,7 @@
 package main.java.ast;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import main.java.ast.declaraciones.Declaracion;
@@ -24,4 +25,11 @@ public class Ambito extends Nodo {
     public boolean pertenece(String id) {
         return decls.containsKey(id);
     }
+
+	@Override
+	public List<Nodo> getAstHijo() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
