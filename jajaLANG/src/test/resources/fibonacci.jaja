@@ -1,4 +1,5 @@
-#traficar test.jaja como r
+//Necesitamos poner una ruta complicada para los tests
+#traficar src/test/resources/parImpar.jaja como r
 
 diver fibonacci(r: ent) -> ent {
     si c == 0 {
@@ -12,7 +13,7 @@ diver fibonacci(r: ent) -> ent {
 
 diver tronco() {
     //Imprime algo por pantalla
-    r::prueba();
+    escribirBin(r::par(2));
 
     para i = 0 -> 10 {
         escribirEntero(fibonacci(i));
