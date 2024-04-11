@@ -9,15 +9,15 @@ import main.java.ast.expresiones.Identificador;
 
 public class Contexto {
 	  private final List<Ambito> ambitos;
-	    private final Modulo modulo;
+	    private final Import imp;
 
-	    public Contexto(Modulo modulo, Ambito global) {
-	        this.modulo = modulo;
+	    public Contexto(Import imp, Ambito global) {
+	        this.imp = imp;
 	        ambitos = new ArrayList<>(Arrays.asList(global));
 	    }
 
-	    public Modulo getModulo() {
-	        return modulo;
+	    public Import getModulo() {
+	        return imp;
 	    }
 
 	    public void apilarAmbito() {
@@ -29,7 +29,7 @@ public class Contexto {
 	        ambitos.remove(ambitos.size() - 1);
 	    }
 
-	    public void add(Declaracion var) {
+	    public void insertar(Declaracion var) {
 	    	Ambito ambitoActual = ambitos.get(ambitos.size() - 1);
 	        if (ambitoActual.pertenece(var.getId()))
 	            throw new BindingError("La definicion " + var.getId() + " ya ha sido definido en el siguiente ambito: " + ambitoActual);
@@ -47,7 +47,7 @@ public class Contexto {
 
 	    public Declaracion get(Identificador iden) {
 	        if (iden.hasModule()) {
-	            return modulo.getDefinition(iden);
+	            return imp.getDefinition(iden);
 	        } else {
 	            return get(iden.getName());
 	        }

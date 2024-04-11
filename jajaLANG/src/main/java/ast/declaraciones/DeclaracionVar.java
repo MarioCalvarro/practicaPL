@@ -62,7 +62,7 @@ public class DeclaracionVar extends Instruccion implements Declaracion {
 	@Override
 	public void bind(Contexto ctx) {
         super.bind(ctx);
-        ctx.add(this);
+        ctx.insertar(this);
         esGlobal = ctx.isGlobal(this.getId());
     }
 
