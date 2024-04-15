@@ -1,12 +1,13 @@
 package main.java.ast.declaraciones;
 
+import main.java.ast.Nodo;
 import main.java.ast.instrucciones.Instruccion;
 import main.java.ast.tipos.Tipo;
 import main.java.ast.tipos.TipoVacio;
 
 import java.util.List;
 
-public class DeclaracionFun implements Declaracion {
+public class DeclaracionFun extends Nodo implements Declaracion {
     private final String id;
     private final List<DeclaracionPar> parametros;
     private final List<Instruccion> cuerpo;

@@ -19,6 +19,7 @@ public class DeclaracionAlias extends Nodo implements Declaracion {
     @Override
     public void bind(Contexto ctx) {
         super.bind(ctx);
+        ctx.
     }
 
     @Override
