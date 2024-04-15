@@ -7,19 +7,18 @@ import main.java.ast.Contexto;
 import main.java.ast.Nodo;
 import main.java.ast.tipos.Tipo;
 
-public class DeclaracionAlias extends Nodo implements Declaracion {
+public class DeclaracionAlias extends Declaracion {
     private final String id;
-    private final Tipo t;
+    private final Tipo tipo;
 
-    public DeclaracionAlias(String id, Tipo t) {
+    public DeclaracionAlias(String id, Tipo tipo) {
         this.id = id;
-        this.t = t;
+        this.tipo = tipo;
     }
 
     @Override
     public void bind(Contexto ctx) {
         super.bind(ctx);
-        ctx.
     }
 
     @Override
@@ -29,13 +28,13 @@ public class DeclaracionAlias extends Nodo implements Declaracion {
 
     @Override
     public String toString() {
-        return "INCOGNITO " + id + " = " + t;
+        return "INCOGNITO " + id + " = " + tipo;
     }
 
     @Override
     public List<Nodo> getAstHijos() {
         List<Nodo> hijos = new ArrayList<>();
-        hijos.add(t);
+        hijos.add(tipo);
         return hijos;
     }
 }

@@ -5,7 +5,7 @@ import main.java.ast.expresiones.Expresion;
 import main.java.ast.instrucciones.Instruccion;
 import main.java.ast.tipos.Tipo;
 
-public class DeclaracionVar extends Instruccion implements Declaracion {
+public class DeclaracionVar extends Declaracion {
     protected String id;
     protected Tipo tipo;
     private Expresion valor;

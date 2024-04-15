@@ -5,9 +5,10 @@ import main.java.ast.instrucciones.Instruccion;
 import main.java.ast.tipos.Tipo;
 import main.java.ast.tipos.TipoVacio;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class DeclaracionFun extends Nodo implements Declaracion {
+public class DeclaracionFun extends Declaracion {
     private final String id;
     private final List<DeclaracionPar> parametros;
     private final List<Instruccion> cuerpo;
@@ -54,5 +55,14 @@ public class DeclaracionFun extends Nodo implements Declaracion {
         }
         sb.append("}");
         return sb.toString();
+    }
+
+    @Override
+    public List<Nodo> getAstHijos() {
+        List<Nodo> lista = new ArrayList<Nodo>();
+        lista.addAll(parametros);
+        lista.addAll(cuerpo);
+        lista.add(tipo);
+        return lista;
     }
 }

@@ -5,7 +5,7 @@ import main.java.ast.tipos.Tipo;
 
 import java.util.List;
 
-public class DeclaracionVariables extends Instruccion {
+public class DeclaracionVariables extends Declaracion {
     private final List<DeclaracionVar> lista_var;
 
     public DeclaracionVariables(Tipo tipo, List<DeclaracionVar> lista_var) {

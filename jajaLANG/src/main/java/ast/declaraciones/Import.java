@@ -9,7 +9,7 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-public class Import extends Nodo {
+public class Import extends Declaracion {
     private final String ruta;
     private final String namespace;
     private Programa nuevoAST;
