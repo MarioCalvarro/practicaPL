@@ -9,15 +9,15 @@ import main.java.ast.tipos.Tipo;
 
 public class DeclaracionAlias extends Declaracion {
     private final String id;
-    private final Tipo tipo;
+    private final Tipo tipoApuntado;
 
     public DeclaracionAlias(String id, Tipo tipo) {
         this.id = id;
-        this.tipo = tipo;
+        this.tipoApuntado = tipo;
     }
 
-    public Tipo tipo() {
-        return tipo;
+    public Tipo tipoApuntado() {
+        return tipoApuntado;
     }
 
     @Override
@@ -33,13 +33,13 @@ public class DeclaracionAlias extends Declaracion {
 
     @Override
     public String toString() {
-        return "INCOGNITO " + id + " = " + tipo;
+        return "INCOGNITO " + id + " = " + tipoApuntado;
     }
 
     @Override
     public List<Nodo> getAstHijos() {
         List<Nodo> hijos = new ArrayList<>();
-        hijos.add(tipo);
+        hijos.add(tipoApuntado);
         return hijos;
     }
 }
