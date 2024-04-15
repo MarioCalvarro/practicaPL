@@ -53,8 +53,10 @@ public class Programa extends Nodo {
         sb.append("),\n");
 
         sb.append("Declaraciones(\n");
-        sb.append(lista_declaraciones).append('\n');
-        sb.append(")");
+        for (Declaracion dec : lista_declaraciones) {
+            sb.append(dec).append('\n');
+        }
+        sb.append(")\n)");
         return sb.toString();
     }
 }
