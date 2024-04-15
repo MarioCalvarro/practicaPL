@@ -32,3 +32,4 @@ public class TipoRegistro extends Tipo {
 		return lista;
 	}
 }
+  

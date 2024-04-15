@@ -48,8 +48,4 @@ public class DeclaracionVariables extends Declaracion {
 		return null;
 	}
 	
-	 @Override
-	    public void bind(Contexto ctx) {
-	        super.bind(ctx);
-	    }
 }

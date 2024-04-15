@@ -32,9 +32,6 @@ public class DeclaracionPar extends DeclaracionVar {
        return new ArrayList<Nodo>();
     }
     
-    @Override
-    public void bind(Contexto ctx) {
-        ctx.insertar(this);
-    }
+    
 
 }

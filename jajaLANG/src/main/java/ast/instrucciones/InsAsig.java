@@ -27,4 +27,15 @@ public class InsAsig extends Instruccion {
 		lista.add(right);	
 		return lista;
 	}
+	
+	 @Override
+    public void typecheck() {
+        super.typecheck();
+        Type placeType = place.type();
+        if (!placeType.equals(expr.type())) {
+            throw new TypeError(
+                    String.format("Can't assign %s to variable %s of type %s", expr.type(), place, placeType));
+        }
+    }
+	
 }
