@@ -19,6 +19,7 @@ public class DeclaracionAlias extends Declaracion {
     @Override
     public void bind(Contexto ctx) {
         super.bind(ctx);
+    	ctx.insertar(this);
     }
 
     @Override

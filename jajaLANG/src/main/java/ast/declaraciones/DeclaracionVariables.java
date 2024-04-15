@@ -1,5 +1,6 @@
 package main.java.ast.declaraciones;
 
+import main.java.ast.Contexto;
 import main.java.ast.Nodo;
 import main.java.ast.instrucciones.Instruccion;
 import main.java.ast.tipos.Tipo;
@@ -46,4 +47,9 @@ public class DeclaracionVariables extends Declaracion {
 	public String getId() {
 		return null;
 	}
+	
+	 @Override
+	    public void bind(Contexto ctx) {
+	        super.bind(ctx);
+	    }
 }

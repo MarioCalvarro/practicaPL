@@ -65,7 +65,7 @@ public class DeclaracionVar extends Declaracion {
     public void bind(Contexto ctx) {
         super.bind(ctx);
         ctx.insertar(this);
-        esGlobal = ctx.isGlobal(this.getId());
+        //esGlobal = ctx.isGlobal(this.getId());
     }
     
     @Override

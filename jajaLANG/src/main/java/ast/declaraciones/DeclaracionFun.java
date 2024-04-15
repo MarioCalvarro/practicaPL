@@ -1,5 +1,6 @@
 package main.java.ast.declaraciones;
 
+import main.java.ast.Contexto;
 import main.java.ast.Nodo;
 import main.java.ast.instrucciones.Instruccion;
 import main.java.ast.tipos.Tipo;
@@ -64,5 +65,13 @@ public class DeclaracionFun extends Declaracion {
         lista.addAll(cuerpo);
         lista.add(tipo);
         return lista;
+    }
+    
+    public void bind(Contexto ctx) {
+        /// Llama a bind de los hijos con nuevo contexto local
+        ctx.insertar(this);
+        ctx.apilarAmbito();;
+        super.bind(ctx);
+        ctx.desapilarAmbito();;
     }
 }
