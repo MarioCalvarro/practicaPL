@@ -1,5 +1,10 @@
 package main.java.ast.tipos;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import main.java.ast.Nodo;
+
 public class TipoPuntero extends Tipo {
     private final Tipo tipoElemento;
 
@@ -11,4 +16,11 @@ public class TipoPuntero extends Tipo {
     public String toString() {
         return tipoElemento.toString() + " @";
     }
+
+    @Override
+	public List<Nodo> getAstHijos() {
+		List<Nodo> lista = new ArrayList<Nodo>();
+		lista.add(tipoElemento);
+		return lista;
+	}
 }

@@ -1,5 +1,10 @@
 package main.java.ast.tipos;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import main.java.ast.Nodo;
+
 public class TipoBinario extends Tipo {
     private static final TipoBinario instancia = new TipoBinario();
 
@@ -14,4 +19,9 @@ public class TipoBinario extends Tipo {
     public String toString() {
         return "bin";
     }
+    
+    @Override
+	public List<Nodo> getAstHijos() {
+		return new ArrayList<Nodo>();
+	}
 }

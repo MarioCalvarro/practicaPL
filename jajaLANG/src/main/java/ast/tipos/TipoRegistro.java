@@ -1,7 +1,9 @@
 package main.java.ast.tipos;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import main.java.ast.Nodo;
 import main.java.ast.declaraciones.Declaracion;
 
 public class TipoRegistro extends Tipo {
@@ -15,4 +17,12 @@ public class TipoRegistro extends Tipo {
     public String toString() {
         return "registro {\n" + atributos.toString() + "}";
     }
+
+
+    @Override
+	public List<Nodo> getAstHijos() {
+		List<Nodo> lista = new ArrayList<Nodo>();
+		lista.addAll(atributos);
+		return lista;
+	}
 }

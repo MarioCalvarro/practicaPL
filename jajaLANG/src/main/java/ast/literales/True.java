@@ -24,7 +24,6 @@ public class True extends Literal {
     
     @Override
 	public List<Nodo> getAstHijos() {
-		List<Nodo> lista = new ArrayList<Nodo>();
-		return lista;
+		return new ArrayList<Nodo>();
 	}
 }
