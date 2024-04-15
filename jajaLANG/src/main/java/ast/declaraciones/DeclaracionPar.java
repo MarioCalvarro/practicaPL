@@ -1,5 +1,9 @@
 package main.java.ast.declaraciones;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import main.java.ast.Nodo;
 import main.java.ast.tipos.Tipo;
 
 public class DeclaracionPar extends DeclaracionVar {
@@ -21,5 +25,9 @@ public class DeclaracionPar extends DeclaracionVar {
             return id + ": " + tipo.toString();
         else
             return "&" + id + ": " + tipo.toString();
+    }
+    
+    public List<Nodo> getAstHijos() {
+       return new ArrayList<Nodo>();
     }
 }

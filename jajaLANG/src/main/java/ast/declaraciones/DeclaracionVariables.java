@@ -1,8 +1,10 @@
 package main.java.ast.declaraciones;
 
+import main.java.ast.Nodo;
 import main.java.ast.instrucciones.Instruccion;
 import main.java.ast.tipos.Tipo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DeclaracionVariables extends Declaracion {
@@ -32,4 +34,16 @@ public class DeclaracionVariables extends Declaracion {
 
         return sb.toString();
     }
+    
+    @Override
+    public List<Nodo> getAstHijos() {
+        List<Nodo> lista = new ArrayList<Nodo>();
+        lista.addAll(lista_var);
+        return lista;
+    }
+
+	@Override
+	public String getId() {
+		return null;
+	}
 }

@@ -59,4 +59,13 @@ public class Programa extends Nodo {
         sb.append(")\n)");
         return sb.toString();
     }
+
+    @Override
+    public List<Nodo> getAstHijos() {
+        List<Nodo> lista = new ArrayList<Nodo>();
+        lista.addAll(mapa_imports.values());
+        lista.addAll(lista_declaraciones);
+        lista.add(ambitoGlobal);
+        return lista;
+    }
 }

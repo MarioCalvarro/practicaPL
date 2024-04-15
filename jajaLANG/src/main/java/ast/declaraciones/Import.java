@@ -8,6 +8,8 @@ import main.java.sintactico.AnalizadorSintacticoJaja;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Import extends Declaracion {
     private final String ruta;
@@ -53,4 +55,16 @@ public class Import extends Declaracion {
     public String toString() {
         return "#traficar " + ruta + " como " + namespace + ",\n" + nuevoAST.toString();
     }
+    
+    @Override
+    public List<Nodo> getAstHijos() {
+        List<Nodo> lista = new ArrayList<Nodo>();
+        lista.add(nuevoAST);
+        return lista;
+    }
+
+	@Override
+	public String getId() {
+		return namespace;
+	}
 }
