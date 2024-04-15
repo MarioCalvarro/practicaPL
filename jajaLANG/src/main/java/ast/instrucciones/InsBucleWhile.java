@@ -1,8 +1,10 @@
 package main.java.ast.instrucciones;
 
 import main.java.ast.Contexto;
+import main.java.ast.Nodo;
 import main.java.ast.expresiones.Expresion;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InsBucleWhile extends Instruccion {
@@ -36,4 +38,12 @@ public class InsBucleWhile extends Instruccion {
         super.bind(ctx);
         ctx.desapilarAmbito();;
     }
+
+	@Override
+	public List<Nodo> getAstHijos() {
+		List<Nodo> lista = new ArrayList<Nodo>();
+		lista.add(condicion);
+		lista.addAll(cuerpo);	
+		return lista;
+	}
 }

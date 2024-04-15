@@ -1,8 +1,10 @@
 package main.java.ast.instrucciones;
 
 import main.java.ast.Contexto;
+import main.java.ast.Nodo;
 import main.java.ast.expresiones.Expresion;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InsCond extends Instruccion {
@@ -67,15 +69,30 @@ public class InsCond extends Instruccion {
     
     @Override
     public void bind(Contexto ctx) {
-        super.setProgress(CompilationProgress.BIND);
+        //super.setProgress(CompilationProgress.BIND);
         condicion.bind(ctx);
 
         ctx.apilarAmbito();
         for (Instruccion s : cuerpo) {
-            if(s.getProgress().lessThan(CompilationProgress.BIND))
+          //  if(s.getProgress().lessThan(CompilationProgress.BIND))
                 s.bind(ctx);
         }
         ctx.desapilarAmbito();     
         instElse.bind(ctx);
     }
+
+	@Override
+	public List<Nodo> getAstHijos() {
+		List<Nodo> lista = new ArrayList<Nodo>();
+		if(condicion != null) {
+			lista.add(condicion);
+		}
+		if(condicion != null) {
+			lista.addAll(cuerpo);	
+		}
+		if(condicion != null) {
+			lista.add(instElse);
+		}
+		return lista;
+	}
 }

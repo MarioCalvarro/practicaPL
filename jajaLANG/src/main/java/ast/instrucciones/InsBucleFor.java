@@ -1,10 +1,12 @@
 package main.java.ast.instrucciones;
 
 import main.java.ast.Contexto;
+import main.java.ast.Nodo;
 import main.java.ast.declaraciones.DeclaracionVar;
 import main.java.ast.expresiones.Expresion;
 import main.java.ast.tipos.TipoEntero;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InsBucleFor extends Instruccion {
@@ -45,4 +47,14 @@ public class InsBucleFor extends Instruccion {
         super.bind(ctx);
         ctx.desapilarAmbito();;
     }
+
+	@Override
+	public List<Nodo> getAstHijos() {
+		List<Nodo> lista = new ArrayList<Nodo>();
+		lista.add(indice);
+		lista.add(ini);
+		lista.add(fin);
+		lista.addAll(cuerpo);	
+		return lista;
+	}
 }

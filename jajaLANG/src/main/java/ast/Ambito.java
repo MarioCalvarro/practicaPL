@@ -3,6 +3,7 @@ package main.java.ast;
 import main.java.ast.declaraciones.Declaracion;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Ambito extends Nodo {
