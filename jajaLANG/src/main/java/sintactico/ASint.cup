@@ -610,7 +610,7 @@ Literal ::= ENTERO: e
         | NUEVO Struct_Literal: sL
         {: RESULT = sL; :}
         | NUEVO Tipo: t
-        {: RESULT = new DirDinamica(t); :}
+        {: RESULT = new LiteralMemoria(t); :}
         //Errores
         | NUEVO:n error
         {: parser.reportError(n.fila(), "Literal inválido.");

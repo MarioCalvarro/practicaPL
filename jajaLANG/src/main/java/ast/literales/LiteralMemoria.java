@@ -1,18 +1,23 @@
 package main.java.ast.literales;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import main.java.ast.Nodo;
 import main.java.ast.tipos.Tipo;
+import main.java.ast.tipos.TipoPuntero;
 
-public class DirDinamica extends Literal {
-    public DirDinamica(Tipo t) {
-        this.tipo = t;
+public class LiteralMemoria extends Literal {
+    private final Tipo apuntado;
+
+    public LiteralMemoria(Tipo t) {
+        this.tipo = new TipoPuntero(t);
+        this.apuntado = t;
     }
 
     @Override
     public String toString() {
-        return "nuevo " + tipo.toString();
+        return "nuevo " + apuntado.toString();
     }
 
     @Override
@@ -23,7 +28,8 @@ public class DirDinamica extends Literal {
 
 	@Override
 	public List<Nodo> getAstHijos() {
-		// TODO Auto-generated method stub
-		return null;
+        List<Nodo> lista = new ArrayList<Nodo>(); 
+        lista.add(apuntado);
+        return lista;
 	}
 }
