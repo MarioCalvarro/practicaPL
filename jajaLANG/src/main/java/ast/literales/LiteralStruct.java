@@ -1,8 +1,11 @@
 package main.java.ast.literales;
 
+import main.java.ast.Nodo;
 import main.java.ast.expresiones.Expresion;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class LiteralStruct extends Literal {
@@ -39,4 +42,11 @@ public class LiteralStruct extends Literal {
     public Object valor() {
         return lExpr;
     }
+    
+    @Override
+	public List<Nodo> getAstHijos() {
+		List<Nodo> lista = new ArrayList<Nodo>();
+	    lista.addAll(lExpr.values());		
+		return lista;
+	}
 }

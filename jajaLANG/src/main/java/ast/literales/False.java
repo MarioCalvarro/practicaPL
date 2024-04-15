@@ -1,5 +1,10 @@
 package main.java.ast.literales;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import main.java.ast.Nodo;
+
 public class False extends Literal {
     private static final False instancia = new False();
 
@@ -16,4 +21,10 @@ public class False extends Literal {
     public Object valor() {
         return false;
     }
+
+	@Override
+	public List<Nodo> getAstHijos() {
+		List<Nodo> lista = new ArrayList<Nodo>();
+		return lista;
+	}
 }

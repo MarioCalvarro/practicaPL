@@ -1,5 +1,10 @@
 package main.java.ast.literales;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import main.java.ast.Nodo;
+
 public class Entero extends Literal {
     private final int value;
 
@@ -20,4 +25,10 @@ public class Entero extends Literal {
     public Object valor() {
         return value;
     }
+
+	@Override
+	public List<Nodo> getAstHijos() {
+		List<Nodo> lista = new ArrayList<Nodo>();
+		return lista;
+	}
 }
