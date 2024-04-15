@@ -441,22 +441,22 @@ Matriz_Atributos ::= Lista_Atributos: lAtr
 
                  | Lista_Atributos: lAtr COMA
                  {: List<Declaracion> mAtr = new ArrayList<Declaracion>();
-                 mAtr.add(lAtr.array()); RESULT = mAtr; :}
+                 mAtr.addAll(lAtr.array()); RESULT = mAtr; :}
 
                  | Matriz_Atributos2: mAtr Lista_Atributos: lAtr
-                 {: mAtr.add(lAtr); RESULT = mAtr; :}
+                 {: mAtr.addAll(lAtr.array()); RESULT = mAtr; :}
 
                  | Matriz_Atributos2: mAtr Lista_Atributos: lAtr COMA
-                 {: mAtr.add(lAtr); RESULT = mAtr; :}
+                 {: mAtr.addAll(lAtr.array()); RESULT = mAtr; :}
                  ;
 
 
 Matriz_Atributos2 ::= Lista_Atributos: lAtr COMA
                   {: List<Declaracion> mAtr = new ArrayList<Declaracion>();
-                  mAtr.add(lAtr.array()); RESULT = mAtr; :}
+                  mAtr.addAll(lAtr.array()); RESULT = mAtr; :}
 
                   | Matriz_Atributos2: mAtr Lista_Atributos: lAtr COMA
-                  {: mAtr.add(lAtr.array()); RESULT = mAtr; :}
+                  {: mAtr.addAll(lAtr.array()); RESULT = mAtr; :}
                   ;
 
 //Pueden tener un valor por defecto
