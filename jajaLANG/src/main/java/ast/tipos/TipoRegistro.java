@@ -15,7 +15,13 @@ public class TipoRegistro extends Tipo {
 
     @Override
     public String toString() {
-        return "registro {\n" + atributos.toString() + "}";
+        StringBuilder sb = new StringBuilder();
+        sb.append("registro {\n");
+        for (Declaracion dec : atributos) {
+            sb.append(dec).append(",\n");
+        }
+        sb.append("}");
+        return sb.toString();
     }
 
 

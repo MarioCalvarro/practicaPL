@@ -54,7 +54,7 @@ public class Programa extends Nodo {
 
         sb.append("Declaraciones(\n");
         for (Declaracion dec : lista_declaraciones) {
-            sb.append(dec).append('\n');
+            sb.append(dec).append(",\n");
         }
         sb.append(")\n)");
         return sb.toString();

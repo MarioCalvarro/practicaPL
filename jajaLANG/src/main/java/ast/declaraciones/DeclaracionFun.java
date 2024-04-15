@@ -46,7 +46,7 @@ public class DeclaracionFun extends Declaracion {
             }
         }
         sb.append(")");
-        if (tipo != null) {
+        if (tipo != TipoVacio.instancia()) {
             sb.append(" -> ").append(tipo);
         }
         sb.append(" {\n");
