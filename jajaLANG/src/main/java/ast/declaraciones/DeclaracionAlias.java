@@ -16,6 +16,10 @@ public class DeclaracionAlias extends Declaracion {
         this.tipo = tipo;
     }
 
+    public Tipo tipo() {
+        return tipo;
+    }
+
     @Override
     public void bind(Contexto ctx) {
         super.bind(ctx);

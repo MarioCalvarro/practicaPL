@@ -22,4 +22,12 @@ public abstract class Nodo {
                 child.bind(ctx);
         }
     }
+
+    public void typecheck() {
+        //progreso = FaseCompilacion.BIND;
+        for (Nodo child : getAstHijos()) {
+            if (child.getProgreso().menor(FaseCompilacion.BIND))
+                child.typecheck();
+        }
+    }
 }

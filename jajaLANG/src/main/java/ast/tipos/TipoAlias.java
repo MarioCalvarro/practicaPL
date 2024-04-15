@@ -3,11 +3,15 @@ package main.java.ast.tipos;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.java.ast.Contexto;
 import main.java.ast.Nodo;
+import main.java.ast.declaraciones.Declaracion;
+import main.java.ast.declaraciones.DeclaracionAlias;
 import main.java.ast.expresiones.Identificador;
 
 public class TipoAlias extends Tipo {
     private final Identificador id;
+    private DeclaracionAlias dec;
 
     public TipoAlias(Identificador id) {
         this.id = id;
@@ -24,4 +28,18 @@ public class TipoAlias extends Tipo {
 		lista.add(id);
 		return lista;
 	}
+
+    @Override
+    public void bind(Contexto ctx) {
+        if (dec == null) {
+            Declaracion dec = ctx.get(id);
+            if (dec == null) {
+                //TODO: Cambiar error
+                throw new RuntimeException();
+            }
+            this.dec = (DeclaracionAlias) dec;
+        }
+
+        super.bind(ctx);
+    }
 }
