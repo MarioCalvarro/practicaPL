@@ -4,6 +4,7 @@ import main.java.ast.Contexto;
 import main.java.ast.Nodo;
 import main.java.ast.instrucciones.Instruccion;
 import main.java.ast.tipos.Tipo;
+import main.java.ast.tipos.TipoFunc;
 import main.java.ast.tipos.TipoVacio;
 
 import java.util.ArrayList;
@@ -13,20 +14,29 @@ public class DeclaracionFun extends Declaracion {
     private final String id;
     private final List<DeclaracionPar> parametros;
     private final List<Instruccion> cuerpo;
-    private Tipo tipo;
 
     // Función void
     public DeclaracionFun(String id, List<DeclaracionPar> parametros, List<Instruccion> cuerpo) {
         this.id = id;
         this.parametros = parametros;
         this.cuerpo = cuerpo;
-        this.tipo = TipoVacio.instancia();
+        List<Tipo> tipoPars = new ArrayList<Tipo>();
+        for (DeclaracionPar par : parametros) {
+            tipoPars.add(par.tipo());
+        }
+        this.tipo = new TipoFunc(TipoVacio.instancia(), tipoPars);
     }
 
     // Funcion con retorno
     public DeclaracionFun(String id, List<DeclaracionPar> parametros, List<Instruccion> cuerpo, Tipo tipo) {
-        this(id, parametros, cuerpo);
-        this.tipo = tipo;
+        this.id = id;
+        this.parametros = parametros;
+        this.cuerpo = cuerpo;
+        List<Tipo> tipoPars = new ArrayList<Tipo>();
+        for (DeclaracionPar par : parametros) {
+            tipoPars.add(par.tipo());
+        }
+        this.tipo = new TipoFunc(tipo, tipoPars);
     }
 
     @Override
@@ -47,7 +57,7 @@ public class DeclaracionFun extends Declaracion {
             }
         }
         sb.append(")");
-        if (tipo != TipoVacio.instancia()) {
+        if (((TipoFunc) tipo).tipoRetorno() != TipoVacio.instancia()) {
             sb.append(" -> ").append(tipo);
         }
         sb.append(" {\n");

@@ -39,4 +39,10 @@ public class Llamada extends Expresion {
         lista.addAll(listaExpresiones);
         return lista;
     }
+
+    @Override
+    public void typecheck() {
+        super.typecheck();
+        //Ver si el identificador es una función
+    }
 }

@@ -3,7 +3,6 @@ package main.java.ast.declaraciones;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.ast.Contexto;
 import main.java.ast.Nodo;
 import main.java.ast.tipos.Tipo;
 
@@ -31,7 +30,4 @@ public class DeclaracionPar extends DeclaracionVar {
     public List<Nodo> getAstHijos() {
        return new ArrayList<Nodo>();
     }
-    
-    
-
 }

@@ -38,5 +38,4 @@ public class InsAsig extends Instruccion {
             throw new RuntimeException();
         }
     }
-	
 }
