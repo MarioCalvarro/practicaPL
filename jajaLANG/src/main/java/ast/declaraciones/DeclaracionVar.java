@@ -63,6 +63,4 @@ public class DeclaracionVar extends Instruccion implements Declaracion {
         ctx.insertar(this);
         esGlobal = ctx.isGlobal(this.getId());
     }
-
-
 }

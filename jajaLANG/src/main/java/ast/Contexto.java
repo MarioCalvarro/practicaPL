@@ -33,7 +33,8 @@ public class Contexto {
     public void insertar(Declaracion var) {
         Ambito ambitoActual = ambitos.get(ambitos.size() - 1);
         if (ambitoActual.pertenece(var.getId()))
-            throw new BindingError("La definicion " + var.getId() + " ya ha sido definido en el siguiente ambito: " + ambitoActual);
+            //TODO: Cambiar error
+            // throw new BindingError("La definicion " + var.getId() + " ya ha sido definido en el siguiente ambito: " + ambitoActual);
 
         ambitos.get(ambitos.size() - 1).add(var);
     }
@@ -47,10 +48,10 @@ public class Contexto {
     }
 
     public Declaracion get(Identificador iden) {
-        if (iden.hasModule()) {
-            return programa.getDefinition(iden);
+        if (iden.externo()) {
+            return programa.getDeclaracionExt(iden);
         } else {
-            return get(iden.getName());
+            return get(iden.nombre());
         }
     }
 

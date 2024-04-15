@@ -33,5 +33,4 @@ public class DeclaracionVariables extends Instruccion {
 
         return sb.toString();
     }
-
 }

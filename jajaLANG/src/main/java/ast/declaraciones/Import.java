@@ -1,5 +1,7 @@
-package main.java.ast;
+package main.java.ast.declaraciones;
 
+import main.java.ast.Nodo;
+import main.java.ast.Programa;
 import main.java.lexico.AnalizadorLexicoJaja;
 import main.java.sintactico.AnalizadorSintacticoJaja;
 
@@ -29,6 +31,7 @@ public class Import extends Nodo {
                     AnalizadorSintacticoJaja as = new AnalizadorSintacticoJaja(al);
                     nuevoAST = (Programa) as.parse().value;
                 } catch (Exception e) {
+                    //TODO: Cambiar error
                     System.err.println("Error al parsear la importación " + namespace);
                     System.exit(1);
                 }
@@ -38,10 +41,16 @@ public class Import extends Nodo {
         return thread;
     }
 
+    public String getNameSpace() {
+        return namespace;
+    }
+
+    public Programa getAST() {
+        return nuevoAST;
+    }
+
     @Override
     public String toString() {
         return "#traficar " + ruta + " como " + namespace + ",\n" + nuevoAST.toString();
     }
-
-
 }
