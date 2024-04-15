@@ -58,7 +58,7 @@ public class DeclaracionFun extends Declaracion {
         }
         sb.append(")");
         if (((TipoFunc) tipo).tipoRetorno() != TipoVacio.instancia()) {
-            sb.append(" -> ").append(tipo);
+            sb.append(" -> ").append(((TipoFunc) tipo).tipoRetorno());
         }
         sb.append(" {\n");
         for (Instruccion ins : cuerpo) {
