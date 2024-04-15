@@ -4,6 +4,7 @@ import main.java.ast.Contexto;
 import main.java.ast.Nodo;
 import main.java.ast.declaraciones.DeclaracionVar;
 import main.java.ast.expresiones.Expresion;
+import main.java.ast.tipos.Tipo;
 import main.java.ast.tipos.TipoEntero;
 
 import java.util.ArrayList;
@@ -57,4 +58,27 @@ public class InsBucleFor extends Instruccion {
 		lista.addAll(cuerpo);	
 		return lista;
 	}
+	
+	@Override
+    public void typecheck() {
+        super.typecheck();
+
+        Tipo tipoIndice = indice.tipo();
+        if (!tipoIndice.equals(TipoEntero.instancia())) {
+        	//TODO : Cambiar error
+            throw new RuntimeException();        
+        }
+        
+        Tipo tipoIni = ini.tipo();
+        if (!tipoIni.equals(TipoEntero.instancia())) {
+        	//TODO : Cambiar error
+            throw new RuntimeException();        
+        }
+        
+        Tipo tipoFin = fin.tipo();
+        if (!tipoFin.equals(TipoEntero.instancia())) {
+        	//TODO : Cambiar error
+            throw new RuntimeException();        
+        }
+    }
 }

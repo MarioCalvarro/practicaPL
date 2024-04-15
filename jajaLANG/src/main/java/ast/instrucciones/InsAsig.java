@@ -5,6 +5,7 @@ import java.util.List;
 
 import main.java.ast.Nodo;
 import main.java.ast.expresiones.Expresion;
+import main.java.ast.tipos.Tipo;
 
 public class InsAsig extends Instruccion {
     private final Expresion left;
@@ -31,10 +32,10 @@ public class InsAsig extends Instruccion {
 	 @Override
     public void typecheck() {
         super.typecheck();
-        Type placeType = place.type();
-        if (!placeType.equals(expr.type())) {
-            throw new TypeError(
-                    String.format("Can't assign %s to variable %s of type %s", expr.type(), place, placeType));
+        Tipo tipoAsignacion = left.tipo();
+        if (!tipoAsignacion.equals(right.tipo())) {
+        	//TODO : Cambiar error
+            throw new RuntimeException();
         }
     }
 	

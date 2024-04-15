@@ -3,6 +3,8 @@ package main.java.ast.instrucciones;
 import main.java.ast.Contexto;
 import main.java.ast.Nodo;
 import main.java.ast.expresiones.Expresion;
+import main.java.ast.tipos.Tipo;
+import main.java.ast.tipos.TipoBinario;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,4 +97,15 @@ public class InsCond extends Instruccion {
 		}
 		return lista;
 	}
+	
+	@Override
+    public void typecheck() {
+        super.typecheck();
+
+        Tipo tipoIndice = condicion.tipo();
+        if (!tipoIndice.equals(TipoBinario.instancia())) {
+        	//TODO : Cambiar error
+            throw new RuntimeException();        
+        }
+    }
 }
