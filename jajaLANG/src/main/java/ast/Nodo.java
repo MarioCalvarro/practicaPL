@@ -30,4 +30,12 @@ public abstract class Nodo {
                 child.typecheck();
         }
     }
+
+    public final Tipo tipo() {
+        if (tipo == null) {
+            //TODO: Cambiar error
+            throw new RuntimeException();
+        }
+        return tipo;
+    }
 }
