@@ -1,6 +1,9 @@
 package main.java.ast.expresiones;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import main.java.ast.Nodo;
 
 public class Llamada extends Expresion {
     private final Identificador exp;
@@ -27,5 +30,13 @@ public class Llamada extends Expresion {
         }
         sb.append(")");
         return sb.toString();
+    }
+
+    @Override
+    public List<Nodo> getAstHijos() {
+        List<Nodo> lista = new ArrayList<Nodo>();
+        lista.add(exp);
+        lista.addAll(listaExpresiones);
+        return lista;
     }
 }

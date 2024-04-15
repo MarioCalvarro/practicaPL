@@ -1,9 +1,15 @@
 package main.java.ast.expresiones;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import main.java.ast.Nodo;
+
 public class OperadorBin extends Expresion {
     private final Operadores op;
     private final Expresion izquierda;
     private final Expresion derecha;
+
     public OperadorBin(Operadores op, Expresion izquierda, Expresion derecha) {
         this.op = op;
         this.izquierda = izquierda;
@@ -64,5 +70,13 @@ public class OperadorBin extends Expresion {
                     throw new IllegalArgumentException("Invalid operator");
             }
         }
+    }
+
+    @Override
+    public List<Nodo> getAstHijos() {
+        List<Nodo> lista = new ArrayList<Nodo>();
+        lista.add(izquierda);
+        lista.add(derecha);
+        return lista;
     }
 }

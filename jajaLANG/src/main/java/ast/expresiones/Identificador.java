@@ -1,5 +1,10 @@
 package main.java.ast.expresiones;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import main.java.ast.Nodo;
+
 public class Identificador extends Expresion {
     private final String lib;
     private final String id;
@@ -32,5 +37,10 @@ public class Identificador extends Expresion {
             return id;
         }
         return lib + "::" + id;
+    }
+
+    @Override
+    public List<Nodo> getAstHijos() {
+        return new ArrayList<Nodo>();
     }
 }
