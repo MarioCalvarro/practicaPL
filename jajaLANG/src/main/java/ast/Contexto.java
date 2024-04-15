@@ -4,7 +4,6 @@ import main.java.ast.declaraciones.Declaracion;
 import main.java.ast.expresiones.Identificador;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,13 +29,14 @@ public class Contexto {
         ambitos.remove(ambitos.size() - 1);
     }
 
-    public void insertar(Declaracion var) {
+    public void insertar(Declaracion dec) {
         Ambito ambitoActual = ambitos.get(ambitos.size() - 1);
-        if (ambitoActual.pertenece(var.getId())) {
+        if (ambitoActual.pertenece(dec.getId())) {
             //TODO: Cambiar error
+            throw new RuntimeException();
         }
 
-       ambitoActual.poner(var);
+       ambitoActual.poner(dec);
     }
 
     public Declaracion get(String iden) {

@@ -1,5 +1,6 @@
 package main.java.ast.declaraciones;
 
+import main.java.ast.Contexto;
 import main.java.ast.Nodo;
 import main.java.ast.Programa;
 import main.java.lexico.AnalizadorLexicoJaja;
@@ -67,4 +68,22 @@ public class Import extends Declaracion {
 	public String getId() {
 		return namespace;
 	}
+
+    @Override
+    public void bind(Contexto ctx) {
+        if (nuevoAST == null) {
+            //Esto no se debería ejecutar nunca en este punto
+            //Pero por si acaso
+            Thread hilo = iniciarParseo();
+            hilo.start();
+            try {
+                hilo.join();
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+        nuevoAST.bind(ctx);
+    }
 }
