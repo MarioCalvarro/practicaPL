@@ -65,7 +65,6 @@ public class Programa extends Nodo {
         List<Nodo> lista = new ArrayList<Nodo>();
         lista.addAll(mapa_imports.values());
         lista.addAll(lista_declaraciones);
-        lista.add(ambitoGlobal);
         return lista;
     }
 }
