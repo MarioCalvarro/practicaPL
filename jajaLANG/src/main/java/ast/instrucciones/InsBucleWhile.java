@@ -1,5 +1,6 @@
 package main.java.ast.instrucciones;
 
+import main.java.ast.Contexto;
 import main.java.ast.expresiones.Expresion;
 
 import java.util.List;
@@ -27,5 +28,12 @@ public class InsBucleWhile extends Instruccion {
 
         return sb.toString();
 
+    }
+    
+    @Override
+    public void bind(Contexto ctx) {
+        ctx.apilarAmbito();;
+        super.bind(ctx);
+        ctx.desapilarAmbito();;
     }
 }

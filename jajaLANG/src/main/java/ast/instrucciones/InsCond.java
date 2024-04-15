@@ -1,5 +1,6 @@
 package main.java.ast.instrucciones;
 
+import main.java.ast.Contexto;
 import main.java.ast.expresiones.Expresion;
 
 import java.util.List;
@@ -62,5 +63,19 @@ public class InsCond extends Instruccion {
 
         return sb.toString();
 
+    }
+    
+    @Override
+    public void bind(Contexto ctx) {
+        super.setProgress(CompilationProgress.BIND);
+        condicion.bind(ctx);
+
+        ctx.apilarAmbito();
+        for (Instruccion s : cuerpo) {
+            if(s.getProgress().lessThan(CompilationProgress.BIND))
+                s.bind(ctx);
+        }
+        ctx.desapilarAmbito();     
+        instElse.bind(ctx);
     }
 }

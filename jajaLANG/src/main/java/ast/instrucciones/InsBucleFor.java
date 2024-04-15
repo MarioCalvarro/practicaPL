@@ -1,5 +1,6 @@
 package main.java.ast.instrucciones;
 
+import main.java.ast.Contexto;
 import main.java.ast.declaraciones.DeclaracionVar;
 import main.java.ast.expresiones.Expresion;
 import main.java.ast.tipos.TipoEntero;
@@ -36,5 +37,12 @@ public class InsBucleFor extends Instruccion {
 
         return sb.toString();
 
+    }
+    
+    @Override
+    public void bind(Contexto ctx) {
+        ctx.apilarAmbito();;
+        super.bind(ctx);
+        ctx.desapilarAmbito();;
     }
 }
