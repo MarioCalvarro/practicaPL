@@ -2,7 +2,6 @@ package main.java.ast;
 
 import main.java.ast.declaraciones.Declaracion;
 import main.java.ast.declaraciones.Import;
-import main.java.ast.declaraciones.ListaDeclaraciones;
 import main.java.ast.expresiones.Identificador;
 
 import java.util.ArrayList;
@@ -12,10 +11,10 @@ import java.util.Map;
 
 public class Programa extends Nodo {
     private final Map<String, Import> mapa_imports;
-    private final ListaDeclaraciones lista_declaraciones;
+    private final List<Declaracion> lista_declaraciones;
     private final Ambito ambitoGlobal = new Ambito();
 
-    public Programa(List<Import> lista_imports, ListaDeclaraciones lista_declaraciones) throws Exception {
+    public Programa(List<Import> lista_imports, List<Declaracion> lista_declaraciones) throws Exception {
         this.lista_declaraciones = lista_declaraciones;
         this.mapa_imports = new HashMap<String, Import>();
         for (Import i : lista_imports) {

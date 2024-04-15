@@ -81,7 +81,7 @@ terminal TokenValue    //Palabras clave
 //Inicio Programa
 non terminal Programa Programa;
 non terminal List<Import> Lista_Imports;
-non terminal ListaDeclaraciones Lista_Declaraciones;
+non terminal List<Declaracion> Lista_Declaraciones;
 
 ///Declaraciones
 non terminal DeclaracionAlias Declaracion_Alias;
@@ -104,8 +104,8 @@ non terminal Llamada Llamada_Fun;
 ///Tipos
 non terminal Tipo Tipo, T, Tipo_Reg;
 //Registros
-non terminal ListaDeclaraciones Matriz_Atributos, Matriz_Atributos2;
-non terminal DeclaracionVariables Lista_Atributos ;
+non terminal List<Declaracion> Matriz_Atributos, Matriz_Atributos2;
+non terminal DeclaracionVariables Lista_Atributos;
 
 
 ///Expresiones
@@ -161,7 +161,7 @@ Lista_Declaraciones ::= Lista_Declaraciones: lDecl Declaracion_Alias: dAlias PUN
 
                     //Variables
                     | Lista_Declaraciones: lDecl Decl_Variables: dGen PUNTOCOMA
-                    {: lDecl.add(dGen); RESULT = lDecl; :}
+                    {: lDecl.addAll(dGen.array()); RESULT = lDecl; :}
 
                     //Funciones
                     | Lista_Declaraciones: lDecl Decl_Funcion: dGen
@@ -171,7 +171,7 @@ Lista_Declaraciones ::= Lista_Declaraciones: lDecl Declaracion_Alias: dAlias PUN
                     //extender "add" para insertar una lista de variables con el
                     //mismo tipo
                     | 
-                    {: RESULT = new ListaDeclaraciones(); :}
+                    {: RESULT = new ArrayList<Declaracion>(); :}
                     ;
 
 Declaracion_Alias ::= INCOGNITO IDEN: id ASIGNACION Tipo: t
@@ -436,12 +436,12 @@ Tipo_Reg ::= REGISTRO LLAP Matriz_Atributos: mAtrib LLCIERRE
 
 //Una sola lista de atributos o varias con la coma de la última opcional
 Matriz_Atributos ::= Lista_Atributos: lAtr
-                 {: ListaDeclaraciones mAtr = new ListaDeclaraciones();
-                 mAtr.add(lAtr); RESULT = mAtr; :}
+                 {: List<Declaracion> mAtr = new ArrayList<Declaracion>();
+                 mAtr.addAll(lAtr.array()); RESULT = mAtr; :}
 
                  | Lista_Atributos: lAtr COMA
-                 {: ListaDeclaraciones mAtr = new ListaDeclaraciones();
-                 mAtr.add(lAtr); RESULT = mAtr; :}
+                 {: List<Declaracion> mAtr = new ArrayList<Declaracion>();
+                 mAtr.add(lAtr.array()); RESULT = mAtr; :}
 
                  | Matriz_Atributos2: mAtr Lista_Atributos: lAtr
                  {: mAtr.add(lAtr); RESULT = mAtr; :}
@@ -452,11 +452,11 @@ Matriz_Atributos ::= Lista_Atributos: lAtr
 
 
 Matriz_Atributos2 ::= Lista_Atributos: lAtr COMA
-                  {: ListaDeclaraciones mAtr = new ListaDeclaraciones();
-                  mAtr.add(lAtr); RESULT = mAtr; :}
+                  {: List<Declaracion> mAtr = new ArrayList<Declaracion>();
+                  mAtr.add(lAtr.array()); RESULT = mAtr; :}
 
                   | Matriz_Atributos2: mAtr Lista_Atributos: lAtr COMA
-                  {: mAtr.add(lAtr); RESULT = mAtr; :}
+                  {: mAtr.add(lAtr.array()); RESULT = mAtr; :}
                   ;
 
 //Pueden tener un valor por defecto

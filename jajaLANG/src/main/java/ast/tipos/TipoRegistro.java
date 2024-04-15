@@ -1,11 +1,13 @@
 package main.java.ast.tipos;
 
-import main.java.ast.declaraciones.ListaDeclaraciones;
+import java.util.List;
+
+import main.java.ast.declaraciones.Declaracion;
 
 public class TipoRegistro extends Tipo {
-    ListaDeclaraciones atributos;
+    List<Declaracion> atributos;
 
-    public TipoRegistro(ListaDeclaraciones atributos) {
+    public TipoRegistro(List<Declaracion> atributos) {
         this.atributos = atributos;
     }
 
