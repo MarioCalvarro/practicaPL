@@ -35,8 +35,8 @@ class ParImparTest {
             + "};\n"
             + "},\n"
             + "diver tronco() {\n"
-            + "escribeBin(impar(9));\n"
-            + "escribeBin(par(12));\n"
+            + "escribirBin(impar(9));\n"
+            + "escribirBin(par(12));\n"
             + "},\n"
             + ")\n"
             + ")";
