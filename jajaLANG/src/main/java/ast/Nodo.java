@@ -1,5 +1,7 @@
 package main.java.ast;
 
+import java.util.List;
+
 import main.java.ast.tipos.Tipo;
 
 public abstract class Nodo {
@@ -10,12 +12,12 @@ public abstract class Nodo {
         return progreso;
     }
 
-    // public abstract List<Nodo> getAstHijo();
+    public abstract List<Nodo> getAstHijos();
 
     // Vincularmos cada uso de una definición con su definición
     public void bind(Contexto ctx) {
         progreso = FaseCompilacion.BIND;
-        for (Nodo child : getAstHijo()) {
+        for (Nodo child : getAstHijos()) {
             if (child.getProgreso().menor(FaseCompilacion.BIND))
                 child.bind(ctx);
         }

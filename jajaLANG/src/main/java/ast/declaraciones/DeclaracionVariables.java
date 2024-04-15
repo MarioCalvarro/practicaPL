@@ -7,7 +7,6 @@ import java.util.List;
 
 public class DeclaracionVariables extends Instruccion {
     private final List<DeclaracionVar> lista_var;
-    private final Tipo tipo;
 
     public DeclaracionVariables(Tipo tipo, List<DeclaracionVar> lista_var) {
         for (DeclaracionVar decl : lista_var) {

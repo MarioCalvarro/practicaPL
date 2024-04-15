@@ -32,11 +32,11 @@ public class Contexto {
 
     public void insertar(Declaracion var) {
         Ambito ambitoActual = ambitos.get(ambitos.size() - 1);
-        if (ambitoActual.pertenece(var.getId()))
+        if (ambitoActual.pertenece(var.getId())) {
             //TODO: Cambiar error
-            // throw new BindingError("La definicion " + var.getId() + " ya ha sido definido en el siguiente ambito: " + ambitoActual);
+        }
 
-        ambitos.get(ambitos.size() - 1).add(var);
+       ambitoActual.poner(var);
     }
 
     public Declaracion get(String iden) {

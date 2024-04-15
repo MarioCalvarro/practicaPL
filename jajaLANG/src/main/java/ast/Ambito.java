@@ -8,7 +8,7 @@ import java.util.Map;
 public class Ambito extends Nodo {
     private final Map<String, Declaracion> decls = new HashMap<String, Declaracion>();
 
-    public void add(Declaracion dec) {
+    public void poner(Declaracion dec) {
         decls.put(dec.getId(), dec);
     }
 
