@@ -1,5 +1,6 @@
 package main.java.ast.tipos;
 
+import main.java.ast.Contexto;
 import main.java.ast.Nodo;
 import main.java.ast.declaraciones.Declaracion;
 
@@ -38,6 +39,15 @@ public class TipoRegistro extends Tipo {
         List<Nodo> lista = new ArrayList<Nodo>();
         lista.addAll(atributos.values());
         return lista;
+    }
+
+    @Override
+    public void bind(Contexto ctx) {
+        //Tenemos que crear un ámbito para que los atributos no se añadan como
+        //variables
+        ctx.apilarAmbito();
+        super.bind(ctx);
+        ctx.desapilarAmbito();
     }
 
     @Override
