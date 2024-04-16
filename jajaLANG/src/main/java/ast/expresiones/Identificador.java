@@ -43,4 +43,10 @@ public class Identificador extends Expresion {
     public List<Nodo> getAstHijos() {
         return new ArrayList<Nodo>();
     }
+
+    @Override
+    public Integer evaluar() {
+        //TODO: Cambiar error
+        throw new RuntimeException("No es un entero estaticamente.");
+    }
 }

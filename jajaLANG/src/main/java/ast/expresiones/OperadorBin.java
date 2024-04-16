@@ -79,4 +79,21 @@ public class OperadorBin extends Expresion {
         lista.add(derecha);
         return lista;
     }
+
+    @Override
+    public Integer evaluar() {
+        Integer izq = izquierda.valor();
+        Integer der = derecha.valor();
+        Integer res = null;
+        switch(op) {
+            case SUMA:
+                res = izq + der;
+                break;
+            //TODO: Hacer el resto de operadores
+            default:
+                //TODO: Cambiar error
+                throw new RuntimeException();
+        }
+        return res;
+    }
 }

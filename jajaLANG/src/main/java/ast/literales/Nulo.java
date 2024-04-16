@@ -27,4 +27,10 @@ public class Nulo extends Literal {
 		List<Nodo> lista = new ArrayList<Nodo>();
 		return lista;
 	}
+
+    @Override
+    public Integer evaluar() {
+        //TODO: Cambiar error
+        throw new RuntimeException("No es un entero estaticamente.");
+    }
 }

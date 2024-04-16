@@ -26,4 +26,9 @@ public class True extends Literal {
 	public List<Nodo> getAstHijos() {
 		return new ArrayList<Nodo>();
 	}
+
+    @Override
+    public Integer evaluar() {
+        return 1;
+    }
 }

@@ -33,7 +33,7 @@ public class OperadorUn extends Expresion {
         public String toString() {
             switch (this) {
                 case NEG:
-                    return "+";
+                    return "!";
                 case MENOS:
                     return "-";
                 case DIRECCION:
@@ -51,5 +51,20 @@ public class OperadorUn extends Expresion {
         List<Nodo> lista = new ArrayList<Nodo>();
         lista.add(derecha);
         return lista;
+    }
+
+    @Override
+    public Integer evaluar() {
+        Integer der = derecha.valor();
+        Integer res = null;
+        switch(op) {
+            case MENOS:
+                res = - der;
+                break;
+            default:
+                //TODO: Cambiar error
+                throw new RuntimeException();
+        }
+        return res;
     }
 }

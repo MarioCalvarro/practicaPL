@@ -49,4 +49,10 @@ public class LiteralStruct extends Literal {
 	    lista.addAll(lExpr.values());		
 		return lista;
 	}
+
+    @Override
+    public Integer evaluar() {
+        //TODO: Cambiar error
+        throw new RuntimeException("No es un entero estaticamente.");
+    }
 }

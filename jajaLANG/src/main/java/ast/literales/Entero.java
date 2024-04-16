@@ -6,10 +6,10 @@ import java.util.List;
 import main.java.ast.Nodo;
 
 public class Entero extends Literal {
-    private final int value;
-
-    public Entero(int value) {
-        this.value = value;
+    private Integer valorEntero;
+    
+    public Entero(int valor) {
+        this.valorEntero = valor;
     }
 
     public Entero(String lexema) {
@@ -18,16 +18,21 @@ public class Entero extends Literal {
 
     @Override
     public String toString() {
-        return String.valueOf(value);
+        return String.valueOf(valor);
     }
 
     @Override
     public Object valor() {
-        return value;
+        return valorEntero;
     }
 
 	@Override
 	public List<Nodo> getAstHijos() {
 		return new ArrayList<Nodo>();
 	}
+
+    @Override
+    public Integer evaluar() {
+        return valorEntero;
+    }
 }
