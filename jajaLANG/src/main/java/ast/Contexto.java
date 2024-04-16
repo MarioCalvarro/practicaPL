@@ -2,6 +2,7 @@ package main.java.ast;
 
 import main.java.ast.declaraciones.Declaracion;
 import main.java.ast.expresiones.Identificador;
+import main.java.ast.tipos.Tipo;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -57,5 +58,22 @@ public class Contexto {
 
     public boolean isGlobal(String name) {
         return this.ambitos.get(0).pertenece(name);
+    }
+    
+    public Tipo getTipoUltimaFuncion() {
+    	boolean encontrado = false;
+    	
+    	for ( Ambito amb : ambitos) {
+    		for(Declaracion dec : amb.) {
+    			try {
+        			DeclaracionFun tipoDeclaracion = (DeclaracionFun) amb.get(dec).;
+        		}catch (ClassCastException e){
+        			//TODO: Cambiar el error     
+                	throw new RuntimeException();
+                }
+    		}
+    		
+    		if(amb.getClass().equals(DeclaracionFun)
+    	}
     }
 }
