@@ -82,8 +82,8 @@ public class OperadorBin extends Expresion {
 
     @Override
     public Integer evaluar() {
-        Integer izq = izquierda.valor();
-        Integer der = derecha.valor();
+        Integer izq = izquierda.valorEntero();
+        Integer der = derecha.valorEntero();
         Integer res = null;
         switch(op) {
             case SUMA:
