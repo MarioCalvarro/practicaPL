@@ -80,7 +80,10 @@ public class DeclaracionFun extends Declaracion {
     public void bind(Contexto ctx) {
         /// Llama a bind de los hijos con nuevo contexto local
         ctx.insertar(this);
-        ctx.apilarAmbito();;
+        ctx.apilarAmbito();
+        // TODO: Esto lo hacemos para que los returns puedan encontrar el tipo de
+        // retorno de la función ya que los ámbitos no tienen orden
+        ctx.insertar(this);
         super.bind(ctx);
         ctx.desapilarAmbito();;
     }

@@ -4,15 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.java.ast.Nodo;
+import main.java.ast.declaraciones.DeclaracionFun;
+import main.java.ast.tipos.TipoFunc;
 
 public class Llamada extends Expresion {
     private final Identificador exp;
     private final List<Expresion> listaExpresiones;
+    private DeclaracionFun decFuncion;
 
     public Llamada(Identificador exp, List<Expresion> listaExpresiones) {
         this.exp = exp;
         this.listaExpresiones = listaExpresiones;
-
     }
 
     @Override
@@ -43,6 +45,30 @@ public class Llamada extends Expresion {
     @Override
     public void typecheck() {
         super.typecheck();
-        //Ver si el identificador es una función
+        TipoFunc tipoFun;
+        try {
+            tipoFun = (TipoFunc) exp.tipo(); 
+        } catch(ClassCastException e) {
+            //TODO: Cambiar error
+            throw new RuntimeException();
+        }
+        
+        if (tipoFun.tipoParametros().size() != listaExpresiones.size()) {
+            //TODO: Cambiar error
+            throw new RuntimeException();
+        }
+
+        //Cargar la definición de la función
+        try {
+            decFuncion = (DeclaracionFun) exp.dec();
+        } catch(ClassCastException e) {
+            //TODO: Cambiar error
+            throw new RuntimeException();
+        }
+        
+        if (decFuncion == null) {
+            //TODO: Cambiar error
+            throw new RuntimeException();
+        }
     }
 }

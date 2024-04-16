@@ -17,6 +17,10 @@ public class TipoFunc extends Tipo {
     public Tipo tipoRetorno() {
         return tipoRetorno;
     }
+    
+    public List<Tipo> tipoParametros() {
+        return tipoParametros();
+    }
 
     @Override
     public List<Nodo> getAstHijos() {

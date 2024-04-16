@@ -34,6 +34,10 @@ public class Identificador extends Expresion {
         return lib != null;
     }
 
+    public Declaracion dec() {
+        return dec;
+    }
+
     @Override
     public void bind(Contexto ctx) {
         super.bind(ctx);
