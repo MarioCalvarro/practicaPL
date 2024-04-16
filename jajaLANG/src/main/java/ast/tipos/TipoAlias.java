@@ -1,13 +1,13 @@
 package main.java.ast.tipos;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import main.java.ast.Contexto;
 import main.java.ast.Nodo;
 import main.java.ast.declaraciones.Declaracion;
 import main.java.ast.declaraciones.DeclaracionAlias;
 import main.java.ast.expresiones.Identificador;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TipoAlias extends Tipo {
     private final Identificador id;
@@ -22,12 +22,12 @@ public class TipoAlias extends Tipo {
         return id.toString();
     }
 
-	@Override
-	public List<Nodo> getAstHijos() {
-		List<Nodo> lista = new ArrayList<Nodo>();
-		lista.add(id);
-		return lista;
-	}
+    @Override
+    public List<Nodo> getAstHijos() {
+        List<Nodo> lista = new ArrayList<Nodo>();
+        lista.add(id);
+        return lista;
+    }
 
     @Override
     public void bind(Contexto ctx) {

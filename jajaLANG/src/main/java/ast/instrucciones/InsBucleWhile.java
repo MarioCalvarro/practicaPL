@@ -33,7 +33,7 @@ public class InsBucleWhile extends Instruccion {
         return sb.toString();
 
     }
-    
+
     @Override
     public void bind(Contexto ctx) {
         ctx.apilarAmbito();
@@ -41,22 +41,22 @@ public class InsBucleWhile extends Instruccion {
         ctx.desapilarAmbito();
     }
 
-	@Override
-	public List<Nodo> getAstHijos() {
-		List<Nodo> lista = new ArrayList<Nodo>();
-		lista.add(condicion);
-		lista.addAll(cuerpo);	
-		return lista;
-	}
-	
-	@Override
+    @Override
+    public List<Nodo> getAstHijos() {
+        List<Nodo> lista = new ArrayList<Nodo>();
+        lista.add(condicion);
+        lista.addAll(cuerpo);
+        return lista;
+    }
+
+    @Override
     public void typecheck() {
         super.typecheck();
 
         Tipo tipoIndice = condicion.tipo();
         if (!tipoIndice.equals(TipoBinario.instancia())) {
-        	//TODO : Cambiar error
-            throw new RuntimeException();        
+            //TODO : Cambiar error
+            throw new RuntimeException();
         }
     }
 }

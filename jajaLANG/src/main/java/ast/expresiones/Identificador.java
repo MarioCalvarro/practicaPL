@@ -1,11 +1,11 @@
 package main.java.ast.expresiones;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import main.java.ast.Contexto;
 import main.java.ast.Nodo;
 import main.java.ast.declaraciones.Declaracion;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Identificador extends Expresion {
     private final String lib;
@@ -41,7 +41,7 @@ public class Identificador extends Expresion {
     @Override
     public void bind(Contexto ctx) {
         super.bind(ctx);
-        
+
         dec = ctx.get(this);
         if (dec == null) {
             //TODO: Cambiar error

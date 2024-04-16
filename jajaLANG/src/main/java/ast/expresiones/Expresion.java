@@ -10,7 +10,7 @@ public abstract class Expresion extends Instruccion {
         //Por defecto, la mayoría de expresiones no son enteros estaticamente
         //TODO: Cambiar error
         throw new RuntimeException("No es un entero estaticamente.");
-    };
+    }
 
     public Integer valorEntero() {
         if (valor == null) {

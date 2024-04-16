@@ -68,7 +68,7 @@ public class InsCond extends Instruccion {
         return sb.toString();
 
     }
-    
+
     @Override
     public void bind(Contexto ctx) {
         //super.setProgress(CompilationProgress.BIND);
@@ -76,36 +76,36 @@ public class InsCond extends Instruccion {
 
         ctx.apilarAmbito();
         for (Instruccion s : cuerpo) {
-          //  if(s.getProgress().lessThan(CompilationProgress.BIND))
-                s.bind(ctx);
+            //  if(s.getProgress().lessThan(CompilationProgress.BIND))
+            s.bind(ctx);
         }
-        ctx.desapilarAmbito();     
+        ctx.desapilarAmbito();
         instElse.bind(ctx);
     }
 
-	@Override
-	public List<Nodo> getAstHijos() {
-		List<Nodo> lista = new ArrayList<Nodo>();
-		if(condicion != null) {
-			lista.add(condicion);
-		}
-		if(condicion != null) {
-			lista.addAll(cuerpo);	
-		}
-		if(condicion != null) {
-			lista.add(instElse);
-		}
-		return lista;
-	}
-	
-	@Override
+    @Override
+    public List<Nodo> getAstHijos() {
+        List<Nodo> lista = new ArrayList<Nodo>();
+        if (condicion != null) {
+            lista.add(condicion);
+        }
+        if (condicion != null) {
+            lista.addAll(cuerpo);
+        }
+        if (condicion != null) {
+            lista.add(instElse);
+        }
+        return lista;
+    }
+
+    @Override
     public void typecheck() {
         super.typecheck();
 
         Tipo tipoIndice = condicion.tipo();
         if (!tipoIndice.equals(TipoBinario.instancia())) {
-        	//TODO : Cambiar error
-            throw new RuntimeException();        
+            //TODO : Cambiar error
+            throw new RuntimeException();
         }
     }
 }

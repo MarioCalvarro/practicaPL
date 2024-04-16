@@ -38,7 +38,7 @@ public class Contexto {
             throw new RuntimeException();
         }
 
-       ambitoActual.poner(dec);
+        ambitoActual.poner(dec);
     }
 
     public Declaracion get(String iden) {
@@ -60,7 +60,7 @@ public class Contexto {
     public boolean isGlobal(String name) {
         return this.ambitos.get(0).pertenece(name);
     }
-    
+
     public Tipo getTipoUltimaFuncion() {
         //Como la declaración de funciones solo se hace en el ámbito global,
         //solo tenemos que buscar en el siguiente (1).

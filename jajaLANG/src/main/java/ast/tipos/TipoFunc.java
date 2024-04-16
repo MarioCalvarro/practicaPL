@@ -1,9 +1,9 @@
 package main.java.ast.tipos;
 
+import main.java.ast.Nodo;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import main.java.ast.Nodo;
 
 public class TipoFunc extends Tipo {
     private final Tipo tipoRetorno;
@@ -17,7 +17,7 @@ public class TipoFunc extends Tipo {
     public Tipo tipoRetorno() {
         return tipoRetorno;
     }
-    
+
     public List<Tipo> tipoParametros() {
         return tipoParametros();
     }
@@ -35,7 +35,7 @@ public class TipoFunc extends Tipo {
         try {
             TipoFunc otro = (TipoFunc) obj;
             return this.tipoRetorno.equals(otro.tipoRetorno) &&
-                this.tipoParametros.equals(otro.tipoParametros);
+                    this.tipoParametros.equals(otro.tipoParametros);
 
         } catch (ClassCastException e) {
             return false;

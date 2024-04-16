@@ -45,13 +45,13 @@ public class LiteralStruct extends Literal {
     public Object valor() {
         return mapaExpresiones;
     }
-    
+
     @Override
-	public List<Nodo> getAstHijos() {
-		List<Nodo> lista = new ArrayList<Nodo>();
-	    lista.addAll(mapaExpresiones.values());		
-		return lista;
-	}
+    public List<Nodo> getAstHijos() {
+        List<Nodo> lista = new ArrayList<Nodo>();
+        lista.addAll(mapaExpresiones.values());
+        return lista;
+    }
 
     @Override
     public void typecheck() {

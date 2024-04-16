@@ -40,17 +40,17 @@ public class LiteralArray extends Literal {
         return lExpr;
     }
 
-	@Override
-	public List<Nodo> getAstHijos() {
-		List<Nodo> lista = new ArrayList<Nodo>();
-	    lista.addAll(lExpr);		
-		return lista;
-	}
+    @Override
+    public List<Nodo> getAstHijos() {
+        List<Nodo> lista = new ArrayList<Nodo>();
+        lista.addAll(lExpr);
+        return lista;
+    }
 
     @Override
     public void typecheck() {
         super.typecheck();
-        
+
         //Todos los elementos tienen que tener el mismo tipo
         Tipo tipoElementos = lExpr.get(0).tipo();
         for (Expresion elem : lExpr) {
@@ -65,6 +65,6 @@ public class LiteralArray extends Literal {
             throw new RuntimeException();
         }
 
-        this.tipo = new TipoArray(tipoElementos, new Entero (lExpr.size()));
+        this.tipo = new TipoArray(tipoElementos, new Entero(lExpr.size()));
     }
 }

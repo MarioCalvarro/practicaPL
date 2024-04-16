@@ -41,7 +41,7 @@ public class InsBucleFor extends Instruccion {
         return sb.toString();
 
     }
-    
+
     @Override
     public void bind(Contexto ctx) {
         ctx.apilarAmbito();
@@ -49,36 +49,36 @@ public class InsBucleFor extends Instruccion {
         ctx.desapilarAmbito();
     }
 
-	@Override
-	public List<Nodo> getAstHijos() {
-		List<Nodo> lista = new ArrayList<Nodo>();
-		lista.add(indice);
-		lista.add(ini);
-		lista.add(fin);
-		lista.addAll(cuerpo);	
-		return lista;
-	}
-	
-	@Override
+    @Override
+    public List<Nodo> getAstHijos() {
+        List<Nodo> lista = new ArrayList<Nodo>();
+        lista.add(indice);
+        lista.add(ini);
+        lista.add(fin);
+        lista.addAll(cuerpo);
+        return lista;
+    }
+
+    @Override
     public void typecheck() {
         super.typecheck();
 
         Tipo tipoIndice = indice.tipo();
         if (!tipoIndice.equals(TipoEntero.instancia())) {
-        	//TODO : Cambiar error
-            throw new RuntimeException();        
+            //TODO : Cambiar error
+            throw new RuntimeException();
         }
-        
+
         Tipo tipoIni = ini.tipo();
         if (!tipoIni.equals(TipoEntero.instancia())) {
-        	//TODO : Cambiar error
-            throw new RuntimeException();        
+            //TODO : Cambiar error
+            throw new RuntimeException();
         }
-        
+
         Tipo tipoFin = fin.tipo();
         if (!tipoFin.equals(TipoEntero.instancia())) {
-        	//TODO : Cambiar error
-            throw new RuntimeException();        
+            //TODO : Cambiar error
+            throw new RuntimeException();
         }
     }
 }

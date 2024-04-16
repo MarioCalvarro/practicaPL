@@ -1,13 +1,12 @@
 package main.java.ast.declaraciones;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import main.java.ast.Contexto;
 import main.java.ast.Nodo;
 import main.java.ast.expresiones.Expresion;
-import main.java.ast.instrucciones.Instruccion;
 import main.java.ast.tipos.Tipo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DeclaracionVar extends Declaracion {
     protected String id;
@@ -67,7 +66,7 @@ public class DeclaracionVar extends Declaracion {
         ctx.insertar(this);
         //esGlobal = ctx.isGlobal(this.getId());
     }
-    
+
     @Override
     public List<Nodo> getAstHijos() {
         List<Nodo> lista = new ArrayList<Nodo>();

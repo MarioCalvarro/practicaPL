@@ -1,11 +1,11 @@
 package main.java.ast.literales;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import main.java.ast.Nodo;
 import main.java.ast.tipos.Tipo;
 import main.java.ast.tipos.TipoPuntero;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LiteralMemoria extends Literal {
     private final Tipo apuntado;
@@ -26,12 +26,12 @@ public class LiteralMemoria extends Literal {
         throw new UnsupportedOperationException("Unimplemented method 'valor'");
     }
 
-	@Override
-	public List<Nodo> getAstHijos() {
-        List<Nodo> lista = new ArrayList<Nodo>(); 
+    @Override
+    public List<Nodo> getAstHijos() {
+        List<Nodo> lista = new ArrayList<Nodo>();
         lista.add(apuntado);
         return lista;
-	}
+    }
 
     @Override
     public void typecheck() {

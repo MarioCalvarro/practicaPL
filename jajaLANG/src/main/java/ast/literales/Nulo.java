@@ -1,10 +1,10 @@
 package main.java.ast.literales;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import main.java.ast.Nodo;
 import main.java.ast.tipos.TipoPuntero;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Nulo extends Literal {
     private static final Nulo instancia = new Nulo();
@@ -26,10 +26,10 @@ public class Nulo extends Literal {
     public Object valor() {
         return null;
     }
-    
+
     @Override
-	public List<Nodo> getAstHijos() {
-		List<Nodo> lista = new ArrayList<Nodo>();
-		return lista;
-	}
+    public List<Nodo> getAstHijos() {
+        List<Nodo> lista = new ArrayList<Nodo>();
+        return lista;
+    }
 }

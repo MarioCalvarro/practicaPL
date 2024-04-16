@@ -1,9 +1,9 @@
 package main.java.ast.tipos;
 
+import main.java.ast.Nodo;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import main.java.ast.Nodo;
 
 public class TipoPuntero extends Tipo {
     private final Tipo tipoElemento;
@@ -18,14 +18,14 @@ public class TipoPuntero extends Tipo {
     }
 
     @Override
-	public List<Nodo> getAstHijos() {
-		List<Nodo> lista = new ArrayList<Nodo>();
-		lista.add(tipoElemento);
-		return lista;
-	}
+    public List<Nodo> getAstHijos() {
+        List<Nodo> lista = new ArrayList<Nodo>();
+        lista.add(tipoElemento);
+        return lista;
+    }
 
     public Tipo getTipoApuntado() {
-    	return tipoElemento.tipo();
+        return tipoElemento.tipo();
     }
 
     @Override

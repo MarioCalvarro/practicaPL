@@ -1,10 +1,10 @@
 package main.java.ast.literales;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import main.java.ast.Nodo;
 import main.java.ast.tipos.TipoBinario;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class False extends Literal {
     private static final False instancia = new False();
@@ -27,10 +27,10 @@ public class False extends Literal {
         return false;
     }
 
-	@Override
-	public List<Nodo> getAstHijos() {
-		return new ArrayList<Nodo>();
-	}
+    @Override
+    public List<Nodo> getAstHijos() {
+        return new ArrayList<Nodo>();
+    }
 
     @Override
     public Integer evaluar() {

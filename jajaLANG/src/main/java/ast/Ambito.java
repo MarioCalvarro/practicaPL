@@ -25,8 +25,8 @@ public class Ambito {
         for (Declaracion d : decls.values()) {
             try {
                 return (DeclaracionFun) d;
+            } catch (ClassCastException e) {
             }
-            catch (ClassCastException e) {}
         }
         return null;
     }

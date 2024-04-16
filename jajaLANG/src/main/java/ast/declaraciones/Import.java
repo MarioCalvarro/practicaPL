@@ -56,7 +56,7 @@ public class Import extends Declaracion {
     public String toString() {
         return "#traficar " + ruta + " como " + namespace + ",\n" + nuevoAST.toString();
     }
-    
+
     @Override
     public List<Nodo> getAstHijos() {
         List<Nodo> lista = new ArrayList<Nodo>();
@@ -64,10 +64,10 @@ public class Import extends Declaracion {
         return lista;
     }
 
-	@Override
-	public String getId() {
-		return namespace;
-	}
+    @Override
+    public String getId() {
+        return namespace;
+    }
 
     @Override
     public void bind(Contexto ctx) {

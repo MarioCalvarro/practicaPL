@@ -1,8 +1,8 @@
 package main.java.ast;
 
-import java.util.List;
-
 import main.java.ast.tipos.Tipo;
+
+import java.util.List;
 
 public abstract class Nodo {
     protected Tipo tipo = null;

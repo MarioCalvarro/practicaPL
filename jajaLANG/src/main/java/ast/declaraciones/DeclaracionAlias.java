@@ -1,11 +1,11 @@
 package main.java.ast.declaraciones;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import main.java.ast.Contexto;
 import main.java.ast.Nodo;
 import main.java.ast.tipos.Tipo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DeclaracionAlias extends Declaracion {
     private final String id;
@@ -23,7 +23,7 @@ public class DeclaracionAlias extends Declaracion {
     @Override
     public void bind(Contexto ctx) {
         super.bind(ctx);
-    	ctx.insertar(this);
+        ctx.insertar(this);
     }
 
     @Override

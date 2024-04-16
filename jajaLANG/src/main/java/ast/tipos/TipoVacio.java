@@ -1,15 +1,16 @@
 package main.java.ast.tipos;
 
+import main.java.ast.Nodo;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import main.java.ast.Nodo;
 
 public class TipoVacio extends Tipo {
     private static final TipoVacio instancia = new TipoVacio();
 
     //No tiene equals porque es la misma instancia en todos los casos
-    private TipoVacio() {}
+    private TipoVacio() {
+    }
 
     public static TipoVacio instancia() {
         return instancia;
@@ -21,7 +22,7 @@ public class TipoVacio extends Tipo {
     }
 
     @Override
-	public List<Nodo> getAstHijos() {
-		return new ArrayList<Nodo>();
-	}
+    public List<Nodo> getAstHijos() {
+        return new ArrayList<Nodo>();
+    }
 }

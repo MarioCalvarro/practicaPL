@@ -1,12 +1,12 @@
 package main.java.ast.tipos;
 
+import main.java.ast.Nodo;
+import main.java.ast.declaraciones.Declaracion;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import main.java.ast.Nodo;
-import main.java.ast.declaraciones.Declaracion;
 
 public class TipoRegistro extends Tipo {
     private final Map<String, Declaracion> atributos;
@@ -34,11 +34,11 @@ public class TipoRegistro extends Tipo {
     }
 
     @Override
-	public List<Nodo> getAstHijos() {
-		List<Nodo> lista = new ArrayList<Nodo>();
-		lista.addAll(atributos.values());
-		return lista;
-	}
+    public List<Nodo> getAstHijos() {
+        List<Nodo> lista = new ArrayList<Nodo>();
+        lista.addAll(atributos.values());
+        return lista;
+    }
 
     @Override
     public boolean equals(Object obj) {

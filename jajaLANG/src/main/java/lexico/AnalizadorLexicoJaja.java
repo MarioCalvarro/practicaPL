@@ -444,6 +444,8 @@ public class AnalizadorLexicoJaja implements java_cup.runtime.Scanner {
      * ZZ_ATTRIBUTE[aState] contains the attributes of state {@code aState}
      */
     private static final int[] ZZ_ATTRIBUTE = zzUnpackAttribute();
+    /* user code: */
+    private final ALexOperaciones ops;
     /**
      * Input device.
      */
@@ -512,8 +514,6 @@ public class AnalizadorLexicoJaja implements java_cup.runtime.Scanner {
      * Whether the user-EOF-code has already been executed.
      */
     private boolean zzEOFDone;
-    /* user code: */
-    private final ALexOperaciones ops;
     private GestionErroresJaja errores;
 
     /**

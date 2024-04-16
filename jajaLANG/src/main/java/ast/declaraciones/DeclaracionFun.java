@@ -76,7 +76,7 @@ public class DeclaracionFun extends Declaracion {
         lista.add(tipo);
         return lista;
     }
-    
+
     public void bind(Contexto ctx) {
         /// Llama a bind de los hijos con nuevo contexto local
         ctx.insertar(this);
@@ -85,6 +85,6 @@ public class DeclaracionFun extends Declaracion {
         // retorno de la función ya que los ámbitos no tienen orden
         ctx.insertar(this);
         super.bind(ctx);
-        ctx.desapilarAmbito();;
+        ctx.desapilarAmbito();
     }
 }

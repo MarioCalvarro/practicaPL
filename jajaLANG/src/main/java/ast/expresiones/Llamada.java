@@ -1,11 +1,11 @@
 package main.java.ast.expresiones;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import main.java.ast.Nodo;
 import main.java.ast.declaraciones.DeclaracionFun;
 import main.java.ast.tipos.TipoFunc;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Llamada extends Expresion {
     private final Identificador exp;
@@ -47,12 +47,12 @@ public class Llamada extends Expresion {
         super.typecheck();
         TipoFunc tipoFun;
         try {
-            tipoFun = (TipoFunc) exp.tipo(); 
-        } catch(ClassCastException e) {
+            tipoFun = (TipoFunc) exp.tipo();
+        } catch (ClassCastException e) {
             //TODO: Cambiar error
             throw new RuntimeException();
         }
-        
+
         if (tipoFun.tipoParametros().size() != listaExpresiones.size()) {
             //TODO: Cambiar error
             throw new RuntimeException();
@@ -61,11 +61,11 @@ public class Llamada extends Expresion {
         //Cargar la definición de la función
         try {
             decFuncion = (DeclaracionFun) exp.dec();
-        } catch(ClassCastException e) {
+        } catch (ClassCastException e) {
             //TODO: Cambiar error
             throw new RuntimeException();
         }
-        
+
         if (decFuncion == null) {
             //TODO: Cambiar error
             throw new RuntimeException();

@@ -4,9 +4,9 @@ import java_cup.runtime.Symbol;
 
 public class UnidadLexica extends Symbol {
     private final String tipo;
-    private String lexema;
     private final int fila;
     private final int columna;
+    private String lexema;
 
     public UnidadLexica(int fila, int columna, int clase, String tipo) {
         super(clase, new TokenValue(fila, columna));

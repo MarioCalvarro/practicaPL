@@ -1,11 +1,11 @@
 package main.java.ast.instrucciones;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import main.java.ast.Nodo;
 import main.java.ast.expresiones.Expresion;
 import main.java.ast.tipos.Tipo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class InsAsig extends Instruccion {
     private final Expresion left;
@@ -21,20 +21,20 @@ public class InsAsig extends Instruccion {
         return left + " = " + right;
     }
 
-	@Override
-	public List<Nodo> getAstHijos() {
-		List<Nodo> lista = new ArrayList<Nodo>();
-		lista.add(left);
-		lista.add(right);	
-		return lista;
-	}
-	
-	 @Override
+    @Override
+    public List<Nodo> getAstHijos() {
+        List<Nodo> lista = new ArrayList<Nodo>();
+        lista.add(left);
+        lista.add(right);
+        return lista;
+    }
+
+    @Override
     public void typecheck() {
         super.typecheck();
         Tipo tipoAsignacion = left.tipo();
         if (!tipoAsignacion.equals(right.tipo())) {
-        	//TODO : Cambiar error
+            //TODO : Cambiar error
             throw new RuntimeException();
         }
     }
