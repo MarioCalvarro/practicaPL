@@ -5,7 +5,6 @@ import main.java.ast.Nodo;
 import main.java.ast.expresiones.Expresion;
 import main.java.ast.tipos.Tipo;
 import main.java.ast.tipos.TipoBinario;
-import main.java.ast.tipos.TipoEntero;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,9 +36,9 @@ public class InsBucleWhile extends Instruccion {
     
     @Override
     public void bind(Contexto ctx) {
-        ctx.apilarAmbito();;
+        ctx.apilarAmbito();
         super.bind(ctx);
-        ctx.desapilarAmbito();;
+        ctx.desapilarAmbito();
     }
 
 	@Override
