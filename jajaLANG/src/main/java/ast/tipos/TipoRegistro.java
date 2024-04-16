@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import main.java.ast.Contexto;
 import main.java.ast.Nodo;
 import main.java.ast.declaraciones.Declaracion;
 
@@ -17,6 +16,10 @@ public class TipoRegistro extends Tipo {
         for (Declaracion campo : atributos) {
             this.atributos.put(campo.getId(), campo);
         }
+    }
+
+    public Tipo getTipoCampo(String campo) {
+        return atributos.get(campo).tipo();
     }
 
     @Override
@@ -36,5 +39,17 @@ public class TipoRegistro extends Tipo {
 		lista.addAll(atributos.values());
 		return lista;
 	}
+
+    @Override
+    public boolean equals(Object obj) {
+        try {
+            TipoRegistro otro = (TipoRegistro) obj;
+
+            //Dos registros son iguales si tienen los mismos atributos (no
+            //importa el orden)
+            return this.atributos.values().equals(otro.atributos.values());
+        } catch (ClassCastException e) {
+            return false;
+        }
+    }
 }
-  

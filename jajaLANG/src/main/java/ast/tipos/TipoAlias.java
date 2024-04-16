@@ -42,4 +42,12 @@ public class TipoAlias extends Tipo {
 
         super.bind(ctx);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        //No podemos comparalos por el nombre porque para eso tendríamos que
+        //hacer un cast que a lo mejor no es posible (por ejemplo, si obj es un
+        //struct anónimo)
+        return dec.tipo().equals(obj);
+    }
 }

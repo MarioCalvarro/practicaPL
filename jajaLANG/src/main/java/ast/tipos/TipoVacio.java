@@ -8,8 +8,8 @@ import main.java.ast.Nodo;
 public class TipoVacio extends Tipo {
     private static final TipoVacio instancia = new TipoVacio();
 
-    private TipoVacio() {
-    }
+    //No tiene equals porque es la misma instancia en todos los casos
+    private TipoVacio() {}
 
     public static TipoVacio instancia() {
         return instancia;

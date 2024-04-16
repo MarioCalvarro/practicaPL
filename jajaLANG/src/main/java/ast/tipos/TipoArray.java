@@ -31,4 +31,14 @@ public class TipoArray extends Tipo {
 		lista.add(tam);
 		return lista;
 	}
+
+    @Override
+    public boolean equals(Object obj) {
+        try {
+            TipoArray otro = (TipoArray) obj;
+            return this.tipoElementos.equals(otro.tipoElementos) && this.tam.equals(otro.tam);
+        } catch (ClassCastException e) {
+            return false;
+        }
+    }
 }
