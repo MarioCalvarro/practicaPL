@@ -80,8 +80,8 @@ public class DeclaracionFun extends Declaracion {
     public void bind(Contexto ctx) {
         /// Llama a bind de los hijos con nuevo contexto local
         ctx.insertar(this);
-        ctx.apilarAmbito();
+        ctx.apilarAmbito();;
         super.bind(ctx);
-        ctx.desapilarAmbito();
+        ctx.desapilarAmbito();;
     }
 }
