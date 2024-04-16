@@ -85,11 +85,26 @@ public class OperadorBin extends Expresion {
         Integer izq = izquierda.valorEntero();
         Integer der = derecha.valorEntero();
         Integer res = null;
+        Boolean bin = null;
         switch(op) {
             case SUMA:
                 res = izq + der;
                 break;
-            //TODO: Hacer el resto de operadores
+            case RESTA:
+            	res = izq - der;
+            	break;
+            case MUL:
+            	res = izq * der;
+            	break;
+            case DIV:
+            	res = izq / der;
+            	break;
+            case MOD:
+            	res = izq % der;
+            	break;
+            case POT:
+            	res = izq ^ der;
+            	break;
             default:
                 //TODO: Cambiar error
                 throw new RuntimeException();

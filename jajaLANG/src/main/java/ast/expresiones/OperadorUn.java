@@ -55,7 +55,7 @@ public class OperadorUn extends Expresion {
 
     @Override
     public Integer evaluar() {
-        Integer der = derecha.valor();
+        Integer der = derecha.valorEntero();
         Integer res = null;
         switch(op) {
             case MENOS:
