@@ -85,7 +85,6 @@ public class OperadorBin extends Expresion {
         Integer izq = izquierda.valorEntero();
         Integer der = derecha.valorEntero();
         Integer res = null;
-        Boolean bin = null;
         switch(op) {
             case SUMA:
                 res = izq + der;
