@@ -8,8 +8,8 @@ import main.java.ast.Nodo;
 public class TipoEntero extends Tipo {
     private static final TipoEntero instancia = new TipoEntero();
 
-    private TipoEntero() {
-    }
+    //No tiene equals porque es la misma instancia en todos los casos
+    private TipoEntero() {}
 
     public static TipoEntero instancia() {
         return instancia;

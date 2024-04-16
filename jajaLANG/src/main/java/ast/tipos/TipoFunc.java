@@ -14,6 +14,10 @@ public class TipoFunc extends Tipo {
         this.tipoParametros = tipoParametros;
     }
 
+    public Tipo tipoRetorno() {
+        return tipoRetorno;
+    }
+
     @Override
     public List<Nodo> getAstHijos() {
         List<Nodo> lista = new ArrayList<Nodo>();
@@ -22,7 +26,15 @@ public class TipoFunc extends Tipo {
         return lista;
     }
 
-    public Tipo tipoRetorno() {
-        return tipoRetorno;
+    @Override
+    public boolean equals(Object obj) {
+        try {
+            TipoFunc otro = (TipoFunc) obj;
+            return this.tipoRetorno.equals(otro.tipoRetorno) &&
+                this.tipoParametros.equals(otro.tipoParametros);
+
+        } catch (ClassCastException e) {
+            return false;
+        }
     }
 }
