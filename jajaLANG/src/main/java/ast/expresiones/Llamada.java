@@ -45,10 +45,4 @@ public class Llamada extends Expresion {
         super.typecheck();
         //Ver si el identificador es una función
     }
-
-    @Override
-    public Integer evaluar() {
-        //TODO: Cambiar error
-        throw new RuntimeException("No es un entero estaticamente.");
-    }
 }

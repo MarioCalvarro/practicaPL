@@ -45,10 +45,4 @@ public class AccesoArray extends Expresion {
             throw new RuntimeException();
         }
     }
-
-    @Override
-    public Integer evaluar() {
-        //TODO: Cambiar error
-        throw new RuntimeException("No es un entero estaticamente.");
-    }
 }

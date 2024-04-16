@@ -32,10 +32,4 @@ public class LiteralMemoria extends Literal {
         lista.add(apuntado);
         return lista;
 	}
-
-    @Override
-    public Integer evaluar() {
-        //TODO: Cambiar error
-        throw new RuntimeException("No es un entero estaticamente.");
-    }
 }

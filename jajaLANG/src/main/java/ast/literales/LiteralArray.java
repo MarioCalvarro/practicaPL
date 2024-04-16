@@ -44,10 +44,4 @@ public class LiteralArray extends Literal {
 	    lista.addAll(lExpr);		
 		return lista;
 	}
-
-    @Override
-    public Integer evaluar() {
-        //TODO: Cambiar error
-        throw new RuntimeException("No es un entero estaticamente.");
-    }
 }
