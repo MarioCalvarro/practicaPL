@@ -23,4 +23,9 @@ public class TipoPuntero extends Tipo {
 		lista.add(tipoElemento);
 		return lista;
 	}
+    
+    public Tipo getTipoApuntado() {
+    	return tipoElemento.tipo();
+    }
+    
 }

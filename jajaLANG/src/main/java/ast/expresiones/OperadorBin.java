@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.java.ast.Nodo;
+import main.java.ast.tipos.Tipo;
+import main.java.ast.tipos.TipoBinario;
+import main.java.ast.tipos.TipoEntero;
+import main.java.ast.tipos.TipoRegistro;
 
 public class OperadorBin extends Expresion {
     private final Operadores op;
@@ -72,6 +76,10 @@ public class OperadorBin extends Expresion {
         }
     }
 
+    private boolean esBinario(Operadores op){
+    	return op == Operadores.CONJ || op == Operadores.DESIGUAL || op == Operadores.DISY || op == Operadores.IGUAL || op == Operadores.NEG;	
+    }
+    
     @Override
     public List<Nodo> getAstHijos() {
         List<Nodo> lista = new ArrayList<Nodo>();
@@ -109,5 +117,24 @@ public class OperadorBin extends Expresion {
                 throw new RuntimeException();
         }
         return res;
+    }
+    
+    @Override
+    public void typecheck() {
+		super.typecheck();    	
+		Tipo tipoIzquierda = izquierda.tipo();
+		Tipo tipoDerecha = derecha.tipo();
+		
+		if(esBinario(op) && (!tipoIzquierda.equals(TipoBinario.instancia())|| !tipoDerecha.equals(TipoBinario.instancia())) ||
+		  (!esBinario(op) && (!tipoIzquierda.equals(TipoEntero.instancia())|| !tipoDerecha.equals(TipoEntero.instancia())))) {
+			//TODO : Cambiar error
+	        throw new RuntimeException();  	
+		}
+		if(esBinario(op)) {
+			this.tipo = TipoBinario.instancia();
+		}
+		else {
+			this.tipo = TipoEntero.instancia();
+		}
     }
 }
