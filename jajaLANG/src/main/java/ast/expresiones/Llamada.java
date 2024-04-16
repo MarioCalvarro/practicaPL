@@ -2,6 +2,7 @@ package main.java.ast.expresiones;
 
 import main.java.ast.Nodo;
 import main.java.ast.declaraciones.DeclaracionFun;
+import main.java.ast.declaraciones.DeclaracionPar;
 import main.java.ast.tipos.TipoFunc;
 
 import java.util.ArrayList;
@@ -45,6 +46,8 @@ public class Llamada extends Expresion {
     @Override
     public void typecheck() {
         super.typecheck();
+
+        //Comprobar que el tipo del identificador es función
         TipoFunc tipoFun;
         try {
             tipoFun = (TipoFunc) exp.tipo();
@@ -53,6 +56,7 @@ public class Llamada extends Expresion {
             throw new RuntimeException();
         }
 
+        //Comprobar que el nº de parámetros es correcto
         if (tipoFun.tipoParametros().size() != listaExpresiones.size()) {
             //TODO: Cambiar error
             throw new RuntimeException();
@@ -65,10 +69,22 @@ public class Llamada extends Expresion {
             //TODO: Cambiar error
             throw new RuntimeException();
         }
-
         if (decFuncion == null) {
             //TODO: Cambiar error
             throw new RuntimeException();
         }
+
+        //Comprobar que el tipo de los parámetros es correcto
+        for (int i = 0; i < listaExpresiones.size(); i++) {
+            DeclaracionPar par = decFuncion.parametros().get(i); 
+            Expresion exp = listaExpresiones.get(i);
+            //TODO: Ahora mismo solo se puede pasar por parametro identificadores
+            if (!par.tipo().equals(exp.tipo()) || par.porReferencia() && exp instanceof Identificador) {
+                //TODO: Cambiar error
+                throw new RuntimeException();
+            }
+        }
+
+        this.tipo = tipoFun.tipoRetorno();
     }
 }

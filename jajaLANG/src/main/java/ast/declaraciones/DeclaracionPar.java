@@ -14,6 +14,10 @@ public class DeclaracionPar extends DeclaracionVar {
         this.porReferencia = porReferencia;
     }
 
+    public boolean porReferencia() {
+        return porReferencia;
+    }
+
     @Override
     public String getId() {
         return id;

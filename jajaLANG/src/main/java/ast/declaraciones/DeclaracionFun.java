@@ -39,6 +39,10 @@ public class DeclaracionFun extends Declaracion {
         this.tipo = new TipoFunc(tipo, tipoPars);
     }
 
+    public List<DeclaracionPar> parametros() {
+        return parametros;
+    }
+
     @Override
     public String getId() {
         return this.id;
