@@ -1,6 +1,7 @@
 package main.java.ast;
 
 import main.java.ast.declaraciones.Declaracion;
+import main.java.ast.declaraciones.DeclaracionFun;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,5 +19,15 @@ public class Ambito {
 
     public boolean pertenece(String id) {
         return decls.containsKey(id);
+    }
+
+    public DeclaracionFun encontrarFun() {
+        for (Declaracion d : decls.values()) {
+            try {
+                return (DeclaracionFun) d;
+            }
+            catch (ClassCastException e) {}
+        }
+        return null;
     }
 }

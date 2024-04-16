@@ -7,10 +7,10 @@ import main.java.ast.Contexto;
 import main.java.ast.Nodo;
 import main.java.ast.expresiones.Expresion;
 import main.java.ast.tipos.Tipo;
-import main.java.ast.tipos.TipoBinario;
 
 public class InsReturn extends Instruccion {
     private final Expresion expr;
+    private Tipo tipoRetornoFun;
 
     public InsReturn(Expresion expr) {
         this.expr = expr;
@@ -29,15 +29,19 @@ public class InsReturn extends Instruccion {
 		}
 		return lista;
 	}
+
+    @Override
+    public void bind(Contexto ctx) {
+        super.bind(ctx);
+        tipoRetornoFun = ctx.getTipoUltimaFuncion();
+    }
 	
 	@Override
     public void typecheck() {
         super.typecheck();
-
-        Tipo tipoIndice = condicion.tipo();
-        if (!tipoIndice.equals(TipoBinario.instancia())) {
-        	//TODO : Cambiar error
-            throw new RuntimeException();        
+        if (!tipoRetornoFun.equals(expr.tipo())) {
+            //TODO: Cambiar error
+            throw new RuntimeException();
         }
     }
 }
