@@ -2,6 +2,8 @@ package main.java.ast.literales;
 
 import main.java.ast.Nodo;
 import main.java.ast.expresiones.Expresion;
+import main.java.ast.tipos.Tipo;
+import main.java.ast.tipos.TipoArray;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,4 +46,25 @@ public class LiteralArray extends Literal {
 	    lista.addAll(lExpr);		
 		return lista;
 	}
+
+    @Override
+    public void typecheck() {
+        super.typecheck();
+        
+        //Todos los elementos tienen que tener el mismo tipo
+        Tipo tipoElementos = lExpr.get(0).tipo();
+        for (Expresion elem : lExpr) {
+            if (!tipoElementos.equals(elem.tipo())) {
+                //TODO: Cambiar error
+                throw new RuntimeException();
+            }
+        }
+
+        if (tipoElementos == null) {
+            //TODO: Cambiar error
+            throw new RuntimeException();
+        }
+
+        this.tipo = new TipoArray(tipoElementos, new Entero (lExpr.size()));
+    }
 }

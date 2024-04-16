@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.java.ast.Nodo;
+import main.java.ast.tipos.TipoEntero;
 
 public class Entero extends Literal {
     private Integer valorEntero;
     
     public Entero(int valor) {
         this.valorEntero = valor;
+        this.tipo = TipoEntero.instancia();
     }
 
     public Entero(String lexema) {

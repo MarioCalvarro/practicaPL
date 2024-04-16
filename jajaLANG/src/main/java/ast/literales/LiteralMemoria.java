@@ -32,4 +32,10 @@ public class LiteralMemoria extends Literal {
         lista.add(apuntado);
         return lista;
 	}
+
+    @Override
+    public void typecheck() {
+        super.typecheck();
+        this.tipo = new TipoPuntero(apuntado);
+    }
 }

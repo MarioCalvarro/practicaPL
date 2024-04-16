@@ -4,9 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.java.ast.Nodo;
+import main.java.ast.tipos.TipoBinario;
 
 public class False extends Literal {
     private static final False instancia = new False();
+
+    private False() {
+        this.tipo = TipoBinario.instancia();
+    }
 
     public static False instancia() {
         return instancia;

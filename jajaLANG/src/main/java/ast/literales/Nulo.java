@@ -4,9 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.java.ast.Nodo;
+import main.java.ast.tipos.TipoPuntero;
 
 public class Nulo extends Literal {
     private static final Nulo instancia = new Nulo();
+
+    private Nulo() {
+        this.tipo = new TipoPuntero(null);
+    }
 
     public static Nulo instancia() {
         return instancia;

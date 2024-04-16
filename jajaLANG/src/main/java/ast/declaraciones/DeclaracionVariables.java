@@ -47,5 +47,4 @@ public class DeclaracionVariables extends Declaracion {
 	public String getId() {
 		return null;
 	}
-	
 }
