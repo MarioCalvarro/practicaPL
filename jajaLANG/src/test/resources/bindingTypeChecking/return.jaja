@@ -1,0 +1,9 @@
+diver fun(b: bin, c: ent) -> ent {
+    si b {
+        return c;
+    }
+    sino {
+        devuelve -c;
+    }
+    devuelve 0;
+}
