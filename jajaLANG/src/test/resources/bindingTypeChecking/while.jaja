@@ -1,0 +1,9 @@
+diver tronco() {
+    ent v1;
+
+    mientras cond {
+        ent vW1;
+    }
+
+    ent v3;
+}

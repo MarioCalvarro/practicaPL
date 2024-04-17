@@ -35,7 +35,7 @@ public class Programa extends Nodo {
         Import mod = mapa_imports.get(iden.modulo());
         if (mod == null) {
             //TODO: cambiar error
-            //throw new Exception();
+            throw new RuntimeException();
         }
         return mod.getAST().getDeclaracionGlobal(iden);
     }
