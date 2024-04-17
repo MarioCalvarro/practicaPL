@@ -30,4 +30,9 @@ public class Ambito {
         }
         return null;
     }
+
+    @Override
+    public String toString() {
+        return decls.toString();
+    }
 }

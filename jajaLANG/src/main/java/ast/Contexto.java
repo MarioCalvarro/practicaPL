@@ -74,4 +74,13 @@ public class Contexto {
         }
         return tipoFun.tipoRetorno();
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (Ambito amb : ambitos) {
+            sb.append("Ámbito (").append(amb).append(")");
+        }
+        return sb.toString();
+    }
 }

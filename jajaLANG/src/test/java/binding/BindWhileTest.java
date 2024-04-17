@@ -3,21 +3,14 @@ package test.java.binding;
 import org.junit.jupiter.api.Test;
 
 import main.java.ast.instrucciones.InsBucleWhile;
-import main.java.ast.instrucciones.Instruccion;
-import main.java.ast.literales.False;
 import main.java.lexico.AnalizadorLexicoJaja;
 import main.java.sintactico.AnalizadorSintacticoJaja;
 import main.java.ast.Ambito;
 import main.java.ast.Contexto;
 import main.java.ast.Programa;
 import main.java.ast.declaraciones.DeclaracionFun;
-import main.java.ast.expresiones.Expresion;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BindWhileTest {
     @Test
@@ -62,7 +55,15 @@ class BindWhileTest {
         //Programa en el constructor puede ser nulo porque no hay importaciones
         Contexto ctxMain = new Contexto(null, new Ambito());
         Contexto ctxBucle = new Contexto(null, new Ambito());
-        main.bind(ctxMain);
-        bucle.bind(ctxBucle);
+        // main.bind(ctxMain); No podemos hacer esto porque así al final el
+        // contexto sería nulo
+        for (var hijo : main.getAstHijos()) {
+            hijo.bind(ctxMain);
+        }
+        for (var hijo : bucle.getAstHijos()) {
+            hijo.bind(ctxBucle);
+        }
+        System.out.println(ctxMain);
+        System.out.println(ctxBucle);
     }
 }
