@@ -1,0 +1,12 @@
+incognito int = ent;
+
+incognito dato_t = registro {
+    atr1: ent,
+    atr2: int,
+};
+
+diver tronco() {
+    ent ab = 2;
+    dato_t a = nuevo {atr1 = 2, atr2 = 1};
+    a.atr2 = ab;
+}
