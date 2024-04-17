@@ -78,9 +78,9 @@ public class Contexto {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Contexto: \n\t");
+        sb.append("Contexto:\n");
         for (Ambito amb : ambitos) {
-            sb.append("Ámbito").append(amb).append("\n\t");
+            sb.append("Ámbito").append(amb).append("\n");
         }
         return sb.toString();
     }

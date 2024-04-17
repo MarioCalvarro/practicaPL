@@ -15,11 +15,10 @@ import java.io.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BindWhileTest {
-    private static final String result = "Contexto: \n" +
-            "\tÁmbito{v1=ent v1, cond=bin cond = fake, v3=ent v3}\n" +
-            "\n" +
-            "Contexto: \n" +
-            "\tÁmbito{vW1=ent vW1}\n";
+    private static final String result = "Contexto:\n"
+    		+ "Ámbito{v1=ent v1, cond=bin cond = fake, v3=ent v3}\n"
+    		+ "Contexto:\n"
+    		+ "Ámbito{vW1=ent vW1}\n";
 
     @Test
     void test() {
