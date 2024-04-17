@@ -70,6 +70,17 @@ public class InsCond extends Instruccion {
     }
 
     @Override
+    public List<Nodo> getAstHijos() {
+        List<Nodo> lista = new ArrayList<Nodo>();
+        lista.add(condicion);
+        lista.addAll(cuerpo);
+        if (instElse != null) {
+            lista.add(instElse);
+        }
+        return lista;
+    }
+
+    @Override
     public void bind(Contexto ctx) {
         //super.setProgress(CompilationProgress.BIND);
         condicion.bind(ctx);
@@ -81,21 +92,6 @@ public class InsCond extends Instruccion {
         }
         ctx.desapilarAmbito();
         instElse.bind(ctx);
-    }
-
-    @Override
-    public List<Nodo> getAstHijos() {
-        List<Nodo> lista = new ArrayList<Nodo>();
-        if (condicion != null) {
-            lista.add(condicion);
-        }
-        if (condicion != null) {
-            lista.addAll(cuerpo);
-        }
-        if (condicion != null) {
-            lista.add(instElse);
-        }
-        return lista;
     }
 
     @Override

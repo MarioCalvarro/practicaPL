@@ -20,7 +20,6 @@ public class InsBucleWhile extends Instruccion {
 
     @Override
     public String toString() {
-
         StringBuilder sb = new StringBuilder();
         sb.append("mientras").append(" ").append(condicion).append(" {\n");
 
@@ -31,14 +30,6 @@ public class InsBucleWhile extends Instruccion {
         sb.append("}");
 
         return sb.toString();
-
-    }
-
-    @Override
-    public void bind(Contexto ctx) {
-        ctx.apilarAmbito();
-        super.bind(ctx);
-        ctx.desapilarAmbito();
     }
 
     @Override
@@ -47,6 +38,13 @@ public class InsBucleWhile extends Instruccion {
         lista.add(condicion);
         lista.addAll(cuerpo);
         return lista;
+    }
+
+    @Override
+    public void bind(Contexto ctx) {
+        ctx.apilarAmbito();
+        super.bind(ctx);
+        ctx.desapilarAmbito();
     }
 
     @Override

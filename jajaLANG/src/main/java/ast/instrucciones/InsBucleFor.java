@@ -27,7 +27,6 @@ public class InsBucleFor extends Instruccion {
 
     @Override
     public String toString() {
-
         StringBuilder sb = new StringBuilder();
         sb.append("para").append(" ").append(id).append(" = ").append(ini)
                 .append(" -> ").append(fin).append(" {\n");
@@ -39,14 +38,6 @@ public class InsBucleFor extends Instruccion {
         sb.append("}");
 
         return sb.toString();
-
-    }
-
-    @Override
-    public void bind(Contexto ctx) {
-        ctx.apilarAmbito();
-        super.bind(ctx);
-        ctx.desapilarAmbito();
     }
 
     @Override
@@ -57,6 +48,13 @@ public class InsBucleFor extends Instruccion {
         lista.add(fin);
         lista.addAll(cuerpo);
         return lista;
+    }
+
+    @Override
+    public void bind(Contexto ctx) {
+        ctx.apilarAmbito();
+        super.bind(ctx);
+        ctx.desapilarAmbito();
     }
 
     @Override
