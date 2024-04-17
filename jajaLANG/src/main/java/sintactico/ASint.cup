@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 import java_cup.runtime.*;
 
 import main.java.lexico.AnalizadorLexicoJaja;
@@ -88,7 +90,7 @@ non terminal DeclaracionAlias Declaracion_Alias;
 //Variables
 non terminal DeclaracionVar Decl_Asig;
 non terminal List<DeclaracionVar> Lista_Decl_Asignaciones;
-non terminal DeclaracionVariables Decl_Variables;
+non terminal List<DeclaracionVar> Decl_Variables;
 //Funciones
 non terminal DeclaracionFun Decl_Funcion;
 non terminal List<DeclaracionPar> Lista_Parametros, Lista_Parametros2;
@@ -97,7 +99,10 @@ non terminal DeclaracionPar Parametro;
 
 ///Instrucciones
 non terminal List<Instruccion> Bloque_Anidado, Lista_Instrucciones;
-non terminal Instruccion Instruccion, Asignacion, Condicional, Bucle, Inst_Return;
+//Tenemos que hacer que instrucción sea una lista de instrucciones porque la asignación
+//puede ser varias en una sola línea
+non terminal List<Instruccion> Instruccion;
+non terminal Instruccion Asignacion, Condicional, Bucle, Inst_Return;
 non terminal InsCond Cond_Else;
 non terminal Llamada Llamada_Fun;
 
@@ -105,7 +110,7 @@ non terminal Llamada Llamada_Fun;
 non terminal Tipo Tipo, T, Tipo_Reg;
 //Registros
 non terminal List<Declaracion> Matriz_Atributos, Matriz_Atributos2;
-non terminal DeclaracionVariables Lista_Atributos;
+non terminal List<DeclaracionVar> Lista_Atributos;
 
 
 ///Expresiones
@@ -161,7 +166,7 @@ Lista_Declaraciones ::= Lista_Declaraciones: lDecl Declaracion_Alias: dAlias PUN
 
                     //Variables
                     | Lista_Declaraciones: lDecl Decl_Variables: dGen PUNTOCOMA
-                    {: lDecl.addAll(dGen.array()); RESULT = lDecl; :}
+                    {: lDecl.addAll(dGen); RESULT = lDecl; :}
 
                     //Funciones
                     | Lista_Declaraciones: lDecl Decl_Funcion: dGen
@@ -188,7 +193,8 @@ Declaracion_Alias ::= INCOGNITO IDEN: id ASIGNACION Tipo: t
 ///Declaraciones variables///
 //Iremos recorriendo cada variable para asignarle su correspondiente tipo
 Decl_Variables ::= Tipo: tipo Lista_Decl_Asignaciones: lVar
-               {: RESULT = new DeclaracionVariables(tipo, lVar); :}
+                {: lVar.forEach(el -> el.setTipo(tipo)); RESULT = lVar; :}
+               //{: RESULT = new DeclaracionVariables(tipo, lVar); :}
                //Errores
                | Tipo: tipo error
                {: parser.reportError("Declaración de variables incorrecta. Lista de variables no válida.");
@@ -282,26 +288,33 @@ Bloque_Anidado ::= LLAP Lista_Instrucciones: LIns LLCIERRE
 
 Lista_Instrucciones ::= Instruccion: ins
                     {: List<Instruccion> lInstrucciones = new ArrayList<Instruccion>();
-                    lInstrucciones.add(ins); RESULT = lInstrucciones; :}
+                    lInstrucciones.addAll(ins); RESULT = lInstrucciones; :}
 
                     | Lista_Instrucciones: lInstrucciones Instruccion: ins
-                    {: lInstrucciones.add(ins); RESULT = lInstrucciones; :}
+                    {: lInstrucciones.addAll(ins); RESULT = lInstrucciones; :}
                     ;
 
 
 ///Tipos de instrucciones///
 Instruccion ::= Decl_Variables: decl PUNTOCOMA       //Solo la declaracion de variables (no dejamos que se puedan definir funciones dentro de otras)
-            {: RESULT = decl; :}
+            {: List<Instruccion> lista = new ArrayList<>();
+               for (var d : decl) { lista.add(d); }
+               RESULT = lista; :}
             |   Asignacion: as PUNTOCOMA
-            {: RESULT = as; :}
+            {: List<Instruccion> lista = Arrays.asList(as);
+               RESULT = lista; :}
             |   Llamada_Fun: llamada PUNTOCOMA        //Llamadas a funcion
-            {: RESULT = llamada; :}
+            {: List<Instruccion> lista = Arrays.asList(llamada);
+               RESULT = lista; :}
             |   Condicional: cond
-            {: RESULT = cond; :}
+            {: List<Instruccion> lista = Arrays.asList(cond);
+               RESULT = lista; :}
             |   Bucle: buc
-            {: RESULT = buc; :}
+            {: List<Instruccion> lista = Arrays.asList(buc);
+               RESULT = lista; :}
             |   Inst_Return: iRet PUNTOCOMA
-            {: RESULT = iRet; :}
+            {: List<Instruccion> lista = Arrays.asList(iRet);
+               RESULT = lista; :}
             ;
 
 
@@ -437,31 +450,32 @@ Tipo_Reg ::= REGISTRO LLAP Matriz_Atributos: mAtrib LLCIERRE
 //Una sola lista de atributos o varias con la coma de la última opcional
 Matriz_Atributos ::= Lista_Atributos: lAtr
                  {: List<Declaracion> mAtr = new ArrayList<Declaracion>();
-                 mAtr.addAll(lAtr.array()); RESULT = mAtr; :}
+                 mAtr.addAll(lAtr); RESULT = mAtr; :}
 
                  | Lista_Atributos: lAtr COMA
                  {: List<Declaracion> mAtr = new ArrayList<Declaracion>();
-                 mAtr.addAll(lAtr.array()); RESULT = mAtr; :}
+                 mAtr.addAll(lAtr); RESULT = mAtr; :}
 
                  | Matriz_Atributos2: mAtr Lista_Atributos: lAtr
-                 {: mAtr.addAll(lAtr.array()); RESULT = mAtr; :}
+                 {: mAtr.addAll(lAtr); RESULT = mAtr; :}
 
                  | Matriz_Atributos2: mAtr Lista_Atributos: lAtr COMA
-                 {: mAtr.addAll(lAtr.array()); RESULT = mAtr; :}
+                 {: mAtr.addAll(lAtr); RESULT = mAtr; :}
                  ;
 
 
 Matriz_Atributos2 ::= Lista_Atributos: lAtr COMA
                   {: List<Declaracion> mAtr = new ArrayList<Declaracion>();
-                  mAtr.addAll(lAtr.array()); RESULT = mAtr; :}
+                  mAtr.addAll(lAtr); RESULT = mAtr; :}
 
                   | Matriz_Atributos2: mAtr Lista_Atributos: lAtr COMA
-                  {: mAtr.addAll(lAtr.array()); RESULT = mAtr; :}
+                  {: mAtr.addAll(lAtr); RESULT = mAtr; :}
                   ;
 
 //Pueden tener un valor por defecto
 Lista_Atributos ::= Lista_Decl_Asignaciones: lVar DOSPUNTOS Tipo: tipo
-                {: RESULT = new DeclaracionVariables(tipo, lVar); :}
+                {: lVar.forEach(el -> el.setTipo(tipo)); RESULT = lVar; :}
+                //{: RESULT = new DeclaracionVariables(tipo, lVar); :}
                 | Lista_Decl_Asignaciones: lVar DOSPUNTOS:d error
                 {: parser.reportError(d.fila(), "Lista de atributos incorrecta. Tipo inválido.");
                    RESULT = null; :}
