@@ -84,6 +84,6 @@ public class Import extends Declaracion {
             }
         }
 
-        nuevoAST.bind(ctx);
+        nuevoAST.bind();
     }
 }
