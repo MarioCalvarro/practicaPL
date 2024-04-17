@@ -37,8 +37,9 @@ public class DeclaracionVar extends Declaracion {
         this.valor = expr;
     }
 
-    // Solo debería cambiar el tipo DeclaracionVariables
-    protected void setTipo(Tipo tipo) {
+    // TODO: Tal vez se le pueda cambiar la visibilidad?
+    // Solo se debería cambiar el tipo en el CUP. ¡Cuidado!
+    public void setTipo(Tipo tipo) {
         this.tipo = tipo;
     }
 
