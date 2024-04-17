@@ -283,6 +283,8 @@ Parametro ::=  IDEN: var DOSPUNTOS Tipo: t
 ///Bloque anidado///
 Bloque_Anidado ::= LLAP Lista_Instrucciones: LIns LLCIERRE
                {: RESULT = LIns; :}
+               | LLAP LLCIERRE
+               {: RESULT = new ArrayList<Instruccion>(); :}
                ;
 
 Lista_Instrucciones ::= Instruccion: ins
