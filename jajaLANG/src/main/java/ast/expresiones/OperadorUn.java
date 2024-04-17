@@ -76,32 +76,42 @@ public class OperadorUn extends Expresion {
     public void typecheck() {
         super.typecheck();
         Tipo tipoDerecha = derecha.tipo();
-        try {
-            TipoPuntero tipopuntero = (TipoPuntero) derecha.tipo();
-        } catch (ClassCastException e) {
-            //TODO: Cambiar el error
-            throw new RuntimeException();
-        }
-
-        if (op == Operadores.MENOS && !tipoDerecha.equals(TipoEntero.instancia()) ||
-                op == Operadores.NEG && !tipoDerecha.equals(TipoBinario.instancia())) {
-            //TODO : Cambiar error
-            throw new RuntimeException();
-        }
-
+        
         switch (op) {
             case MENOS:
+            	if (!tipoDerecha.equals(TipoEntero.instancia())) {
+            		 //TODO : Cambiar error
+                    throw new RuntimeException();
+            	}
                 this.tipo = TipoEntero.instancia();
                 break;
+            
             case NEG:
+            	if (!tipoDerecha.equals(TipoBinario.instancia())) {
+            		 //TODO : Cambiar error
+                    throw new RuntimeException();
+            	}
                 this.tipo = TipoBinario.instancia();
                 break;
+            
             case DIRECCION:
+            	if (!tipoDerecha.equals(TipoEntero.instancia())) {
+           		 //TODO : Cambiar error
+                   throw new RuntimeException();
+            	}
                 this.tipo = TipoEntero.instancia();
                 break;
+            
             case PUNTERO:
-                this.tipo = ((TipoPuntero) derecha.tipo()).getTipoApuntado();
+            	 try {
+                     TipoPuntero tipopuntero = (TipoPuntero) derecha.tipo();
+                     this.tipo = tipopuntero.getTipoApuntado();
+                 } catch (ClassCastException e) {
+                     //TODO: Cambiar el error
+                     throw new RuntimeException();
+                 }
                 break;
+            
             default:
                 //TODO : Cambiar error
                 throw new RuntimeException();
