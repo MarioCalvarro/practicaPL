@@ -36,7 +36,6 @@ public class InsCond extends Instruccion {
         this.cuerpo = cuerpo;
         this.instElse = instElse;
         this.esPrimero = isfirst;
-
     }
 
     @Override
@@ -72,8 +71,12 @@ public class InsCond extends Instruccion {
     @Override
     public List<Nodo> getAstHijos() {
         List<Nodo> lista = new ArrayList<Nodo>();
-        lista.add(condicion);
-        lista.addAll(cuerpo);
+        if (condicion != null) {
+            lista.add(condicion);
+        }
+        if (cuerpo != null) {
+            lista.addAll(cuerpo);
+        }
         if (instElse != null) {
             lista.add(instElse);
         }
@@ -83,15 +86,21 @@ public class InsCond extends Instruccion {
     @Override
     public void bind(Contexto ctx) {
         //super.setProgress(CompilationProgress.BIND);
-        condicion.bind(ctx);
-
-        ctx.apilarAmbito();
-        for (Instruccion s : cuerpo) {
-            //  if(s.getProgress().lessThan(CompilationProgress.BIND))
-            s.bind(ctx);
+        if (condicion != null) {
+            condicion.bind(ctx);
         }
-        ctx.desapilarAmbito();
-        instElse.bind(ctx);
+
+        if (cuerpo != null) {
+            ctx.apilarAmbito();
+            for (Instruccion s : cuerpo) {
+                //  if(s.getProgress().lessThan(CompilationProgress.BIND))
+                s.bind(ctx);
+            }
+            ctx.desapilarAmbito();
+        }
+        if (instElse != null) {
+            instElse.bind(ctx);
+        }
     }
 
     @Override

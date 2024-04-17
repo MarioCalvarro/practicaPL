@@ -1,6 +1,6 @@
-diver fun(b: bin, c: ent) -> ent {
+diver fun(b: bin -> c: ent) -> ent {
     si b {
-        return c;
+        devuelve c;
     }
     sino {
         devuelve -c;
