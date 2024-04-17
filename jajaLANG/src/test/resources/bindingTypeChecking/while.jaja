@@ -1,8 +1,8 @@
 diver tronco() {
     ent v1;
-	bin cont = fake;
+	bin cond = fake;
 	
-    mientras cond {
+    mientras fake {
         ent vW1;
     }
 

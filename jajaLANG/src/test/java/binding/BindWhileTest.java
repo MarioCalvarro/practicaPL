@@ -12,7 +12,15 @@ import main.java.ast.declaraciones.DeclaracionFun;
 
 import java.io.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class BindWhileTest {
+    private static final String result = "Contexto: \n" +
+            "\tÁmbito{v1=ent v1, cond=bin cond = fake, v3=ent v3}\n" +
+            "\n" +
+            "Contexto: \n" +
+            "\tÁmbito{vW1=ent vW1}\n";
+
     @Test
     void test() {
         // 1) Crear el AST
@@ -20,6 +28,7 @@ class BindWhileTest {
         // función. Con esto comprobamos que el total no tiene lo del while
         // 3) Imprimir los contextos
         Reader input = null;
+        String test1 = "";
         try {
             input = new InputStreamReader(new FileInputStream("src/test/resources/bindingTypeChecking/while.jaja"));
         } catch (FileNotFoundException e) {
@@ -65,5 +74,8 @@ class BindWhileTest {
         }
         System.out.println(ctxMain);
         System.out.println(ctxBucle);
+
+        test1 = ctxMain.toString() + ctxBucle.toString();
+        assertEquals(test1, result);
     }
 }

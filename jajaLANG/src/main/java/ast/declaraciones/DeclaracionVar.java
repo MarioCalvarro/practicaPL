@@ -10,7 +10,6 @@ import java.util.List;
 
 public class DeclaracionVar extends Declaracion {
     protected String id;
-    protected Tipo tipo;
     private Expresion valor;
     private boolean esGlobal;
 
