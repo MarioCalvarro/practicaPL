@@ -16,5 +16,4 @@ public enum FaseCompilacion {
     public boolean alMenos(FaseCompilacion otro) {
         return !(this.menor(otro));
     }
-
 }
