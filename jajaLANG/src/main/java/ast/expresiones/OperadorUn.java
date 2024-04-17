@@ -13,6 +13,25 @@ public class OperadorUn extends Expresion {
     private final Operadores op;
     private final Expresion derecha;
 
+    public enum Operadores {
+        NEG, DIRECCION, PUNTERO, MENOS;
+
+        public String toString() {
+            switch (this) {
+                case NEG:
+                    return "!";
+                case MENOS:
+                    return "-";
+                case DIRECCION:
+                    return "&";
+                case PUNTERO:
+                    return "@";
+                default:
+                    throw new IllegalArgumentException("Invalid operator");
+            }
+        }
+    }
+
     public OperadorUn(Operadores op, Expresion derecha) {
         this.op = op;
         this.derecha = derecha;
@@ -86,25 +105,6 @@ public class OperadorUn extends Expresion {
             default:
                 //TODO : Cambiar error
                 throw new RuntimeException();
-        }
-    }
-
-    public enum Operadores {
-        NEG, DIRECCION, PUNTERO, MENOS;
-
-        public String toString() {
-            switch (this) {
-                case NEG:
-                    return "!";
-                case MENOS:
-                    return "-";
-                case DIRECCION:
-                    return "&";
-                case PUNTERO:
-                    return "@";
-                default:
-                    throw new IllegalArgumentException("Invalid operator");
-            }
         }
     }
 }
