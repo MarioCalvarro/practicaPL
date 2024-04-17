@@ -1,0 +1,5 @@
+diver fun1(){ent a;}
+diver fun2(a: ent) -> ent{
+	ent b =  1;
+	ent c = fun2(2);
+}
