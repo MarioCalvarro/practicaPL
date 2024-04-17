@@ -47,7 +47,7 @@ class BindWhileTest {
         try {
             //Se supone que la segunda instrucción (no hay parámetros es el
             //bucle)
-            bucle = (InsBucleWhile) main.getAstHijos().get(1);
+            bucle = (InsBucleWhile) main.getAstHijos().get(2);
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(1);
