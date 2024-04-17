@@ -194,7 +194,6 @@ Declaracion_Alias ::= INCOGNITO IDEN: id ASIGNACION Tipo: t
 //Iremos recorriendo cada variable para asignarle su correspondiente tipo
 Decl_Variables ::= Tipo: tipo Lista_Decl_Asignaciones: lVar
                 {: lVar.forEach(el -> el.setTipo(tipo)); RESULT = lVar; :}
-               //{: RESULT = new DeclaracionVariables(tipo, lVar); :}
                //Errores
                | Tipo: tipo error
                {: parser.reportError("Declaración de variables incorrecta. Lista de variables no válida.");
@@ -475,7 +474,6 @@ Matriz_Atributos2 ::= Lista_Atributos: lAtr COMA
 //Pueden tener un valor por defecto
 Lista_Atributos ::= Lista_Decl_Asignaciones: lVar DOSPUNTOS Tipo: tipo
                 {: lVar.forEach(el -> el.setTipo(tipo)); RESULT = lVar; :}
-                //{: RESULT = new DeclaracionVariables(tipo, lVar); :}
                 | Lista_Decl_Asignaciones: lVar DOSPUNTOS:d error
                 {: parser.reportError(d.fila(), "Lista de atributos incorrecta. Tipo inválido.");
                    RESULT = null; :}
