@@ -1,0 +1,5 @@
+#traficar src/test/resources/bindingTypeChecking/otro.jaja como otro
+
+diver tronco() {
+    ent num = otro::mas2(2);
+}

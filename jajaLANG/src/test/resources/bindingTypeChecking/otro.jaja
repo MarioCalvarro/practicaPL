@@ -1,0 +1,3 @@
+diver mas2(x: ent) -> ent {
+    devuelve x + 2;
+}

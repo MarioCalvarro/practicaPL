@@ -40,6 +40,11 @@ public class Programa extends Nodo {
         return mod.getAST().getDeclaracionGlobal(iden);
     }
 
+    //TODO: Esto seguramente tengamos que quitarlo. Lo tenemos para tests
+    public Ambito getAmbitoGlobal() {
+        return ambitoGlobal;
+    }
+
     public Declaracion getDeclaracionGlobal(Identificador iden) {
         return ambitoGlobal.get(iden.nombre());
     }
@@ -66,5 +71,10 @@ public class Programa extends Nodo {
         lista.addAll(mapa_imports.values());
         lista.addAll(lista_declaraciones);
         return lista;
+    }
+
+    public void bind() {
+        Contexto ctx = new Contexto(this, this.ambitoGlobal);
+        super.bind(ctx);
     }
 }
