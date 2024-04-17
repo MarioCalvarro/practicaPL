@@ -1,0 +1,20 @@
+diver tronco(){
+	si facto{
+		ent a = 3;
+		ent b = a + 3;
+		
+		si fake {
+			bin a = facto;
+		}
+		sino facto {
+			a += 2;
+		}
+		sino {
+			b = 3;
+		}	
+	}
+	sino{
+		ent b = 3;
+	}
+
+}
