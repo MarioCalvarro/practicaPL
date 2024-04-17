@@ -1,0 +1,10 @@
+diver tronco() {
+    ent v1;
+	bin cond = fake;
+	
+    para v1 = (2+2) -> 1 {
+        ent vW1;
+    }
+
+    ent v3;
+}

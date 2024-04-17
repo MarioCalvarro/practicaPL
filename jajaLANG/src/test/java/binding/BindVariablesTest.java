@@ -22,9 +22,9 @@ class BindVariablesTest {
     @Test
     void test() {
         // 1) Crear el AST
-        // 2) Crear dos contextos. Uno con solo el while y otro con la
-        // función. Con esto comprobamos que el total no tiene lo del while
-        // 3) Imprimir los contextos
+        // 2) Crear dos variables. Uno que no dependa de otra y otro que dependa del primero.
+    	    //Con esto comprobamos que el primero se ha añadido al ambito
+        // 3) Imprimir el contexto
         Reader input = null;
         String test1 = "";
         try {
@@ -44,7 +44,6 @@ class BindVariablesTest {
         }
         DeclaracionVar var1 = null;
         try {
-            //Se supone que el único hijo es la declaración del main
             var1 = (DeclaracionVar) pr.getAstHijos().get(0);
         } catch (Exception e) {
             e.printStackTrace();
@@ -52,8 +51,7 @@ class BindVariablesTest {
         }
         DeclaracionVar var2 = null;
         try {
-            //Se supone que la segunda instrucción (no hay parámetros es el
-            //bucle)
+            
             var2 = (DeclaracionVar) pr.getAstHijos().get(1);
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,8 +59,7 @@ class BindVariablesTest {
         }
         //Programa en el constructor puede ser nulo porque no hay importaciones
         Contexto ctx1 = new Contexto(null, new Ambito());
-        // main.bind(ctxMain); No podemos hacer esto porque así al final el
-        // contexto sería nulo
+        
         for (var hijo : pr.getAstHijos()) {
             hijo.bind(ctx1);
         }
