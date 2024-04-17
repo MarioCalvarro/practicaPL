@@ -14,13 +14,13 @@ public class OperadorUn extends Expresion {
     private final Expresion derecha;
 
     public enum Operadores {
-        NEG, DIRECCION, PUNTERO, MENOS;
+        NEG, DIRECCION, PUNTERO, RESTA;
 
         public String toString() {
             switch (this) {
                 case NEG:
                     return "!";
-                case MENOS:
+                case RESTA:
                     return "-";
                 case DIRECCION:
                     return "&";
@@ -62,7 +62,7 @@ public class OperadorUn extends Expresion {
         Integer der = derecha.valorEntero();
         Integer res = null;
         switch (op) {
-            case MENOS:
+            case RESTA:
                 res = -der;
                 break;
             default:
@@ -78,7 +78,7 @@ public class OperadorUn extends Expresion {
         Tipo tipoDerecha = derecha.tipo();
         
         switch (op) {
-            case MENOS:
+            case RESTA:
             	if (!tipoDerecha.equals(TipoEntero.instancia())) {
             		 //TODO : Cambiar error
                     throw new RuntimeException();

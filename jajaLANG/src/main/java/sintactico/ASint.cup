@@ -74,7 +74,7 @@ terminal TokenValue    //Palabras clave
 
             //Otros
             DIRECCION, PUNTERO, ASIGNACION, PUNTO, COMA, PUNTOCOMA,
-            CUATROPUNTOS, DOSPUNTOS, FLECHA, MENOS,
+            CUATROPUNTOS, DOSPUNTOS, FLECHA,
 
             //Agrupaciones
             CAP, CCIERRE, PAP, PCIERRE, LLAP, LLCIERRE;
@@ -585,8 +585,8 @@ E8 ::= OP8:op8 E8: derecha
    
 OP8 ::= NEG
     {: RESULT = OperadorUn.Operadores.NEG; :}	 	 
-    | MENOS
-    {: RESULT = OperadorUn.Operadores.MENOS; :}
+    | RESTA
+    {: RESULT = OperadorUn.Operadores.RESTA; :}
     ;
     
 //Literales y paréntesis

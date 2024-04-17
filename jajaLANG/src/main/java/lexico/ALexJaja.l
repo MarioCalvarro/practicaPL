@@ -65,7 +65,7 @@ digito = ({digitoPositivo}|0)
 parteEntera = 0|({digitoPositivo}{digito}*)
 
 identificador = ({letra})({letra}|{digito})*
-numeroEntero = [\+]?{parteEntera}
+numeroEntero = {parteEntera}
 
 
 //Operadores

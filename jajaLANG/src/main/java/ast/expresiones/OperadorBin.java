@@ -76,7 +76,8 @@ public class OperadorBin extends Expresion {
     }
 
     private boolean esBinario(Operadores op) {
-        return op == Operadores.CONJ || op == Operadores.DESIGUAL || op == Operadores.DISY || op == Operadores.IGUAL || op == Operadores.NEG;
+        return op == Operadores.CONJ || op == Operadores.DESIGUAL || op == Operadores.DISY || op == Operadores.IGUAL
+                || op == Operadores.NEG;
     }
 
     @Override
@@ -112,7 +113,7 @@ public class OperadorBin extends Expresion {
                 res = izq ^ der;
                 break;
             default:
-                //TODO: Cambiar error
+                // TODO: Cambiar error
                 throw new RuntimeException();
         }
         return res;
@@ -124,12 +125,14 @@ public class OperadorBin extends Expresion {
         Tipo tipoIzquierda = izquierda.tipo();
         Tipo tipoDerecha = derecha.tipo();
 
-        if (esBinario(op) && (!tipoIzquierda.equals(TipoBinario.instancia()) || !tipoDerecha.equals(TipoBinario.instancia())) ||
-                (!esBinario(op) && (!tipoIzquierda.equals(TipoEntero.instancia()) || !tipoDerecha.equals(TipoEntero.instancia())))) {
-            //TODO : Cambiar error
+        if (esBinario(op)
+                && (!tipoIzquierda.equals(TipoBinario.instancia()) || !tipoDerecha.equals(TipoBinario.instancia())) ||
+                (!esBinario(op) && (!tipoIzquierda.equals(TipoEntero.instancia())
+                        || !tipoDerecha.equals(TipoEntero.instancia())))) {
+            // TODO : Cambiar error
             throw new RuntimeException();
         }
 
-        this.tipo = tipoIzquierda; //O derecha, da igual
+        this.tipo = tipoIzquierda; // O derecha, da igual
     }
 }
