@@ -4,13 +4,14 @@ incognito dato_t = registro {
 };
 
 diver f(&a: ent) -> ent {
-    devuelve @a;
+	a += 1;
+    devuelve a;
 }
 
 diver tronco() {
     ent @ punt = nuevo ent;
     @punt = 10;
-    ent b = f(punt);
+    ent b = f(@punt);
     escribirEnt(b); //Tiene que dar 10
     liberar(punt);
 
