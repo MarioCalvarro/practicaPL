@@ -1,5 +1,5 @@
 diver tronco(){
-	si facto{
+	si facto {
 		ent a = 3;
 		ent b = a + 3;
 		
@@ -13,8 +13,7 @@ diver tronco(){
 			b = 3;
 		}	
 	}
-	sino{
+	sino {
 		ent b = 3;
 	}
-
 }

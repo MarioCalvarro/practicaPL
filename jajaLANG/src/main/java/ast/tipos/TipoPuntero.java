@@ -20,7 +20,7 @@ public class TipoPuntero extends Tipo {
     }
 
     public Tipo getTipoApuntado() {
-        return tipoElemento.tipo();
+        return tipoElemento;
     }
 
     @Override

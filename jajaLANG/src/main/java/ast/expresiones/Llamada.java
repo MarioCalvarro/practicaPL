@@ -3,7 +3,9 @@ package main.java.ast.expresiones;
 import main.java.ast.Nodo;
 import main.java.ast.declaraciones.DeclaracionFun;
 import main.java.ast.declaraciones.DeclaracionPar;
+import main.java.ast.designadores.Designador;
 import main.java.ast.designadores.Identificador;
+import main.java.ast.tipos.Tipo;
 import main.java.ast.tipos.TipoFunc;
 
 import java.util.ArrayList;
@@ -12,7 +14,6 @@ import java.util.List;
 public class Llamada extends Expresion {
     private final Identificador exp;
     private final List<Expresion> listaExpresiones;
-    private DeclaracionFun decFuncion;
 
     public Llamada(Identificador exp, List<Expresion> listaExpresiones) {
         this.exp = exp;
@@ -58,30 +59,31 @@ public class Llamada extends Expresion {
             throw new RuntimeException();
         }
 
-        //Comprobar que el nº de parámetros es correcto
-        if (tipoFun.tipoParametros().size() != listaExpresiones.size()) {
+
+        List<Tipo> llamados = new ArrayList<>();
+        for (var e : listaExpresiones) {
+            llamados.add(e.tipo());
+        }
+        TipoFunc tipoLlamado = new TipoFunc(tipoFun.tipoRetorno(), llamados);
+
+        if (!tipoLlamado.equals(tipoFun)) {
             //TODO: Cambiar error
             throw new RuntimeException();
         }
 
+        DeclaracionFun decFuncion;
         //Cargar la definición de la función
         try {
             decFuncion = (DeclaracionFun) exp.dec();
-        } catch (ClassCastException e) {
+        } catch (ClassCastException e) { //No debería pasar nunca
             //TODO: Cambiar error
             throw new RuntimeException();
         }
-        if (decFuncion == null) {
-            //TODO: Cambiar error
-            throw new RuntimeException();
-        }
-
-        //Comprobar que el tipo de los parámetros es correcto
-        for (int i = 0; i < listaExpresiones.size(); i++) {
+        
+        for (int i = 0; i < decFuncion.parametros().size(); i++) {
             DeclaracionPar par = decFuncion.parametros().get(i);
             Expresion exp = listaExpresiones.get(i);
-            //TODO: Ahora mismo solo se puede pasar por parametro identificadores
-            if (!par.tipo().equals(exp.tipo()) || par.porReferencia() && exp instanceof Identificador) {
+            if (par.porReferencia() && !(exp instanceof Designador)) {
                 //TODO: Cambiar error
                 throw new RuntimeException();
             }

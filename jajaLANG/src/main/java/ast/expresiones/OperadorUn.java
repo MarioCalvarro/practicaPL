@@ -72,13 +72,14 @@ public class OperadorUn extends Expresion {
                 break;
 
             case PUNTERO:
+                TipoPuntero tipoPuntero;
                 try {
-                    TipoPuntero tipopuntero = (TipoPuntero) derecha.tipo();
-                    this.tipo = tipopuntero.getTipoApuntado();
+                    tipoPuntero = (TipoPuntero) derecha.tipo();
                 } catch (ClassCastException e) {
                     //TODO: Cambiar el error
                     throw new RuntimeException();
                 }
+                this.tipo = tipoPuntero.getTipoApuntado();
                 break;
 
             default:

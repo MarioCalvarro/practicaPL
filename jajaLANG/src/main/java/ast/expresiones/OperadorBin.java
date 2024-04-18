@@ -86,11 +86,20 @@ public class OperadorBin extends Expresion {
             throw new RuntimeException();
         }
 
-        this.tipo = tipoIzquierda; // O derecha, da igual
+        if (esRelacional(op)) {
+            this.tipo = TipoBinario.instancia();
+        }
+        else {
+            this.tipo = tipoIzquierda; // O derecha, da igual
+        }
     }
 
     private boolean esBinario(Operadores op) {
         return op == Operadores.CONJ || op == Operadores.DISY;
+    }
+
+    private boolean esRelacional(Operadores op) {
+        return op == Operadores.IGUAL || op == Operadores.DESIGUAL || op == Operadores.MENOR || op == Operadores.MAYOR || op == Operadores.MENORIGUAL || op == Operadores.MAYORIGUAL;
     }
 
     @Override
