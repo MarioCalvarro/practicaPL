@@ -65,8 +65,6 @@ public class Import extends Declaracion {
             @Override
             public void run() {
                 try {
-                    String workingDir = System.getProperty("user.dir");
-                    System.out.println("Working Directory = " + workingDir);
                     Reader input = new InputStreamReader(new FileInputStream(ruta));
                     AnalizadorLexicoJaja al = new AnalizadorLexicoJaja(input);
                     AnalizadorSintacticoJaja as = new AnalizadorSintacticoJaja(al);
