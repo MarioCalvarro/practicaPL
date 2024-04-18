@@ -15,6 +15,18 @@ public class DeclaracionFun extends Declaracion {
     private final List<DeclaracionPar> parametros;
     private final List<Instruccion> cuerpo;
 
+    //Función sin cuerpo (para input/output)
+    public DeclaracionFun(String id, List<DeclaracionPar> parametros, Tipo tipoRetorno) {
+        this.id = id;
+        this.parametros = parametros;
+        this.cuerpo = new ArrayList<>();
+        List<Tipo> tipoPars = new ArrayList<Tipo>();
+        for (DeclaracionPar par : parametros) {
+            tipoPars.add(par.tipo());
+        }
+        this.tipo = new TipoFunc(tipoRetorno, tipoPars);
+    }
+
     // Función void
     public DeclaracionFun(String id, List<DeclaracionPar> parametros, List<Instruccion> cuerpo) {
         this.id = id;

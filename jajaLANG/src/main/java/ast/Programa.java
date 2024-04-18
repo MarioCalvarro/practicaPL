@@ -1,10 +1,16 @@
 package main.java.ast;
 
 import main.java.ast.declaraciones.Declaracion;
+import main.java.ast.declaraciones.DeclaracionFun;
+import main.java.ast.declaraciones.DeclaracionPar;
 import main.java.ast.declaraciones.Import;
 import main.java.ast.designadores.Identificador;
+import main.java.ast.tipos.TipoBinario;
+import main.java.ast.tipos.TipoEntero;
+import main.java.ast.tipos.TipoVacio;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +35,21 @@ public class Programa extends Nodo {
         for (Thread th : lista_hilos) {
             th.join();
         }
+        cargarInOut();
+    }
+
+    private void cargarInOut() {
+        //Lectura
+        ambitoGlobal.poner(new DeclaracionFun("leeEnt", Arrays.asList(), TipoEntero.instancia()));
+        ambitoGlobal.poner(new DeclaracionFun("leeBin", Arrays.asList(), TipoBinario.instancia()));
+
+        //Escritura
+        ambitoGlobal.poner(new DeclaracionFun("escribirEnt",
+                    Arrays.asList(new DeclaracionPar("num", TipoEntero.instancia(), false)), 
+                    TipoVacio.instancia()));
+        ambitoGlobal.poner(new DeclaracionFun("escribirBin",
+                    Arrays.asList(new DeclaracionPar("num", TipoBinario.instancia(), false)), 
+                    TipoVacio.instancia()));
     }
 
     public Declaracion getDeclaracionExt(Identificador iden) {
