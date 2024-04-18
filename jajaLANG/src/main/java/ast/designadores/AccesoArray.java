@@ -4,6 +4,7 @@ import main.java.ast.Nodo;
 import main.java.ast.expresiones.Expresion;
 import main.java.ast.tipos.TipoArray;
 import main.java.ast.tipos.TipoEntero;
+import main.java.errors.TypeError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,16 +35,14 @@ public class AccesoArray extends Designador {
     public void typecheck() {
         super.typecheck();
         if (!indice.tipo().equals(TipoEntero.instancia())) {
-            //TODO: Cambiar error
-            throw new RuntimeException();
+            throw new TypeError("La expresión " + indice.toString() + " de acceso al array no es un entero.");
         }
 
         try {
             tipo = ((TipoArray) array.tipo()).tipoElementos();
         } catch (ClassCastException e) {
             //Si no puede hacer cast, es porque no es de tipo array
-            //TODO: Cambiar error
-            throw new RuntimeException();
+            throw new TypeError("La expresión " + array.toString() + " no es de tipo array.");
         }
     }
 }

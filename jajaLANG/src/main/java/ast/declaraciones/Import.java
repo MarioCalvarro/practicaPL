@@ -3,6 +3,7 @@ package main.java.ast.declaraciones;
 import main.java.ast.Contexto;
 import main.java.ast.Nodo;
 import main.java.ast.Programa;
+import main.java.errors.ImportError;
 import main.java.lexico.AnalizadorLexicoJaja;
 import main.java.sintactico.AnalizadorSintacticoJaja;
 
@@ -52,8 +53,7 @@ public class Import extends Declaracion {
             try {
                 hilo.join();
             } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                throw new ImportError("Error al importar de '" + ruta + "'");
             }
         }
 
@@ -70,9 +70,7 @@ public class Import extends Declaracion {
                     AnalizadorSintacticoJaja as = new AnalizadorSintacticoJaja(al);
                     nuevoAST = (Programa) as.parse().value;
                 } catch (Exception e) {
-                    //TODO: Cambiar error
-                    System.err.println("Error al parsear la importación " + namespace);
-                    System.exit(1);
+                    throw new ImportError("Error al importar de '" + ruta + "'");
                 }
             }
         });

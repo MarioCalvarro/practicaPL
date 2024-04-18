@@ -5,6 +5,7 @@ import main.java.ast.Nodo;
 import main.java.ast.expresiones.Expresion;
 import main.java.ast.tipos.Tipo;
 import main.java.ast.tipos.TipoAlias;
+import main.java.errors.TypeError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,8 +86,7 @@ public class DeclaracionVar extends Declaracion {
     public void typecheck() {
         super.typecheck();
         if (valor != null && !(this.tipo().equals(valor.tipo()))) {
-            //TODO: Cambiar error
-            throw new RuntimeException();
+            throw new TypeError("El tipo del valor " + valor.toString() + " asignado a la variable " + id.toString() + " no coincide con el de esta.");
         }
     }
 }

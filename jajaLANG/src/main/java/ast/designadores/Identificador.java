@@ -3,6 +3,7 @@ package main.java.ast.designadores;
 import main.java.ast.Contexto;
 import main.java.ast.Nodo;
 import main.java.ast.declaraciones.Declaracion;
+import main.java.errors.BindError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,8 +58,7 @@ public class Identificador extends Designador {
 
         dec = ctx.get(this);
         if (dec == null) {
-            //TODO: Cambiar error
-            throw new RuntimeException();
+            throw new BindError("No se ha encontrado la defininición de " + toString());
         }
 
         this.tipo = dec.tipo();
