@@ -17,6 +17,10 @@ public class TipoAlias extends Tipo {
         this.id = id;
     }
 
+    public Tipo tipoApuntado() {
+        return dec.tipoApuntado();
+    }
+
     @Override
     public String toString() {
         return id.toString();

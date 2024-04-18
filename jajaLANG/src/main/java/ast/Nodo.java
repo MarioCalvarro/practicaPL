@@ -1,6 +1,7 @@
 package main.java.ast;
 
 import main.java.ast.tipos.Tipo;
+import main.java.ast.tipos.TipoAlias;
 
 import java.util.List;
 
@@ -36,6 +37,12 @@ public abstract class Nodo {
             //TODO: Cambiar error
             throw new RuntimeException();
         }
-        return tipo;
+        try {
+            //Comprobar si el tipo es tipo alias
+            TipoAlias tAlias = (TipoAlias) tipo;
+            return tAlias.tipoApuntado();
+        } catch (ClassCastException e) {
+            return tipo;
+        }
     }
 }
