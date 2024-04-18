@@ -46,7 +46,16 @@ public class TipoRegistro extends Tipo {
 
             //Dos registros son iguales si tienen los mismos atributos (no
             //importa el orden)
-            return this.atributos.values().equals(otro.atributos.values());
+            for (var el : atributos.entrySet()) {
+                var aux = otro.atributos.get(el.getKey());
+                if (aux == null) {
+                    return false;
+                }
+                if (!(el.getValue().tipo().equals(aux.tipo()))) {
+                    return false;
+                }
+            }
+            return true;
         } catch (ClassCastException e) {
             return false;
         }

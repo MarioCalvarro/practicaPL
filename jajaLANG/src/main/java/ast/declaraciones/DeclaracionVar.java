@@ -80,7 +80,7 @@ public class DeclaracionVar extends Declaracion {
     @Override
     public void typecheck() {
         super.typecheck();
-        if (valor != null && !this.tipo().equals(valor.tipo())) {
+        if (valor != null && !(this.tipo().equals(valor.tipo()))) {
             //TODO: Cambiar error
             throw new RuntimeException();
         }
