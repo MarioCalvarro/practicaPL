@@ -17,7 +17,7 @@ public class TypecheckReferenciaDinamicaTest {
         //Programa que importa una librería y llama a una de sus funciones
         Reader input = null;
         try {
-            input = new InputStreamReader(new FileInputStream("src/test/resources/bindingTypeChecking/referenciaDinamica.jaja"));
+            input = new InputStreamReader(new FileInputStream("src/test/resources/referenciaDinamica.jaja"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.exit(1);

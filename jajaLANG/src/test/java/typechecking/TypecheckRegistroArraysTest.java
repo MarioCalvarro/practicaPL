@@ -17,7 +17,7 @@ public class TypecheckRegistroArraysTest {
         //Programa que importa una librería y llama a una de sus funciones
         Reader input = null;
         try {
-            input = new InputStreamReader(new FileInputStream("src/test/resources/bindingTypeChecking/registroArrays.jaja"));
+            input = new InputStreamReader(new FileInputStream("src/test/resources/registrosArrays.jaja"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.exit(1);
