@@ -7,6 +7,7 @@ import main.java.ast.declaraciones.Import;
 import main.java.ast.designadores.Identificador;
 import main.java.ast.tipos.TipoBinario;
 import main.java.ast.tipos.TipoEntero;
+import main.java.ast.tipos.TipoPuntero;
 import main.java.ast.tipos.TipoVacio;
 
 import java.util.ArrayList;
@@ -35,10 +36,10 @@ public class Programa extends Nodo {
         for (Thread th : lista_hilos) {
             th.join();
         }
-        cargarInOut();
+        cargarFuncionesPred();
     }
 
-    private void cargarInOut() {
+    private void cargarFuncionesPred() {
         //Lectura
         ambitoGlobal.poner(new DeclaracionFun("leeEnt", Arrays.asList(), TipoEntero.instancia()));
         ambitoGlobal.poner(new DeclaracionFun("leeBin", Arrays.asList(), TipoBinario.instancia()));
@@ -50,8 +51,14 @@ public class Programa extends Nodo {
         ambitoGlobal.poner(new DeclaracionFun("escribirBin",
                     Arrays.asList(new DeclaracionPar("num", TipoBinario.instancia(), false)), 
                     TipoVacio.instancia()));
+        
+        //Liberar
+        ambitoGlobal.poner(new DeclaracionFun("liberar", 
+        		    Arrays.asList(new DeclaracionPar("puntero", 
+        		    	   new TipoPuntero(null), false)), TipoVacio.instancia() ));
     }
-
+    
+   
     public Declaracion getDeclaracionExt(Identificador iden) {
         Import mod = mapa_imports.get(iden.modulo());
         if (mod == null) {
