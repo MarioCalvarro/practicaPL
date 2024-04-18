@@ -41,8 +41,8 @@ public class Programa extends Nodo {
 
     private void cargarFuncionesPred() {
         //Lectura
-        ambitoGlobal.poner(new DeclaracionFun("leeEnt", Arrays.asList(), TipoEntero.instancia()));
-        ambitoGlobal.poner(new DeclaracionFun("leeBin", Arrays.asList(), TipoBinario.instancia()));
+        ambitoGlobal.poner(new DeclaracionFun("leerEnt", Arrays.asList(), TipoEntero.instancia()));
+        ambitoGlobal.poner(new DeclaracionFun("leerBin", Arrays.asList(), TipoBinario.instancia()));
 
         //Escritura
         ambitoGlobal.poner(new DeclaracionFun("escribirEnt",
