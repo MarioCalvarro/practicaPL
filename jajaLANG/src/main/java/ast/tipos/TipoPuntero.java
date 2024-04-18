@@ -27,6 +27,10 @@ public class TipoPuntero extends Tipo {
     public boolean equals(Object obj) {
         try {
             TipoPuntero otro = (TipoPuntero) obj;
+
+            //Es el puntero nulo (vale para cualquiera)
+            if (otro.tipoElemento == null)
+                return true;
             return this.tipoElemento.equals(otro.tipoElemento);
         } catch (ClassCastException e) {
             return false;
