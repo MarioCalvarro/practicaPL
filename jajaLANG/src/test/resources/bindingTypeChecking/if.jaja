@@ -1,5 +1,6 @@
 diver tronco(){
-	si facto {
+    ent @ ab = nulo;
+	si ab == nulo {
 		ent a = 3;
 		ent b = a + 3;
 		

@@ -72,7 +72,11 @@ public class OperadorBin extends Expresion {
             }
         }
         else if (tipoIzquierda instanceof TipoPuntero) {
-            if (!tipoDerecha.equals(TipoEntero.instancia())) {
+            if (!(tipoDerecha instanceof  TipoPuntero && esRelacional(op))) {
+                // TODO : Cambiar error
+                throw new RuntimeException();
+            }
+            else if (!(tipoDerecha instanceof  TipoPuntero) && !tipoDerecha.equals(TipoEntero.instancia())) {
                 // TODO : Cambiar error
                 throw new RuntimeException();
             }
