@@ -5,6 +5,7 @@ import main.java.ast.expresiones.Expresion;
 import main.java.ast.tipos.Tipo;
 import main.java.ast.tipos.TipoArray;
 import main.java.errors.BindError;
+import main.java.errors.TypeError;
 
 import java.util.ArrayList;
 import java.util.List;
