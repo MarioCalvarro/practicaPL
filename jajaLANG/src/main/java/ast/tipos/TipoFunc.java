@@ -19,7 +19,7 @@ public class TipoFunc extends Tipo {
     }
 
     public List<Tipo> tipoParametros() {
-        return tipoParametros();
+        return tipoParametros;
     }
 
     @Override

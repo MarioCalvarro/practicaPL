@@ -28,7 +28,7 @@ public class DeclaracionFun extends Declaracion {
     }
 
     // Funcion con retorno
-    public DeclaracionFun(String id, List<DeclaracionPar> parametros, List<Instruccion> cuerpo, Tipo tipo) {
+    public DeclaracionFun(String id, List<DeclaracionPar> parametros, List<Instruccion> cuerpo, Tipo tipoRetorno) {
         this.id = id;
         this.parametros = parametros;
         this.cuerpo = cuerpo;
@@ -36,7 +36,7 @@ public class DeclaracionFun extends Declaracion {
         for (DeclaracionPar par : parametros) {
             tipoPars.add(par.tipo());
         }
-        this.tipo = new TipoFunc(tipo, tipoPars);
+        this.tipo = new TipoFunc(tipoRetorno, tipoPars);
     }
 
     public List<DeclaracionPar> parametros() {

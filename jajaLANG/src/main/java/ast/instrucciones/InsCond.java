@@ -107,10 +107,12 @@ public class InsCond extends Instruccion {
     public void typecheck() {
         super.typecheck();
 
-        Tipo tipoIndice = condicion.tipo();
-        if (!tipoIndice.equals(TipoBinario.instancia())) {
-            //TODO : Cambiar error
-            throw new RuntimeException();
+        if (condicion != null) {
+            Tipo tipoIndice = condicion.tipo();
+            if (!tipoIndice.equals(TipoBinario.instancia())) {
+                //TODO : Cambiar error
+                throw new RuntimeException();
+            }
         }
     }
 }
