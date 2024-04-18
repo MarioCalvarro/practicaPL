@@ -21,12 +21,6 @@ public class DeclaracionAlias extends Declaracion {
     }
 
     @Override
-    public void bind(Contexto ctx) {
-        super.bind(ctx);
-        ctx.insertar(this);
-    }
-
-    @Override
     public String getId() {
         return this.id;
     }
@@ -41,5 +35,11 @@ public class DeclaracionAlias extends Declaracion {
         List<Nodo> hijos = new ArrayList<>();
         hijos.add(tipoApuntado);
         return hijos;
+    }
+
+    @Override
+    public void bind(Contexto ctx) {
+        super.bind(ctx);
+        ctx.insertar(this);
     }
 }

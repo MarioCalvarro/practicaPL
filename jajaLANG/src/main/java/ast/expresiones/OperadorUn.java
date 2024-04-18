@@ -39,21 +39,6 @@ public class OperadorUn extends Expresion {
     }
 
     @Override
-    public Integer evaluar() {
-        Integer der = derecha.valorEntero();
-        Integer res = null;
-        switch (op) {
-            case RESTA:
-                res = -der;
-                break;
-            default:
-                //TODO: Cambiar error
-                throw new RuntimeException();
-        }
-        return res;
-    }
-
-    @Override
     public void typecheck() {
         super.typecheck();
         Tipo tipoDerecha = derecha.tipo();
@@ -97,6 +82,21 @@ public class OperadorUn extends Expresion {
                 //TODO : Cambiar error
                 throw new RuntimeException();
         }
+    }
+
+    @Override
+    public Integer evaluar() {
+        Integer der = derecha.valorEntero();
+        Integer res = null;
+        switch (op) {
+            case RESTA:
+                res = -der;
+                break;
+            default:
+                //TODO: Cambiar error
+                throw new RuntimeException();
+        }
+        return res;
     }
 
     public enum Operadores {

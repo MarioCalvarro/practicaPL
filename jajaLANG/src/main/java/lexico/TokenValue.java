@@ -5,15 +5,15 @@ public class TokenValue {
     private final int columna;
     private String lexema;
 
+    public TokenValue(int fila, int columna, String lexema) {
+        this(fila, columna);
+        this.lexema = lexema;
+    }
+
     public TokenValue(int fila, int columna) {
         this.fila = fila;
         this.columna = columna;
         this.lexema = null;
-    }
-
-    public TokenValue(int fila, int columna, String lexema) {
-        this(fila, columna);
-        this.lexema = lexema;
     }
 
     public int fila() {

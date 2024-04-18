@@ -13,27 +13,27 @@ public class DeclaracionVar extends Declaracion {
     private Expresion valor;
     private boolean esGlobal;
 
-    // Declaración sin valor
-    public DeclaracionVar(String id) {
-        this.id = id;
-    }
-
-    // Parámetro función
-    public DeclaracionVar(String id, Tipo tipo) {
-        this(id);
-        setTipo(tipo);
-    }
-
     // Declaracion con valor
     public DeclaracionVar(String id, Expresion expr) {
         this(id);
         this.valor = expr;
     }
 
+    // Declaración sin valor
+    public DeclaracionVar(String id) {
+        this.id = id;
+    }
+
     // Declaracion con valor y tipo
     public DeclaracionVar(String id, Tipo tipo, Expresion expr) {
         this(id, tipo);
         this.valor = expr;
+    }
+
+    // Parámetro función
+    public DeclaracionVar(String id, Tipo tipo) {
+        this(id);
+        setTipo(tipo);
     }
 
     // TODO: Tal vez se le pueda cambiar la visibilidad?
@@ -61,13 +61,6 @@ public class DeclaracionVar extends Declaracion {
     }
 
     @Override
-    public void bind(Contexto ctx) {
-        super.bind(ctx);
-        ctx.insertar(this);
-        //esGlobal = ctx.isGlobal(this.getId());
-    }
-
-    @Override
     public List<Nodo> getAstHijos() {
         List<Nodo> lista = new ArrayList<Nodo>();
         lista.add(tipo);
@@ -75,5 +68,12 @@ public class DeclaracionVar extends Declaracion {
             lista.add(valor);
         }
         return lista;
+    }
+
+    @Override
+    public void bind(Contexto ctx) {
+        super.bind(ctx);
+        ctx.insertar(this);
+        //esGlobal = ctx.isGlobal(this.getId());
     }
 }

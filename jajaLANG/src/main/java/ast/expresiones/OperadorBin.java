@@ -36,17 +36,34 @@ public class OperadorBin extends Expresion {
         return "(" + izquierda + ")" + op.toString() + "(" + derecha + ")";
     }
 
-    private boolean esBinario(Operadores op) {
-        return op == Operadores.CONJ || op == Operadores.DESIGUAL || op == Operadores.DISY || op == Operadores.IGUAL
-                || op == Operadores.NEG;
-    }
-
     @Override
     public List<Nodo> getAstHijos() {
         List<Nodo> lista = new ArrayList<Nodo>();
         lista.add(izquierda);
         lista.add(derecha);
         return lista;
+    }
+
+    @Override
+    public void typecheck() {
+        super.typecheck();
+        Tipo tipoIzquierda = izquierda.tipo();
+        Tipo tipoDerecha = derecha.tipo();
+
+        if (esBinario(op)
+                && (!tipoIzquierda.equals(TipoBinario.instancia()) || !tipoDerecha.equals(TipoBinario.instancia())) ||
+                (!esBinario(op) && (!tipoIzquierda.equals(TipoEntero.instancia())
+                        || !tipoDerecha.equals(TipoEntero.instancia())))) {
+            // TODO : Cambiar error
+            throw new RuntimeException();
+        }
+
+        this.tipo = tipoIzquierda; // O derecha, da igual
+    }
+
+    private boolean esBinario(Operadores op) {
+        return op == Operadores.CONJ || op == Operadores.DESIGUAL || op == Operadores.DISY || op == Operadores.IGUAL
+                || op == Operadores.NEG;
     }
 
     @Override
@@ -78,23 +95,6 @@ public class OperadorBin extends Expresion {
                 throw new RuntimeException();
         }
         return res;
-    }
-
-    @Override
-    public void typecheck() {
-        super.typecheck();
-        Tipo tipoIzquierda = izquierda.tipo();
-        Tipo tipoDerecha = derecha.tipo();
-
-        if (esBinario(op)
-                && (!tipoIzquierda.equals(TipoBinario.instancia()) || !tipoDerecha.equals(TipoBinario.instancia())) ||
-                (!esBinario(op) && (!tipoIzquierda.equals(TipoEntero.instancia())
-                        || !tipoDerecha.equals(TipoEntero.instancia())))) {
-            // TODO : Cambiar error
-            throw new RuntimeException();
-        }
-
-        this.tipo = tipoIzquierda; // O derecha, da igual
     }
 
     public enum Operadores {

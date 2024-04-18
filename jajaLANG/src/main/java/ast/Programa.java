@@ -40,13 +40,13 @@ public class Programa extends Nodo {
         return mod.getAST().getDeclaracionGlobal(iden);
     }
 
+    public Declaracion getDeclaracionGlobal(Identificador iden) {
+        return ambitoGlobal.get(iden.nombre());
+    }
+
     //TODO: Esto seguramente tengamos que quitarlo. Lo tenemos para tests
     public Ambito getAmbitoGlobal() {
         return ambitoGlobal;
-    }
-
-    public Declaracion getDeclaracionGlobal(Identificador iden) {
-        return ambitoGlobal.get(iden.nombre());
     }
 
     @Override

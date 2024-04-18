@@ -22,11 +22,6 @@ public class TipoAlias extends Tipo {
     }
 
     @Override
-    public String toString() {
-        return id.toString();
-    }
-
-    @Override
     public List<Nodo> getAstHijos() {
         List<Nodo> lista = new ArrayList<Nodo>();
         lista.add(id);
@@ -53,5 +48,10 @@ public class TipoAlias extends Tipo {
         //hacer un cast que a lo mejor no es posible (por ejemplo, si obj es un
         //struct anónimo)
         return dec.tipo().equals(obj);
+    }
+
+    @Override
+    public String toString() {
+        return id.toString();
     }
 }

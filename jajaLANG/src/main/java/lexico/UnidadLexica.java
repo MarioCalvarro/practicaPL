@@ -42,6 +42,14 @@ public class UnidadLexica extends Symbol {
         return sym;
     }
 
+    public String toString() {
+        if (lexema() == null) {
+            return "[clase:" + tipo + ",fila:" + fila() + ",col:" + columna() + "]";
+        } else {
+            return "[clase:" + tipo + ",fila:" + fila() + ",col:" + columna() + ",lexema:" + lexema() + "]";
+        }
+    }
+
     public String lexema() {
         return lexema;
     }
@@ -52,13 +60,5 @@ public class UnidadLexica extends Symbol {
 
     public int columna() {
         return columna;
-    }
-
-    public String toString() {
-        if (lexema() == null) {
-            return "[clase:" + tipo + ",fila:" + fila() + ",col:" + columna() + "]";
-        } else {
-            return "[clase:" + tipo + ",fila:" + fila() + ",col:" + columna() + ",lexema:" + lexema() + "]";
-        }
     }
 }

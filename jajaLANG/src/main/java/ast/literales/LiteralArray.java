@@ -26,8 +26,9 @@ public class LiteralArray extends Literal {
         for (Expresion exp : lExpr) {
             contador++;
             sb.append(exp);
-            if (contador != capacidad)
+            if (contador != capacidad) {
                 sb.append(", ");
+            }
         }
 
         sb.append("]");

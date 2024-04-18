@@ -539,7 +539,9 @@ public class AnalizadorLexicoJaja implements java_cup.runtime.Scanner {
         while (i < l) {
             int count = packed.charAt(i++);
             int value = packed.charAt(i++);
-            do result[j++] = value; while (--count > 0);
+            do {
+                result[j++] = value;
+            } while (--count > 0);
         }
         return j;
     }
@@ -558,7 +560,9 @@ public class AnalizadorLexicoJaja implements java_cup.runtime.Scanner {
         while (i < l) {
             int count = packed.charAt(i++);
             int value = packed.charAt(i++);
-            do result[j++] = value; while (--count > 0);
+            do {
+                result[j++] = value;
+            } while (--count > 0);
         }
         return j;
     }
@@ -577,7 +581,9 @@ public class AnalizadorLexicoJaja implements java_cup.runtime.Scanner {
         while (i < l) {
             int count = packed.charAt(i++);
             int value = packed.charAt(i++);
-            do result[j++] = value; while (--count > 0);
+            do {
+                result[j++] = value;
+            } while (--count > 0);
         }
         return j;
     }
@@ -615,7 +621,9 @@ public class AnalizadorLexicoJaja implements java_cup.runtime.Scanner {
             int count = packed.charAt(i++);
             int value = packed.charAt(i++);
             value--;
-            do result[j++] = value; while (--count > 0);
+            do {
+                result[j++] = value;
+            } while (--count > 0);
         }
         return j;
     }
@@ -634,137 +642,15 @@ public class AnalizadorLexicoJaja implements java_cup.runtime.Scanner {
         while (i < l) {
             int count = packed.charAt(i++);
             int value = packed.charAt(i++);
-            do result[j++] = value; while (--count > 0);
+            do {
+                result[j++] = value;
+            } while (--count > 0);
         }
         return j;
     }
 
-    /**
-     * Translates raw input code points to DFA table row
-     */
-    private static int zzCMap(int input) {
-        int offset = input & 255;
-        return offset == input ? ZZ_CMAP_BLOCKS[offset] : ZZ_CMAP_BLOCKS[ZZ_CMAP_TOP[input >> 8] | offset];
-    }
-
-    /**
-     * Reports an error that occurred while scanning.
-     *
-     * <p>In a well-formed scanner (no or only correct usage of {@code yypushback(int)} and a
-     * match-all fallback rule) this method will only be called with things that
-     * "Can't Possibly Happen".
-     *
-     * <p>If this method is called, something is seriously wrong (e.g. a JFlex bug producing a faulty
-     * scanner etc.).
-     *
-     * <p>Usual syntax/scanner level error handling should be done in error fallback rules.
-     *
-     * @param errorCode the code of the error message to display.
-     */
-    private static void zzScanError(int errorCode) {
-        String message;
-        try {
-            message = ZZ_ERROR_MSG[errorCode];
-        } catch (ArrayIndexOutOfBoundsException e) {
-            message = ZZ_ERROR_MSG[ZZ_UNKNOWN_ERROR];
-        }
-
-        throw new Error(message);
-    }
-
-    public String lexema() {
-        return yytext();
-    }
-
-    public int fila() {
-        return yyline + 1;
-    }
-
-    public int columna() {
-        return yycolumn + 1;
-    }
-
     public void fijaGestionErrores(GestionErroresJaja errores) {
         this.errores = errores;
-    }
-
-    /**
-     * Refills the input buffer.
-     *
-     * @return {@code false} iff there was new input.
-     * @throws java.io.IOException if any I/O-Error occurs
-     */
-    private boolean zzRefill() throws java.io.IOException {
-
-        /* first: make room (if you can) */
-        if (zzStartRead > 0) {
-            zzEndRead += zzFinalHighSurrogate;
-            zzFinalHighSurrogate = 0;
-            System.arraycopy(zzBuffer, zzStartRead,
-                    zzBuffer, 0,
-                    zzEndRead - zzStartRead);
-
-            /* translate stored positions */
-            zzEndRead -= zzStartRead;
-            zzCurrentPos -= zzStartRead;
-            zzMarkedPos -= zzStartRead;
-            zzStartRead = 0;
-        }
-
-        /* is the buffer big enough? */
-        if (zzCurrentPos >= zzBuffer.length - zzFinalHighSurrogate) {
-            /* if not: blow it up */
-            char newBuffer[] = new char[zzBuffer.length * 2];
-            System.arraycopy(zzBuffer, 0, newBuffer, 0, zzBuffer.length);
-            zzBuffer = newBuffer;
-            zzEndRead += zzFinalHighSurrogate;
-            zzFinalHighSurrogate = 0;
-        }
-
-        /* fill the buffer with new input */
-        int requested = zzBuffer.length - zzEndRead;
-        int numRead = zzReader.read(zzBuffer, zzEndRead, requested);
-
-        /* not supposed to occur according to specification of java.io.Reader */
-        if (numRead == 0) {
-            throw new java.io.IOException(
-                    "Reader returned 0 characters. See JFlex examples/zero-reader for a workaround.");
-        }
-        if (numRead > 0) {
-            zzEndRead += numRead;
-            if (Character.isHighSurrogate(zzBuffer[zzEndRead - 1])) {
-                if (numRead == requested) { // We requested too few chars to encode a full Unicode character
-                    --zzEndRead;
-                    zzFinalHighSurrogate = 1;
-                } else {                    // There is room in the buffer for at least one more char
-                    int c = zzReader.read();  // Expecting to read a paired low surrogate char
-                    if (c == -1) {
-                        return true;
-                    } else {
-                        zzBuffer[zzEndRead++] = (char) c;
-                    }
-                }
-            }
-            /* potentially more input available */
-            return false;
-        }
-
-        /* numRead < 0 ==> end of stream */
-        return true;
-    }
-
-    /**
-     * Closes the input reader.
-     *
-     * @throws java.io.IOException if the reader could not be closed.
-     */
-    public final void yyclose() throws java.io.IOException {
-        zzAtEOF = true; // indicate end of file
-        zzEndRead = zzStartRead; // invalidate buffer
-
-        if (zzReader != null) {
-            zzReader.close();
-        }
     }
 
     /**
@@ -833,15 +719,6 @@ public class AnalizadorLexicoJaja implements java_cup.runtime.Scanner {
     }
 
     /**
-     * Returns the text matched by the current regular expression.
-     *
-     * @return the matched text.
-     */
-    public final String yytext() {
-        return new String(zzBuffer, zzStartRead, zzMarkedPos - zzStartRead);
-    }
-
-    /**
      * Returns the character at the given position from the matched text.
      *
      * <p>It is equivalent to {@code yytext().charAt(pos)}, but faster.
@@ -854,6 +731,22 @@ public class AnalizadorLexicoJaja implements java_cup.runtime.Scanner {
     }
 
     /**
+     * Pushes the specified amount of characters back into the input stream.
+     *
+     * <p>They will be read again by then next call of the scanning method.
+     *
+     * @param number the number of characters to be read again. This number must not be greater than
+     *               {@link #yylength()}.
+     */
+    public void yypushback(int number) {
+        if (number > yylength()) {
+            zzScanError(ZZ_PUSHBACK_2BIG);
+        }
+
+        zzMarkedPos -= number;
+    }
+
+    /**
      * How many characters were matched.
      *
      * @return the length of the matched text region.
@@ -863,33 +756,29 @@ public class AnalizadorLexicoJaja implements java_cup.runtime.Scanner {
     }
 
     /**
-     * Pushes the specified amount of characters back into the input stream.
+     * Reports an error that occurred while scanning.
      *
-     * <p>They will be read again by then next call of the scanning method.
+     * <p>In a well-formed scanner (no or only correct usage of {@code yypushback(int)} and a
+     * match-all fallback rule) this method will only be called with things that
+     * "Can't Possibly Happen".
      *
-     * @param number the number of characters to be read again. This number must not be greater than
-     *               {@link #yylength()}.
+     * <p>If this method is called, something is seriously wrong (e.g. a JFlex bug producing a faulty
+     * scanner etc.).
+     *
+     * <p>Usual syntax/scanner level error handling should be done in error fallback rules.
+     *
+     * @param errorCode the code of the error message to display.
      */
-    public void yypushback(int number) {
-        if (number > yylength())
-            zzScanError(ZZ_PUSHBACK_2BIG);
-
-        zzMarkedPos -= number;
-    }
-
-
-    /**
-     * Contains user EOF-code, which will be executed exactly once,
-     * when the end of file is reached
-     */
-    private void zzDoEOF() throws java.io.IOException {
-        if (!zzEOFDone) {
-            zzEOFDone = true;
-
-            yyclose();
+    private static void zzScanError(int errorCode) {
+        String message;
+        try {
+            message = ZZ_ERROR_MSG[errorCode];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            message = ZZ_ERROR_MSG[ZZ_UNKNOWN_ERROR];
         }
-    }
 
+        throw new Error(message);
+    }
 
     /**
      * Resumes scanning until the next regular expression is matched, the end of input is encountered
@@ -940,9 +829,9 @@ public class AnalizadorLexicoJaja implements java_cup.runtime.Scanner {
                         zzR = true;
                         break;
                     case '\n':
-                        if (zzR)
+                        if (zzR) {
                             zzR = false;
-                        else {
+                        } else {
                             yyline++;
                             yycolumn = 0;
                         }
@@ -957,21 +846,24 @@ public class AnalizadorLexicoJaja implements java_cup.runtime.Scanner {
                 // peek one character ahead if it is
                 // (if we have counted one line too much)
                 boolean zzPeek;
-                if (zzMarkedPosL < zzEndReadL)
+                if (zzMarkedPosL < zzEndReadL) {
                     zzPeek = zzBufferL[zzMarkedPosL] == '\n';
-                else if (zzAtEOF)
+                } else if (zzAtEOF) {
                     zzPeek = false;
-                else {
+                } else {
                     boolean eof = zzRefill();
                     zzEndReadL = zzEndRead;
                     zzMarkedPosL = zzMarkedPos;
                     zzBufferL = zzBuffer;
-                    if (eof)
+                    if (eof) {
                         zzPeek = false;
-                    else
+                    } else {
                         zzPeek = zzBufferL[zzMarkedPosL] == '\n';
+                    }
                 }
-                if (zzPeek) yyline--;
+                if (zzPeek) {
+                    yyline--;
+                }
             }
             zzAction = -1;
 
@@ -1015,14 +907,18 @@ public class AnalizadorLexicoJaja implements java_cup.runtime.Scanner {
                         }
                     }
                     int zzNext = zzTransL[zzRowMapL[zzState] + zzCMap(zzInput)];
-                    if (zzNext == -1) break zzForAction;
+                    if (zzNext == -1) {
+                        break zzForAction;
+                    }
                     zzState = zzNext;
 
                     zzAttributes = zzAttrL[zzState];
                     if ((zzAttributes & 1) == 1) {
                         zzAction = zzState;
                         zzMarkedPosL = zzCurrentPosL;
-                        if ((zzAttributes & 8) == 8) break zzForAction;
+                        if ((zzAttributes & 8) == 8) {
+                            break zzForAction;
+                        }
                     }
 
                 }
@@ -1403,6 +1299,126 @@ public class AnalizadorLexicoJaja implements java_cup.runtime.Scanner {
                 }
             }
         }
+    }
+
+    /**
+     * Refills the input buffer.
+     *
+     * @return {@code false} iff there was new input.
+     * @throws java.io.IOException if any I/O-Error occurs
+     */
+    private boolean zzRefill() throws java.io.IOException {
+
+        /* first: make room (if you can) */
+        if (zzStartRead > 0) {
+            zzEndRead += zzFinalHighSurrogate;
+            zzFinalHighSurrogate = 0;
+            System.arraycopy(zzBuffer, zzStartRead,
+                    zzBuffer, 0,
+                    zzEndRead - zzStartRead);
+
+            /* translate stored positions */
+            zzEndRead -= zzStartRead;
+            zzCurrentPos -= zzStartRead;
+            zzMarkedPos -= zzStartRead;
+            zzStartRead = 0;
+        }
+
+        /* is the buffer big enough? */
+        if (zzCurrentPos >= zzBuffer.length - zzFinalHighSurrogate) {
+            /* if not: blow it up */
+            char newBuffer[] = new char[zzBuffer.length * 2];
+            System.arraycopy(zzBuffer, 0, newBuffer, 0, zzBuffer.length);
+            zzBuffer = newBuffer;
+            zzEndRead += zzFinalHighSurrogate;
+            zzFinalHighSurrogate = 0;
+        }
+
+        /* fill the buffer with new input */
+        int requested = zzBuffer.length - zzEndRead;
+        int numRead = zzReader.read(zzBuffer, zzEndRead, requested);
+
+        /* not supposed to occur according to specification of java.io.Reader */
+        if (numRead == 0) {
+            throw new java.io.IOException(
+                    "Reader returned 0 characters. See JFlex examples/zero-reader for a workaround.");
+        }
+        if (numRead > 0) {
+            zzEndRead += numRead;
+            if (Character.isHighSurrogate(zzBuffer[zzEndRead - 1])) {
+                if (numRead == requested) { // We requested too few chars to encode a full Unicode character
+                    --zzEndRead;
+                    zzFinalHighSurrogate = 1;
+                } else {                    // There is room in the buffer for at least one more char
+                    int c = zzReader.read();  // Expecting to read a paired low surrogate char
+                    if (c == -1) {
+                        return true;
+                    } else {
+                        zzBuffer[zzEndRead++] = (char) c;
+                    }
+                }
+            }
+            /* potentially more input available */
+            return false;
+        }
+
+        /* numRead < 0 ==> end of stream */
+        return true;
+    }
+
+    /**
+     * Translates raw input code points to DFA table row
+     */
+    private static int zzCMap(int input) {
+        int offset = input & 255;
+        return offset == input ? ZZ_CMAP_BLOCKS[offset] : ZZ_CMAP_BLOCKS[ZZ_CMAP_TOP[input >> 8] | offset];
+    }
+
+    /**
+     * Contains user EOF-code, which will be executed exactly once,
+     * when the end of file is reached
+     */
+    private void zzDoEOF() throws java.io.IOException {
+        if (!zzEOFDone) {
+            zzEOFDone = true;
+
+            yyclose();
+        }
+    }
+
+    public int fila() {
+        return yyline + 1;
+    }
+
+    public int columna() {
+        return yycolumn + 1;
+    }
+
+    public String lexema() {
+        return yytext();
+    }
+
+    /**
+     * Closes the input reader.
+     *
+     * @throws java.io.IOException if the reader could not be closed.
+     */
+    public final void yyclose() throws java.io.IOException {
+        zzAtEOF = true; // indicate end of file
+        zzEndRead = zzStartRead; // invalidate buffer
+
+        if (zzReader != null) {
+            zzReader.close();
+        }
+    }
+
+    /**
+     * Returns the text matched by the current regular expression.
+     *
+     * @return the matched text.
+     */
+    public final String yytext() {
+        return new String(zzBuffer, zzStartRead, zzMarkedPos - zzStartRead);
     }
 
 

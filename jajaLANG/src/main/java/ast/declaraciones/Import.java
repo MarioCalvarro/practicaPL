@@ -22,6 +22,44 @@ public class Import extends Declaracion {
         this.namespace = namespace;
     }
 
+    public String getNameSpace() {
+        return namespace;
+    }
+
+    public Programa getAST() {
+        return nuevoAST;
+    }
+
+    @Override
+    public String toString() {
+        return "#traficar " + ruta + " como " + namespace + ",\n" + nuevoAST.toString();
+    }
+
+    @Override
+    public List<Nodo> getAstHijos() {
+        List<Nodo> lista = new ArrayList<Nodo>();
+        lista.add(nuevoAST);
+        return lista;
+    }
+
+    @Override
+    public void bind(Contexto ctx) {
+        if (nuevoAST == null) {
+            //Esto no se debería ejecutar nunca en este punto
+            //Pero por si acaso
+            Thread hilo = iniciarParseo();
+            hilo.start();
+            try {
+                hilo.join();
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+        nuevoAST.bind();
+    }
+
     public Thread iniciarParseo() {
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -44,46 +82,8 @@ public class Import extends Declaracion {
         return thread;
     }
 
-    public String getNameSpace() {
-        return namespace;
-    }
-
-    public Programa getAST() {
-        return nuevoAST;
-    }
-
-    @Override
-    public String toString() {
-        return "#traficar " + ruta + " como " + namespace + ",\n" + nuevoAST.toString();
-    }
-
-    @Override
-    public List<Nodo> getAstHijos() {
-        List<Nodo> lista = new ArrayList<Nodo>();
-        lista.add(nuevoAST);
-        return lista;
-    }
-
     @Override
     public String getId() {
         return namespace;
-    }
-
-    @Override
-    public void bind(Contexto ctx) {
-        if (nuevoAST == null) {
-            //Esto no se debería ejecutar nunca en este punto
-            //Pero por si acaso
-            Thread hilo = iniciarParseo();
-            hilo.start();
-            try {
-                hilo.join();
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-
-        nuevoAST.bind();
     }
 }

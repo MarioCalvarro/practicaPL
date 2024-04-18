@@ -894,26 +894,6 @@ public class AnalizadorSintacticoJaja extends java_cup.runtime.lr_parser {
     }
 
     /**
-     * Action encapsulation object initializer.
-     */
-    protected void init_actions() {
-        action_obj = new CUP$AnalizadorSintacticoJaja$actions(this);
-    }
-
-    /**
-     * Invoke a user supplied parse action.
-     */
-    public java_cup.runtime.Symbol do_action(
-            int act_num,
-            java_cup.runtime.lr_parser parser,
-            java.util.Stack stack,
-            int top)
-            throws java.lang.Exception {
-        /* call code in generated class */
-        return action_obj.CUP$AnalizadorSintacticoJaja$do_action(act_num, parser, stack, top);
-    }
-
-    /**
      * Indicates start state.
      */
     public int start_state() {
@@ -942,6 +922,19 @@ public class AnalizadorSintacticoJaja extends java_cup.runtime.lr_parser {
     }
 
     /**
+     * Invoke a user supplied parse action.
+     */
+    public java_cup.runtime.Symbol do_action(
+            int act_num,
+            java_cup.runtime.lr_parser parser,
+            java.util.Stack stack,
+            int top)
+            throws java.lang.Exception {
+        /* call code in generated class */
+        return action_obj.CUP$AnalizadorSintacticoJaja$do_action(act_num, parser, stack, top);
+    }
+
+    /**
      * User initialization code.
      */
     public void user_init() throws java.lang.Exception {
@@ -953,11 +946,22 @@ public class AnalizadorSintacticoJaja extends java_cup.runtime.lr_parser {
     }
 
     /**
+     * Action encapsulation object initializer.
+     */
+    protected void init_actions() {
+        action_obj = new CUP$AnalizadorSintacticoJaja$actions(this);
+    }
+
+    /**
      * Scan to get the next Symbol.
      */
     public java_cup.runtime.Symbol scan()
             throws java.lang.Exception {
         return getScanner().next_token();
+    }
+
+    public void syntax_error(Symbol unidadLexica) {
+        errores.errorSintactico((UnidadLexica) unidadLexica);
     }
 
     public void reportError(String error) {
@@ -968,10 +972,6 @@ public class AnalizadorSintacticoJaja extends java_cup.runtime.lr_parser {
     public void reportError(int fila, String error) {
         System.err.print("Error fila: " + fila + ": ");
         System.err.println(error);
-    }
-
-    public void syntax_error(Symbol unidadLexica) {
-        errores.errorSintactico((UnidadLexica) unidadLexica);
     }
 
     public Symbol iniciarParseo() throws Exception {
@@ -995,6 +995,22 @@ class CUP$AnalizadorSintacticoJaja$actions {
      */
     CUP$AnalizadorSintacticoJaja$actions(AnalizadorSintacticoJaja parser) {
         this.parser = parser;
+    }
+
+    /**
+     * Method splitting the generated action code into several parts.
+     */
+    public final java_cup.runtime.Symbol CUP$AnalizadorSintacticoJaja$do_action(
+            int CUP$AnalizadorSintacticoJaja$act_num,
+            java_cup.runtime.lr_parser CUP$AnalizadorSintacticoJaja$parser,
+            java.util.Stack CUP$AnalizadorSintacticoJaja$stack,
+            int CUP$AnalizadorSintacticoJaja$top)
+            throws java.lang.Exception {
+        return CUP$AnalizadorSintacticoJaja$do_action_part00000000(
+                CUP$AnalizadorSintacticoJaja$act_num,
+                CUP$AnalizadorSintacticoJaja$parser,
+                CUP$AnalizadorSintacticoJaja$stack,
+                CUP$AnalizadorSintacticoJaja$top);
     }
 
     /**
@@ -2653,21 +2669,5 @@ class CUP$AnalizadorSintacticoJaja$actions {
 
         }
     } /* end of method */
-
-    /**
-     * Method splitting the generated action code into several parts.
-     */
-    public final java_cup.runtime.Symbol CUP$AnalizadorSintacticoJaja$do_action(
-            int CUP$AnalizadorSintacticoJaja$act_num,
-            java_cup.runtime.lr_parser CUP$AnalizadorSintacticoJaja$parser,
-            java.util.Stack CUP$AnalizadorSintacticoJaja$stack,
-            int CUP$AnalizadorSintacticoJaja$top)
-            throws java.lang.Exception {
-        return CUP$AnalizadorSintacticoJaja$do_action_part00000000(
-                CUP$AnalizadorSintacticoJaja$act_num,
-                CUP$AnalizadorSintacticoJaja$parser,
-                CUP$AnalizadorSintacticoJaja$stack,
-                CUP$AnalizadorSintacticoJaja$top);
-    }
 }
 

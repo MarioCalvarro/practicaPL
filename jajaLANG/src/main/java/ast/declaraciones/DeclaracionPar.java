@@ -25,10 +25,11 @@ public class DeclaracionPar extends DeclaracionVar {
 
     @Override
     public String toString() {
-        if (!porReferencia)
+        if (!porReferencia) {
             return id + ": " + tipo.toString();
-        else
+        } else {
             return "&" + id + ": " + tipo.toString();
+        }
     }
 
     public List<Nodo> getAstHijos() {

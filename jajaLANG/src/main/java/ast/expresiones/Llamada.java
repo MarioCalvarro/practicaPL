@@ -27,8 +27,9 @@ public class Llamada extends Expresion {
             i++;
             sb.append(exp);
 
-            if (i != size)
+            if (i != size) {
                 sb.append(",");
+            }
 
         }
         sb.append(")");

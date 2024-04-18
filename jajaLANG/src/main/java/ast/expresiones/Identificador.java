@@ -12,13 +12,13 @@ public class Identificador extends Expresion {
     private final String id;
     private Declaracion dec = null;
 
+    public Identificador(String id) {
+        this(id, null);
+    }
+
     public Identificador(String id, String lib) {
         this.id = id;
         this.lib = lib;
-    }
-
-    public Identificador(String id) {
-        this(id, null);
     }
 
     public String nombre() {
@@ -39,19 +39,6 @@ public class Identificador extends Expresion {
     }
 
     @Override
-    public void bind(Contexto ctx) {
-        super.bind(ctx);
-
-        dec = ctx.get(this);
-        if (dec == null) {
-            //TODO: Cambiar error
-            throw new RuntimeException();
-        }
-
-        this.tipo = dec.tipo();
-    }
-
-    @Override
     public String toString() {
         if (lib == null) {
             return id;
@@ -62,5 +49,18 @@ public class Identificador extends Expresion {
     @Override
     public List<Nodo> getAstHijos() {
         return new ArrayList<Nodo>();
+    }
+
+    @Override
+    public void bind(Contexto ctx) {
+        super.bind(ctx);
+
+        dec = ctx.get(this);
+        if (dec == null) {
+            //TODO: Cambiar error
+            throw new RuntimeException();
+        }
+
+        this.tipo = dec.tipo();
     }
 }

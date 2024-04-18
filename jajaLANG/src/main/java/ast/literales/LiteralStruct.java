@@ -31,8 +31,9 @@ public class LiteralStruct extends Literal {
             contador++;
             Map.Entry<String, Expresion> entry = iterator.next();
             sb.append(entry.getKey()).append(" = ").append(entry.getValue());
-            if (contador != capacidad)
+            if (contador != capacidad) {
                 sb.append(",");
+            }
             sb.append('\n');
         }
 

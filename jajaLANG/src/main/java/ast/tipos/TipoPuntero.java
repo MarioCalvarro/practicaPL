@@ -13,11 +13,6 @@ public class TipoPuntero extends Tipo {
     }
 
     @Override
-    public String toString() {
-        return tipoElemento.toString() + " @";
-    }
-
-    @Override
     public List<Nodo> getAstHijos() {
         List<Nodo> lista = new ArrayList<Nodo>();
         lista.add(tipoElemento);
@@ -36,5 +31,10 @@ public class TipoPuntero extends Tipo {
         } catch (ClassCastException e) {
             return false;
         }
+    }
+
+    @Override
+    public String toString() {
+        return tipoElemento.toString() + " @";
     }
 }

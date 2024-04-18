@@ -9,13 +9,13 @@ import java.util.List;
 public class Entero extends Literal {
     private Integer valorEntero;
 
+    public Entero(String lexema) {
+        this(Integer.parseInt(lexema));
+    }
+
     public Entero(int valor) {
         this.valorEntero = valor;
         this.tipo = TipoEntero.instancia();
-    }
-
-    public Entero(String lexema) {
-        this(Integer.parseInt(lexema));
     }
 
     @Override

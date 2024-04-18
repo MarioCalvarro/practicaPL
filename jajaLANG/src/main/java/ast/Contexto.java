@@ -41,20 +41,20 @@ public class Contexto {
         ambitoActual.poner(dec);
     }
 
-    public Declaracion get(String iden) {
-        Declaracion dec = null;
-        for (int i = ambitos.size() - 1; i >= 0 && dec == null; i--) {
-            dec = ambitos.get(i).get(iden);
-        }
-        return dec;
-    }
-
     public Declaracion get(Identificador iden) {
         if (iden.externo()) {
             return programa.getDeclaracionExt(iden);
         } else {
             return get(iden.nombre());
         }
+    }
+
+    public Declaracion get(String iden) {
+        Declaracion dec = null;
+        for (int i = ambitos.size() - 1; i >= 0 && dec == null; i--) {
+            dec = ambitos.get(i).get(iden);
+        }
+        return dec;
     }
 
     public boolean isGlobal(String name) {

@@ -20,11 +20,6 @@ public class TipoArray extends Tipo {
     }
 
     @Override
-    public String toString() {
-        return "vector" + "(" + tipoElementos + ", " + tam + ")";
-    }
-
-    @Override
     public List<Nodo> getAstHijos() {
         List<Nodo> lista = new ArrayList<Nodo>();
         lista.add(tipoElementos);
@@ -40,5 +35,10 @@ public class TipoArray extends Tipo {
         } catch (ClassCastException e) {
             return false;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "vector" + "(" + tipoElementos + ", " + tam + ")";
     }
 }

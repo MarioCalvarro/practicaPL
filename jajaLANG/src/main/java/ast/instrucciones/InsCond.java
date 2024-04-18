@@ -43,13 +43,15 @@ public class InsCond extends Instruccion {
         StringBuilder sb = new StringBuilder();
 
         if (cuerpo != null) {
-            if (esPrimero)
+            if (esPrimero) {
                 sb.append("si");
-            else
+            } else {
                 sb.append(" sino");
+            }
 
-            if (condicion != null)
+            if (condicion != null) {
                 sb.append(" ").append(condicion);
+            }
 
             sb.append(" {\n");
 
