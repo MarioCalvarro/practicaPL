@@ -6,6 +6,7 @@ import main.java.ast.declaraciones.DeclaracionVar;
 import main.java.ast.expresiones.Expresion;
 import main.java.ast.tipos.Tipo;
 import main.java.ast.tipos.TipoEntero;
+import main.java.errors.BindError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,20 +64,19 @@ public class InsBucleFor extends Instruccion {
 
         Tipo tipoIndice = indice.tipo();
         if (!tipoIndice.equals(TipoEntero.instancia())) {
-            //TODO : Cambiar error
-            throw new RuntimeException();
+            throw new BindError("El tipo del indice del bucle " + this.indice.toString() + " no es entero.");
+
         }
 
         Tipo tipoIni = ini.tipo();
         if (!tipoIni.equals(TipoEntero.instancia())) {
-            //TODO : Cambiar error
-            throw new RuntimeException();
+            throw new BindError("El tipo del inicio del indice del bucle " + this.ini.toString() + " no es entero.");
+
         }
 
         Tipo tipoFin = fin.tipo();
         if (!tipoFin.equals(TipoEntero.instancia())) {
-            //TODO : Cambiar error
-            throw new RuntimeException();
+            throw new BindError("El tipo del final del indice del bucle " + this.ini.toString() + " no es entero.");
         }
     }
 }

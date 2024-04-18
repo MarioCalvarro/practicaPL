@@ -4,6 +4,7 @@ import main.java.ast.Contexto;
 import main.java.ast.Nodo;
 import main.java.ast.expresiones.Expresion;
 import main.java.ast.tipos.Tipo;
+import main.java.errors.BindError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,8 +41,7 @@ public class InsReturn extends Instruccion {
     public void typecheck() {
         super.typecheck();
         if (!tipoRetornoFun.equals(expr.tipo())) {
-            //TODO: Cambiar error
-            throw new RuntimeException();
+            throw new BindError("El tipo de retorno " + expr.tipo().toString() + " no coincide con el tipo de retorno de la función " + this.tipoRetornoFun.toString() + ".");
         }
     }
 }

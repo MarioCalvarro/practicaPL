@@ -39,8 +39,7 @@ public class TipoAlias extends Tipo {
         if (dec == null) {
             Declaracion dec = ctx.get(id);
             if (dec == null) {
-                //TODO: Cambiar error
-                throw new BindError("No existe el identificador del alias.");
+                throw new BindError("No existe el identificador del alias " + id.toString() + ".");
             }
             this.dec = (DeclaracionAlias) dec;
         }

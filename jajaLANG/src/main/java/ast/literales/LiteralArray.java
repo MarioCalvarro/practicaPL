@@ -57,12 +57,12 @@ public class LiteralArray extends Literal {
         Tipo tipoElementos = lExpr.get(0).tipo();
         for (Expresion elem : lExpr) {
             if (!elem.tipo().equals(tipoElementos)) {
-                throw new BindError("El tipo del elemento del array no es correcto.");
+                throw new BindError("El tipo del elemento del array " + this.toString() + " no es correcto.");
             }
         }
 
         if (tipoElementos == null) {
-            throw new BindError("El array no tiene elementos.");
+            throw new BindError("El array " + this.toString() + " no tiene elementos.");
         }
 
         this.tipo = new TipoArray(tipoElementos, new Entero(lExpr.size()));
