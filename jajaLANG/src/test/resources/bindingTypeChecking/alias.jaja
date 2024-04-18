@@ -1,2 +1,6 @@
 incognito int = ent;
+incognito ab = int;
+
 int a = 2;
+ab b = a;
+ent c = b;

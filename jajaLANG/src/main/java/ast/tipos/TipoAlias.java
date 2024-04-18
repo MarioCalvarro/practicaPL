@@ -18,7 +18,12 @@ public class TipoAlias extends Tipo {
     }
 
     public Tipo tipoApuntado() {
-        return dec.tipoApuntado();
+        try {
+            TipoAlias apuntado = (TipoAlias) dec.tipoApuntado();
+            return apuntado.tipoApuntado();
+        } catch (ClassCastException e) {
+            return dec.tipoApuntado();
+        }
     }
 
     @Override
@@ -47,7 +52,7 @@ public class TipoAlias extends Tipo {
         //No podemos comparalos por el nombre porque para eso tendríamos que
         //hacer un cast que a lo mejor no es posible (por ejemplo, si obj es un
         //struct anónimo)
-        return dec.tipo().equals(obj);
+        return dec.tipoApuntado().equals(obj);
     }
 
     @Override

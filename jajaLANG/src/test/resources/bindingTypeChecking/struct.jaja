@@ -7,6 +7,6 @@ incognito dato_t = registro {
 
 diver tronco() {
     ent ab = 2;
-    dato_t a = nuevo {atr1 = 2, atr2 = 1};
+    dato_t a = 3;
     a.atr2 = ab;
 }
