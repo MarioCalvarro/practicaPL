@@ -32,7 +32,6 @@ public class Llamada extends Expresion {
             if (i != size) {
                 sb.append(",");
             }
-
         }
         sb.append(")");
         return sb.toString();

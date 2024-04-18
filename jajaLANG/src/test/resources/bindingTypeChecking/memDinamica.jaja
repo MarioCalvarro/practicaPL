@@ -1,0 +1,5 @@
+ent @ a;
+
+diver main() {
+    a = nuevo ent;
+}
