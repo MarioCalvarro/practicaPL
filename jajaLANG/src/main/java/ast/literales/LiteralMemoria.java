@@ -2,13 +2,14 @@ package main.java.ast.literales;
 
 import main.java.ast.Nodo;
 import main.java.ast.tipos.Tipo;
+import main.java.ast.tipos.TipoAlias;
 import main.java.ast.tipos.TipoPuntero;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LiteralMemoria extends Literal {
-    private final Tipo apuntado;
+    private Tipo apuntado;
 
     public LiteralMemoria(Tipo t) {
         this.tipo = new TipoPuntero(t);
@@ -36,6 +37,10 @@ public class LiteralMemoria extends Literal {
     @Override
     public void typecheck() {
         super.typecheck();
+        //Queremos quitarnos el tipo alias cuanto antes
+        while (apuntado instanceof TipoAlias) {
+            apuntado = ((TipoAlias) apuntado).tipoApuntado();
+        }
         this.tipo = new TipoPuntero(apuntado);
     }
 }
