@@ -5,6 +5,7 @@ import main.java.ast.Nodo;
 import main.java.ast.declaraciones.Declaracion;
 import main.java.ast.declaraciones.DeclaracionAlias;
 import main.java.ast.designadores.Identificador;
+import main.java.errors.BindError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,7 @@ public class TipoAlias extends Tipo {
             Declaracion dec = ctx.get(id);
             if (dec == null) {
                 //TODO: Cambiar error
-                throw new RuntimeException();
+                throw new BindError("No existe el identificador del alias.");
             }
             this.dec = (DeclaracionAlias) dec;
         }

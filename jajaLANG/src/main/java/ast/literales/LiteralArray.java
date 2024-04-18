@@ -4,6 +4,7 @@ import main.java.ast.Nodo;
 import main.java.ast.expresiones.Expresion;
 import main.java.ast.tipos.Tipo;
 import main.java.ast.tipos.TipoArray;
+import main.java.errors.BindError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,8 +57,7 @@ public class LiteralArray extends Literal {
         Tipo tipoElementos = lExpr.get(0).tipo();
         for (Expresion elem : lExpr) {
             if (!elem.tipo().equals(tipoElementos)) {
-                //TODO: Cambiar error
-                throw new RuntimeException();
+                throw new BindError("El tipo del elemento del array no es correcto.");
             }
         }
 
