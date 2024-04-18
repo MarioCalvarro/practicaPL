@@ -4,6 +4,7 @@ import main.java.ast.Nodo;
 import main.java.ast.tipos.Tipo;
 import main.java.ast.tipos.TipoBinario;
 import main.java.ast.tipos.TipoEntero;
+import main.java.ast.tipos.TipoPuntero;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,10 +51,37 @@ public class OperadorBin extends Expresion {
         Tipo tipoIzquierda = izquierda.tipo();
         Tipo tipoDerecha = derecha.tipo();
 
-        if (esBinario(op)
-                && (!tipoIzquierda.equals(TipoBinario.instancia()) || !tipoDerecha.equals(TipoBinario.instancia())) ||
-                (!esBinario(op) && (!tipoIzquierda.equals(TipoEntero.instancia())
-                        || !tipoDerecha.equals(TipoEntero.instancia())))) {
+        if (tipoIzquierda.equals(TipoBinario.instancia())) {
+            if (!tipoDerecha.equals(TipoBinario.instancia())) {
+                // TODO : Cambiar error
+                throw new RuntimeException();
+            }
+            if (!esBinario(op)) {
+                // TODO : Cambiar error
+                throw new RuntimeException();
+            }
+        }
+        else if (tipoIzquierda.equals(TipoEntero.instancia())) {
+            if (!tipoDerecha.equals(TipoEntero.instancia()) && !(tipoDerecha instanceof TipoPuntero)) {
+                // TODO : Cambiar error
+                throw new RuntimeException();
+            }
+            if (esBinario(op)) {
+                // TODO : Cambiar error
+                throw new RuntimeException();
+            }
+        }
+        else if (tipoIzquierda instanceof TipoPuntero) {
+            if (!tipoDerecha.equals(TipoEntero.instancia())) {
+                // TODO : Cambiar error
+                throw new RuntimeException();
+            }
+            if (esBinario(op)) {
+                // TODO : Cambiar error
+                throw new RuntimeException();
+            }
+        }
+        else {
             // TODO : Cambiar error
             throw new RuntimeException();
         }
@@ -62,8 +90,7 @@ public class OperadorBin extends Expresion {
     }
 
     private boolean esBinario(Operadores op) {
-        return op == Operadores.CONJ || op == Operadores.DESIGUAL || op == Operadores.DISY || op == Operadores.IGUAL
-                || op == Operadores.NEG;
+        return op == Operadores.CONJ || op == Operadores.DISY;
     }
 
     @Override
@@ -98,7 +125,7 @@ public class OperadorBin extends Expresion {
     }
 
     public enum Operadores {
-        SUMA, RESTA, MUL, DIV, MOD, IGUAL, DESIGUAL, MENOR, MAYOR, MENORIGUAL, MAYORIGUAL, DISY, CONJ, POT, NEG;
+        SUMA, RESTA, MUL, DIV, MOD, IGUAL, DESIGUAL, MENOR, MAYOR, MENORIGUAL, MAYORIGUAL, DISY, CONJ, POT;
 
         public String toString() {
             switch (this) {

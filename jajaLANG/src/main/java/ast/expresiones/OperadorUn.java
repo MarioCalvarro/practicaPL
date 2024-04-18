@@ -1,6 +1,7 @@
 package main.java.ast.expresiones;
 
 import main.java.ast.Nodo;
+import main.java.ast.designadores.Designador;
 import main.java.ast.tipos.Tipo;
 import main.java.ast.tipos.TipoBinario;
 import main.java.ast.tipos.TipoEntero;
@@ -61,7 +62,9 @@ public class OperadorUn extends Expresion {
                 break;
 
             case DIRECCION:
-                if (!tipoDerecha.equals(TipoEntero.instancia())) {
+                try {
+                    Designador aux = (Designador) derecha;
+                } catch (ClassCastException e) {
                     //TODO : Cambiar error
                     throw new RuntimeException();
                 }

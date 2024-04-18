@@ -11,7 +11,7 @@ import main.java.ast.Programa;
 import main.java.lexico.AnalizadorLexicoJaja;
 import main.java.sintactico.AnalizadorSintacticoJaja;
 
-public class TypecheckPuneroTest {
+public class TypecheckPunteroTest {
 	@Test
     void test() {
         //Programa que importa una librería y llama a una de sus funciones
