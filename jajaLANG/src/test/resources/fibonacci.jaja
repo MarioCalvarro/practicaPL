@@ -1,4 +1,4 @@
-#traficar src/test/resources/parImpar.jaja como r
+#traficar src/test/resources/otro.jaja como r
 
 diver fibonacci(c: ent) -> ent {
     si c == 0 {
@@ -12,9 +12,9 @@ diver fibonacci(c: ent) -> ent {
 
 diver tronco() {
     //Imprime algo por pantalla
-    escribirBin(r::par(2));
+    escribirEnt(r::fun(2));
 
     para i = 0 -> 10 {
-        escribirEntero(fibonacci(i));
+        escribirEnt(fibonacci(i));
     } 
 }

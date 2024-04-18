@@ -1,0 +1,3 @@
+diver fun(p: ent) -> ent {
+    devuelve p;
+}

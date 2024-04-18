@@ -13,9 +13,9 @@ diver tronco() {
     r::prueba();
     
     //Falta punto y coma
-    escribirEntero();
+    escribirEnt();
 
     para i = 0 -> 10 {
-        escribirEntero(i);
+        escribirEnt(i);
     } 
 }
