@@ -1,4 +1,4 @@
-/*package test.java.typechecking;
+package test.java.typechecking;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -35,6 +35,6 @@ public class TypecheckParImparTest {
         pr.bind();
         pr.typecheck();
     }
-}*/
+}
 
 
