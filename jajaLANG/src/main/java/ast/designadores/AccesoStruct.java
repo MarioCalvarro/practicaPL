@@ -1,13 +1,14 @@
-package main.java.ast.expresiones;
+package main.java.ast.designadores;
 
 import main.java.ast.Nodo;
+import main.java.ast.expresiones.Expresion;
 import main.java.ast.tipos.Tipo;
 import main.java.ast.tipos.TipoRegistro;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccesoStruct extends Expresion {
+public class AccesoStruct extends Designador {
     private final Expresion exp;
     private final String id;
 

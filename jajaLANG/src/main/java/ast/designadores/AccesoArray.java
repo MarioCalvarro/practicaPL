@@ -1,13 +1,14 @@
-package main.java.ast.expresiones;
+package main.java.ast.designadores;
 
 import main.java.ast.Nodo;
+import main.java.ast.expresiones.Expresion;
 import main.java.ast.tipos.TipoArray;
 import main.java.ast.tipos.TipoEntero;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccesoArray extends Expresion {
+public class AccesoArray extends Designador {
     private final Expresion array;
     private final Expresion indice;
 

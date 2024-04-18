@@ -14,8 +14,8 @@ import main.java.lexico.TokenValue;
 import main.java.errors.GestionErroresJaja;
 
 import main.java.ast.Programa;
-import main.java.ast.declaraciones.Import;
 import main.java.ast.declaraciones.*;
+import main.java.ast.designadores.*;
 import main.java.ast.expresiones.*;
 import main.java.ast.instrucciones.*;
 import main.java.ast.literales.*;

@@ -65,7 +65,7 @@ public class OperadorUn extends Expresion {
                     //TODO : Cambiar error
                     throw new RuntimeException();
                 }
-                this.tipo = TipoEntero.instancia();
+                this.tipo = new TipoPuntero(tipoDerecha);
                 break;
 
             case PUNTERO:

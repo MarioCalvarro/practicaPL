@@ -2,7 +2,7 @@ package main.java.ast;
 
 import main.java.ast.declaraciones.Declaracion;
 import main.java.ast.declaraciones.Import;
-import main.java.ast.expresiones.Identificador;
+import main.java.ast.designadores.Identificador;
 
 import java.util.ArrayList;
 import java.util.HashMap;

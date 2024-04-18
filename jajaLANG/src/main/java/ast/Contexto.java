@@ -1,7 +1,7 @@
 package main.java.ast;
 
 import main.java.ast.declaraciones.Declaracion;
-import main.java.ast.expresiones.Identificador;
+import main.java.ast.designadores.Identificador;
 import main.java.ast.tipos.Tipo;
 import main.java.ast.tipos.TipoFunc;
 

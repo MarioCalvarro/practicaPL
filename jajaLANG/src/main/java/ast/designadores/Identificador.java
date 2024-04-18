@@ -1,4 +1,4 @@
-package main.java.ast.expresiones;
+package main.java.ast.designadores;
 
 import main.java.ast.Contexto;
 import main.java.ast.Nodo;
@@ -7,7 +7,7 @@ import main.java.ast.declaraciones.Declaracion;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Identificador extends Expresion {
+public class Identificador extends Designador {
     private final String lib;
     private final String id;
     private Declaracion dec = null;

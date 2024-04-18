@@ -3,6 +3,7 @@ package main.java.ast.expresiones;
 import main.java.ast.Nodo;
 import main.java.ast.declaraciones.DeclaracionFun;
 import main.java.ast.declaraciones.DeclaracionPar;
+import main.java.ast.designadores.Identificador;
 import main.java.ast.tipos.TipoFunc;
 
 import java.util.ArrayList;
