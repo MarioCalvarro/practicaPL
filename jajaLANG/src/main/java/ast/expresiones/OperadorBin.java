@@ -56,10 +56,6 @@ public class OperadorBin extends Expresion {
                 // TODO : Cambiar error
                 throw new RuntimeException();
             }
-            if (!esBinario(op)) {
-                // TODO : Cambiar error
-                throw new RuntimeException();
-            }
         }
         else if (tipoIzquierda.equals(TipoEntero.instancia())) {
             if (!tipoDerecha.equals(TipoEntero.instancia()) && !(tipoDerecha instanceof TipoPuntero)) {
@@ -72,14 +68,15 @@ public class OperadorBin extends Expresion {
             }
         }
         else if (tipoIzquierda instanceof TipoPuntero) {
-            if (!(tipoDerecha instanceof  TipoPuntero && esRelacional(op))) {
+            if (tipoDerecha instanceof TipoPuntero && !esRelacional(op)) {
                 // TODO : Cambiar error
                 throw new RuntimeException();
             }
-            else if (!(tipoDerecha instanceof  TipoPuntero) && !tipoDerecha.equals(TipoEntero.instancia())) {
+            else if (!esRelacional(op) && !tipoDerecha.equals(TipoEntero.instancia())) {
                 // TODO : Cambiar error
                 throw new RuntimeException();
             }
+
             if (esBinario(op)) {
                 // TODO : Cambiar error
                 throw new RuntimeException();
