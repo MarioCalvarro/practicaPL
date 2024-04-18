@@ -1,0 +1,10 @@
+ent @ a;
+ent b = 5;
+diver tronco () {
+	a = &b;
+	a += 1;
+	si @a == 6 {
+		a = 0;
+	}
+}
+
