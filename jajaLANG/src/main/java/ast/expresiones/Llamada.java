@@ -76,7 +76,7 @@ public class Llamada extends Expresion {
 
         //Comprobar que el tipo de los parámetros es correcto
         for (int i = 0; i < listaExpresiones.size(); i++) {
-            DeclaracionPar par = decFuncion.parametros().get(i); 
+            DeclaracionPar par = decFuncion.parametros().get(i);
             Expresion exp = listaExpresiones.get(i);
             //TODO: Ahora mismo solo se puede pasar por parametro identificadores
             if (!par.tipo().equals(exp.tipo()) || par.porReferencia() && exp instanceof Identificador) {

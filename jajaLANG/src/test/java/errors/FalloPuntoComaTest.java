@@ -14,10 +14,10 @@ class FalloPuntoComaTest {
     private final static ByteArrayOutputStream errContent = new ByteArrayOutputStream();
     private final static PrintStream originalErr = System.err;
     private static final String result = "ERROR línea 2, columna 10.\n"
-        + "ERROR línea 5, columna 10.\n"
-        + "Error fila: 5: Condicional incorrecto. La condición no es válida.\n"
-        + "Error fila: 2: Condicional incorrecto. La condición no es válida.\n"
-        + "El programa contiene errores. Abortando compilación...\n";
+            + "ERROR línea 5, columna 10.\n"
+            + "Error fila: 5: Condicional incorrecto. La condición no es válida.\n"
+            + "Error fila: 2: Condicional incorrecto. La condición no es válida.\n"
+            + "El programa contiene errores. Abortando compilación...\n";
 
     @BeforeAll
     public static void setUpStreams() {

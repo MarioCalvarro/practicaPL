@@ -13,25 +13,6 @@ public class OperadorUn extends Expresion {
     private final Operadores op;
     private final Expresion derecha;
 
-    public enum Operadores {
-        NEG, DIRECCION, PUNTERO, RESTA;
-
-        public String toString() {
-            switch (this) {
-                case NEG:
-                    return "!";
-                case RESTA:
-                    return "-";
-                case DIRECCION:
-                    return "&";
-                case PUNTERO:
-                    return "@";
-                default:
-                    throw new IllegalArgumentException("Invalid operator");
-            }
-        }
-    }
-
     public OperadorUn(Operadores op, Expresion derecha) {
         this.op = op;
         this.derecha = derecha;
@@ -76,45 +57,64 @@ public class OperadorUn extends Expresion {
     public void typecheck() {
         super.typecheck();
         Tipo tipoDerecha = derecha.tipo();
-        
+
         switch (op) {
             case RESTA:
-            	if (!tipoDerecha.equals(TipoEntero.instancia())) {
-            		 //TODO : Cambiar error
+                if (!tipoDerecha.equals(TipoEntero.instancia())) {
+                    //TODO : Cambiar error
                     throw new RuntimeException();
-            	}
+                }
                 this.tipo = TipoEntero.instancia();
                 break;
-            
+
             case NEG:
-            	if (!tipoDerecha.equals(TipoBinario.instancia())) {
-            		 //TODO : Cambiar error
+                if (!tipoDerecha.equals(TipoBinario.instancia())) {
+                    //TODO : Cambiar error
                     throw new RuntimeException();
-            	}
+                }
                 this.tipo = TipoBinario.instancia();
                 break;
-            
+
             case DIRECCION:
-            	if (!tipoDerecha.equals(TipoEntero.instancia())) {
-           		 //TODO : Cambiar error
-                   throw new RuntimeException();
-            	}
+                if (!tipoDerecha.equals(TipoEntero.instancia())) {
+                    //TODO : Cambiar error
+                    throw new RuntimeException();
+                }
                 this.tipo = TipoEntero.instancia();
                 break;
-            
+
             case PUNTERO:
-            	 try {
-                     TipoPuntero tipopuntero = (TipoPuntero) derecha.tipo();
-                     this.tipo = tipopuntero.getTipoApuntado();
-                 } catch (ClassCastException e) {
-                     //TODO: Cambiar el error
-                     throw new RuntimeException();
-                 }
+                try {
+                    TipoPuntero tipopuntero = (TipoPuntero) derecha.tipo();
+                    this.tipo = tipopuntero.getTipoApuntado();
+                } catch (ClassCastException e) {
+                    //TODO: Cambiar el error
+                    throw new RuntimeException();
+                }
                 break;
-            
+
             default:
                 //TODO : Cambiar error
                 throw new RuntimeException();
+        }
+    }
+
+    public enum Operadores {
+        NEG, DIRECCION, PUNTERO, RESTA;
+
+        public String toString() {
+            switch (this) {
+                case NEG:
+                    return "!";
+                case RESTA:
+                    return "-";
+                case DIRECCION:
+                    return "&";
+                case PUNTERO:
+                    return "@";
+                default:
+                    throw new IllegalArgumentException("Invalid operator");
+            }
         }
     }
 }

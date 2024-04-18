@@ -1,24 +1,26 @@
 package test.java.binding;
 
-import org.junit.jupiter.api.Test;
-
-import main.java.ast.instrucciones.InsBucleWhile;
-import main.java.lexico.AnalizadorLexicoJaja;
-import main.java.sintactico.AnalizadorSintacticoJaja;
 import main.java.ast.Ambito;
 import main.java.ast.Contexto;
 import main.java.ast.Programa;
 import main.java.ast.declaraciones.DeclaracionFun;
+import main.java.ast.instrucciones.InsBucleWhile;
+import main.java.lexico.AnalizadorLexicoJaja;
+import main.java.sintactico.AnalizadorSintacticoJaja;
+import org.junit.jupiter.api.Test;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BindWhileTest {
     private static final String result = "Contexto:\n"
-    		+ "Ámbito{v1=ent v1, cond=bin cond = fake, v3=ent v3}\n"
-    		+ "Contexto:\n"
-    		+ "Ámbito{vW1=ent vW1}\n";
+            + "Ámbito{v1=ent v1, cond=bin cond = fake, v3=ent v3}\n"
+            + "Contexto:\n"
+            + "Ámbito{vW1=ent vW1}\n";
 
     @Test
     void test() {

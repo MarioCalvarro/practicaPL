@@ -71,9 +71,9 @@ public class DeclaracionVar extends Declaracion {
     public List<Nodo> getAstHijos() {
         List<Nodo> lista = new ArrayList<Nodo>();
         lista.add(tipo);
-        if(valor != null) {
+        if (valor != null) {
             lista.add(valor);
-        }    
+        }
         return lista;
     }
 }

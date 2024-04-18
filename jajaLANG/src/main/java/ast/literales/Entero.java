@@ -1,7 +1,6 @@
 package main.java.ast.literales;
 
 import main.java.ast.Nodo;
-import main.java.ast.tipos.TipoArray;
 import main.java.ast.tipos.TipoEntero;
 
 import java.util.ArrayList;

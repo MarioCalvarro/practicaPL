@@ -1,24 +1,24 @@
 package test.java.binding;
 
-import org.junit.jupiter.api.Test;
-
-import main.java.ast.instrucciones.InsBucleWhile;
-import main.java.lexico.AnalizadorLexicoJaja;
-import main.java.sintactico.AnalizadorSintacticoJaja;
 import main.java.ast.Ambito;
 import main.java.ast.Contexto;
 import main.java.ast.Programa;
 import main.java.ast.declaraciones.DeclaracionAlias;
-import main.java.ast.declaraciones.DeclaracionFun;
 import main.java.ast.declaraciones.DeclaracionVar;
+import main.java.lexico.AnalizadorLexicoJaja;
+import main.java.sintactico.AnalizadorSintacticoJaja;
+import org.junit.jupiter.api.Test;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BindAliasTest {
     private static final String result = "Contexto:\n"
-    		+ "Ámbito{a=int a = 2, int=INCOGNITO int = ent}\n";
+            + "Ámbito{a=int a = 2, int=INCOGNITO int = ent}\n";
 
     @Test
     void test() {
@@ -57,11 +57,11 @@ class BindAliasTest {
             System.exit(1);
         }
         Contexto ctx = new Contexto(null, new Ambito());
-        
+
         for (var hijo : pr.getAstHijos()) {
             hijo.bind(ctx);
         }
-        
+
         System.out.println(ctx);
         test1 = ctx.toString();
         assertEquals(test1, result);
