@@ -62,7 +62,7 @@ public class LiteralArray extends Literal {
         }
 
         if (tipoElementos == null) {
-            throw new BindError("El array " + this.toString() + " no tiene elementos.");
+            throw new TypeError("El array " + this.toString() + " no tiene elementos.");
         }
 
         this.tipo = new TipoArray(tipoElementos, new Entero(lExpr.size()));

@@ -6,6 +6,7 @@ import main.java.ast.expresiones.Expresion;
 import main.java.ast.tipos.Tipo;
 import main.java.ast.tipos.TipoBinario;
 import main.java.errors.BindError;
+import main.java.errors.TypeError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,7 +114,7 @@ public class InsCond extends Instruccion {
         if (condicion != null) {
             Tipo tipoIndice = condicion.tipo();
             if (!tipoIndice.equals(TipoBinario.instancia())) {
-                throw new BindError("El tipo de la condición del bucle " +this.condicion.toString() + " no es booleano.");
+                throw new TypeError("El tipo de la condición del bucle " +this.condicion.toString() + " no es booleano.");
             }
         }
     }
