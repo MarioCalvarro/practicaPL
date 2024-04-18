@@ -7,5 +7,6 @@ diver tronco () {
 	si @a == 6 {
 		@a = 0;
 	}
+	 bin c = !facto;
 }
 
