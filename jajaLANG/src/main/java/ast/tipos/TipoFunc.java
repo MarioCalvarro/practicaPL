@@ -36,7 +36,6 @@ public class TipoFunc extends Tipo {
             TipoFunc otro = (TipoFunc) obj;
             return this.tipoRetorno.equals(otro.tipoRetorno) &&
                     this.tipoParametros.equals(otro.tipoParametros);
-
         } catch (ClassCastException e) {
             return false;
         }
