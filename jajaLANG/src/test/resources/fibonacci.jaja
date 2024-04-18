@@ -1,7 +1,6 @@
-//Necesitamos poner una ruta complicada para los tests
 #traficar src/test/resources/parImpar.jaja como r
 
-diver fibonacci(r: ent) -> ent {
+diver fibonacci(c: ent) -> ent {
     si c == 0 {
         devuelve 1; 
     }
