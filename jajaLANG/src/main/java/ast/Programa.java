@@ -54,8 +54,8 @@ public class Programa extends Nodo {
         
         //Liberar
         ambitoGlobal.poner(new DeclaracionFun("liberar", 
-        		    Arrays.asList(new DeclaracionPar("puntero", 
-        		    	   new TipoPuntero(null), false)), TipoVacio.instancia() ));
+        		    Arrays.asList(new DeclaracionPar("puntero", new TipoPuntero(null), false)),
+                    TipoVacio.instancia()));
     }
     
    

@@ -4,6 +4,7 @@ import main.java.ast.Contexto;
 import main.java.ast.Nodo;
 import main.java.ast.expresiones.Expresion;
 import main.java.ast.tipos.Tipo;
+import main.java.ast.tipos.TipoAlias;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,8 +74,11 @@ public class DeclaracionVar extends Declaracion {
     @Override
     public void bind(Contexto ctx) {
         super.bind(ctx);
+        //Queremos quitarnos el tipo alias cuanto antes
+        while (tipo instanceof TipoAlias) {
+            tipo = ((TipoAlias) tipo).tipoApuntado();
+        }
         ctx.insertar(this);
-        //esGlobal = ctx.isGlobal(this.getId());
     }
 
     @Override

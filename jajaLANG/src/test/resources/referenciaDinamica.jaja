@@ -11,7 +11,8 @@ diver f(&a: ent) -> ent {
 diver tronco() {
     ent @ punt = nuevo ent;
     @punt = 10;
-    ent b = f(@punt);
+    ent a = @punt;
+    ent b = f(a);
     escribirEnt(b); //Tiene que dar 10
     liberar(punt);
 
