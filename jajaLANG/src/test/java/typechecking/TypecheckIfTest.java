@@ -30,6 +30,6 @@ class TypecheckIfTest {
         }
         //Solo queremos comprobar que no tire excepción
         pr.bind();
-        pr.checktype();
+        pr.typecheck();
     }
 }
