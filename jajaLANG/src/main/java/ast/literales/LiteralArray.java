@@ -54,7 +54,7 @@ public class LiteralArray extends Literal {
         //Todos los elementos tienen que tener el mismo tipo
         Tipo tipoElementos = lExpr.get(0).tipo();
         for (Expresion elem : lExpr) {
-            if (!tipoElementos.equals(elem.tipo())) {
+            if (!elem.tipo().equals(tipoElementos)) {
                 //TODO: Cambiar error
                 throw new RuntimeException();
             }

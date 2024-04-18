@@ -8,7 +8,7 @@ import main.java.ast.Programa;
 
 import java.io.*;
 
-class TypeCheckArrayTest {
+class TypecheckArrayTest {
     @Test
     void test() {
         //Programa que importa una librería y llama a una de sus funciones

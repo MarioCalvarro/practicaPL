@@ -1,6 +1,7 @@
 package main.java.ast.literales;
 
 import main.java.ast.Nodo;
+import main.java.ast.tipos.TipoArray;
 import main.java.ast.tipos.TipoEntero;
 
 import java.util.ArrayList;
@@ -16,6 +17,16 @@ public class Entero extends Literal {
 
     public Entero(String lexema) {
         this(Integer.parseInt(lexema));
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        try {
+            Entero otro = (Entero) obj;
+            return this.valorEntero.equals(otro.valorEntero);
+        } catch (ClassCastException e) {
+            return false;
+        }
     }
 
     @Override
