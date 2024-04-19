@@ -48,14 +48,14 @@ public class OperadorUn extends Expresion {
         switch (op) {
             case RESTA:
                 if (!tipoDerecha.equals(TipoEntero.instancia())) {
-                    throw new TypeError( this.derecha.toString() + " no es de tipo entero y  por tanto no se le puede aplicar el menos unario.");
+                    throw new TypeError(this.derecha.toString() + " no es de tipo entero y  por tanto no se le puede aplicar el menos unario.");
                 }
                 this.tipo = TipoEntero.instancia();
                 break;
 
             case NEG:
                 if (!tipoDerecha.equals(TipoBinario.instancia())) {
-                    throw new TypeError( this.derecha.toString() + " no es de tipo booleano y  por tanto no se le puede aplicar la negación unaria.");
+                    throw new TypeError(this.derecha.toString() + " no es de tipo booleano y  por tanto no se le puede aplicar la negación unaria.");
                 }
                 this.tipo = TipoBinario.instancia();
                 break;
@@ -64,7 +64,7 @@ public class OperadorUn extends Expresion {
                 try {
                     Designador aux = (Designador) derecha;
                 } catch (ClassCastException e) {
-                    throw new TypeError( this.derecha.toString() + " no es un designador y  por tanto no se le puede aplicar el operador dirección.");
+                    throw new TypeError(this.derecha.toString() + " no es un designador y  por tanto no se le puede aplicar el operador dirección.");
                 }
                 this.tipo = new TipoPuntero(tipoDerecha);
                 break;
@@ -74,14 +74,14 @@ public class OperadorUn extends Expresion {
                 try {
                     tipoPuntero = (TipoPuntero) derecha.tipo();
                 } catch (ClassCastException e) {
-                    throw new TypeError( this.derecha.toString() + " no es un puntero y  por tanto no se le puede aplicar el operador puntero.");
+                    throw new TypeError(this.derecha.toString() + " no es un puntero y  por tanto no se le puede aplicar el operador puntero.");
 
                 }
                 this.tipo = tipoPuntero.getTipoApuntado();
                 break;
 
             default:
-                throw new TypeError( this.op.toString() + " no es un operador unario valido.");
+                throw new TypeError(this.op.toString() + " no es un operador unario valido.");
         }
     }
 
@@ -94,8 +94,7 @@ public class OperadorUn extends Expresion {
                 res = -der;
                 break;
             default:
-                //TODO: Cambiar error
-                throw new RuntimeException();
+                throw new TypeError("El operador " + op.toString() + " no se puede evaluar estaticamente.");
         }
         return res;
     }

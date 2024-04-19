@@ -4,6 +4,8 @@ import main.java.ast.declaraciones.Declaracion;
 import main.java.ast.designadores.Identificador;
 import main.java.ast.tipos.Tipo;
 import main.java.ast.tipos.TipoFunc;
+import main.java.errors.BindError;
+import main.java.errors.TypeError;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,8 +36,7 @@ public class Contexto {
     public void insertar(Declaracion dec) {
         Ambito ambitoActual = ambitos.get(ambitos.size() - 1);
         if (ambitoActual.pertenece(dec.getId())) {
-            //TODO: Cambiar error
-            throw new RuntimeException();
+            throw new BindError("El identificador " + dec.getId() + " ya está relacionado con otra declaración en el mismo ámbito.");
         }
 
         ambitoActual.poner(dec);
@@ -69,8 +70,7 @@ public class Contexto {
         try {
             tipoFun = (TipoFunc) ambitos.get(1).encontrarFun().tipo();
         } catch (ClassCastException e) {
-            //TODO: Cambiar error
-            throw new RuntimeException();
+            throw new TypeError("No ha sido posible encontrar el tipo de la función asociada al 'devuelve'.");
         }
         return tipoFun.tipoRetorno();
     }

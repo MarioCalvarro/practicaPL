@@ -29,10 +29,6 @@ public class OperadorBin extends Expresion {
         return derecha;
     }
 
-    public Operadores getOp() {
-        return op;
-    }
-
     @Override
     public String toString() {
         return "(" + izquierda + ")" + op.toString() + "(" + derecha + ")";
@@ -56,36 +52,31 @@ public class OperadorBin extends Expresion {
             if (!tipoDerecha.equals(TipoBinario.instancia())) {
                 throw new BindError("El lado izquierdo de la operación " + this.izquierda.toString() + " es binario, pero el lado derecho no " + this.derecha.toString() + ".");
             }
-        }
-        else if (tipoIzquierda.equals(TipoEntero.instancia())) {
+        } else if (tipoIzquierda.equals(TipoEntero.instancia())) {
             if (!tipoDerecha.equals(TipoEntero.instancia()) && !(tipoDerecha instanceof TipoPuntero)) {
                 throw new BindError("El lado izquierdo de la operación " + this.izquierda.toString() + " es de tipo entero, pero el lado derecho no es entero ni puntero " + this.derecha.toString() + ".");
             }
             if (esBinario(op)) {
                 throw new BindError("El lado izquierdo de la operación " + this.izquierda.toString() + " es entero, pero el operador " + this.op.toString() + " es binario.");
             }
-        }
-        else if (tipoIzquierda instanceof TipoPuntero) {
+        } else if (tipoIzquierda instanceof TipoPuntero) {
             if (tipoDerecha instanceof TipoPuntero && !esRelacional(op)) {
                 throw new BindError("Ambos lados de la expresión son de tipo puntero pero la operación " + this.getOp().toString() + " no es relacional.");
-            }
-            else if (!esRelacional(op) && !tipoDerecha.equals(TipoEntero.instancia())) {
+            } else if (!esRelacional(op) && !tipoDerecha.equals(TipoEntero.instancia())) {
                 throw new BindError("El lado izquierdo es de tipo puntero " + this.izquierda.toString() + "el lado izquierdo no es entero " + this.derecha.toString() + " y el operador no es relacional " + this.getOp().toString() + ".");
             }
 
             if (esBinario(op)) {
                 throw new BindError("El lado izquierdo es de tipo puntero " + this.izquierda.toString() + "pero el operador es binario " + this.getOp().toString() + ".");
             }
-        }
-        else {
+        } else {
             throw new BindError("El lado izquierdo de la expresión no es ni de tipo entero, binario ni puntero " + this.izquierda.toString() + ".");
 
         }
 
         if (esRelacional(op)) {
             this.tipo = TipoBinario.instancia();
-        }
-        else {
+        } else {
             this.tipo = tipoIzquierda; // O derecha, da igual
         }
     }
@@ -96,6 +87,10 @@ public class OperadorBin extends Expresion {
 
     private boolean esRelacional(Operadores op) {
         return op == Operadores.IGUAL || op == Operadores.DESIGUAL || op == Operadores.MENOR || op == Operadores.MAYOR || op == Operadores.MENORIGUAL || op == Operadores.MAYORIGUAL;
+    }
+
+    public Operadores getOp() {
+        return op;
     }
 
     @Override
@@ -123,8 +118,7 @@ public class OperadorBin extends Expresion {
                 res = izq ^ der;
                 break;
             default:
-                // TODO: Cambiar error
-                throw new RuntimeException();
+                throw new TypeError("El operador " + op.toString() + " no se puede evaluar estaticamente.");
         }
         return res;
     }

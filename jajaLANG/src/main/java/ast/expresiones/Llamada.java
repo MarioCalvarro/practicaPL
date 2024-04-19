@@ -7,7 +7,6 @@ import main.java.ast.designadores.Designador;
 import main.java.ast.designadores.Identificador;
 import main.java.ast.tipos.Tipo;
 import main.java.ast.tipos.TipoFunc;
-import main.java.errors.BindError;
 import main.java.errors.TypeError;
 
 import java.util.ArrayList;
@@ -56,7 +55,7 @@ public class Llamada extends Expresion {
         try {
             tipoFun = (TipoFunc) exp.tipo();
         } catch (ClassCastException e) {
-            throw new TypeError( this.exp.toString() + " no es una función.");
+            throw new TypeError(this.exp.toString() + " no es una función.");
 
         }
 
@@ -77,10 +76,10 @@ public class Llamada extends Expresion {
         try {
             decFuncion = (DeclaracionFun) exp.dec();
         } catch (ClassCastException e) { //No debería pasar nunca
-            throw new TypeError("El tipo de la declaración de la funcion " + this.exp.dec()+ " no es entero.");
+            throw new TypeError("El tipo de la declaración de la funcion " + this.exp.dec() + " no es entero.");
 
         }
-        
+
         for (int i = 0; i < decFuncion.parametros().size(); i++) {
             DeclaracionPar par = decFuncion.parametros().get(i);
             Expresion exp = listaExpresiones.get(i);

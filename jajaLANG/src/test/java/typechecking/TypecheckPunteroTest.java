@@ -1,18 +1,17 @@
 package test.java.typechecking;
 
+import main.java.ast.Programa;
+import main.java.lexico.AnalizadorLexicoJaja;
+import main.java.sintactico.AnalizadorSintacticoJaja;
+import org.junit.jupiter.api.Test;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-import org.junit.jupiter.api.Test;
-
-import main.java.ast.Programa;
-import main.java.lexico.AnalizadorLexicoJaja;
-import main.java.sintactico.AnalizadorSintacticoJaja;
-
 public class TypecheckPunteroTest {
-	@Test
+    @Test
     void test() {
         //Programa que importa una librería y llama a una de sus funciones
         Reader input = null;

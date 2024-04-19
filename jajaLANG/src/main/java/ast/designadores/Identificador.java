@@ -40,14 +40,6 @@ public class Identificador extends Designador {
     }
 
     @Override
-    public String toString() {
-        if (lib == null) {
-            return id;
-        }
-        return lib + "::" + id;
-    }
-
-    @Override
     public List<Nodo> getAstHijos() {
         return new ArrayList<Nodo>();
     }
@@ -62,5 +54,13 @@ public class Identificador extends Designador {
         }
 
         this.tipo = dec.tipo();
+    }
+
+    @Override
+    public String toString() {
+        if (lib == null) {
+            return id;
+        }
+        return lib + "::" + id;
     }
 }

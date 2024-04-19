@@ -4,6 +4,7 @@ import main.java.ast.Nodo;
 import main.java.ast.tipos.Tipo;
 import main.java.ast.tipos.TipoAlias;
 import main.java.ast.tipos.TipoPuntero;
+import main.java.errors.TypeError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +24,7 @@ public class LiteralMemoria extends Literal {
 
     @Override
     public Object valor() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'valor'");
+        throw new TypeError("Un literal de memoria no tiene valor estático.");
     }
 
     @Override

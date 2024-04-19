@@ -29,8 +29,9 @@ public class TipoPuntero extends Tipo {
             TipoPuntero otro = (TipoPuntero) obj;
 
             //Es el puntero nulo (vale para cualquiera)
-            if (this.tipoElemento == null || otro.tipoElemento == null)
+            if (this.tipoElemento == null || otro.tipoElemento == null) {
                 return true;
+            }
 
             return this.tipoElemento.equals(otro.tipoElemento);
         } catch (ClassCastException e) {

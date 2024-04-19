@@ -2,6 +2,7 @@ package main.java.ast;
 
 import main.java.ast.tipos.Tipo;
 import main.java.ast.tipos.TipoAlias;
+import main.java.errors.TypeError;
 
 import java.util.List;
 
@@ -34,8 +35,7 @@ public abstract class Nodo {
 
     public final Tipo tipo() {
         if (tipo == null) {
-            //TODO: Cambiar error
-            throw new RuntimeException();
+            throw new TypeError("Un nodo no tiene tipo");
         }
         try {
             //Comprobar si el tipo es tipo alias

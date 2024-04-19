@@ -1,9 +1,9 @@
 package main.java.ast.expresiones;
 
 import main.java.ast.instrucciones.Instruccion;
+import main.java.errors.TypeError;
 
 public abstract class Expresion extends Instruccion {
-    //TODO: Cambiar tipo
     protected Integer valor;
 
     public Integer valorEntero() {
@@ -15,7 +15,6 @@ public abstract class Expresion extends Instruccion {
 
     public Integer evaluar() {
         //Por defecto, la mayoría de expresiones no son enteros estaticamente
-        //TODO: Cambiar error
-        throw new RuntimeException("No es un entero estaticamente.");
+        throw new TypeError("No es un entero estaticamente.");
     }
 }

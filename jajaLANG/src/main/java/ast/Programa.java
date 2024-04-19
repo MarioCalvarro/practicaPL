@@ -9,12 +9,9 @@ import main.java.ast.tipos.TipoBinario;
 import main.java.ast.tipos.TipoEntero;
 import main.java.ast.tipos.TipoPuntero;
 import main.java.ast.tipos.TipoVacio;
+import main.java.errors.BindError;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Programa extends Nodo {
     private final Map<String, Import> mapa_imports;
@@ -46,35 +43,29 @@ public class Programa extends Nodo {
 
         //Escritura
         ambitoGlobal.poner(new DeclaracionFun("escribirEnt",
-                    Arrays.asList(new DeclaracionPar("num", TipoEntero.instancia(), false)), 
-                    TipoVacio.instancia()));
+                Arrays.asList(new DeclaracionPar("num", TipoEntero.instancia(), false)),
+                TipoVacio.instancia()));
         ambitoGlobal.poner(new DeclaracionFun("escribirBin",
-                    Arrays.asList(new DeclaracionPar("num", TipoBinario.instancia(), false)), 
-                    TipoVacio.instancia()));
-        
+                Arrays.asList(new DeclaracionPar("num", TipoBinario.instancia(), false)),
+                TipoVacio.instancia()));
+
         //Liberar
-        ambitoGlobal.poner(new DeclaracionFun("liberar", 
-        		    Arrays.asList(new DeclaracionPar("puntero", new TipoPuntero(null), false)),
-                    TipoVacio.instancia()));
+        ambitoGlobal.poner(new DeclaracionFun("liberar",
+                Arrays.asList(new DeclaracionPar("puntero", new TipoPuntero(null), false)),
+                TipoVacio.instancia()));
     }
-    
-   
+
+
     public Declaracion getDeclaracionExt(Identificador iden) {
         Import mod = mapa_imports.get(iden.modulo());
         if (mod == null) {
-            //TODO: cambiar error
-            throw new RuntimeException();
+            throw new BindError("La librería con identificador " + iden.modulo() + " no ha sido importada.");
         }
         return mod.getAST().getDeclaracionGlobal(iden);
     }
 
     public Declaracion getDeclaracionGlobal(Identificador iden) {
         return ambitoGlobal.get(iden.nombre());
-    }
-
-    //TODO: Esto seguramente tengamos que quitarlo. Lo tenemos para tests
-    public Ambito getAmbitoGlobal() {
-        return ambitoGlobal;
     }
 
     @Override

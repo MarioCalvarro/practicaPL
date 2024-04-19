@@ -18,27 +18,6 @@ public class LiteralArray extends Literal {
     }
 
     @Override
-    public String toString() {
-        int contador = 0, capacidad = lExpr.size();
-
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("[");
-
-        for (Expresion exp : lExpr) {
-            contador++;
-            sb.append(exp);
-            if (contador != capacidad) {
-                sb.append(", ");
-            }
-        }
-
-        sb.append("]");
-
-        return sb.toString();
-    }
-
-    @Override
     public Object valor() {
         return lExpr;
     }
@@ -67,5 +46,26 @@ public class LiteralArray extends Literal {
         }
 
         this.tipo = new TipoArray(tipoElementos, new Entero(lExpr.size()));
+    }
+
+    @Override
+    public String toString() {
+        int contador = 0, capacidad = lExpr.size();
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("[");
+
+        for (Expresion exp : lExpr) {
+            contador++;
+            sb.append(exp);
+            if (contador != capacidad) {
+                sb.append(", ");
+            }
+        }
+
+        sb.append("]");
+
+        return sb.toString();
     }
 }
