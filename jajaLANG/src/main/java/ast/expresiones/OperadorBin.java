@@ -6,6 +6,7 @@ import main.java.ast.tipos.TipoBinario;
 import main.java.ast.tipos.TipoEntero;
 import main.java.ast.tipos.TipoPuntero;
 import main.java.errors.BindError;
+import main.java.errors.TypeError;
 
 import java.util.ArrayList;
 import java.util.List;
