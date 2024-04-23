@@ -25,4 +25,9 @@ public class TipoEntero extends Tipo {
     public List<Nodo> getAstHijos() {
         return new ArrayList<Nodo>();
     }
+
+    @Override
+    public int tam() {
+        return Tipo.TAM_BASICO;
+    }
 }

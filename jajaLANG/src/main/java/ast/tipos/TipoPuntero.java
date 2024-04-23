@@ -43,4 +43,9 @@ public class TipoPuntero extends Tipo {
     public String toString() {
         return tipoElemento.toString() + " @";
     }
+
+    @Override
+    public int tam() {
+        return Tipo.TAM_BASICO;
+    }
 }

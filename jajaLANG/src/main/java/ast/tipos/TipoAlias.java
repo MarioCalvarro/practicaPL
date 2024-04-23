@@ -59,4 +59,9 @@ public class TipoAlias extends Tipo {
     public String toString() {
         return id.toString();
     }
+
+    @Override
+    public int tam() {
+        return dec.tipoApuntado().tam();
+    }
 }

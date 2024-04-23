@@ -40,4 +40,10 @@ public class TipoFunc extends Tipo {
             return false;
         }
     }
+
+    @Override
+    public int tam() {
+        //Las funciones no se guardan en memoria
+        return 0; 
+    }
 }

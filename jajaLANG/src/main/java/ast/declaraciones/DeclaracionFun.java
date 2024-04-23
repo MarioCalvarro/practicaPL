@@ -1,6 +1,7 @@
 package main.java.ast.declaraciones;
 
 import main.java.ast.Contexto;
+import main.java.ast.Delta;
 import main.java.ast.Nodo;
 import main.java.ast.instrucciones.Instruccion;
 import main.java.ast.tipos.Tipo;
@@ -14,6 +15,7 @@ public class DeclaracionFun extends Declaracion {
     private final String id;
     private final List<DeclaracionPar> parametros;
     private final List<Instruccion> cuerpo;
+    private int tam;
 
     //Función sin cuerpo (para input/output)
     public DeclaracionFun(String id, List<DeclaracionPar> parametros, Tipo tipoRetorno) {
@@ -49,6 +51,10 @@ public class DeclaracionFun extends Declaracion {
             tipoPars.add(par.tipo());
         }
         this.tipo = new TipoFunc(tipoRetorno, tipoPars);
+    }
+
+    private int getTam(){
+        return tam;
     }
 
     public List<DeclaracionPar> parametros() {
@@ -102,5 +108,12 @@ public class DeclaracionFun extends Declaracion {
         ctx.insertar(this);
         super.bind(ctx);
         ctx.desapilarAmbito();
+    }
+
+    @Override
+    public void calcularOffset(Delta delta) {
+        Delta d = new Delta();
+        super.calcularOffset(d);
+        tam = d.getMax();
     }
 }

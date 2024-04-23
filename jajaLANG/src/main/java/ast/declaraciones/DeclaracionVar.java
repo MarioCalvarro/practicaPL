@@ -1,6 +1,7 @@
 package main.java.ast.declaraciones;
 
 import main.java.ast.Contexto;
+import main.java.ast.Delta;
 import main.java.ast.Nodo;
 import main.java.ast.expresiones.Expresion;
 import main.java.ast.tipos.Tipo;
@@ -14,6 +15,7 @@ public class DeclaracionVar extends Declaracion {
     protected String id;
     private Expresion valor;
     private boolean esGlobal;
+    protected int posicionDelta;
 
     // Declaracion con valor
     public DeclaracionVar(String id, Expresion expr) {
@@ -88,5 +90,10 @@ public class DeclaracionVar extends Declaracion {
         if (valor != null && !(this.tipo().equals(valor.tipo()))) {
             throw new TypeError("El tipo del valor " + valor.toString() + " asignado a la variable " + id.toString() + " no coincide con el de esta.");
         }
+    }
+    @Override
+    public void calcularOffset(Delta delta) {
+        posicionDelta = delta.actualizarPosicionDelta(this.tipo().tam());
+        super.calcularOffset(delta);
     }
 }

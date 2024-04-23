@@ -41,4 +41,9 @@ public class TipoArray extends Tipo {
     public String toString() {
         return "vector" + "(" + tipoElementos + ", " + tam + ")";
     }
+
+    @Override
+    public int tam() {
+        return tam.valorEntero() * this.tipoElementos.tam();
+    }
 }

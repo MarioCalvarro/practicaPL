@@ -1,6 +1,7 @@
 package main.java.ast.declaraciones;
 
 import main.java.ast.Contexto;
+import main.java.ast.Delta;
 import main.java.ast.Nodo;
 import main.java.ast.Programa;
 import main.java.errors.ImportError;
@@ -82,4 +83,7 @@ public class Import extends Declaracion {
     public String getId() {
         return namespace;
     }
+
+    @Override
+    public void calcularOffset(Delta delta) {} //TODO
 }

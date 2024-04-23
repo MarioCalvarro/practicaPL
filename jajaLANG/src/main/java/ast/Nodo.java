@@ -32,7 +32,7 @@ public abstract class Nodo {
             child.typecheck();
         }
     }
-
+    
     public final Tipo tipo() {
         if (tipo == null) {
             throw new TypeError("Un nodo no tiene tipo");
@@ -45,4 +45,12 @@ public abstract class Nodo {
             return tipo;
         }
     }
+
+    public void calcularOffset(Delta ultimoDelta) {
+        for (Nodo child : getAstHijos()) {
+                child.calcularOffset(ultimoDelta);
+        }
+    }
+
+
 }

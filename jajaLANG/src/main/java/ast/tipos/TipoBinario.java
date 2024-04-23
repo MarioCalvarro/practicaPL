@@ -25,4 +25,9 @@ public class TipoBinario extends Tipo {
     public List<Nodo> getAstHijos() {
         return new ArrayList<Nodo>();
     }
+
+    @Override
+    public int tam() {
+        return Tipo.TAM_BASICO;
+    }
 }

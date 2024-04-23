@@ -11,6 +11,7 @@ import java.util.Map;
 
 public class TipoRegistro extends Tipo {
     private final Map<String, Declaracion> atributos;
+    private int tam = -1;
 
     public TipoRegistro(List<Declaracion> atributos) {
         this.atributos = new HashMap<String, Declaracion>();
@@ -70,5 +71,16 @@ public class TipoRegistro extends Tipo {
         }
         sb.append("}");
         return sb.toString();
+    }
+
+    @Override
+    public int tam() {
+        if(tam == -1){
+            tam = 0;
+            for (Declaracion dec : this.atributos.values()) {
+                tam += dec.tipo().tam();
+            }
+        }
+        return tam;
     }
 }
