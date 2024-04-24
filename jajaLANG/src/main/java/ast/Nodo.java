@@ -48,9 +48,7 @@ public abstract class Nodo {
 
     public void calcularOffset(Delta ultimoDelta) {
         for (Nodo child : getAstHijos()) {
-                child.calcularOffset(ultimoDelta);
+            child.calcularOffset(ultimoDelta);
         }
     }
-
-
 }

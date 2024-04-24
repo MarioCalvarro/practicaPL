@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DeclaracionFun extends Declaracion {
-    private final String id;
+    private String id;
     private final List<DeclaracionPar> parametros;
     private final List<Instruccion> cuerpo;
     private int tam;
@@ -115,5 +115,9 @@ public class DeclaracionFun extends Declaracion {
         Delta d = new Delta();
         super.calcularOffset(d);
         tam = d.getMax();
+    }
+
+    public void nuevoPrefijo(String prefijo) {
+        this.id = prefijo + "::" + id;
     }
 }

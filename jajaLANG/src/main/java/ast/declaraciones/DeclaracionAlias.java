@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DeclaracionAlias extends Declaracion {
-    private final String id;
+    private String id;
     private final Tipo tipoApuntado;
 
     public DeclaracionAlias(String id, Tipo tipo) {

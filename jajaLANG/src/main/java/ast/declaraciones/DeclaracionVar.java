@@ -46,6 +46,14 @@ public class DeclaracionVar extends Declaracion {
         this.tipo = tipo;
     }
 
+    public boolean esGlobal() {
+        return esGlobal;
+    }
+
+    public int getPosicionDelta() {
+        return posicionDelta;
+    }
+
     @Override
     public String getId() {
         return this.id;
