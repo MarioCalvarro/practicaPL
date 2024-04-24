@@ -1,6 +1,7 @@
 package main.java.ast.instrucciones;
 
 import main.java.ast.Contexto;
+import main.java.ast.Delta;
 import main.java.ast.Nodo;
 import main.java.ast.expresiones.Expresion;
 import main.java.ast.tipos.Tipo;
@@ -56,5 +57,12 @@ public class InsBucleWhile extends Instruccion {
         if (!tipoIndice.equals(TipoBinario.instancia())) {
             throw new TypeError("El tipo de la condición del bucle " + this.condicion.toString() + " no es booleano.");
         }
+    }
+
+    @Override
+    public void calcularOffset(Delta ultimoDelta) {
+        ultimoDelta.entrarEnBloque();
+        super.calcularOffset(ultimoDelta);
+        ultimoDelta.salirDeBloque();
     }
 }

@@ -1,6 +1,7 @@
 package main.java.ast.instrucciones;
 
 import main.java.ast.Contexto;
+import main.java.ast.Delta;
 import main.java.ast.Nodo;
 import main.java.ast.declaraciones.DeclaracionVar;
 import main.java.ast.expresiones.Expresion;
@@ -78,5 +79,12 @@ public class InsBucleFor extends Instruccion {
         if (!tipoFin.equals(TipoEntero.instancia())) {
             throw new TypeError("El tipo del final del indice del bucle " + this.ini.toString() + " no es entero.");
         }
+    }
+
+    @Override
+    public void calcularOffset(Delta ultimoDelta) {
+        ultimoDelta.entrarEnBloque();
+        super.calcularOffset(ultimoDelta);
+        ultimoDelta.salirDeBloque();
     }
 }

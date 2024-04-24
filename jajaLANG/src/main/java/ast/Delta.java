@@ -7,7 +7,7 @@ public class Delta {
     private int c = 0;
     private int max;
 
-    public void sntrarEnBloque() {
+    public void entrarEnBloque() {
         pilaDeltas.push(c);
     }
 
