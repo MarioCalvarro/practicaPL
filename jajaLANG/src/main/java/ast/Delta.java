@@ -15,14 +15,14 @@ public class Delta {
         c = pilaDeltas.pop();
     }
 
-    public int actualizarPosicionDelta(int typeSize) {
+    public int actualizarPosicionDelta(int tam) {
         var currOffset = c;
-        incrementarOffset(typeSize);
+        incrementarOffset(tam);
         return currOffset;
     }
 
-    private void incrementarOffset(int typeSize) {
-        c += typeSize;
+    private void incrementarOffset(int tam) {
+        c += tam;
         max = Math.max(max, c);
     }
 

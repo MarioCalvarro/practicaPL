@@ -1,5 +1,6 @@
 package main.java.ast.expresiones;
 
+import main.java.ast.Delta;
 import main.java.ast.Nodo;
 import main.java.ast.declaraciones.DeclaracionFun;
 import main.java.ast.declaraciones.DeclaracionPar;
@@ -15,6 +16,7 @@ import java.util.List;
 public class Llamada extends Expresion {
     private final Identificador exp;
     private final List<Expresion> listaExpresiones;
+    private int posicion;
 
     public Llamada(Identificador exp, List<Expresion> listaExpresiones) {
         this.exp = exp;
@@ -90,4 +92,13 @@ public class Llamada extends Expresion {
 
         this.tipo = tipoFun.tipoRetorno();
     }
+
+    @Override
+    public void calcularOffset(Delta ultimoDelta) {
+        super.calcularOffset(ultimoDelta);
+        DeclaracionFun dec = (DeclaracionFun) exp.dec();
+        TipoFunc tipo = (TipoFunc) dec.tipo() ;
+        posicion = ultimoDelta.actualizarPosicionDelta(tipo.tipoRetorno().tam());
+    }
+
 }
