@@ -1,5 +1,6 @@
 package main.java.ast;
 
+import main.java.ast.declaraciones.DeclaracionFun;
 import main.java.ast.declaraciones.DeclaracionVar;
 
 public class GeneradorCodigo {
@@ -28,6 +29,12 @@ public class GeneradorCodigo {
 
     private static void desangrar() {
         nivel_indentacion -= TAM_INDENTACION;   //TODO: Puede pasar el 0?
+    }
+
+    public void sangrado(Runnable r) {
+        sangrar();
+        r.run();
+        desangrar();
     }
 
     private void cargarFunciones(StringBuilder aux) {
@@ -190,8 +197,8 @@ public class GeneradorCodigo {
     }
 
     public void duplicate() {
-        tee_local("temp");
-        get_local("temp");
+        local_tee("temp");
+        local_get("temp");
     }
 
     /* i32 MEMORY OPERATIONS */
@@ -290,68 +297,176 @@ public class GeneradorCodigo {
 
     /* LOCALS */
     public void local(String name, String type) {
-        escribir("(local %s %s)", name, type);
+        escribir("(local %s %s)"+ name + type);
     }
 
     public void local_get(String name) {
-        escribir("get_local $%s", name);
+        escribir("get_local $%s" + name);
     }
 
-    public void get_local(int index) {
-        escribir("get_local %d", index);
+    public void local_get(int index) {
+        escribir("local_get %d" + index);
     }
 
-    public void set_local(String name) {
-        escribir("set_local $%s", name);
+    public void local_set(String name) {
+        escribir("local_set $%s"+ name);
     }
 
-    public void set_local(int index) {
-        escribir("set_local %d", index);
+    public void local_set(int index) {
+        escribir("local_set %d" + index);
     }
 
-    public void tee_local(String name) {
-        escribir("tee_local $%s", name);
+    public void local_tee(String name) {
+        escribir("local_tee $%s"+ name);
     }
 
-    public void tee_local(int index) {
-        escribir("tee_local %d", index);
+    public void local_tee(int index) {
+        escribir("local_tee %d" + index);
     }
 
     /* GLOBALS */
     public void global(String name, String type) {
-        escribir("(global %s %s)", name, type);
+        escribir("(global %s %s)" + name + type);
     }
 
     public void global(String name, String type, String value) {
-        escribir("(global %s %s (%s.const %s))", name, type, type, value);
+        escribir("(global %s %s (%s.const %s))" + name + type + type + value);
     }
 
     public void global_mut(String name, String type) {
-        escribir("(global %s (mut %s))", name, type);
+        escribir("(global %s (mut %s))" + name + type);
     }
 
     public void global_mut(String name, String type, String value) {
-        escribir("(global %s (mut %s) (%s.const %s))", name, type, type, value);
+        escribir("(global %s (mut %s) (%s.const %s))" + name + type + type + value);
     }
 
-    public void get_global(String name) {
-        escribir("get_global $%s", name);
+    public void global_get(String name) {
+        escribir("global_get $%s" + name);
     }
 
-    public void get_global(int index) {
-        escribir("get_global %d", index);
+    public void global_get(int index) {
+        escribir("global_get %d" + index);
     }
 
-    public void set_global(String name) {
-        escribir("set_global $%s", name);
+    public void global_set(String name) {
+        escribir("global_set $%s" + name);
     }
 
-    public void set_global(int index) {
-        escribir("set_global %d", index);
+    public void global_set(int index) {
+        escribir("global_set %d" + index);
     }
 
     /* FUNCTIONS */
-    public void call(String name) {
-        escribir("call $%s", name);
+    public void call (String name) {
+        escribir("call $%s" + name);
+    }
+
+    public void func(DeclaracionFun fun, Runnable runnable) {
+        escribir("(func $%s" + fun.getId());
+        sangrado(() -> {
+            escribir(String.format("(local $%s i32)" + INICIO_GLOBAL));
+            escribir("(local $temp i32)");
+
+            int stackSize = fun.getSize() + 4 + 4 + 4;
+
+            i32_const(stackSize);
+            reservarPila();
+
+            runnable.run(); // La idea es que haga algo con el ProgramOutput dentro del runnable
+
+            liberarPila();
+        });
+        escribir(")");
+    }
+
+    public void hacerReturn() {
+        liberarPila();
+        escribir("return");
+    }
+
+    /* CONTROL FLOW */
+    public void bloque(Runnable runnable) {
+        escribir("block");
+        sangrado(runnable);
+        escribir("end");
+    }
+
+    public void bloques(int n, Runnable runnable) {
+    }
+
+    public void bucle(Runnable runnable) {
+        escribir("loop");
+        sangrado(runnable);
+        escribir("end");
+    }
+
+    public void bloque_bucle(Runnable runnable) {
+        bloque(() -> bucle(runnable));
+    }
+
+    public void br(int skip) {
+        escribir("br %d" + skip);
+    }
+
+    public void br_if(int skip) {
+        escribir("br_if %d" + skip);
+    }
+
+    public void br_if(int skip, String condition) {
+        escribir("(br_if %d (%s))" + skip + condition);
+    }
+    // public void br_table(int[] skip){
+    //
+    // }
+
+    public void si_sino(Runnable then, Runnable els) {
+        escribir("if");
+        sangrado(then);
+        escribir("else");
+        sangrado(els);
+        escribir("end");
+    }
+
+    public void if_(Runnable then) {
+        escribir("if");
+        sangrado(then);
+        escribir("end");
+    }
+
+    public void br_tabla(int size) {
+        StringBuilder sb = new StringBuilder(" ");
+        sb.append("br_table");
+        for (int i = 0; i <= size; i++) {
+            sb.append(String.format("%d", i));
+        }
+       escribir(sb.toString());
+    }
+
+    public interface IntRunnable {
+        void run(int i);
+    }
+
+    public void br_tabla(int size, IntRunnable r) {
+        for (int i = 0; i < size; i++) {
+            escribir("block");
+            sangrar();
+        }
+        // Tabla de branching
+        bloque(() -> br_tabla(size));
+        for (int i = 0; i < size; i++) {
+            r.run(i);
+            desangrar();
+            escribir("end");
+        }
+    }
+
+    public void bloque() {
+        escribir("block");
+    }
+
+    public void fin() {
+        desangrar();
+        escribir("end");
     }
 }
