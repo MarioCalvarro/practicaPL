@@ -126,11 +126,6 @@ public class InsCond extends Instruccion {
             ins.calcularOffset(ultimoDelta);
         }
         ultimoDelta.salirDeBloque();
-
-        ultimoDelta.entrarEnBloque();
-        for (Instruccion ins : instElse.cuerpo) {
-            ins.calcularOffset(ultimoDelta);
-        }
-        ultimoDelta.salirDeBloque();
+        instElse.calcularOffset(ultimoDelta);
     }
 }
