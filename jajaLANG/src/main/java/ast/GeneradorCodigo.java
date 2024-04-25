@@ -31,7 +31,7 @@ public class GeneradorCodigo {
         nivel_indentacion -= TAM_INDENTACION;   //TODO: Puede pasar el 0?
     }
 
-    private void cargarFunciones(StringBuilder aux) {
+    private static void cargarFunciones(StringBuilder aux) {
         //Función que reserva $size bytes de stack
         sb.append("""
                 (func $reserveStack (param $size i32)
@@ -190,97 +190,97 @@ public class GeneradorCodigo {
         escribir("drop");
     }
 
-    public void duplicate() {
+    public static void duplicate() {
         local_tee("temp");
         local_get("temp");
     }
 
     /* i32 MEMORY OPERATIONS */
-    public void i32_load() {
+    public static void i32_load() {
         escribir("i32.load");
     }
 
-    public void i32_load(int offset) {
+    public static void i32_load(int offset) {
         escribir("i32.load offset=" + offset);
     }
 
-    public void i32_store() {
+    public static void i32_store() {
         escribir("i32.store");
     }
 
     /* i32 OPERATIONS */
-    public void i32_const(int i) {
+    public static void i32_const(int i) {
         escribir("i32.const " + i);
     }
 
-    public void i32_add() {
+    public static void i32_add() {
         escribir("i32.add");
     }
 
-    public void i32_sub() {
+    public static void i32_sub() {
         escribir("i32.sub");
     }
 
-    public void i32_mul() {
+    public static void i32_mul() {
         escribir("i32.mul");
     }
 
-    public void i32_div_s() {
+    public static void i32_div_s() {
         escribir("i32.div_s");
     }
 
-    public void i32_rem_s() {
+    public static void i32_rem_s() {
         escribir("i32.rem_s");
     }
 
-    public void i32_eq() {
+    public static void i32_eq() {
         escribir("i32.eq");
     }
 
-    public void i32_ne() {
+    public static void i32_ne() {
         escribir("i32.ne");
     }
 
-    public void i32_eqz() {
+    public static void i32_eqz() {
         escribir("i32.eqz");
     }
 
-    public void i32_le_s() {
+    public static void i32_le_s() {
         escribir("i32.le_s");
     }
 
-    public void i32_lt_s() {
+    public static void i32_lt_s() {
         escribir("i32.lt_s");
     }
 
-    public void i32_ge_s() {
+    public static void i32_ge_s() {
         escribir("i32.ge_s");
     }
 
-    public void i32_gt_s() {
+    public static void i32_gt_s() {
         escribir("i32.gt_s");
     }
 
-    public void i32_and() {
+    public static void i32_and() {
         escribir("i32.and");
     }
 
-    public void i32_or() {
+    public static void i32_or() {
         escribir("i32.or");
     }
 
-    public void i32_xor() {
+    public static void i32_xor() {
         escribir("i32.xor");
     }
 
     /* MEMORY LOCALS */
-    public void mem_local(int offset) {
+    public static void mem_local(int offset) {
         local_get(INICIO_LOCAL);
         i32_const(offset);
         i32_add();
     }
 
-    public void mem_location(DeclaracionVar var) {
+    public static void mem_location(DeclaracionVar var) {
         if (var.esGlobal()) {
             //TODO: Cambio MP y SP o solo MP
             i32_const(INICIO_GLOBAL + var.getPosicionDelta());
@@ -290,69 +290,69 @@ public class GeneradorCodigo {
     }
 
     /* LOCALS */
-    public void local(String name, String type) {
+    public static void local(String name, String type) {
         escribir(String.format("(local %s %s)", name, type));
     }
 
-    public void local_get(String name) {
+    public static void local_get(String name) {
         escribir(String.format("get_local $%s", name));
     }
 
-    public void local_get(int index) {
+    public static void local_get(int index) {
         escribir(String.format("local.get %d", index));
     }
 
-    public void local_set(String name) {
+    public static void local_set(String name) {
         escribir(String.format("local.set $%s", name));
     }
 
-    public void local_set(int index) {
+    public static void local_set(int index) {
         escribir(String.format("local.set %d", index));
     }
 
-    public void local_tee(String name) {
+    public static void local_tee(String name) {
         escribir(String.format("local.tee $%s", name));
     }
 
-    public void local_tee(int index) {
+    public static void local_tee(int index) {
         escribir(String.format("local.tee %d", index));
     }
 
     /* GLOBALS */
-    public void global(String name, String type) {
+    public static void global(String name, String type) {
         escribir(String.format("(global %s %s)", name, type));
     }
 
-    public void global(String name, String type, String value) {
+    public static void global(String name, String type, String value) {
         escribir(String.format("(global %s %s (%s.const %s))", name, type, type, value));
     }
 
-    public void global_mut(String name, String type) {
+    public static void global_mut(String name, String type) {
         escribir(String.format("(global %s (mut %s))", name, type));
     }
 
-    public void global_mut(String name, String type, String value) {
+    public static void global_mut(String name, String type, String value) {
         escribir(String.format("(global %s (mut %s) (%s.const %s))", name, type, type, value));
     }
 
-    public void global_get(String name) {
+    public static void global_get(String name) {
         escribir("global.get $" + name);
     }
 
-    public void global_get(int index) {
+    public static void global_get(int index) {
         escribir("global.get " + index);
     }
 
-    public void global_set(String name) {
+    public static void global_set(String name) {
         escribir("global.set $" + name);
     }
 
-    public void global_set(int index) {
+    public static void global_set(int index) {
         escribir("global.set " + index);
     }
 
     /* FUNCTIONS */
-    public void func(DeclaracionFun fun, Runnable runnable) {
+    public static void func(DeclaracionFun fun, Runnable runnable) {
         escribir("(func $%s" + fun.getId());
         sangrar();
             escribir(String.format("(local $%s i32)", INICIO_GLOBAL));
@@ -372,40 +372,40 @@ public class GeneradorCodigo {
         escribir(")");
     }
 
-    public void hacerReturn() {
+    public static void hacerReturn() {
         liberarPila();
         escribir("return");
     }
 
     /* CONTROL FLOW */
-    public void bloque(Runnable runnable) {
+    public static void bloque(Runnable runnable) {
         escribir("block");
         //TODO: sangrado(runnable);
         escribir("end");
     }
 
-    public void bloques(int n, Runnable runnable) {
+    public static void bloques(int n, Runnable runnable) {
     }
 
-    public void bucle(Runnable runnable) {
+    public static void bucle(Runnable runnable) {
         escribir("loop");
         //TODO: sangrado(runnable);
         escribir("end");
     }
 
-    public void bloque_bucle(Runnable runnable) {
+    public static void bloque_bucle(Runnable runnable) {
         bloque(() -> bucle(runnable));
     }
 
-    public void br(int skip) {
+    public static void br(int skip) {
         escribir("br " + skip);
     }
 
-    public void br_if(int skip) {
+    public static void br_if(int skip) {
         escribir("br_if " + skip);
     }
 
-    public void si_sino(Runnable then, Runnable els) {
+    public static void si_sino(Runnable then, Runnable els) {
         escribir("if");
         sangrar();
         //TODO: sangrado(then);
@@ -417,7 +417,7 @@ public class GeneradorCodigo {
         escribir("end");
     }
 
-    public void if_(Runnable then) {
+    public static void if_(Runnable then) {
         escribir("if");
         sangrar();
         //TODO: sangrado(then);
@@ -425,11 +425,11 @@ public class GeneradorCodigo {
         escribir("end");
     }
 
-    public void bloque() {
+    public static void bloque() {
         escribir("block");
     }
 
-    public void fin() {
+    public static void fin() {
         desangrar();
         escribir("end");
     }

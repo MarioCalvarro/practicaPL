@@ -109,11 +109,12 @@ public class DeclaracionVar extends Declaracion {
 
     @Override
     public void compilar() {
+        GeneradorCodigo.comentario("Declaración de la variable: " + id);
         GeneradorCodigo.mem_location(this);
 
-        if (this.expr == null) {
+        if (this.valor == null) {
             /// Rellena con ceros
-            out.comment("No tiene valor por defecto, rellenar con ceros");
+            GeneradorCodigo.comentario("No tiene valor asignado → ceros");
             out.i32_const(this.type.size() / 4);
             out.call(ProgramOutput.FILL_ZERO);
         } else if (expr.type().isBasic) {
