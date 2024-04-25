@@ -1,5 +1,6 @@
 package main.java.ast.designadores;
 
+import main.java.ast.GeneradorCodigo;
 import main.java.ast.Nodo;
 import main.java.ast.expresiones.Expresion;
 import main.java.ast.tipos.Tipo;
@@ -44,5 +45,12 @@ public class AccesoStruct extends Designador {
         if (tipo == null) {
             throw new TypeError("No se ha encontrado el campo " + id.toString() + " accedido sobre el registro " + tipoCast.toString() + ".");
         }
+    }
+
+    @Override
+    public void compilar() {
+        exp.compilar();
+        GeneradorCodigo.i32_const(((TipoRegistro) tipo).offsetAtributo(id));
+        GeneradorCodigo.i32_add();          //inicio + offsetAtributo
     }
 }

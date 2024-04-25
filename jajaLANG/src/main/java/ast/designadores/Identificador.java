@@ -3,6 +3,7 @@ package main.java.ast.designadores;
 import main.java.ast.Contexto;
 import main.java.ast.Nodo;
 import main.java.ast.declaraciones.Declaracion;
+import main.java.ast.declaraciones.DeclaracionVar;
 import main.java.errors.BindError;
 
 import java.util.ArrayList;
@@ -62,5 +63,15 @@ public class Identificador extends Designador {
             return id;
         }
         return lib + "::" + id;
+    }
+
+    @Override
+    public void compilar() {
+        try {
+            DeclaracionVar variable = (DeclaracionVar) dec;
+        } catch (ClassCastException e) {
+            //TODO: Error
+            throw new RuntimeException();
+        }
     }
 }

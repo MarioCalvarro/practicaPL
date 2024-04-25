@@ -3,6 +3,7 @@ package main.java.ast.tipos;
 import main.java.ast.Contexto;
 import main.java.ast.Nodo;
 import main.java.ast.declaraciones.Declaracion;
+import main.java.ast.declaraciones.DeclaracionVar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +23,11 @@ public class TipoRegistro extends Tipo {
 
     public Tipo getTipoCampo(String campo) {
         return atributos.get(campo).tipo();
+    }
+
+    public int offsetAtributo(String at) {
+        DeclaracionVar atributo = (DeclaracionVar) atributos.get(at);
+        return atributo.getPosicionDelta();
     }
 
     @Override

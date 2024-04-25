@@ -1,5 +1,6 @@
 package main.java.ast.designadores;
 
+import main.java.ast.GeneradorCodigo;
 import main.java.ast.Nodo;
 import main.java.ast.expresiones.Expresion;
 import main.java.ast.tipos.TipoArray;
@@ -44,5 +45,16 @@ public class AccesoArray extends Designador {
             //Si no puede hacer cast, es porque no es de tipo array
             throw new TypeError("La expresión " + array.toString() + " no es de tipo array.");
         }
+    }
+
+    @Override
+    public void compilar() {
+        int tamElementos = ((TipoArray) tipo).tipoElementos().tam();
+
+        GeneradorCodigo.i32_const(tamElementos);
+        indice.compilar();
+        GeneradorCodigo.i32_mul();      //indice * tamElementos
+        array.compilar();
+        GeneradorCodigo.i32_add();      //inicio + indice * tamElementos
     }
 }
