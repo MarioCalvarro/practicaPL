@@ -51,4 +51,10 @@ public abstract class Nodo {
             child.calcularOffset(ultimoDelta);
         }
     }
+
+    public void compilar() {
+        for (Nodo child : getAstHijos()) {
+            child.compilar();
+        }
+    }
 }

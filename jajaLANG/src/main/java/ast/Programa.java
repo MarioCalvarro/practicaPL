@@ -116,7 +116,14 @@ public class Programa extends Nodo {
         }
     }
 
+    @Override
+    public void typecheck() {
+        bind();
+        super.typecheck();
+    }
+
     public void calcularOffset() {
+        typecheck();
         traerDefExternas();
         calcularOffset(new Delta());
     }
@@ -125,5 +132,11 @@ public class Programa extends Nodo {
     public void calcularOffset(Delta d) {
         super.calcularOffset(d);
         tamVarGlobales = d.getMax();
+    }
+
+    @Override
+    public void compilar() {
+        calcularOffset();
+        //TODO
     }
 }

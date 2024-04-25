@@ -2,6 +2,7 @@ package main.java.ast.declaraciones;
 
 import main.java.ast.Contexto;
 import main.java.ast.Delta;
+import main.java.ast.GeneradorCodigo;
 import main.java.ast.Nodo;
 import main.java.ast.expresiones.Expresion;
 import main.java.ast.tipos.Tipo;
@@ -99,9 +100,28 @@ public class DeclaracionVar extends Declaracion {
             throw new TypeError("El tipo del valor " + valor.toString() + " asignado a la variable " + id.toString() + " no coincide con el de esta.");
         }
     }
+
     @Override
     public void calcularOffset(Delta delta) {
         posicionDelta = delta.actualizarPosicionDelta(this.tipo().tam());
         super.calcularOffset(delta);
+    }
+
+    @Override
+    public void compilar() {
+        GeneradorCodigo.mem_location(this);
+
+        if (this.expr == null) {
+            /// Rellena con ceros
+            out.comment("No tiene valor por defecto, rellenar con ceros");
+            out.i32_const(this.type.size() / 4);
+            out.call(ProgramOutput.FILL_ZERO);
+        } else if (expr.type().isBasic) {
+            out.comment("Asignado un tipo básico: " + expr.decompile());
+            expr.compileAsAssign(out);
+        } else {
+            out.comment("Asignando un tipo no básico: " + expr.decompile());
+            expr.compileAsAssign(out);
+        }
     }
 }
