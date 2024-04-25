@@ -2,6 +2,7 @@ package main.java.ast.declaraciones;
 
 import main.java.ast.Contexto;
 import main.java.ast.Delta;
+import main.java.ast.GeneradorCodigo;
 import main.java.ast.Nodo;
 import main.java.ast.instrucciones.Instruccion;
 import main.java.ast.tipos.Tipo;
@@ -119,5 +120,28 @@ public class DeclaracionFun extends Declaracion {
 
     public void nuevoPrefijo(String prefijo) {
         this.id = prefijo + "::" + id;
+    }
+
+
+    @Override
+    public void compilar() {
+        GeneradorCodigo.escribir("(func $%s" + this.getId());
+        GeneradorCodigo.sangrar();
+            GeneradorCodigo.escribir(String.format("(local $%s i32)", GeneradorCodigo.INICIO_GLOBAL));
+            GeneradorCodigo.escribir("(local $temp i32)");
+
+            //TODO: Cuánto hay que sumar?
+            int x = 0;
+            int stackSize = this.getTam() + x;
+
+            GeneradorCodigo.i32_const(stackSize);
+            GeneradorCodigo.reservarPila();
+
+            for (Instruccion ins : cuerpo)  {
+                ins.compilar();
+            }
+            GeneradorCodigo.liberarPila();
+        GeneradorCodigo.desangrar();
+        GeneradorCodigo.escribir(")");
     }
 }

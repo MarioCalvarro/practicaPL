@@ -115,14 +115,11 @@ public class DeclaracionVar extends Declaracion {
         if (this.valor == null) {
             /// Rellena con ceros
             GeneradorCodigo.comentario("No tiene valor asignado → ceros");
-            out.i32_const(this.type.size() / 4);
-            out.call(ProgramOutput.FILL_ZERO);
-        } else if (expr.type().isBasic) {
-            out.comment("Asignado un tipo básico: " + expr.decompile());
-            expr.compileAsAssign(out);
+            GeneradorCodigo.i32_const(tipo.tam() / 4);
+            GeneradorCodigo.llamar(GeneradorCodigo.ZEROS);
         } else {
-            out.comment("Asignando un tipo no básico: " + expr.decompile());
-            expr.compileAsAssign(out);
+            GeneradorCodigo.comentario("Asignando el valor: " + valor.toString());
+            valor.compilar();
         }
     }
 }

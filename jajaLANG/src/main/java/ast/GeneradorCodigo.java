@@ -352,26 +352,6 @@ public class GeneradorCodigo {
     }
 
     /* FUNCTIONS */
-    public static void func(DeclaracionFun fun, Runnable runnable) {
-        escribir("(func $%s" + fun.getId());
-        sangrar();
-            escribir(String.format("(local $%s i32)", INICIO_GLOBAL));
-            escribir("(local $temp i32)");
-
-            //TODO: Cuánto hay que sumar?
-            int x = 0;
-            int stackSize = fun.getTam() + x;
-
-            i32_const(stackSize);
-            reservarPila();
-
-            //TODO: runnable.run(); // La idea es que haga algo con el ProgramOutput dentro del runnable
-
-            liberarPila();
-        desangrar();
-        escribir(")");
-    }
-
     public static void hacerReturn() {
         liberarPila();
         escribir("return");
