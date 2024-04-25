@@ -31,12 +31,6 @@ public class GeneradorCodigo {
         nivel_indentacion -= TAM_INDENTACION;   //TODO: Puede pasar el 0?
     }
 
-    public void sangrado(Runnable r) {
-        sangrar();
-        r.run();
-        desangrar();
-    }
-
     private void cargarFunciones(StringBuilder aux) {
         //Función que reserva $size bytes de stack
         sb.append("""
@@ -305,23 +299,23 @@ public class GeneradorCodigo {
     }
 
     public void local_get(int index) {
-        escribir("local_get %d" + index);
+        escribir("local.get %d" + index);
     }
 
     public void local_set(String name) {
-        escribir("local_set $%s"+ name);
+        escribir("local.set $%s"+ name);
     }
 
     public void local_set(int index) {
-        escribir("local_set %d" + index);
+        escribir("local.set %d" + index);
     }
 
     public void local_tee(String name) {
-        escribir("local_tee $%s"+ name);
+        escribir("local.tee $%s"+ name);
     }
 
     public void local_tee(int index) {
-        escribir("local_tee %d" + index);
+        escribir("local.tee %d" + index);
     }
 
     /* GLOBALS */
@@ -334,49 +328,47 @@ public class GeneradorCodigo {
     }
 
     public void global_mut(String name, String type) {
-        escribir("(global %s (mut %s))" + name + type);
+        escribir(String.format("(global %s (mut %s))", name, type));
     }
 
     public void global_mut(String name, String type, String value) {
-        escribir("(global %s (mut %s) (%s.const %s))" + name + type + type + value);
+        escribir(String.format("(global %s (mut %s) (%s.const %s))", name, type, type, value));
     }
 
     public void global_get(String name) {
-        escribir("global_get $%s" + name);
+        escribir("global.get $" + name);
     }
 
     public void global_get(int index) {
-        escribir("global_get %d" + index);
+        escribir("global.get " + index);
     }
 
     public void global_set(String name) {
-        escribir("global_set $%s" + name);
+        escribir("global.set $" + name);
     }
 
     public void global_set(int index) {
-        escribir("global_set %d" + index);
+        escribir("global.set " + index);
     }
 
     /* FUNCTIONS */
-    public void call (String name) {
-        escribir("call $%s" + name);
-    }
-
     public void func(DeclaracionFun fun, Runnable runnable) {
         escribir("(func $%s" + fun.getId());
-        sangrado(() -> {
-            escribir(String.format("(local $%s i32)" + INICIO_GLOBAL));
+        sangrar();
+            escribir(String.format("(local $%s i32)", INICIO_GLOBAL));
             escribir("(local $temp i32)");
 
-            int stackSize = fun.getSize() + 4 + 4 + 4;
+            //TODO: Cuánto hay que sumar?
+            int x = 0;
+            int stackSize = fun.getTam() + x;
 
             i32_const(stackSize);
             reservarPila();
 
-            runnable.run(); // La idea es que haga algo con el ProgramOutput dentro del runnable
+            //TODO: runnable.run(); // La idea es que haga algo con el ProgramOutput dentro del runnable
 
             liberarPila();
-        });
+        desangrar();
         escribir(")");
     }
 
@@ -388,7 +380,7 @@ public class GeneradorCodigo {
     /* CONTROL FLOW */
     public void bloque(Runnable runnable) {
         escribir("block");
-        sangrado(runnable);
+        //TODO: sangrado(runnable);
         escribir("end");
     }
 
@@ -397,7 +389,7 @@ public class GeneradorCodigo {
 
     public void bucle(Runnable runnable) {
         escribir("loop");
-        sangrado(runnable);
+        //TODO: sangrado(runnable);
         escribir("end");
     }
 
@@ -406,59 +398,31 @@ public class GeneradorCodigo {
     }
 
     public void br(int skip) {
-        escribir("br %d" + skip);
+        escribir("br " + skip);
     }
 
     public void br_if(int skip) {
-        escribir("br_if %d" + skip);
+        escribir("br_if " + skip);
     }
-
-    public void br_if(int skip, String condition) {
-        escribir("(br_if %d (%s))" + skip + condition);
-    }
-    // public void br_table(int[] skip){
-    //
-    // }
 
     public void si_sino(Runnable then, Runnable els) {
         escribir("if");
-        sangrado(then);
+        sangrar();
+        //TODO: sangrado(then);
+        desangrar();
         escribir("else");
-        sangrado(els);
+        sangrar();
+        //TODO: sangrado(els);
+        desangrar();
         escribir("end");
     }
 
     public void if_(Runnable then) {
         escribir("if");
-        sangrado(then);
+        sangrar();
+        //TODO: sangrado(then);
+        desangrar();
         escribir("end");
-    }
-
-    public void br_tabla(int size) {
-        StringBuilder sb = new StringBuilder(" ");
-        sb.append("br_table");
-        for (int i = 0; i <= size; i++) {
-            sb.append(String.format("%d", i));
-        }
-       escribir(sb.toString());
-    }
-
-    public interface IntRunnable {
-        void run(int i);
-    }
-
-    public void br_tabla(int size, IntRunnable r) {
-        for (int i = 0; i < size; i++) {
-            escribir("block");
-            sangrar();
-        }
-        // Tabla de branching
-        bloque(() -> br_tabla(size));
-        for (int i = 0; i < size; i++) {
-            r.run(i);
-            desangrar();
-            escribir("end");
-        }
     }
 
     public void bloque() {

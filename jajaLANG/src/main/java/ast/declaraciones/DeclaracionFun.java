@@ -53,7 +53,7 @@ public class DeclaracionFun extends Declaracion {
         this.tipo = new TipoFunc(tipoRetorno, tipoPars);
     }
 
-    private int getTam(){
+    public int getTam(){
         return tam;
     }
 
