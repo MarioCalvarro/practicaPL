@@ -117,7 +117,7 @@ public class Llamada extends Expresion {
         GeneradorCodigo.i32_load();
         GeneradorCodigo.i32_store();
         //if no basico
-        GeneradorCodigo.llamar(GeneradorCodigo.SWAP);
+        GeneradorCodigo.llamar(GeneradorCodigo.CAMBIAR);
         GeneradorCodigo.i32_const(tipo.tam()/4);
         GeneradorCodigo.llamar(GeneradorCodigo.COPIAR);
     }
