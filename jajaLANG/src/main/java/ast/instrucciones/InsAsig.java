@@ -1,5 +1,6 @@
 package main.java.ast.instrucciones;
 
+import main.java.ast.GeneradorCodigo;
 import main.java.ast.Nodo;
 import main.java.ast.expresiones.Expresion;
 import main.java.ast.tipos.Tipo;
@@ -37,5 +38,14 @@ public class InsAsig extends Instruccion {
         if (!tipoAsignacion.equals(right.tipo())) {
             throw new TypeError("El tipo de la izquierda de la asignación " + this.left.toString() + " no coincide con el tipo de la izquierda " + this.right.toString() + ".");
         }
+    }
+
+    @Override
+    public void compilar(){
+        GeneradorCodigo.comentario("INSTRUCCION: " +  this.toString());
+        left.compilar();
+        
+        GeneradorCodigo.comentario("Asignando " + left.toString());
+        right.compilar();
     }
 }

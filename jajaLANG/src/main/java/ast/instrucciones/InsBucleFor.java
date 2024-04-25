@@ -2,6 +2,7 @@ package main.java.ast.instrucciones;
 
 import main.java.ast.Contexto;
 import main.java.ast.Delta;
+import main.java.ast.GeneradorCodigo;
 import main.java.ast.Nodo;
 import main.java.ast.declaraciones.DeclaracionVar;
 import main.java.ast.expresiones.Expresion;
@@ -11,6 +12,10 @@ import main.java.errors.TypeError;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.crypto.spec.GCMParameterSpec;
+
+import org.apache.tools.ant.input.GreedyInputHandler;
 
 public class InsBucleFor extends Instruccion {
     private final String id;
@@ -86,5 +91,63 @@ public class InsBucleFor extends Instruccion {
         ultimoDelta.entrarEnBloque();
         super.calcularOffset(ultimoDelta);
         ultimoDelta.salirDeBloque();
+    }
+
+    @Override
+    public void compilar(){
+        GeneradorCodigo.comentario("INSTRUCCION: " + this.toString());
+        
+        inicializar();
+
+        GeneradorCodigo.escribir("loop");
+        GeneradorCodigo.sangrar();
+        comprobarCondicion(1);
+        for(Instruccion i : cuerpo){
+            i.compilar();
+        }
+        incrementarIndice(1);
+        GeneradorCodigo.br(0);
+        GeneradorCodigo.desangrar();
+        GeneradorCodigo.escribir("end");
+    }
+
+    private void inicializar() {
+        // Iniciar índice //
+        // Cargar posición índice
+        GeneradorCodigo.mem_location(indice);
+        // Cargar valor inicial
+        ini.compilar();
+        // Guardar valor inicial en índice
+        GeneradorCodigo.i32_store();
+    }
+
+    private void incrementarIndice(int paso) {
+        // Incrementar índice //
+        // Cargar índice
+        GeneradorCodigo.mem_location(indice);
+        GeneradorCodigo.duplicate(); // Una posición para guardar y otra para cargar
+        // Cargar valor actual del índice
+        GeneradorCodigo.i32_load();
+        // Incrementar valor actual
+        GeneradorCodigo.i32_const(paso);
+        GeneradorCodigo.i32_add();
+        // Guardar valor actual en índice
+        GeneradorCodigo.i32_store();
+    }
+
+    private void comprobarCondicion(int paso) {
+        // Caragar direccion indice
+        GeneradorCodigo.mem_location(indice);
+        // Cargar valor actual del índice
+        GeneradorCodigo.i32_load();
+        // Cargar valor final
+        fin.compilar();
+        // Condición para salir del bucle
+        if (paso < 0) {
+            GeneradorCodigo.i32_lt_s(); // index < to
+        } else {
+            GeneradorCodigo.i32_gt_s(); // index > to
+        }
+        GeneradorCodigo.br_if(1);
     }
 }
