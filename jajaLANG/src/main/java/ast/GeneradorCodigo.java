@@ -291,40 +291,40 @@ public class GeneradorCodigo {
 
     /* LOCALS */
     public void local(String name, String type) {
-        escribir("(local %s %s)"+ name + type);
+        escribir(String.format("(local %s %s)", name, type));
     }
 
     public void local_get(String name) {
-        escribir("get_local $%s" + name);
+        escribir(String.format("get_local $%s", name));
     }
 
     public void local_get(int index) {
-        escribir("local.get %d" + index);
+        escribir(String.format("local.get %d", index));
     }
 
     public void local_set(String name) {
-        escribir("local.set $%s"+ name);
+        escribir(String.format("local.set $%s", name));
     }
 
     public void local_set(int index) {
-        escribir("local.set %d" + index);
+        escribir(String.format("local.set %d", index));
     }
 
     public void local_tee(String name) {
-        escribir("local.tee $%s"+ name);
+        escribir(String.format("local.tee $%s", name));
     }
 
     public void local_tee(int index) {
-        escribir("local.tee %d" + index);
+        escribir(String.format("local.tee %d", index));
     }
 
     /* GLOBALS */
     public void global(String name, String type) {
-        escribir("(global %s %s)" + name + type);
+        escribir(String.format("(global %s %s)", name, type));
     }
 
     public void global(String name, String type, String value) {
-        escribir("(global %s %s (%s.const %s))" + name + type + type + value);
+        escribir(String.format("(global %s %s (%s.const %s))", name, type, type, value));
     }
 
     public void global_mut(String name, String type) {
