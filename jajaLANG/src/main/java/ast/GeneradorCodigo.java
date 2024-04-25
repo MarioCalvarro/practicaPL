@@ -7,27 +7,27 @@ public class GeneradorCodigo {
     private final static StringBuilder sb = new StringBuilder();
     private final static int TAM_INDENTACION = 2;
 
-    private final static String SIG_FUNC = "_sig_void";
-    private final static String INICIO_LOCAL = "localsStart";
-    private final static int INICIO_GLOBAL = 4;     //TODO: MP + SP o solo MP
-    private final static String RESERVAR_PILA = "reserveStack";
-    private final static String LIBERAR_PILA = "freeStack";
-    private final static String RESERVAR_HEAP = "reserveHeap";
-    private final static String ZEROS = "fillZero";
-    private final static String COPIAR = "copyn";
+    public final static String SIG_FUNC = "_sig_void";
+    public final static String INICIO_LOCAL = "localsStart";
+    public final static int INICIO_GLOBAL = 4;     //TODO: MP + SP o solo MP
+    public final static String RESERVAR_PILA = "reserveStack";
+    public final static String LIBERAR_PILA = "freeStack";
+    public final static String RESERVAR_HEAP = "reserveHeap";
+    public final static String ZEROS = "fillZero";
+    public final static String COPIAR = "copyn";
 
     private final static int tamMemoria = 2000;
     private static int nivel_indentacion = 0;
 
-    private static void escribir(String instruccion) {
+    public static void escribir(String instruccion) {
         sb.append(instruccion.indent(nivel_indentacion));
     }
 
-    private static void sangrar() {
+    public static void sangrar() {
         nivel_indentacion += TAM_INDENTACION;
     }
 
-    private static void desangrar() {
+    public static void desangrar() {
         nivel_indentacion -= TAM_INDENTACION;   //TODO: Puede pasar el 0?
     }
 
