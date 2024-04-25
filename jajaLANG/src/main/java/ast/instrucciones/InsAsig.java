@@ -44,7 +44,6 @@ public class InsAsig extends Instruccion {
     @Override
     public void compilar(){
         left.compilarDesignador();
-
         right.compilarAsignacion();
     }
 }

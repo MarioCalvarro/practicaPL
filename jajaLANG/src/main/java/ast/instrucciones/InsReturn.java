@@ -1,6 +1,7 @@
 package main.java.ast.instrucciones;
 
 import main.java.ast.Contexto;
+import main.java.ast.GeneradorCodigo;
 import main.java.ast.Nodo;
 import main.java.ast.expresiones.Expresion;
 import main.java.ast.tipos.Tipo;
@@ -44,4 +45,20 @@ public class InsReturn extends Instruccion {
             throw new TypeError("El tipo de retorno " + expr.tipo().toString() + " no coincide con el tipo de retorno de la función " + this.tipoRetornoFun.toString() + ".");
         }
     }
+
+    @Override 
+    public void compilar(){
+        //TODO:: averiguar qué hacer
+        //GeneradorCodigo.comentario("INSTRUCCION: " + this.toString());
+        //GeneradorCodigo.comentario("Cargar la direccion del lugar donde almacenar el resultado de esta llamada de funcion");
+        GeneradorCodigo.global_get("SP");
+        GeneradorCodigo.i32_const(4);
+        GeneradorCodigo.i32_sub();
+        GeneradorCodigo.i32_load();
+
+        //GeneradorCodigo.comentario("Se ha guardado el valor);
+
+        expr.compilar();
+        GeneradorCodigo.hacerReturn();
+    } 
 }

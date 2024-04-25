@@ -92,7 +92,6 @@ public class InsBucleFor extends Instruccion {
     @Override
     public void compilar(){
         GeneradorCodigo.comentario("INSTRUCCION: " + this.toString());
-        
         inicializar();
 
         GeneradorCodigo.escribir("loop");
@@ -112,7 +111,7 @@ public class InsBucleFor extends Instruccion {
         // Cargar posición índice
         GeneradorCodigo.mem_location(indice);
         // Cargar valor inicial
-        ini.compilar();
+        ini.compilarExpresion();
         // Guardar valor inicial en índice
         GeneradorCodigo.i32_store();
     }
@@ -137,7 +136,7 @@ public class InsBucleFor extends Instruccion {
         // Cargar valor actual del índice
         GeneradorCodigo.i32_load();
         // Cargar valor final
-        fin.compilar();
+        fin.compilarExpresion();
         // Condición para salir del bucle
         GeneradorCodigo.i32_gt_s(); // index > to
         GeneradorCodigo.br_if(1);
