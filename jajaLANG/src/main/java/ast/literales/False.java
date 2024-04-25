@@ -1,5 +1,6 @@
 package main.java.ast.literales;
 
+import main.java.ast.GeneradorCodigo;
 import main.java.ast.Nodo;
 import main.java.ast.tipos.TipoBinario;
 
@@ -35,5 +36,10 @@ public class False extends Literal {
     @Override
     public Integer evaluar() {
         return 0;
+    }
+
+    @Override
+    public void compilarExpresion() {
+        GeneradorCodigo.i32_const(0);
     }
 }

@@ -1,5 +1,6 @@
 package main.java.ast.literales;
 
+import main.java.ast.GeneradorCodigo;
 import main.java.ast.Nodo;
 import main.java.ast.tipos.Tipo;
 import main.java.ast.tipos.TipoAlias;
@@ -42,5 +43,14 @@ public class LiteralMemoria extends Literal {
             apuntado = ((TipoAlias) apuntado).tipoApuntado();
         }
         this.tipo = new TipoPuntero(apuntado);
+    }
+
+    @Override
+    public void compilarExpresion() {
+        //Reservar el espacio necesario en el heap
+        GeneradorCodigo.i32_const(apuntado.tam());
+        GeneradorCodigo.reservarHeap();
+
+        //TODO: Hacer algo con MP
     }
 }

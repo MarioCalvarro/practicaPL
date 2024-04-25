@@ -1,5 +1,6 @@
 package main.java.ast.literales;
 
+import main.java.ast.GeneradorCodigo;
 import main.java.ast.Nodo;
 import main.java.ast.tipos.TipoPuntero;
 
@@ -31,5 +32,10 @@ public class Nulo extends Literal {
     public List<Nodo> getAstHijos() {
         List<Nodo> lista = new ArrayList<Nodo>();
         return lista;
+    }
+
+    @Override
+    public void compilarExpresion() {
+        GeneradorCodigo.i32_const(0);
     }
 }

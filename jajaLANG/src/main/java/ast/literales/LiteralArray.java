@@ -1,5 +1,6 @@
 package main.java.ast.literales;
 
+import main.java.ast.GeneradorCodigo;
 import main.java.ast.Nodo;
 import main.java.ast.expresiones.Expresion;
 import main.java.ast.tipos.Tipo;
@@ -67,5 +68,29 @@ public class LiteralArray extends Literal {
         sb.append("]");
 
         return sb.toString();
+    }
+
+    @Override
+    public void compilarExpresion() {
+        //TODO: Error
+        throw new RuntimeException();
+    }
+
+    @Override
+    public void compilarAsignacion() {
+        int longitud = lExpr.size();
+        for (int i = 0; i < lExpr.size(); ++i) {
+            var elemento = this.lExpr.get(i);
+
+            if (i != longitud - 1) {
+                //Duplicamos la dirección inicial para el siguiente
+                GeneradorCodigo.duplicate();
+            }
+
+            GeneradorCodigo.i32_const(i * elemento.tipo().tam());       //Delta = i * tam_elem
+            GeneradorCodigo.i32_add();      //inicio += delta
+
+            elemento.compilarAsignacion();
+        }
     }
 }

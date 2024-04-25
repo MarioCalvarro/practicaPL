@@ -1,5 +1,6 @@
 package main.java.ast.literales;
 
+import main.java.ast.GeneradorCodigo;
 import main.java.ast.Nodo;
 import main.java.ast.tipos.TipoEntero;
 
@@ -46,5 +47,10 @@ public class Entero extends Literal {
     @Override
     public Integer evaluar() {
         return valorEntero;
+    }
+
+    @Override
+    public void compilarExpresion() {
+        GeneradorCodigo.i32_const(valorEntero);
     }
 }
