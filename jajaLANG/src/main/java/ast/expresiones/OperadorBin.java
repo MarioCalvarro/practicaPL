@@ -1,5 +1,6 @@
 package main.java.ast.expresiones;
 
+import main.java.ast.GeneradorCodigo;
 import main.java.ast.Nodo;
 import main.java.ast.tipos.Tipo;
 import main.java.ast.tipos.TipoBinario;
@@ -160,6 +161,58 @@ public class OperadorBin extends Expresion {
                 default:
                     throw new IllegalArgumentException("Invalid operator");
             }
+        }
+    }
+    @Override
+    public void compilarExpresion() {
+        izquierda.compilarExpresion();
+        derecha.compilarExpresion();
+        switch (op) {
+            case SUMA:
+                GeneradorCodigo.i32_add();
+                break;
+            case RESTA:
+                GeneradorCodigo.i32_sub();
+                break;
+            case MUL:
+                GeneradorCodigo.i32_mul();
+                break;
+            case DIV:
+                GeneradorCodigo.i32_div_s();
+                break;
+            case MOD:
+                GeneradorCodigo.i32_rem_s();
+                break;
+            case IGUAL:
+                GeneradorCodigo.i32_eq();
+                break;
+            case DESIGUAL:
+                GeneradorCodigo.i32_ne();
+                break;
+            case MENOR:
+                GeneradorCodigo.i32_le_s();
+                break;
+            case MAYOR:
+                GeneradorCodigo.i32_ge_s();
+                break;
+            case MENORIGUAL:
+                GeneradorCodigo.i32_le_s();
+                break;
+            case MAYORIGUAL:
+                GeneradorCodigo.i32_ge_s();
+                break;
+            case CONJ:
+                GeneradorCodigo.i32_and();
+                break;
+            case DISY:
+                GeneradorCodigo.i32_or();
+                break;
+            case POT:
+                //TODO: 
+                //GeneradorCodigo.i32_pot();
+                break;
+            default:
+                throw new RuntimeException("Operador no soportada: " + op.toString());
         }
     }
 }

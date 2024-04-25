@@ -1,6 +1,7 @@
 package main.java.ast.expresiones;
 
 import main.java.ast.Delta;
+import main.java.ast.GeneradorCodigo;
 import main.java.ast.Nodo;
 import main.java.ast.declaraciones.DeclaracionFun;
 import main.java.ast.declaraciones.DeclaracionPar;
@@ -99,6 +100,31 @@ public class Llamada extends Expresion {
         DeclaracionFun dec = (DeclaracionFun) exp.dec();
         TipoFunc tipo = (TipoFunc) dec.tipo() ;
         posicion = ultimoDelta.actualizarPosicionDelta(tipo.tipoRetorno().tam());
+    }
+
+    @Override
+    public void compilarExpresion(){
+        compilar();
+        GeneradorCodigo.mem_local(this.posicion);
+        GeneradorCodigo.i32_load();
+    }
+
+    @Override
+    public void compilarAsignacion(){
+        compilar();
+        GeneradorCodigo.mem_local(posicion);
+        //if basico
+        GeneradorCodigo.i32_load();
+        GeneradorCodigo.i32_store();
+        //if no basico
+        GeneradorCodigo.llamar(GeneradorCodigo.SWAP);
+        GeneradorCodigo.i32_const(tipo.tam()/4);
+        GeneradorCodigo.llamar(GeneradorCodigo.COPIAR);
+    }
+
+    @Override
+    public void compilar(){
+        if(this.tipo)
     }
 
 }

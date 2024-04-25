@@ -15,6 +15,8 @@ public class GeneradorCodigo {
     public final static String RESERVAR_HEAP = "reserveHeap";
     public final static String ZEROS = "fillZero";
     public final static String COPIAR = "copyn";
+    public final static String SWAP = "swap";
+
 
     private final static int tamMemoria = 2000;
     private static int nivel_indentacion = 0;
