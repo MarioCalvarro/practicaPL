@@ -13,10 +13,6 @@ import main.java.errors.TypeError;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.crypto.spec.GCMParameterSpec;
-
-import org.apache.tools.ant.input.GreedyInputHandler;
-
 public class InsBucleFor extends Instruccion {
     private final String id;
     private final DeclaracionVar indice;
@@ -100,14 +96,14 @@ public class InsBucleFor extends Instruccion {
         inicializar();
 
         GeneradorCodigo.escribir("loop");
-        GeneradorCodigo.sangrar();
-        comprobarCondicion(1);
-        for(Instruccion i : cuerpo){
-            i.compilar();
-        }
-        incrementarIndice(1);
-        GeneradorCodigo.br(0);
-        GeneradorCodigo.desangrar();
+            GeneradorCodigo.sangrar();
+            comprobarCondicion();
+            for(Instruccion i : cuerpo){
+                i.compilar();
+            }
+            incrementarIndice();
+            GeneradorCodigo.br(0);
+            GeneradorCodigo.desangrar();
         GeneradorCodigo.escribir("end");
     }
 
@@ -121,7 +117,7 @@ public class InsBucleFor extends Instruccion {
         GeneradorCodigo.i32_store();
     }
 
-    private void incrementarIndice(int paso) {
+    private void incrementarIndice() {
         // Incrementar índice //
         // Cargar índice
         GeneradorCodigo.mem_location(indice);
@@ -129,13 +125,13 @@ public class InsBucleFor extends Instruccion {
         // Cargar valor actual del índice
         GeneradorCodigo.i32_load();
         // Incrementar valor actual
-        GeneradorCodigo.i32_const(paso);
+        GeneradorCodigo.i32_const(1);
         GeneradorCodigo.i32_add();
         // Guardar valor actual en índice
         GeneradorCodigo.i32_store();
     }
 
-    private void comprobarCondicion(int paso) {
+    private void comprobarCondicion() {
         // Caragar direccion indice
         GeneradorCodigo.mem_location(indice);
         // Cargar valor actual del índice
@@ -143,11 +139,7 @@ public class InsBucleFor extends Instruccion {
         // Cargar valor final
         fin.compilar();
         // Condición para salir del bucle
-        if (paso < 0) {
-            GeneradorCodigo.i32_lt_s(); // index < to
-        } else {
-            GeneradorCodigo.i32_gt_s(); // index > to
-        }
+        GeneradorCodigo.i32_gt_s(); // index > to
         GeneradorCodigo.br_if(1);
     }
 }

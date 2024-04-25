@@ -1,0 +1,4 @@
+- DeclaracionFuncion
+- Designador
+- Llamada
+- Literales (pero con excepción)

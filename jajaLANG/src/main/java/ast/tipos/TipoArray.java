@@ -46,4 +46,9 @@ public class TipoArray extends Tipo {
     public int tam() {
         return tam.valorEntero() * this.tipoElementos.tam();
     }
+
+    @Override
+    public boolean esBasico() {
+        return false;
+    }
 }

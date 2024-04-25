@@ -64,4 +64,9 @@ public class TipoAlias extends Tipo {
     public int tam() {
         return dec.tipoApuntado().tam();
     }
+
+    @Override
+    public boolean esBasico() {
+        return dec.tipoApuntado().esBasico();
+    }
 }

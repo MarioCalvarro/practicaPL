@@ -89,4 +89,9 @@ public class TipoRegistro extends Tipo {
         }
         return tam;
     }
+
+    @Override
+    public boolean esBasico() {
+        return false;
+    }
 }
