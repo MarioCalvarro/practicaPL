@@ -1,8 +1,10 @@
 package main.java.ast.designadores;
 
 import main.java.ast.Contexto;
+import main.java.ast.GeneradorCodigo;
 import main.java.ast.Nodo;
 import main.java.ast.declaraciones.Declaracion;
+import main.java.ast.declaraciones.DeclaracionPar;
 import main.java.ast.declaraciones.DeclaracionVar;
 import main.java.errors.BindError;
 
@@ -69,6 +71,15 @@ public class Identificador extends Designador {
     public void compilar() {
         try {
             DeclaracionVar variable = (DeclaracionVar) dec;
+
+            GeneradorCodigo.mem_location(variable);
+            try {
+                DeclaracionPar par = (DeclaracionPar) variable;
+                if (par.porReferencia()) {
+                    //Cargamos la dirección a la que apunta
+                    GeneradorCodigo.i32_load();
+                }
+            } catch (ClassCastException e) {}
         } catch (ClassCastException e) {
             //TODO: Error
             throw new RuntimeException();

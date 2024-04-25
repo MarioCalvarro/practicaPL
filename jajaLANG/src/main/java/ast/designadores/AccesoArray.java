@@ -48,13 +48,13 @@ public class AccesoArray extends Designador {
     }
 
     @Override
-    public void compilar() {
+    public void compilarDesignador() {
         int tamElementos = ((TipoArray) tipo).tipoElementos().tam();
 
         GeneradorCodigo.i32_const(tamElementos);
-        indice.compilar();
+        indice.compilarExpresion();
         GeneradorCodigo.i32_mul();      //indice * tamElementos
-        array.compilar();
+        array.compilarDesignador();
         GeneradorCodigo.i32_add();      //inicio + indice * tamElementos
     }
 }

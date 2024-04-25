@@ -1,6 +1,5 @@
 package main.java.ast;
 
-import main.java.ast.declaraciones.DeclaracionFun;
 import main.java.ast.declaraciones.DeclaracionVar;
 
 public class GeneradorCodigo {
@@ -15,8 +14,7 @@ public class GeneradorCodigo {
     public final static String RESERVAR_HEAP = "reserveHeap";
     public final static String ZEROS = "fillZero";
     public final static String COPIAR = "copyn";
-    public final static String SWAP = "swap";
-
+    public final static String CAMBIAR = "swap";
 
     private final static int tamMemoria = 2000;
     private static int nivel_indentacion = 0;
@@ -134,6 +132,16 @@ public class GeneradorCodigo {
                             br 0
                         end
                     end
+                )
+                """);
+
+        sb.append("""
+                (func $swap
+                    (param $a i32)
+                    (param $b i32)
+                    (result i32 i32)
+                    get_local $b
+                    get_local $a
                 )
                 """);
     }
