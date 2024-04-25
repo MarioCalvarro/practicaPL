@@ -46,19 +46,4 @@ public class DeclaracionPar extends DeclaracionVar {
         } 
         posicionDelta = delta.actualizarPosicionDelta(tam);
     }
-
-    @Override
-    public void compilar() {
-        GeneradorCodigo.escribir("(func $%s" + this.getId());
-        GeneradorCodigo.sangrar();
-            GeneradorCodigo.escribir(String.format("(local $%s i32)", GeneradorCodigo.INICIO_GLOBAL));
-            GeneradorCodigo.escribir("(local $temp i32)");
-
-            //TODO: Cuánto hay que sumar?
-            int x = 0;
-            int stackSize = this.getTam() + x;
-
-            GeneradorCodigo.i32_const(stackSize);
-            GeneradorCodigo.reservarPila();
-    }
 }
