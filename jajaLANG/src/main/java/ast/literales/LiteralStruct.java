@@ -1,5 +1,6 @@
 package main.java.ast.literales;
 
+import main.java.ast.GeneradorCodigo;
 import main.java.ast.Nodo;
 import main.java.ast.declaraciones.Declaracion;
 import main.java.ast.declaraciones.DeclaracionVar;
@@ -64,5 +65,32 @@ public class LiteralStruct extends Literal {
             atributos.add(new DeclaracionVar(at.getKey(), at.getValue().tipo(), at.getValue()));
         }
         this.tipo = new TipoRegistro(atributos);
+    }
+
+    @Override
+    public void compilarExpresion() {
+        //TODO: Error
+        throw new RuntimeException();
+    }
+
+    @Override
+    public void compilarAsignacion() {
+        GeneradorCodigo.sangrar();
+        for (var attr : mapaExpresiones.entrySet()) {
+            var id_attr = attr.getKey();
+            var val_attr = attr.getValue();
+
+            //Duplicamos la dirección inicial
+            GeneradorCodigo.duplicate();
+            GeneradorCodigo.i32_const(((TipoRegistro) tipo).offsetAtributo(id_attr));
+            GeneradorCodigo.i32_add(); //Inicial + delta
+
+            //Asignamos el valor del atributo en inicial + delta
+            val_attr.compilarAsignacion();
+        }
+
+        //Quitamos la dirección inicial
+        GeneradorCodigo.drop();
+        GeneradorCodigo.desangrar();
     }
 }
