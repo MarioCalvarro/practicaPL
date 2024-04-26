@@ -127,7 +127,7 @@ public class DeclaracionFun extends Declaracion {
     public void compilar() {
         GeneradorCodigo.escribir("(func $%s" + this.getId());
         GeneradorCodigo.sangrar();
-            GeneradorCodigo.escribir(String.format("(local $%s i32)", GeneradorCodigo.INICIO_GLOBAL));
+            GeneradorCodigo.escribir(String.format("(local $%s i32)", GeneradorCodigo.INICIO_GLOBAL));      //TODO: Global o local
             GeneradorCodigo.escribir("(local $temp i32)");
 
             //TODO: Cuánto hay que sumar?

@@ -49,16 +49,13 @@ public class InsReturn extends Instruccion {
     @Override 
     public void compilar(){
         //TODO:: averiguar qué hacer
-        //GeneradorCodigo.comentario("INSTRUCCION: " + this.toString());
-        //GeneradorCodigo.comentario("Cargar la direccion del lugar donde almacenar el resultado de esta llamada de funcion");
         GeneradorCodigo.global_get("SP");
         GeneradorCodigo.i32_const(4);
         GeneradorCodigo.i32_sub();
         GeneradorCodigo.i32_load();
 
-        //GeneradorCodigo.comentario("Se ha guardado el valor);
+        expr.compilarAsignacion();
 
-        expr.compilar();
         GeneradorCodigo.hacerReturn();
     } 
 }
