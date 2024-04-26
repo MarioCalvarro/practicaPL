@@ -3,6 +3,7 @@ package main.java.ast;
 import main.java.ast.declaraciones.Declaracion;
 import main.java.ast.declaraciones.DeclaracionFun;
 import main.java.ast.declaraciones.DeclaracionPar;
+import main.java.ast.declaraciones.DeclaracionVar;
 import main.java.ast.declaraciones.Import;
 import main.java.ast.designadores.Identificador;
 import main.java.ast.tipos.TipoBinario;
@@ -120,12 +121,6 @@ public class Programa extends Nodo {
         tamVarGlobales = d.getMax();
     }
 
-    @Override
-    public void compilar() {
-        calcularOffset();
-        //TODO
-    }
-
     public void calcularOffset() {
         if (!typecheckDone) {
             typecheck();
@@ -146,6 +141,64 @@ public class Programa extends Nodo {
                 } catch (ClassCastException e) {
                 }
             }
+        }
+    }
+
+    @Override
+    public void compilar() {
+        calcularOffset();
+
+        String funcionMain = "tronco";
+        Boolean hayMain = false;
+        for (Declaracion dec : lista_declaraciones) {
+            try {
+                DeclaracionFun funDec = (DeclaracionFun) dec;
+                if (funDec.getId().equals(funcionMain)) {
+                    if (hayMain) {
+                        //TODO: Error
+                        throw new RuntimeException("Multiple main functions found");
+                    }
+                    hayMain = true;
+                }
+            } catch (ClassCastException e) {}
+        }
+
+        if (!hayMain) {
+            //TODO: Error
+            throw new RuntimeException("No main function found");
+        }
+
+        GeneradorCodigo.escribir(String.format("(func $start (type $%s)", GeneradorCodigo.SIG_FUNC));
+        GeneradorCodigo.sangrar();
+            //Al inicio MP será el 0
+            GeneradorCodigo.i32_const(0);
+            GeneradorCodigo.global_set(GeneradorCodigo.MP);
+
+            //MP (que es 0) almacena el antiguo MP (que al inicio es el mismo)
+            GeneradorCodigo.global_get(GeneradorCodigo.MP);
+            GeneradorCodigo.global_get(GeneradorCodigo.MP);
+            GeneradorCodigo.i32_store();
+
+            /// Ahora configurar el SP
+            GeneradorCodigo.i32_const(4 + tamVarGlobales);
+            GeneradorCodigo.global_set("SP");
+
+            for (Declaracion dec : lista_declaraciones) {
+                try {
+                    DeclaracionVar var = (DeclaracionVar) dec;
+                    var.compilar();
+                } catch (ClassCastException e) {}
+            }
+        GeneradorCodigo.desangrar();
+        GeneradorCodigo.llamar(funcionMain);
+        GeneradorCodigo.escribir(")");
+
+        //Compilamos las funciones
+        for (Declaracion dec : lista_declaraciones) {
+            try {
+                DeclaracionFun funDec = (DeclaracionFun) dec;
+                funDec.compilar();
+            } catch (ClassCastException e) {}
         }
     }
 }

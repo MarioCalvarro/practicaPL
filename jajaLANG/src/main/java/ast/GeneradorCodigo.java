@@ -12,6 +12,10 @@ public class GeneradorCodigo {
     public final static String ZEROS = "fillZero";
     public final static String COPIAR = "copyn";
     public final static String CAMBIAR = "swap";
+    public final static String MP = "MP";
+    public final static String SP = "SP";
+    public final static String NP = "NP";
+
     private final static StringBuilder sb = new StringBuilder();
     private final static int TAM_INDENTACION = 2;
     private final static int tamMemoria = 2000;
