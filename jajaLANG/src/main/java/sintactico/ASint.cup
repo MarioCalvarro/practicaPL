@@ -117,7 +117,7 @@ non terminal List<DeclaracionVar> Lista_Atributos;
 non terminal Expresion Expresion, E1, E2, E3, E4, E5, E6, E7, E8, E9, E10;
 non terminal List<Expresion> Lista_Expresiones;
 non terminal OperadorBin.Operadores OpBin, OP2, OP3, OP4, OP5;
-non terminal OperadorUn.Operadores OP7, OP8;
+non terminal OperadorUn.Operadores OP8;
 
 //Literales
 terminal Entero ENTERO;
@@ -558,18 +558,14 @@ E6 ::= E6: izquierda POT E7: derecha
    ;
 
 //dirección, puntero
-E7 ::= OP7:op7 E7: derecha
-   {: RESULT = new OperadorUn(op7, derecha); :}
+E7 ::= DIRECCION E7: derecha
+   {: RESULT = new OperadorUn(OperadorUn.Operadores.DIRECCION, derecha); :}
+   | PUNTERO E7: derecha
+   {: RESULT = new AccesoPuntero(derecha); :}
    | E8: e8
    {: RESULT = e8; :}
    ;
 
-   
-OP7 ::= DIRECCION
-    {: RESULT = OperadorUn.Operadores.DIRECCION; :}	 	 
-    | PUNTERO
-    {: RESULT = OperadorUn.Operadores.PUNTERO; :}
-    ;
 
 //negación y menos unario
 E8 ::= OP8:op8 E8: derecha

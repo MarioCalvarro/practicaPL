@@ -70,17 +70,6 @@ public class OperadorUn extends Expresion {
                 this.tipo = new TipoPuntero(tipoDerecha);
                 break;
 
-            case PUNTERO:
-                TipoPuntero tipoPuntero;
-                try {
-                    tipoPuntero = (TipoPuntero) derecha.tipo();
-                } catch (ClassCastException e) {
-                    throw new TypeError(this.derecha.toString() + " no es un puntero y  por tanto no se le puede aplicar el operador puntero.");
-
-                }
-                this.tipo = tipoPuntero.getTipoApuntado();
-                break;
-
             default:
                 throw new TypeError(this.op.toString() + " no es un operador unario valido.");
         }
@@ -116,16 +105,13 @@ public class OperadorUn extends Expresion {
             case DIRECCION:
                 ((Designador) derecha).compilarDesignador();
                 break;
-            case PUNTERO:
-                //TODO
-                break;
             default:
                 throw new IllegalArgumentException("Invalid operator '" + op + "'");
         }
     }
 
     public enum Operadores {
-        NEG, DIRECCION, PUNTERO, RESTA;
+        NEG, DIRECCION, RESTA;
 
         public String toString() {
             switch (this) {
@@ -135,8 +121,6 @@ public class OperadorUn extends Expresion {
                     return "-";
                 case DIRECCION:
                     return "&";
-                case PUNTERO:
-                    return "@";
                 default:
                     throw new IllegalArgumentException("Invalid operator");
             }
