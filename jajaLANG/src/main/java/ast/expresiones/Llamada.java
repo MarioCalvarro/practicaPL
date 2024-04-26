@@ -128,64 +128,61 @@ public class Llamada extends Expresion {
             } catch(ClassCastException e){}
         }
 
-         /// Si son funciones scan y print, tratarlos diferente porque no hacen falta reserverStack ni freeStack
-        if(exp.externo()){
+        var decFun = (DeclaracionFun) this.exp.dec();
+
+        //Caso de ser funciones scan o print
+        if(decFun.esImportado()){
             for (int i = 0; i < listaExpresiones.size(); i++) {
                 var expr = listaExpresiones.get(i);
                 expr.compilarExpresion();
             }
-            /// Guardar el resultado en la posición de memoria asignada para caso scan
-            
+
+            //Por si necesitamos guardar el resultado
             if (((TipoFunc) exp.tipo()).tipoRetorno().tam() > 0) {
                 GeneradorCodigo.mem_local(posicion);
             }
 
-            /// Llamar a la funcion desde WASM
+            //Llamamos por wasm
             GeneradorCodigo.llamar(exp.nombre());
 
+            //Por si tenemos que guardar el resultado
             if (((TipoFunc) exp.tipo()).tipoRetorno().tam() > 0) {
                 GeneradorCodigo.i32_store();
             }
 
             return;        
         }
-         /// Para funciones normales
-         var params = ((TipoFunc) exp.tipo()).tipoParametros();
 
-         GeneradorCodigo.comentario("Copianfo argumentos al stack");
- 
-         for (int i = 0; i < listaExpresiones.size(); i++) {
-             var param = params.get(i);
-             var expr = listaExpresiones.get(i);
-            
-             GeneradorCodigo.comentario("Copiando argumento " + param + " al stack");
- 
-             /// Calcular primero las direcciones de los parámetros
-             GeneradorCodigo.global_get("SP");
-             GeneradorCodigo.i32_const(4 + 4 + param.tam());
-             GeneradorCodigo.i32_add();
- 
-             if (param.isRef()) {
-                 /// En el caso de metodo struct, copiar la direccion del struct tal cual
-                 GeneradorCodigo.comentario("Copiando la referencia de " + param.toString() + " al stack");
-                 var designador = (Designador) expr;
-                 designador.compilarDesignador();
-                 GeneradorCodigo.i32_store();
+        //Parámetros de la función referida
+        var params = decFun.parametros();
 
-             } else {
-                 expr.compilarAsignacion();
-             }
-         }
- 
-         GeneradorCodigo.comentario("Poner la direccion de memoria donde guardar el resultado");
-         GeneradorCodigo.global_get("SP");
-         GeneradorCodigo.i32_const( ((TipoFunc) exp.tipo()).tipoRetorno().tam() + 4 + 4);
-         GeneradorCodigo.i32_add();
-         GeneradorCodigo.mem_local(posicion);
-         GeneradorCodigo.i32_store();
- 
-         GeneradorCodigo.comentario("HACIENDO LA LLAMADA DE FUNCION");
-         GeneradorCodigo.llamar(exp.nombre());
-         GeneradorCodigo.comentario("LLAMADA DE FUNCION REALIZADA");
+        for (int i = 0; i < listaExpresiones.size(); i++) {
+            //Copiar los argumentos antes de llamar a la función
+            var param = params.get(i);
+            var expr = listaExpresiones.get(i);
+
+            GeneradorCodigo.global_get("SP");
+            GeneradorCodigo.i32_const(4 + param.getPosicionDelta());
+            GeneradorCodigo.i32_add();      //Localstart + delta
+
+            if (param.porReferencia()) {
+                //Copiamos la dirección del designador que se llama
+                var designador = (Designador) expr;
+                designador.compilarDesignador();
+                GeneradorCodigo.i32_store();
+            } else {
+                //Copiamos a la dirección dada antes
+                expr.compilarAsignacion();
+            }
+        }
+
+        GeneradorCodigo.global_get("SP");
+        GeneradorCodigo.i32_const(decFun.getTam() + 4);
+        GeneradorCodigo.i32_add();              //localstart + maxTamFunc
+
+        GeneradorCodigo.mem_local(posicion);        //Donde guardamos el resultado 
+        GeneradorCodigo.i32_store();
+
+        GeneradorCodigo.llamar(exp.nombre());
     }
 }

@@ -35,6 +35,7 @@ public class Contexto {
 
     public void insertar(Declaracion dec) {
         Ambito ambitoActual = ambitos.get(ambitos.size() - 1);
+
         if (ambitoActual.pertenece(dec.getId())) {
             throw new BindError("El identificador " + dec.getId() + " ya está relacionado con otra declaración en el mismo ámbito.");
         }

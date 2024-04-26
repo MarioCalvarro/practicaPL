@@ -17,8 +17,9 @@ public class DeclaracionFun extends Declaracion {
     private final List<DeclaracionPar> parametros;
     private final List<Instruccion> cuerpo;
     private int tam;
+    private boolean importado = false;
 
-    //Función sin cuerpo (para input/output)
+    //Función sin cuerpo, importadas (para input/output)
     public DeclaracionFun(String id, List<DeclaracionPar> parametros, Tipo tipoRetorno) {
         this.id = id;
         this.parametros = parametros;
@@ -28,6 +29,7 @@ public class DeclaracionFun extends Declaracion {
             tipoPars.add(par.tipo());
         }
         this.tipo = new TipoFunc(tipoRetorno, tipoPars);
+        this.importado = true;
     }
 
     // Función void
@@ -60,6 +62,10 @@ public class DeclaracionFun extends Declaracion {
 
     public List<DeclaracionPar> parametros() {
         return parametros;
+    }
+
+    public boolean esImportado() {
+        return importado;
     }
 
     @Override
