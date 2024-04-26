@@ -117,21 +117,27 @@ public class DeclaracionFun extends Declaracion {
 
     @Override
     public void compilar() {
+        GeneradorCodigo.comentario("Declaración de la función: " + this.getId());
         GeneradorCodigo.escribir("(func $" + this.getId());
         GeneradorCodigo.sangrar();
-        GeneradorCodigo.escribir(String.format("(local $%s i32)", GeneradorCodigo.INICIO_LOCAL));
-        GeneradorCodigo.escribir("(local $temp i32)");
+            GeneradorCodigo.escribir(String.format("(local $%s i32)", GeneradorCodigo.INICIO_LOCAL));
+            GeneradorCodigo.escribir("(local $temp i32)");
 
-        int x = 4 + 4;      //4 de MP y 4 de valor de retorno
-        int stackSize = this.getTam() + x;
+            int x = 4 + 4;      //4 de MP y 4 de valor de retorno
+            int stackSize = this.getTam() + x;
 
-        GeneradorCodigo.i32_const(stackSize);
-        GeneradorCodigo.reservarPila();
+            GeneradorCodigo.comentario("Reservamos espacio de pila: " + stackSize);
+            GeneradorCodigo.i32_const(stackSize);
+            GeneradorCodigo.reservarPila();
 
-        for (Instruccion ins : cuerpo) {
-            ins.compilar();
-        }
-        GeneradorCodigo.liberarPila();
+            GeneradorCodigo.sangrar();
+                for (Instruccion ins : cuerpo) {
+                    ins.compilar();
+                }
+            GeneradorCodigo.desangrar();
+
+            GeneradorCodigo.comentario("Liberamos la pila");
+            GeneradorCodigo.liberarPila();
         GeneradorCodigo.desangrar();
         GeneradorCodigo.escribir(")");
     }

@@ -154,9 +154,10 @@ public class GeneradorCodigo {
 
     public static void mem_location(DeclaracionVar var) {
         if (var.esGlobal()) {
-            //TODO: Cambio MP y SP o solo MP
+            comentario("Variable global con delta: " + var.getPosicionDelta());
             i32_const(INICIO_GLOBAL + var.getPosicionDelta());
         } else {
+            comentario("Variable con delta: " + var.getPosicionDelta());
             mem_local(var.getPosicionDelta());
         }
     }
