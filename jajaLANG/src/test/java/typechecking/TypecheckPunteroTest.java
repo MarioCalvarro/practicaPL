@@ -30,8 +30,6 @@ public class TypecheckPunteroTest {
             e.printStackTrace();
             System.exit(1);
         }
-        //Solo queremos comprobar que no tire excepción
-        pr.bind();
         pr.typecheck();
     }
 }
