@@ -23,21 +23,17 @@ public class GeneradorCodigo {
 
     private static void trasReservarPila() {
         sb.append("""
-                ;; Guarda en $temp el valor de $MP antiguo
+                ;;Guardamos el valor anterior de MP
                 set_local $temp
 
-                ;; Guarda en MEM[$MP] el valor de $MP antiguo
-                get_global $MP       ;;; Este es MP nuevo = SP antiguo
+                ;;Guardamos en la posición de MP el antiguo MP
+                get_global $MP
                 get_local $temp
-                i32.store            ;;; Guarda en MEM[MP] el valor de MP antiguo
+                i32.store       ;;MEM[MP] = MP_antiguo
 
-                    get_global $MP
-                    get_global $SP       ;;; Este es SP nuevo (con el espacio reservado)
-                i32.store offset=4       ;;; Guarda en MEM[MP+4] el valor de SP nuevo
-
-                ;; Calcular el inicio del stack para las variables locales (8 + MP porque usamos 2 casillas para puntero dinamico)
-                        get_global $MP
-                        i32.const 8
+                ;;localStart = MP + 4
+                get_global $MP
+                i32.const 4
                 i32.add
                 """);
         local_set(INICIO_LOCAL);
@@ -284,8 +280,6 @@ public class GeneradorCodigo {
         aux.append("(global $SP (mut i32) (i32.const 0))         ;; start of stack");
         aux.append("(global $MP (mut i32) (i32.const 0))         ;; mark pointer");
         aux.append("(global $NP (mut i32) (i32.const 131071996)) ;; heap 2000*64*1024-4");
-        // Este es el tipo de todas nuestras funciones, pues nos
-        // pasamos los argumentos y valores de retorno por memoria
         cargarFunciones(aux);
         aux.append(sb.toString());
         return aux.toString();
@@ -296,13 +290,20 @@ public class GeneradorCodigo {
         sb.append("""
                 (func $reserveStack (param $size i32)
                 (result i32)
+                    ;;Devolver antiguo MP
                     global.get $MP
+
+                    ;;MP = SP_antiguo
                     global.get $SP
                     global.set $MP
+
+                    ;;SP = SP_antiguo + size
                     global.get $SP
                     local.get $size
                     i32.add
                     global.set $SP
+
+                    ;;Overflow
                     global.get $SP
                     global.get $NP
                     i32.gt_u
@@ -316,10 +317,11 @@ public class GeneradorCodigo {
         //Función que libera un marco del stack
         sb.append("""
                 (func $freeStack (type $_sig_void)
+                    ;;SP = MP
                     global.get $MP
-                    i32.load
-                    i32.load offset=4
                     global.set $SP
+
+                    ;;MP = MP_antiguo
                     global.get $MP
                     i32.load
                     global.set $MP   
@@ -342,22 +344,30 @@ public class GeneradorCodigo {
                 (param $n i32)
                     block
                         loop
+                            ;;n == 0?
                             local.get $n
                             i32.eqz
                             br_if 1
 
+                            ;;n -= 1
                             local.get $n
                             i32.const 1
                             i32.sub
                             local.set $n
+
+                            ;;MEM[dest] = MEM[src]
                             local.get $dest
                             local.get $src
                             i32.load
                             i32.store
+
+                            ;;dest += 4
                             local.get $dest
                             i32.const 4
                             i32.add
                             local.set $dest
+
+                            ;;src += 4
                             local.get $src
                             i32.const 4
                             i32.add
@@ -375,16 +385,23 @@ public class GeneradorCodigo {
                     (param $n i32)
                     block
                         loop
+                            ;;n == 0?
                             get_local $n
                             i32.eqz
                             br_if 1
+
+                            ;;n -= 1
                             get_local $n
                             i32.const 1
                             i32.sub
                             set_local $n
+
+                            ;;MEM[src] = 0
                             get_local $src
                             i32.const 0
                             i32.store
+
+                            ;;src += 4
                             get_local $src
                             i32.const 4
                             i32.add
