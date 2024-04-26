@@ -55,9 +55,7 @@ public class Main {
                 try (FileWriter escritor = new FileWriter(archivoCompilado)) {
                     escritor.write(output.toString());
                 } catch (Exception e) {
-                    System.err.println(String.format(
-                                "[ERROR]: Se ha producido un error al intentar escribir el código en el archivo %s",
-                                archivoCompilado.getName()));
+                    System.err.println(String.format("No se ha podido escribir el código compilado en el archivo %s", archivoCompilado.getName()));
                 }
                 break;
             default:
