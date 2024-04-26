@@ -130,11 +130,9 @@ public class DeclaracionFun extends Declaracion {
             GeneradorCodigo.i32_const(stackSize);
             GeneradorCodigo.reservarPila();
 
-            GeneradorCodigo.sangrar();
-                for (Instruccion ins : cuerpo) {
-                    ins.compilar();
-                }
-            GeneradorCodigo.desangrar();
+            for (Instruccion ins : cuerpo) {
+                ins.compilar();
+            }
 
             GeneradorCodigo.comentario("Liberamos la pila");
             GeneradorCodigo.liberarPila();

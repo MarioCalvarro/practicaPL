@@ -109,7 +109,7 @@ public class DeclaracionVar extends Declaracion {
 
     @Override
     public void compilar() {
-        GeneradorCodigo.comentario("Declaración de la variable: " + id);
+        GeneradorCodigo.comentario(String.format(";;;INICIO DECLARACIÓN DE %s;;;", getId()));
         GeneradorCodigo.mem_location(this);
 
         if (this.valor == null) {
@@ -121,5 +121,6 @@ public class DeclaracionVar extends Declaracion {
             GeneradorCodigo.comentario("Asignando el valor: " + valor.toString());
             valor.compilarAsignacion();
         }
+        GeneradorCodigo.comentario(String.format(";;;FIN DECLARACIÓN DE %s;;;\n", getId()));
     }
 }

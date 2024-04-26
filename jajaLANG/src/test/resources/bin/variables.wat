@@ -14,6 +14,7 @@
 (func $start (type $_sig_void)
   i32.const 8
   call $reserveStack
+  ;;;;;;;;INICIO POST RESERVA;;;;;;;;
   ;;Guardamos el valor anterior de MP
   local.set $temp
   
@@ -28,21 +29,34 @@
   i32.add
   local.set $localsStart
 
-;;Declaración de la variable: var1
+  ;;;;;;;;;FIN POST RESERVA;;;;;;;;
+
+  ;;;;;INICIO DECLARACIÓN DE var1;;;
+
+  ;;Variable con delta: 0
   local.get $localsStart
   i32.const 0
   i32.add
 
-;;Asignando el valor: 1
+  ;;Asignando el valor: 1
   i32.const 1
   i32.store
+
+  ;;;;;FIN DECLARACIÓN DE var1;;;
+
+;;Llamada a 'tronco'
 call $tronco
 )
+
+;;Declaración de la función: tronco
 (func $tronco
   (local $localsStart i32)
   (local $temp i32)
+
+  ;;Reservamos espacio de pila: 12
   i32.const 12
   call $reserveStack
+  ;;;;;;;;INICIO POST RESERVA;;;;;;;;
   ;;Guardamos el valor anterior de MP
   local.set $temp
   
@@ -57,14 +71,22 @@ call $tronco
   i32.add
   local.set $localsStart
 
-;;Declaración de la variable: var2
+  ;;;;;;;;;FIN POST RESERVA;;;;;;;;
+
+  ;;;;;INICIO DECLARACIÓN DE var2;;;
+
+  ;;Variable con delta: 0
   local.get $localsStart
   i32.const 0
   i32.add
 
-;;No tiene valor asignado → ceros
+  ;;No tiene valor asignado → ceros
   i32.const 1
   call $fillZero
+
+  ;;;;;FIN DECLARACIÓN DE var2;;;
+
+  ;;Liberamos la pila
   call $freeStack
 )
 (func $reserveStack (param $size i32)

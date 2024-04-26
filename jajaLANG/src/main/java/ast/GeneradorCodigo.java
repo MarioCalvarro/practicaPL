@@ -25,13 +25,13 @@ public class GeneradorCodigo {
         String[] lines = comentario.split("\n");
         sb.append("\n");
         for (String line : lines) {
-            //Los comentarios no tendrán indentación
-            sb.append(";;").append(line).append("\n");
+            escribir(";;" + line + "\n");
         }
     }
 
     private static void trasReservarPila() {
         escribir("""
+                ;;;;;;;;INICIO POST RESERVA;;;;;;;;
                 ;;Guardamos el valor anterior de MP
                 local.set $temp
 
@@ -46,6 +46,7 @@ public class GeneradorCodigo {
                 i32.add
                 """);
         local_set(INICIO_LOCAL);
+        comentario(";;;;;;;FIN POST RESERVA;;;;;;;;");
     }
 
     public static void reservarPila() {
