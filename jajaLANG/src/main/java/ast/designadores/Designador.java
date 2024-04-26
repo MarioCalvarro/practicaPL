@@ -17,7 +17,7 @@ public abstract class Designador extends Expresion {
 
         GeneradorCodigo.llamar(GeneradorCodigo.CAMBIAR);
 
-        GeneradorCodigo.i32_const(tipo().tam() / 4);
+        GeneradorCodigo.i32_const(tipo().tam() / 4);        //Si es básico solo se copia uno
 
         GeneradorCodigo.llamar(GeneradorCodigo.COPIAR);
     }

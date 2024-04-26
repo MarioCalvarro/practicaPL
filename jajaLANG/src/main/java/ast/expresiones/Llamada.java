@@ -113,12 +113,9 @@ public class Llamada extends Expresion {
     public void compilarAsignacion(){
         compilar();
         GeneradorCodigo.mem_local(posicion);
-        //if basico
-        GeneradorCodigo.i32_load();
-        GeneradorCodigo.i32_store();
-        //if no basico
+
         GeneradorCodigo.llamar(GeneradorCodigo.CAMBIAR);
-        GeneradorCodigo.i32_const(tipo.tam()/4);
+        GeneradorCodigo.i32_const(tipo.tam()/4);        //Si es básico se copia solo uno
         GeneradorCodigo.llamar(GeneradorCodigo.COPIAR);
     }
 
