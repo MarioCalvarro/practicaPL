@@ -5,7 +5,7 @@ import main.java.ast.declaraciones.DeclaracionVar;
 public class GeneradorCodigo {
     public final static String SIG_FUNC = "_sig_void";
     public final static String INICIO_LOCAL = "localsStart";
-    public final static int INICIO_GLOBAL = 4;     //TODO: MP + SP o solo MP
+    public final static int INICIO_GLOBAL = 4;
     public final static String RESERVAR_PILA = "reserveStack";
     public final static String LIBERAR_PILA = "freeStack";
     public final static String RESERVAR_HEAP = "reserveHeap";
@@ -21,8 +21,31 @@ public class GeneradorCodigo {
         sb.append(";;").append(comentario);
     }
 
+    private static void trasReservarPila() {
+        sb.append("""
+                ;; Guarda en $temp el valor de $MP antiguo
+                set_local $temp
+
+                ;; Guarda en MEM[$MP] el valor de $MP antiguo
+                get_global $MP       ;;; Este es MP nuevo = SP antiguo
+                get_local $temp
+                i32.store            ;;; Guarda en MEM[MP] el valor de MP antiguo
+
+                    get_global $MP
+                    get_global $SP       ;;; Este es SP nuevo (con el espacio reservado)
+                i32.store offset=4       ;;; Guarda en MEM[MP+4] el valor de SP nuevo
+
+                ;; Calcular el inicio del stack para las variables locales (8 + MP porque usamos 2 casillas para puntero dinamico)
+                        get_global $MP
+                        i32.const 8
+                i32.add
+                """);
+        local_set(INICIO_LOCAL);
+    }
+
     public static void reservarPila() {
-        //TODO
+        llamar(RESERVAR_PILA);
+        trasReservarPila();
     }
 
     public static void reservarHeap() {
