@@ -39,7 +39,11 @@
   i32.const 4
 
   ;;Asignando el valor: 1
+
+  ;;Evaluamos la expresión
   i32.const 1
+
+  ;;La guardamos en la dirección anterior
   i32.store
 
   ;;;;;FIN DECLARACIÓN DE var1;;;
@@ -81,7 +85,11 @@ call $tronco
   i32.add
 
   ;;Asignando el valor: 100
+
+  ;;Evaluamos la expresión
   i32.const 100
+
+  ;;La guardamos en la dirección anterior
   i32.store
 
   ;;;;;FIN DECLARACIÓN DE var2;;;
@@ -91,11 +99,17 @@ call $tronco
   ;;Variable global con delta: 0
   i32.const 4
 
+  ;;Sacamos la dirección del designador
+
   ;;Variable con delta: 0
   local.get $localsStart
   i32.const 0
   i32.add
+
+  ;;Cambiamos el orden: DST, SRC -> SRC, DST
   call $swap
+
+  ;;Copiamos el tamaño del tipo entre 4
   i32.const 1
   call $copyn
 

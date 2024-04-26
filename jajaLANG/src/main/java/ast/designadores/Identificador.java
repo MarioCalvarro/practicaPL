@@ -77,6 +77,7 @@ public class Identificador extends Designador {
                 DeclaracionPar par = (DeclaracionPar) variable;
                 if (par.porReferencia()) {
                     //Cargamos la dirección a la que apunta
+                    GeneradorCodigo.comentario("Parámetro por referencia -> cargamos el valor al que apunta");
                     GeneradorCodigo.i32_load();
                 }
             } catch (ClassCastException e) {
