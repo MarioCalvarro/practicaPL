@@ -121,14 +121,6 @@ public class Programa extends Nodo {
         tamVarGlobales = d.getMax();
     }
 
-    public void calcularOffset() {
-        if (!typecheckDone) {
-            typecheck();
-        }
-        traerDefExternas();
-        calcularOffset(new Delta());
-    }
-
     private void traerDefExternas() {
         for (Import lib : mapa_imports.values()) {
             // lib.getAST().traerDefExternas();         Esto lo haríamos si permitiesemos recursividad
@@ -142,6 +134,14 @@ public class Programa extends Nodo {
                 }
             }
         }
+    }
+
+    public void calcularOffset() {
+        if (!typecheckDone) {
+            typecheck();
+        }
+        traerDefExternas();
+        calcularOffset(new Delta());
     }
 
     @Override
@@ -170,18 +170,15 @@ public class Programa extends Nodo {
 
         GeneradorCodigo.escribir(String.format("(func $start (type $%s)", GeneradorCodigo.SIG_FUNC));
         GeneradorCodigo.sangrar();
-            //Al inicio MP será el 0
+            //Al inicio MP y SP apuntarán al 0
             GeneradorCodigo.i32_const(0);
             GeneradorCodigo.global_set(GeneradorCodigo.MP);
+            GeneradorCodigo.i32_const(0);
+            GeneradorCodigo.global_set(GeneradorCodigo.SP);
 
-            //MP (que es 0) almacena el antiguo MP (que al inicio es el mismo)
-            GeneradorCodigo.global_get(GeneradorCodigo.MP);
-            GeneradorCodigo.global_get(GeneradorCodigo.MP);
-            GeneradorCodigo.i32_store();
-
-            /// Ahora configurar el SP
-            GeneradorCodigo.i32_const(4 + tamVarGlobales);
-            GeneradorCodigo.global_set("SP");
+            //Ahora reservamos memoria para las variables globales
+            GeneradorCodigo.i32_const(4 + tamVarGlobales);      //MP + Tam. Variables Globales
+            GeneradorCodigo.reservarPila();
 
             for (Declaracion dec : lista_declaraciones) {
                 try {

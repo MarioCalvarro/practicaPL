@@ -60,10 +60,6 @@ public class GeneradorCodigo {
         sb.append(instruccion.indent(nivel_indentacion));
     }
 
-    public static void mainFunc() {
-        //TODO
-    }
-
     //Pila de operaciones
     public static void drop() {
         escribir("drop");
@@ -423,6 +419,12 @@ public class GeneradorCodigo {
                     (result i32 i32)
                     get_local $b
                     get_local $a
+                )
+                """);
+
+        sb.append("""
+                (func $liberar
+                    ;;TODO? Si lo hacemos tenemos que hacer gestión de memoria 
                 )
                 """);
     }
