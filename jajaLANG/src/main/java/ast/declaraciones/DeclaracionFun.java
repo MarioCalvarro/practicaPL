@@ -117,7 +117,7 @@ public class DeclaracionFun extends Declaracion {
 
     @Override
     public void compilar() {
-        GeneradorCodigo.escribir("(func $%s" + this.getId());
+        GeneradorCodigo.escribir("(func $" + this.getId());
         GeneradorCodigo.sangrar();
         GeneradorCodigo.escribir(String.format("(local $%s i32)", GeneradorCodigo.INICIO_LOCAL));
         GeneradorCodigo.escribir("(local $temp i32)");

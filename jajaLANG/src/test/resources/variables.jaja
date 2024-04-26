@@ -1,0 +1,5 @@
+ent var1 = 1;
+
+diver tronco() {
+    ent var2;
+}

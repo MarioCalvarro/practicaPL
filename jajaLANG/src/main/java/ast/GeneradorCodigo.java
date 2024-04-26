@@ -22,11 +22,16 @@ public class GeneradorCodigo {
     private static int nivel_indentacion = 0;
 
     public static void comentario(String comentario) {
-        sb.append(";;").append(comentario);
+        String[] lines = comentario.split("\n");
+        for (String line : lines) {
+            //Los comentarios no tendrán indentación
+            sb.append(";;").append(line).append("\n");
+        }
+        sb.append("\n");
     }
 
     private static void trasReservarPila() {
-        sb.append("""
+        escribir("""
                 ;;Guardamos el valor anterior de MP
                 set_local $temp
 
@@ -268,18 +273,18 @@ public class GeneradorCodigo {
         aux.append("(module\n");
         aux.append("""
                 (import "runtime" "print" (func $print (param i32)))
-                (import "runtime" "scan" (func $scan (result i32)))""");
-        aux.append("""
-                (import "runtime" "exceptionHandler" (func $exception (type $_sig_i32)))""");
-        aux.append(String.format("(memory %d)", tamMemoria));
-        aux.append("(start $start)");
-        aux.append("(type $_sig_i32i32i32 (func (param i32 i32 i32) ))");
-        aux.append("(type $_sig_i32 (func (param i32)))");
-        aux.append("(type $_sig_ri32 (func (result i32)))");
-        aux.append("(type $_sig_void (func))");
-        aux.append("(global $SP (mut i32) (i32.const 0))         ;; start of stack");
-        aux.append("(global $MP (mut i32) (i32.const 0))         ;; mark pointer");
-        aux.append("(global $NP (mut i32) (i32.const 131071996)) ;; heap 2000*64*1024-4");
+                (import "runtime" "scan" (func $scan (result i32)))
+                (import "runtime" "exceptionHandler" (func $exception (type $_sig_i32)))
+                """);
+        aux.append(String.format("(memory %d)\n", tamMemoria));
+        aux.append("(start $start)\n");
+        aux.append("(type $_sig_i32i32i32 (func (param i32 i32 i32) ))\n");
+        aux.append("(type $_sig_i32 (func (param i32)))\n");
+        aux.append("(type $_sig_ri32 (func (result i32)))\n");
+        aux.append("(type $_sig_void (func))\n");
+        aux.append("(global $SP (mut i32) (i32.const 0))         ;; start of stack\n");
+        aux.append("(global $MP (mut i32) (i32.const 0))         ;; mark pointer\n");
+        aux.append("(global $NP (mut i32) (i32.const 131071996)) ;; heap 2000*64*1024-4\n");
         cargarFunciones(aux);
         aux.append(sb.toString());
         return aux.toString();
@@ -287,7 +292,7 @@ public class GeneradorCodigo {
 
     private static void cargarFunciones(StringBuilder aux) {
         //Función que reserva $size bytes de stack
-        sb.append("""
+        escribir("""
                 (func $reserveStack (param $size i32)
                 (result i32)
                     ;;Devolver antiguo MP
@@ -315,7 +320,7 @@ public class GeneradorCodigo {
                 """);
 
         //Función que libera un marco del stack
-        sb.append("""
+        escribir("""
                 (func $freeStack (type $_sig_void)
                     ;;SP = MP
                     global.get $MP
@@ -329,7 +334,7 @@ public class GeneradorCodigo {
                 """);
 
         //TODO: Reservar Heap
-        sb.append("""
+        escribir("""
                 (func $reserveHeap (type $_sig_i32)
                 (param $size i32)
                 ;; ....
@@ -337,7 +342,7 @@ public class GeneradorCodigo {
                 """);
 
         // Copiar $n posiciones a partir de $src en $dest
-        sb.append("""
+        escribir("""
                 (func $copyn (type $_sig_i32i32i32) ;; copy $n i32 slots from $src to $dest
                 (param $src i32)
                 (param $dest i32)
@@ -379,7 +384,7 @@ public class GeneradorCodigo {
                 """);
 
         // Poner $n ceros a partir de la dirección $src
-        sb.append("""
+        escribir("""
                 (func $fillZero
                     (param $src i32)
                     (param $n i32)
@@ -412,7 +417,7 @@ public class GeneradorCodigo {
                 )
                 """);
 
-        sb.append("""
+        escribir("""
                 (func $swap
                     (param $a i32)
                     (param $b i32)
@@ -422,7 +427,7 @@ public class GeneradorCodigo {
                 )
                 """);
 
-        sb.append("""
+        escribir("""
                 (func $liberar
                     ;;TODO? Si lo hacemos tenemos que hacer gestión de memoria 
                 )
