@@ -119,7 +119,7 @@ public class DeclaracionVar extends Declaracion {
             GeneradorCodigo.llamar(GeneradorCodigo.ZEROS);
         } else {
             GeneradorCodigo.comentario("Asignando el valor: " + valor.toString());
-            valor.compilar();
+            valor.compilarAsignacion();
         }
     }
 }
