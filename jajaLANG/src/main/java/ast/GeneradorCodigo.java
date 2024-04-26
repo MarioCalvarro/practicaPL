@@ -217,26 +217,7 @@ public class GeneradorCodigo {
         llamar(LIBERAR_PILA);
     }
 
-    public static void bloques(int n, Runnable runnable) {
-    }
-
-    public static void bloque_bucle(Runnable runnable) {
-        bloque(() -> bucle(runnable));
-    }
-
     /* CONTROL FLOW */
-    public static void bloque(Runnable runnable) {
-        escribir("block");
-        //TODO: sangrado(runnable);
-        escribir("end");
-    }
-
-    public static void bucle(Runnable runnable) {
-        escribir("loop");
-        //TODO: sangrado(runnable);
-        escribir("end");
-    }
-
     public static void br(int skip) {
         escribir("br " + skip);
     }
@@ -245,32 +226,12 @@ public class GeneradorCodigo {
         escribir("br_if " + skip);
     }
 
-    public static void si_sino(Runnable then, Runnable els) {
-        escribir("if");
-        sangrar();
-        //TODO: sangrado(then);
-        desangrar();
-        escribir("else");
-        sangrar();
-        //TODO: sangrado(els);
-        desangrar();
-        escribir("end");
-    }
-
     public static void sangrar() {
         nivel_indentacion += TAM_INDENTACION;
     }
 
     public static void desangrar() {
         nivel_indentacion -= TAM_INDENTACION;   //TODO: Puede pasar el 0?
-    }
-
-    public static void if_(Runnable then) {
-        escribir("if");
-        sangrar();
-        //TODO: sangrado(then);
-        desangrar();
-        escribir("end");
     }
 
     public static void bloque() {
