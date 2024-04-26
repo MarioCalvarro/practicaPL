@@ -1,5 +1,6 @@
 package main.java.ast.instrucciones;
 
+import main.java.ast.GeneradorCodigo;
 import main.java.ast.Nodo;
 import main.java.ast.expresiones.Expresion;
 import main.java.ast.tipos.Tipo;
@@ -41,7 +42,9 @@ public class InsAsig extends Instruccion {
 
     @Override
     public void compilar() {
+        GeneradorCodigo.comentario(";;INICIO ASIGNACIÓN;;;");
         left.compilarDesignador();
         right.compilarAsignacion();
+        GeneradorCodigo.comentario(";;FIN ASIGNACIÓN;;;");
     }
 }

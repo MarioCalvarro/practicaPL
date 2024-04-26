@@ -75,23 +75,6 @@ public class InsBucleFor extends Instruccion {
     }
 
     @Override
-    public void compilar() {
-        GeneradorCodigo.comentario("INSTRUCCION: " + this.toString());
-        inicializar();
-
-        GeneradorCodigo.escribir("loop");
-        GeneradorCodigo.sangrar();
-        comprobarCondicion();
-        for (Instruccion i : cuerpo) {
-            i.compilar();
-        }
-        incrementarIndice();
-        GeneradorCodigo.br(0);
-        GeneradorCodigo.desangrar();
-        GeneradorCodigo.escribir("end");
-    }
-
-    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("para").append(" ").append(id).append(" = ").append(ini)
@@ -106,39 +89,61 @@ public class InsBucleFor extends Instruccion {
         return sb.toString();
     }
 
+    @Override
+    public void compilar() {
+        GeneradorCodigo.comentario(";;INICIO BUCLE FOR;;;");
+        inicializar();
+
+        GeneradorCodigo.escribir("loop");
+        GeneradorCodigo.sangrar();
+            comprobarCondicion();
+            for (Instruccion i : cuerpo) {
+                i.compilar();
+            }
+            incrementarIndice();
+            GeneradorCodigo.br(0);
+        GeneradorCodigo.desangrar();
+        GeneradorCodigo.escribir("end");
+        GeneradorCodigo.comentario(";;FIN BUCLE FOR;;;");
+    }
+
     private void inicializar() {
-        // Iniciar índice //
-        // Cargar posición índice
+        GeneradorCodigo.comentario("Inicialización de la variable del bucle");
         GeneradorCodigo.mem_location(indice);
-        // Cargar valor inicial
+
+        GeneradorCodigo.comentario("Evaluamos la expresión inicial");
         ini.compilarExpresion();
-        // Guardar valor inicial en índice
+
+        GeneradorCodigo.comentario("Guardamos el valor del inicio en la localización del índice");
         GeneradorCodigo.i32_store();
     }
 
     private void comprobarCondicion() {
-        // Caragar direccion indice
+        GeneradorCodigo.comentario("Comprobación de la condición del bucle");
+        GeneradorCodigo.comentario("Cargar el índice");
         GeneradorCodigo.mem_location(indice);
-        // Cargar valor actual del índice
         GeneradorCodigo.i32_load();
-        // Cargar valor final
-        fin.compilarExpresion();
-        // Condición para salir del bucle
+        
+        GeneradorCodigo.comentario("Sacamos el valor de la expresión final");
+        fin.compilarExpresion();        //TODO: Hacer esto una sola vez fuera del bucle y usar esa variable local
+
+
+        GeneradorCodigo.comentario("Comparamos: indice > final?");
         GeneradorCodigo.i32_gt_s(); // index > to
         GeneradorCodigo.br_if(1);
     }
 
     private void incrementarIndice() {
-        // Incrementar índice //
-        // Cargar índice
+        GeneradorCodigo.comentario("Incrementar el índice");
+
         GeneradorCodigo.mem_location(indice);
         GeneradorCodigo.duplicate(); // Una posición para guardar y otra para cargar
-        // Cargar valor actual del índice
+        GeneradorCodigo.comentario("Cargar valor actual y sumar 1");
         GeneradorCodigo.i32_load();
-        // Incrementar valor actual
         GeneradorCodigo.i32_const(1);
         GeneradorCodigo.i32_add();
-        // Guardar valor actual en índice
+
+        GeneradorCodigo.comentario("Guardar el nuevo resultado");
         GeneradorCodigo.i32_store();
     }
 }

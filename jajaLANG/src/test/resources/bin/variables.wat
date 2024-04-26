@@ -86,6 +86,8 @@ call $tronco
 
   ;;;;;FIN DECLARACIÓN DE var2;;;
 
+  ;;;;INICIO ASIGNACIÓN;;;
+
   ;;Variable global con delta: 0
   i32.const 4
 
@@ -96,6 +98,8 @@ call $tronco
   call $swap
   i32.const 1
   call $copyn
+
+  ;;;;FIN ASIGNACIÓN;;;
 
   ;;Liberamos la pila
   call $freeStack
