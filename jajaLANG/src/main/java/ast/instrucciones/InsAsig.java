@@ -1,8 +1,6 @@
 package main.java.ast.instrucciones;
 
-import main.java.ast.GeneradorCodigo;
 import main.java.ast.Nodo;
-import main.java.ast.designadores.Designador;
 import main.java.ast.expresiones.Expresion;
 import main.java.ast.tipos.Tipo;
 import main.java.errors.TypeError;
@@ -42,7 +40,7 @@ public class InsAsig extends Instruccion {
     }
 
     @Override
-    public void compilar(){
+    public void compilar() {
         left.compilarDesignador();
         right.compilarAsignacion();
     }

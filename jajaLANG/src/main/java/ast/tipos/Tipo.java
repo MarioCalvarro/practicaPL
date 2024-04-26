@@ -8,6 +8,7 @@ public abstract class Tipo extends Nodo {
     public Tipo() {
         this.tipo = TipoVacio.instancia();
     }
+
     public abstract int tam();
 
     public boolean esBasico() {

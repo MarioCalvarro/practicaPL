@@ -46,8 +46,8 @@ public class InsReturn extends Instruccion {
         }
     }
 
-    @Override 
-    public void compilar(){
+    @Override
+    public void compilar() {
         //TODO:: averiguar qué hacer
         GeneradorCodigo.global_get("SP");
         GeneradorCodigo.i32_const(4);
@@ -57,5 +57,5 @@ public class InsReturn extends Instruccion {
         expr.compilarAsignacion();
 
         GeneradorCodigo.hacerReturn();
-    } 
+    }
 }

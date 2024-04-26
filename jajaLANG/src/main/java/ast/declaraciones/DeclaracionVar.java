@@ -14,9 +14,9 @@ import java.util.List;
 
 public class DeclaracionVar extends Declaracion {
     protected String id;
+    protected int posicionDelta;
     private Expresion valor;
     private boolean esGlobal;
-    protected int posicionDelta;
 
     // Declaracion con valor
     public DeclaracionVar(String id, Expresion expr) {

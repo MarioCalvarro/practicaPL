@@ -81,7 +81,7 @@ public class TipoRegistro extends Tipo {
 
     @Override
     public int tam() {
-        if(tam == -1){
+        if (tam == -1) {
             tam = 0;
             for (Declaracion dec : this.atributos.values()) {
                 tam += dec.tipo().tam();

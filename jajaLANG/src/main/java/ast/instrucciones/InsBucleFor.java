@@ -29,21 +29,6 @@ public class InsBucleFor extends Instruccion {
     }
 
     @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("para").append(" ").append(id).append(" = ").append(ini)
-                .append(" -> ").append(fin).append(" {\n");
-
-        for (Instruccion ins : cuerpo) {
-            sb.append(ins).append(";\n");
-        }
-
-        sb.append("}");
-
-        return sb.toString();
-    }
-
-    @Override
     public List<Nodo> getAstHijos() {
         List<Nodo> lista = new ArrayList<Nodo>();
         lista.add(indice);
@@ -90,20 +75,35 @@ public class InsBucleFor extends Instruccion {
     }
 
     @Override
-    public void compilar(){
+    public void compilar() {
         GeneradorCodigo.comentario("INSTRUCCION: " + this.toString());
         inicializar();
 
         GeneradorCodigo.escribir("loop");
-            GeneradorCodigo.sangrar();
-            comprobarCondicion();
-            for(Instruccion i : cuerpo){
-                i.compilar();
-            }
-            incrementarIndice();
-            GeneradorCodigo.br(0);
-            GeneradorCodigo.desangrar();
+        GeneradorCodigo.sangrar();
+        comprobarCondicion();
+        for (Instruccion i : cuerpo) {
+            i.compilar();
+        }
+        incrementarIndice();
+        GeneradorCodigo.br(0);
+        GeneradorCodigo.desangrar();
         GeneradorCodigo.escribir("end");
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("para").append(" ").append(id).append(" = ").append(ini)
+                .append(" -> ").append(fin).append(" {\n");
+
+        for (Instruccion ins : cuerpo) {
+            sb.append(ins).append(";\n");
+        }
+
+        sb.append("}");
+
+        return sb.toString();
     }
 
     private void inicializar() {
@@ -114,6 +114,18 @@ public class InsBucleFor extends Instruccion {
         ini.compilarExpresion();
         // Guardar valor inicial en índice
         GeneradorCodigo.i32_store();
+    }
+
+    private void comprobarCondicion() {
+        // Caragar direccion indice
+        GeneradorCodigo.mem_location(indice);
+        // Cargar valor actual del índice
+        GeneradorCodigo.i32_load();
+        // Cargar valor final
+        fin.compilarExpresion();
+        // Condición para salir del bucle
+        GeneradorCodigo.i32_gt_s(); // index > to
+        GeneradorCodigo.br_if(1);
     }
 
     private void incrementarIndice() {
@@ -128,17 +140,5 @@ public class InsBucleFor extends Instruccion {
         GeneradorCodigo.i32_add();
         // Guardar valor actual en índice
         GeneradorCodigo.i32_store();
-    }
-
-    private void comprobarCondicion() {
-        // Caragar direccion indice
-        GeneradorCodigo.mem_location(indice);
-        // Cargar valor actual del índice
-        GeneradorCodigo.i32_load();
-        // Cargar valor final
-        fin.compilarExpresion();
-        // Condición para salir del bucle
-        GeneradorCodigo.i32_gt_s(); // index > to
-        GeneradorCodigo.br_if(1);
     }
 }

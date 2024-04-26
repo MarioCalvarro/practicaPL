@@ -98,40 +98,24 @@ public class Llamada extends Expresion {
     public void calcularOffset(Delta ultimoDelta) {
         super.calcularOffset(ultimoDelta);
         DeclaracionFun dec = (DeclaracionFun) exp.dec();
-        TipoFunc tipo = (TipoFunc) dec.tipo() ;
+        TipoFunc tipo = (TipoFunc) dec.tipo();
         posicion = ultimoDelta.actualizarPosicionDelta(tipo.tipoRetorno().tam());
     }
 
     @Override
-    public void compilarExpresion(){
-        compilar();
-        GeneradorCodigo.mem_local(this.posicion);
-        GeneradorCodigo.i32_load();
-    }
-
-    @Override
-    public void compilarAsignacion(){
-        compilar();
-        GeneradorCodigo.mem_local(posicion);
-
-        GeneradorCodigo.llamar(GeneradorCodigo.CAMBIAR);
-        GeneradorCodigo.i32_const(tipo.tam()/4);        //Si es básico se copia solo uno
-        GeneradorCodigo.llamar(GeneradorCodigo.COPIAR);
-    }
-
-    @Override
-    public void compilar(){
-        for(Expresion exp : listaExpresiones){
-            try{
+    public void compilar() {
+        for (Expresion exp : listaExpresiones) {
+            try {
                 Llamada llamada = (Llamada) exp;
                 llamada.compilar();
-            } catch(ClassCastException e){}
+            } catch (ClassCastException e) {
+            }
         }
 
         var decFun = (DeclaracionFun) this.exp.dec();
 
         //Caso de ser funciones scan o print
-        if(decFun.esImportado()){
+        if (decFun.esImportado()) {
             for (int i = 0; i < listaExpresiones.size(); i++) {
                 var expr = listaExpresiones.get(i);
                 expr.compilarExpresion();
@@ -150,7 +134,7 @@ public class Llamada extends Expresion {
                 GeneradorCodigo.i32_store();
             }
 
-            return;        
+            return;
         }
 
         //Parámetros de la función referida
@@ -180,9 +164,26 @@ public class Llamada extends Expresion {
         GeneradorCodigo.i32_const(decFun.getTam() + 4);
         GeneradorCodigo.i32_add();              //localstart + maxTamFunc
 
-        GeneradorCodigo.mem_local(posicion);        //Donde guardamos el resultado 
+        GeneradorCodigo.mem_local(posicion);        //Donde guardamos el resultado
         GeneradorCodigo.i32_store();
 
         GeneradorCodigo.llamar(exp.nombre());
+    }
+
+    @Override
+    public void compilarExpresion() {
+        compilar();
+        GeneradorCodigo.mem_local(this.posicion);
+        GeneradorCodigo.i32_load();
+    }
+
+    @Override
+    public void compilarAsignacion() {
+        compilar();
+        GeneradorCodigo.mem_local(posicion);
+
+        GeneradorCodigo.llamar(GeneradorCodigo.CAMBIAR);
+        GeneradorCodigo.i32_const(tipo.tam() / 4);        //Si es básico se copia solo uno
+        GeneradorCodigo.llamar(GeneradorCodigo.COPIAR);
     }
 }

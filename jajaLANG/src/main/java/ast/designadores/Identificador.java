@@ -79,7 +79,8 @@ public class Identificador extends Designador {
                     //Cargamos la dirección a la que apunta
                     GeneradorCodigo.i32_load();
                 }
-            } catch (ClassCastException e) {}
+            } catch (ClassCastException e) {
+            }
         } catch (ClassCastException e) {
             //TODO: Error
             throw new RuntimeException();

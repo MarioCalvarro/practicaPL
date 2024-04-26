@@ -12,8 +12,6 @@ import main.java.errors.TypeError;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.management.monitor.GaugeMonitor;
-
 public class InsBucleWhile extends Instruccion {
     private final Expresion condicion;
     private final List<Instruccion> cuerpo;
@@ -70,13 +68,13 @@ public class InsBucleWhile extends Instruccion {
     }
 
     @Override
-    public void compilar(){
+    public void compilar() {
         //GeneradorCodigo.comentario("INSTRUCCION: " + this.toString());
         GeneradorCodigo.sangrar();
         condicion.compilarExpresion();
         GeneradorCodigo.i32_eqz();
         GeneradorCodigo.br_if(1);
-        for(Instruccion i : cuerpo){
+        for (Instruccion i : cuerpo) {
             i.compilar();
         }
         GeneradorCodigo.br(0);

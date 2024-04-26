@@ -97,35 +97,10 @@ public class Programa extends Nodo {
         return lista;
     }
 
-    public void bind() {
-        Contexto ctx = new Contexto(this, this.ambitoGlobal);
-        super.bind(ctx);
-    }
-
-    private void traerDefExternas() {
-        for (Import lib : mapa_imports.values()) {
-            // lib.getAST().traerDefExternas();         Esto lo haríamos si permitiesemos recursividad
-            for (Declaracion d : lib.getAST().lista_declaraciones) {
-                //Solo nos vamos a quedar con las funciones
-                try {
-                    DeclaracionFun dec = (DeclaracionFun) d;
-                    dec.nuevoPrefijo(lib.getId());
-                    lista_declaraciones.add(dec);
-                } catch (ClassCastException e) {}
-            }
-        }
-    }
-
     @Override
     public void typecheck() {
         bind();
         super.typecheck();
-    }
-
-    public void calcularOffset() {
-        typecheck();
-        traerDefExternas();
-        calcularOffset(new Delta());
     }
 
     @Override
@@ -138,5 +113,31 @@ public class Programa extends Nodo {
     public void compilar() {
         calcularOffset();
         //TODO
+    }
+
+    public void calcularOffset() {
+        typecheck();
+        traerDefExternas();
+        calcularOffset(new Delta());
+    }
+
+    private void traerDefExternas() {
+        for (Import lib : mapa_imports.values()) {
+            // lib.getAST().traerDefExternas();         Esto lo haríamos si permitiesemos recursividad
+            for (Declaracion d : lib.getAST().lista_declaraciones) {
+                //Solo nos vamos a quedar con las funciones
+                try {
+                    DeclaracionFun dec = (DeclaracionFun) d;
+                    dec.nuevoPrefijo(lib.getId());
+                    lista_declaraciones.add(dec);
+                } catch (ClassCastException e) {
+                }
+            }
+        }
+    }
+
+    public void bind() {
+        Contexto ctx = new Contexto(this, this.ambitoGlobal);
+        super.bind(ctx);
     }
 }

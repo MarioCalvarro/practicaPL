@@ -32,7 +32,7 @@ public abstract class Nodo {
             child.typecheck();
         }
     }
-    
+
     public final Tipo tipo() {
         if (tipo == null) {
             throw new TypeError("Un nodo no tiene tipo");

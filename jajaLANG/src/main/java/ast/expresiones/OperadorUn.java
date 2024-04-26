@@ -100,6 +100,30 @@ public class OperadorUn extends Expresion {
         return res;
     }
 
+    @Override
+    public void compilarExpresion() {
+        switch (op) {
+            case NEG:
+                GeneradorCodigo.i32_const(1);
+                derecha.compilarExpresion();
+                GeneradorCodigo.i32_xor();
+                break;
+            case RESTA:
+                GeneradorCodigo.i32_const(0);
+                derecha.compilarExpresion();
+                GeneradorCodigo.i32_sub();
+                break;
+            case DIRECCION:
+                ((Designador) derecha).compilarDesignador();
+                break;
+            case PUNTERO:
+                //TODO
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid operator '" + op + "'");
+        }
+    }
+
     public enum Operadores {
         NEG, DIRECCION, PUNTERO, RESTA;
 
@@ -116,30 +140,6 @@ public class OperadorUn extends Expresion {
                 default:
                     throw new IllegalArgumentException("Invalid operator");
             }
-        }
-    }
-
-    @Override
-    public void compilarExpresion() {
-        switch (op) {
-            case NEG:
-                GeneradorCodigo.i32_const(1);
-                derecha.compilarExpresion();
-                GeneradorCodigo.i32_xor();
-                break;
-            case RESTA:
-                GeneradorCodigo.i32_const(0);
-                derecha.compilarExpresion();
-                GeneradorCodigo.i32_sub();
-                break;
-            case DIRECCION: 
-                ((Designador) derecha).compilarDesignador();   
-                break;         
-            case PUNTERO:
-                //TODO      
-                break;      
-            default :
-                throw new IllegalArgumentException("Invalid operator '" + op + "'");
         }
     }
 }

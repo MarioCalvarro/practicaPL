@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DeclaracionFun extends Declaracion {
-    private String id;
     private final List<DeclaracionPar> parametros;
     private final List<Instruccion> cuerpo;
+    private String id;
     private int tam;
     private boolean importado = false;
 
@@ -56,21 +56,12 @@ public class DeclaracionFun extends Declaracion {
         this.tipo = new TipoFunc(tipoRetorno, tipoPars);
     }
 
-    public int getTam(){
-        return tam;
-    }
-
     public List<DeclaracionPar> parametros() {
         return parametros;
     }
 
     public boolean esImportado() {
         return importado;
-    }
-
-    @Override
-    public String getId() {
-        return this.id;
     }
 
     @Override
@@ -124,30 +115,38 @@ public class DeclaracionFun extends Declaracion {
         tam = d.getMax();
     }
 
-    public void nuevoPrefijo(String prefijo) {
-        this.id = prefijo + "::" + id;
-    }
-
-
     @Override
     public void compilar() {
         GeneradorCodigo.escribir("(func $%s" + this.getId());
         GeneradorCodigo.sangrar();
-            GeneradorCodigo.escribir(String.format("(local $%s i32)", GeneradorCodigo.INICIO_GLOBAL));      //TODO: Global o local
-            GeneradorCodigo.escribir("(local $temp i32)");
+        GeneradorCodigo.escribir(String.format("(local $%s i32)", GeneradorCodigo.INICIO_GLOBAL));      //TODO: Global o local
+        GeneradorCodigo.escribir("(local $temp i32)");
 
-            //TODO: Cuánto hay que sumar?
-            int x = 0;
-            int stackSize = this.getTam() + x;
+        //TODO: Cuánto hay que sumar?
+        int x = 0;
+        int stackSize = this.getTam() + x;
 
-            GeneradorCodigo.i32_const(stackSize);
-            GeneradorCodigo.reservarPila();
+        GeneradorCodigo.i32_const(stackSize);
+        GeneradorCodigo.reservarPila();
 
-            for (Instruccion ins : cuerpo)  {
-                ins.compilar();
-            }
-            GeneradorCodigo.liberarPila();
+        for (Instruccion ins : cuerpo) {
+            ins.compilar();
+        }
+        GeneradorCodigo.liberarPila();
         GeneradorCodigo.desangrar();
         GeneradorCodigo.escribir(")");
+    }
+
+    @Override
+    public String getId() {
+        return this.id;
+    }
+
+    public int getTam() {
+        return tam;
+    }
+
+    public void nuevoPrefijo(String prefijo) {
+        this.id = prefijo + "::" + id;
     }
 }

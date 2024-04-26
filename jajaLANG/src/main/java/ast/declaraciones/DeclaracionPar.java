@@ -1,7 +1,6 @@
 package main.java.ast.declaraciones;
 
 import main.java.ast.Delta;
-import main.java.ast.GeneradorCodigo;
 import main.java.ast.Nodo;
 import main.java.ast.tipos.Tipo;
 
@@ -41,9 +40,9 @@ public class DeclaracionPar extends DeclaracionVar {
     @Override
     public void calcularOffset(Delta delta) {
         int tam = 4; //Si es por referencia es un puntero y ocupa 4 Bytes.
-        if (!porReferencia){
-            tam = tipo.tam();        
-        } 
+        if (!porReferencia) {
+            tam = tipo.tam();
+        }
         posicionDelta = delta.actualizarPosicionDelta(tam);
     }
 }

@@ -125,44 +125,6 @@ public class OperadorBin extends Expresion {
         return res;
     }
 
-    public enum Operadores {
-        SUMA, RESTA, MUL, DIV, MOD, IGUAL, DESIGUAL, MENOR, MAYOR, MENORIGUAL, MAYORIGUAL, DISY, CONJ, POT;
-
-        public String toString() {
-            switch (this) {
-                case SUMA:
-                    return "+";
-                case RESTA:
-                    return "-";
-                case MUL:
-                    return "*";
-                case DIV:
-                    return "/";
-                case MOD:
-                    return "%";
-                case IGUAL:
-                    return "==";
-                case DESIGUAL:
-                    return "!=";
-                case MENOR:
-                    return "<";
-                case MAYOR:
-                    return ">";
-                case MENORIGUAL:
-                    return "<=";
-                case MAYORIGUAL:
-                    return ">=";
-                case CONJ:
-                    return "&&";
-                case DISY:
-                    return "||";
-                case POT:
-                    return "^";
-                default:
-                    throw new IllegalArgumentException("Invalid operator");
-            }
-        }
-    }
     @Override
     public void compilarExpresion() {
         izquierda.compilarExpresion();
@@ -208,11 +170,50 @@ public class OperadorBin extends Expresion {
                 GeneradorCodigo.i32_or();
                 break;
             case POT:
-                //TODO: 
+                //TODO:
                 //GeneradorCodigo.i32_pot();
                 break;
             default:
                 throw new RuntimeException("Operador no soportada: " + op.toString());
+        }
+    }
+
+    public enum Operadores {
+        SUMA, RESTA, MUL, DIV, MOD, IGUAL, DESIGUAL, MENOR, MAYOR, MENORIGUAL, MAYORIGUAL, DISY, CONJ, POT;
+
+        public String toString() {
+            switch (this) {
+                case SUMA:
+                    return "+";
+                case RESTA:
+                    return "-";
+                case MUL:
+                    return "*";
+                case DIV:
+                    return "/";
+                case MOD:
+                    return "%";
+                case IGUAL:
+                    return "==";
+                case DESIGUAL:
+                    return "!=";
+                case MENOR:
+                    return "<";
+                case MAYOR:
+                    return ">";
+                case MENORIGUAL:
+                    return "<=";
+                case MAYORIGUAL:
+                    return ">=";
+                case CONJ:
+                    return "&&";
+                case DISY:
+                    return "||";
+                case POT:
+                    return "^";
+                default:
+                    throw new IllegalArgumentException("Invalid operator");
+            }
         }
     }
 }

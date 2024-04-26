@@ -4,7 +4,6 @@ import main.java.ast.Contexto;
 import main.java.ast.Delta;
 import main.java.ast.GeneradorCodigo;
 import main.java.ast.Nodo;
-import main.java.ast.declaraciones.Declaracion;
 import main.java.ast.expresiones.Expresion;
 import main.java.ast.tipos.Tipo;
 import main.java.ast.tipos.TipoBinario;
@@ -120,6 +119,7 @@ public class InsCond extends Instruccion {
             }
         }
     }
+
     @Override
     public void calcularOffset(Delta ultimoDelta) {
         ultimoDelta.entrarEnBloque();
@@ -131,26 +131,25 @@ public class InsCond extends Instruccion {
     }
 
     @Override
-    public void compilar(){
+    public void compilar() {
         //GeneradorCodigo.comentario("INSTRUCCION: " + this.toString());
-        if (condicion != null){
+        if (condicion != null) {
             condicion.compilarExpresion();
             GeneradorCodigo.escribir("if");
             GeneradorCodigo.sangrar();
-                for(Instruccion i : cuerpo){
-                    i.compilar();
-                }
+            for (Instruccion i : cuerpo) {
+                i.compilar();
+            }
             GeneradorCodigo.desangrar();
             GeneradorCodigo.escribir("else");
             GeneradorCodigo.sangrar();
-                instElse.compilar();
+            instElse.compilar();
             GeneradorCodigo.desangrar();
-            GeneradorCodigo.escribir("end");       
-        }
-        else{
-            for(Instruccion i : cuerpo){
-                    i.compilar();
+            GeneradorCodigo.escribir("end");
+        } else {
+            for (Instruccion i : cuerpo) {
+                i.compilar();
             }
-        }  
-    }   
+        }
+    }
 }
