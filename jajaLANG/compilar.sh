@@ -8,3 +8,4 @@ fi
 
 # Execute the script with the argument inserted
 mvn clean compile exec:java -Dexec.args="compilar src/test/resources/$1"
+wat2wasm src/test/resources/bin/variables.wat

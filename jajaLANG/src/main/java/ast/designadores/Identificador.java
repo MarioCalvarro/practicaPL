@@ -68,7 +68,7 @@ public class Identificador extends Designador {
     }
 
     @Override
-    public void compilar() {
+    public void compilarDesignador() {
         try {
             DeclaracionVar variable = (DeclaracionVar) dec;
 

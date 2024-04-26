@@ -91,6 +91,7 @@ public class DeclaracionVar extends Declaracion {
             tipo = ((TipoAlias) tipo).tipoApuntado();
         }
         ctx.insertar(this);
+        esGlobal = ctx.esGlobal(id);
     }
 
     @Override

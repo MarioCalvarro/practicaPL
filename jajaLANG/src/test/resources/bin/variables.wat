@@ -12,6 +12,8 @@
 (global $MP (mut i32) (i32.const 0))         ;; mark pointer
 (global $NP (mut i32) (i32.const 131071996)) ;; heap 2000*64*1024-4
 (func $start (type $_sig_void)
+(local $localsStart i32)
+(local $temp i32)
   i32.const 8
   call $reserveStack
   ;;;;;;;;INICIO POST RESERVA;;;;;;;;
@@ -33,10 +35,8 @@
 
   ;;;;;INICIO DECLARACIÓN DE var1;;;
 
-  ;;Variable con delta: 0
-  local.get $localsStart
-  i32.const 0
-  i32.add
+  ;;Variable global con delta: 0
+  i32.const 4
 
   ;;Asignando el valor: 1
   i32.const 1
@@ -80,11 +80,22 @@ call $tronco
   i32.const 0
   i32.add
 
-  ;;No tiene valor asignado → ceros
-  i32.const 1
-  call $fillZero
+  ;;Asignando el valor: 100
+  i32.const 100
+  i32.store
 
   ;;;;;FIN DECLARACIÓN DE var2;;;
+
+  ;;Variable global con delta: 0
+  i32.const 4
+
+  ;;Variable con delta: 0
+  local.get $localsStart
+  i32.const 0
+  i32.add
+  call $swap
+  i32.const 1
+  call $copyn
 
   ;;Liberamos la pila
   call $freeStack
@@ -204,4 +215,7 @@ call $tronco
 )
 (func $liberar
     ;;TODO? Si lo hacemos tenemos que hacer gestión de memoria
+)
+(export "memory" (memory 0))
+(export "init" (func $start))
 )

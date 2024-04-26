@@ -289,6 +289,11 @@ public class GeneradorCodigo {
         aux.append("(global $NP (mut i32) (i32.const 131071996)) ;; heap 2000*64*1024-4\n");
         cargarFunciones(aux);
         aux.append(sb.toString());
+        aux.append("""
+                (export "memory" (memory 0))
+                (export "init" (func $start))
+                """); // Para testear
+        aux.append(")");
         return aux.toString();
     }
 

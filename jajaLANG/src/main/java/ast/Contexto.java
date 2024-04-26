@@ -59,7 +59,7 @@ public class Contexto {
         return dec;
     }
 
-    public boolean isGlobal(String name) {
+    public boolean esGlobal(String name) {
         return this.ambitos.get(0).pertenece(name);
     }
 

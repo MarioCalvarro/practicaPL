@@ -169,6 +169,8 @@ public class Programa extends Nodo {
         }
 
         GeneradorCodigo.escribir(String.format("(func $start (type $%s)", GeneradorCodigo.SIG_FUNC));
+        GeneradorCodigo.escribir(String.format("(local $%s i32)", GeneradorCodigo.INICIO_LOCAL));
+        GeneradorCodigo.escribir("(local $temp i32)");
         GeneradorCodigo.sangrar();
             //Reservamos memoria para las variables globales
             GeneradorCodigo.i32_const(4 + tamVarGlobales);      //MP + Tam. Variables Globales
