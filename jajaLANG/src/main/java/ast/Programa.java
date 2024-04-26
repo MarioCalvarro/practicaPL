@@ -18,6 +18,8 @@ public class Programa extends Nodo {
     private final List<Declaracion> lista_declaraciones;
     private final Ambito ambitoGlobal = new Ambito();
     private int tamVarGlobales = 0;
+    private boolean bindDone = false;
+    private boolean typecheckDone = false;
 
     public Programa(List<Import> lista_imports, List<Declaracion> lista_declaraciones) throws Exception {
         this.lista_declaraciones = lista_declaraciones;
@@ -44,16 +46,16 @@ public class Programa extends Nodo {
 
         //Escritura
         ambitoGlobal.poner(new DeclaracionFun("escribirEnt",
-                Arrays.asList(new DeclaracionPar("num", TipoEntero.instancia(), false)),
-                TipoVacio.instancia()));
+                    Arrays.asList(new DeclaracionPar("num", TipoEntero.instancia(), false)),
+                    TipoVacio.instancia()));
         ambitoGlobal.poner(new DeclaracionFun("escribirBin",
-                Arrays.asList(new DeclaracionPar("num", TipoBinario.instancia(), false)),
-                TipoVacio.instancia()));
+                    Arrays.asList(new DeclaracionPar("num", TipoBinario.instancia(), false)),
+                    TipoVacio.instancia()));
 
         //Liberar
         ambitoGlobal.poner(new DeclaracionFun("liberar",
-                Arrays.asList(new DeclaracionPar("puntero", new TipoPuntero(null), false)),
-                TipoVacio.instancia()));
+                    Arrays.asList(new DeclaracionPar("puntero", new TipoPuntero(null), false)),
+                    TipoVacio.instancia()));
     }
 
 
@@ -97,10 +99,19 @@ public class Programa extends Nodo {
         return lista;
     }
 
+    public void bind() {
+        Contexto ctx = new Contexto(this, this.ambitoGlobal);
+        super.bind(ctx);
+        bindDone = true;
+    }
+
     @Override
     public void typecheck() {
-        bind();
+        if (!bindDone) {
+            bind();
+        }
         super.typecheck();
+        typecheckDone = true;
     }
 
     @Override
@@ -116,7 +127,9 @@ public class Programa extends Nodo {
     }
 
     public void calcularOffset() {
-        typecheck();
+        if (!typecheckDone) {
+            typecheck();
+        }
         traerDefExternas();
         calcularOffset(new Delta());
     }
@@ -134,10 +147,5 @@ public class Programa extends Nodo {
                 }
             }
         }
-    }
-
-    public void bind() {
-        Contexto ctx = new Contexto(this, this.ambitoGlobal);
-        super.bind(ctx);
     }
 }

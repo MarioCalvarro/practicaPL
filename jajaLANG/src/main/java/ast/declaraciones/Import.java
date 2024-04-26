@@ -80,10 +80,6 @@ public class Import extends Declaracion {
     }
 
     @Override
-    public void calcularOffset(Delta delta) {
-    } //TODO
-
-    @Override
     public String getId() {
         return namespace;
     }
