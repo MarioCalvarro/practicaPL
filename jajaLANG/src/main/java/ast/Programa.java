@@ -170,13 +170,7 @@ public class Programa extends Nodo {
 
         GeneradorCodigo.escribir(String.format("(func $start (type $%s)", GeneradorCodigo.SIG_FUNC));
         GeneradorCodigo.sangrar();
-            //Al inicio MP y SP apuntarán al 0
-            GeneradorCodigo.i32_const(0);
-            GeneradorCodigo.global_set(GeneradorCodigo.MP);
-            GeneradorCodigo.i32_const(0);
-            GeneradorCodigo.global_set(GeneradorCodigo.SP);
-
-            //Ahora reservamos memoria para las variables globales
+            //Reservamos memoria para las variables globales
             GeneradorCodigo.i32_const(4 + tamVarGlobales);      //MP + Tam. Variables Globales
             GeneradorCodigo.reservarPila();
 

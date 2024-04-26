@@ -12,29 +12,29 @@
 (global $MP (mut i32) (i32.const 0))         ;; mark pointer
 (global $NP (mut i32) (i32.const 131071996)) ;; heap 2000*64*1024-4
 (func $start (type $_sig_void)
-  i32.const 0
-  global.set $MP
-  i32.const 0
-  global.set $SP
   i32.const 8
   call $reserveStack
-;;Guardamos el valor anterior de MP
-set_local $temp
-
-;;Guardamos en la posición de MP el antiguo MP
-get_global $MP
-get_local $temp
-i32.store       ;;MEM[MP] = MP_antiguo
-
-;;localStart = MP + 4
-get_global $MP
-i32.const 4
-i32.add
+  ;;Guardamos el valor anterior de MP
+  local.set $temp
+  
+  ;;Guardamos en la posición de MP el antiguo MP
+  global.get $MP
+  local.get $temp
+  i32.store       ;;MEM[MP] = MP_antiguo
+  
+  ;;localStart = MP + 4
+  global.get $MP
+  i32.const 4
+  i32.add
   local.set $localsStart
-;;Declaración de la variable: var1  get_local $localsStart
+
+;;Declaración de la variable: var1
+  local.get $localsStart
   i32.const 0
   i32.add
-;;Asignando el valor: 1  i32.const 1
+
+;;Asignando el valor: 1
+  i32.const 1
   i32.store
 call $tronco
 )
@@ -43,23 +43,27 @@ call $tronco
   (local $temp i32)
   i32.const 12
   call $reserveStack
-;;Guardamos el valor anterior de MP
-set_local $temp
-
-;;Guardamos en la posición de MP el antiguo MP
-get_global $MP
-get_local $temp
-i32.store       ;;MEM[MP] = MP_antiguo
-
-;;localStart = MP + 4
-get_global $MP
-i32.const 4
-i32.add
+  ;;Guardamos el valor anterior de MP
+  local.set $temp
+  
+  ;;Guardamos en la posición de MP el antiguo MP
+  global.get $MP
+  local.get $temp
+  i32.store       ;;MEM[MP] = MP_antiguo
+  
+  ;;localStart = MP + 4
+  global.get $MP
+  i32.const 4
+  i32.add
   local.set $localsStart
-;;Declaración de la variable: var2  get_local $localsStart
+
+;;Declaración de la variable: var2
+  local.get $localsStart
   i32.const 0
   i32.add
-;;No tiene valor asignado → ceros  i32.const 1
+
+;;No tiene valor asignado → ceros
+  i32.const 1
   call $fillZero
   call $freeStack
 )
@@ -145,26 +149,26 @@ i32.add
     block
         loop
             ;;n == 0?
-            get_local $n
+            local.get $n
             i32.eqz
             br_if 1
 
             ;;n -= 1
-            get_local $n
+            local.get $n
             i32.const 1
             i32.sub
-            set_local $n
+            local.set $n
 
             ;;MEM[src] = 0
-            get_local $src
+            local.get $src
             i32.const 0
             i32.store
 
             ;;src += 4
-            get_local $src
+            local.get $src
             i32.const 4
             i32.add
-            set_local $src
+            local.set $src
             br 0
         end
     end
@@ -173,8 +177,8 @@ i32.add
     (param $a i32)
     (param $b i32)
     (result i32 i32)
-    get_local $b
-    get_local $a
+    local.get $b
+    local.get $a
 )
 (func $liberar
     ;;TODO? Si lo hacemos tenemos que hacer gestión de memoria
