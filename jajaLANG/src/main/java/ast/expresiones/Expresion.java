@@ -23,6 +23,7 @@ public abstract class Expresion extends Instruccion {
     public void compilar() {
         //Del único que nos interesa el valor que devuelve es la llamada
         compilarExpresion();
+        GeneradorCodigo.comentario("Dropeamos el valor dado de una expresión compilada como una instrucción.");
         GeneradorCodigo.drop();
     }
 
@@ -36,7 +37,9 @@ public abstract class Expresion extends Instruccion {
     public void compilarAsignacion() {
         //Necesita la dirección antes
         //Esto lo tienen que sobreescribir los tipos no básicos
+        GeneradorCodigo.comentario("Evaluamos la expresión");
         compilarExpresion();
+        GeneradorCodigo.comentario("La guardamos en la dirección anterior");
         GeneradorCodigo.i32_store();
     }
 }
