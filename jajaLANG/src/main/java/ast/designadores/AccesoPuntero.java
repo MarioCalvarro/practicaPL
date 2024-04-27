@@ -44,7 +44,7 @@ public class AccesoPuntero extends Designador {
 
     @Override
     public void compilarDesignador() {
-        GeneradorCodigo.comentario("Cargar la dirección a la que apunta por el puntero.");
+        GeneradorCodigo.comentario("Cargar la dirección a la que apunta el puntero.");
         puntero.compilarDesignador();
         GeneradorCodigo.i32_load();
     }

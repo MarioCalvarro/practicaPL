@@ -1,12 +1,7 @@
 diver tronco() {
     ent i = 100;
-    bin cond = fake;
-    si cond {
-        i -= 20;
-    } sino !cond {
-        i += i;
-    } sino {
-        i += 20;
-    }
+    ent @ punt = &i;
+    @punt += 20;
+
     escribirEnt(i);
 }

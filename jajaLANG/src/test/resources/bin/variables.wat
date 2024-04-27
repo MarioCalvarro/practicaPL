@@ -82,179 +82,64 @@ drop
 
   ;;;;;FIN DECLARACIÓN DE i;;;
 
-  ;;;;;INICIO DECLARACIÓN DE cond;;;
+  ;;;;;INICIO DECLARACIÓN DE punt;;;
 
   ;;Variable con delta: 4
   local.get $localsStart
   i32.const 4
   i32.add
 
-  ;;Asignar el valor: fake
+  ;;Asignar el valor: &(i)
 
   ;;Evaluar la expresión
+
+  ;;Variable con delta: 0
+  local.get $localsStart
   i32.const 0
+  i32.add
 
   ;;Guardar la dirección anterior
   i32.store
 
-  ;;;;;FIN DECLARACIÓN DE cond;;;
+  ;;;;;FIN DECLARACIÓN DE punt;;;
 
-  ;;;;INICIO CONDICIONAL;;;
+  ;;;;INICIO ASIGNACIÓN;;;
 
-  ;;Evaluar condción
-
-  ;;Sacar la dirección del designador
+  ;;Cargar la dirección a la que apunta el puntero.
 
   ;;Variable con delta: 4
   local.get $localsStart
   i32.const 4
   i32.add
+  i32.load
+
+  ;;Evaluar la expresión
+
+  ;;Evaluar una operación binaria. Izquierda:
+
+  ;;Sacar la dirección del designador
+
+  ;;Cargar la dirección a la que apunta el puntero.
+
+  ;;Variable con delta: 4
+  local.get $localsStart
+  i32.const 4
+  i32.add
+  i32.load
 
   ;;Cargar el valor dado por esa dirección
   i32.load
-  if
 
-    ;;Cuerpo del if
+  ;;Evaluar una operación binaria. Derecha:
+  i32.const 20
 
-    ;;;;INICIO ASIGNACIÓN;;;
+  ;;Evaluar una operación binaria. Operador:
+  i32.add
 
-    ;;Variable con delta: 0
-    local.get $localsStart
-    i32.const 0
-    i32.add
+  ;;Guardar la dirección anterior
+  i32.store
 
-    ;;Evaluar la expresión
-
-    ;;Evaluar una operación binaria. Izquierda:
-
-    ;;Sacar la dirección del designador
-
-    ;;Variable con delta: 0
-    local.get $localsStart
-    i32.const 0
-    i32.add
-
-    ;;Cargar el valor dado por esa dirección
-    i32.load
-
-    ;;Evaluar una operación binaria. Derecha:
-    i32.const 20
-
-    ;;Evaluar una operación binaria. Operador:
-    i32.sub
-
-    ;;Guardar la dirección anterior
-    i32.store
-
-    ;;;;FIN ASIGNACIÓN;;;
-  else
-
-    ;;;;INICIO CONDICIONAL;;;
-
-    ;;Evaluar condción
-
-    ;;Evaluar una negación.
-    i32.const 1
-
-    ;;Sacar la dirección del designador
-
-    ;;Variable con delta: 4
-    local.get $localsStart
-    i32.const 4
-    i32.add
-
-    ;;Cargar el valor dado por esa dirección
-    i32.load
-    i32.xor
-    if
-
-      ;;Cuerpo del if
-
-      ;;;;INICIO ASIGNACIÓN;;;
-
-      ;;Variable con delta: 0
-      local.get $localsStart
-      i32.const 0
-      i32.add
-
-      ;;Evaluar la expresión
-
-      ;;Evaluar una operación binaria. Izquierda:
-
-      ;;Sacar la dirección del designador
-
-      ;;Variable con delta: 0
-      local.get $localsStart
-      i32.const 0
-      i32.add
-
-      ;;Cargar el valor dado por esa dirección
-      i32.load
-
-      ;;Evaluar una operación binaria. Derecha:
-
-      ;;Sacar la dirección del designador
-
-      ;;Variable con delta: 0
-      local.get $localsStart
-      i32.const 0
-      i32.add
-
-      ;;Cargar el valor dado por esa dirección
-      i32.load
-
-      ;;Evaluar una operación binaria. Operador:
-      i32.add
-
-      ;;Guardar la dirección anterior
-      i32.store
-
-      ;;;;FIN ASIGNACIÓN;;;
-    else
-
-      ;;;;INICIO CONDICIONAL;;;
-
-      ;;Cuerpo del else
-
-      ;;;;INICIO ASIGNACIÓN;;;
-
-      ;;Variable con delta: 0
-      local.get $localsStart
-      i32.const 0
-      i32.add
-
-      ;;Evaluar la expresión
-
-      ;;Evaluar una operación binaria. Izquierda:
-
-      ;;Sacar la dirección del designador
-
-      ;;Variable con delta: 0
-      local.get $localsStart
-      i32.const 0
-      i32.add
-
-      ;;Cargar el valor dado por esa dirección
-      i32.load
-
-      ;;Evaluar una operación binaria. Derecha:
-      i32.const 20
-
-      ;;Evaluar una operación binaria. Operador:
-      i32.add
-
-      ;;Guardar la dirección anterior
-      i32.store
-
-      ;;;;FIN ASIGNACIÓN;;;
-
-      ;;;;FIN CONDICIONAL;;;
-    end
-
-    ;;;;FIN CONDICIONAL;;;
-  end
-
-  ;;;;FIN CONDICIONAL;;;
+  ;;;;FIN ASIGNACIÓN;;;
 
   ;;Sacar la dirección del designador
 
