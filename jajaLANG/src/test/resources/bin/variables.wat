@@ -45,8 +45,8 @@ drop
   (local $localsStart i32)
   (local $temp i32)
 
-  ;;Reservar espacio de pila: 16
-  i32.const 16
+  ;;Reservar espacio de pila: 20
+  i32.const 20
   call $reserveStack
   ;;;;;;;;INICIO POST RESERVA;;;;;;;;
   ;;Guardamos el valor anterior de MP
@@ -72,59 +72,73 @@ drop
   i32.const 0
   i32.add
 
-  ;;Asignar el valor: {
-  ;;at1 = 1
-  ;;}
+  ;;Asignar el valor: [100, 200]
 
-  ;;Inicio copia valores del literal de registro.
-
-    ;;Duplicar la dirección inicial del registro.
+    ;;Duplicar la dirección inicial del array para el siguiente elemento.
     local.tee $temp
     local.get $temp
 
-    ;;Tomar el offset del atributo at1.
+    ;;Dirección del siguiente elemento: 0 * 4
     i32.const 0
     i32.add
 
-    ;;Copiar el valor del atributo at1 a su posición adecuada.
+    ;;Copiar el valor de la expresión en esa posición.
 
     ;;Evaluar la expresión
-    i32.const 1
+    i32.const 100
 
     ;;Guardar la dirección anterior
     i32.store
 
-    ;;Eliminar la copia de la dirección inicial del regitro.
+    ;;Duplicar la dirección inicial del array para el siguiente elemento.
+    local.tee $temp
+    local.get $temp
+
+    ;;Dirección del siguiente elemento: 1 * 4
+    i32.const 4
+    i32.add
+
+    ;;Copiar el valor de la expresión en esa posición.
+
+    ;;Evaluar la expresión
+    i32.const 200
+
+    ;;Guardar la dirección anterior
+    i32.store
+
+    ;;Eliminar la dirección inicial duplicada.
     drop
 
   ;;;;;FIN DECLARACIÓN DE b;;;
 
-  ;;;;;INICIO DECLARACIÓN DE a;;;
-
-  ;;Variable con delta: 4
-  local.get $localsStart
-  i32.const 4
-  i32.add
-
-  ;;Asignar el valor: (b).at1
+  ;;Evaluar una operación binaria. Izquierda:
 
   ;;Sacar la dirección del designador
+
+  ;;Acceder al array b.
+  i32.const 4
+
+  ;;Calcular el valor del índice.
+  i32.const 0
+  i32.mul
+
+  ;;Calcular la dirección del array.
 
   ;;Variable con delta: 0
   local.get $localsStart
   i32.const 0
   i32.add
-  i32.const 0
   i32.add
 
-  ;;Cambiar el orden: DST, SRC -> SRC, DST
-  call $swap
+  ;;Cargar el valor dado por esa dirección
+  i32.load
 
-  ;;Copiar el tamaño del tipo entre 4
-  i32.const 1
-  call $copyn
+  ;;Evaluar una operación binaria. Derecha:
+  i32.const 21
 
-  ;;;;;FIN DECLARACIÓN DE a;;;
+  ;;Evaluar una operación binaria. Operador:
+  i32.add
+  call $escribirEnt
 
   ;;Si no hay 'return' (es 'void') ponemos en la posición en la que debería estar un 0
 

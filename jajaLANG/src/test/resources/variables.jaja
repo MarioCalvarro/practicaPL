@@ -1,8 +1,4 @@
-incognito t_dato = registro {
-    at1: ent,
-};
-
 diver tronco() {
-    t_dato b = nuevo { at1 = 1 };
-    ent a = b.at1;
+    vector(ent, 2) b = nuevo [100, 200];
+    escribirEnt(b[0] + 21);
 }

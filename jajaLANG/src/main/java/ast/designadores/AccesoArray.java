@@ -49,7 +49,7 @@ public class AccesoArray extends Designador {
 
     @Override
     public void compilarDesignador() {
-        int tamElementos = ((TipoArray) tipo).tipoElementos().tam();
+        int tamElementos = ((TipoArray) array.tipo()).tipoElementos().tam();
 
         GeneradorCodigo.comentario(String.format("Acceder al array %s.", array.toString()));
         GeneradorCodigo.i32_const(tamElementos);
