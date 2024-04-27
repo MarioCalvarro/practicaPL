@@ -1,7 +1,13 @@
+incognito t_dato = registro {
+    at1: ent,
+}
+
 diver mas1(a: ent) -> ent {
-    devuelve a + 1;
+    devuelve nuevo {
+        at1 = a + 1
+    };
 }
 
 diver tronco() {
-    ent b = mas1(2);
+    t_dato b = mas1(2);
 }
