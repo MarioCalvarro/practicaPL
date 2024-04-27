@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WASM Loader</title>
+</head>
+<body>
+    <!--  Selects a wasm file from current directory  -->
+    <h1 id="curr-file">  </h1>
+    <div class="main">
+        <label for="wasm-file" class="button">
+            Select WASM file
+        </label>
+        <input type="file" id="wasm-file" accept=".wasm">
+        <button class="button" id="load-wasm" disabled>Execute</button>
+    </div>
+    <div id="memory-controls">
+        <p>Show first <span id="elements-show"></span> bytes</p>
+        <input type="range" min="2" max="800" value="200" id="memory-slider">
+    </div>
+    <div id="memory"></div>
+    <p id="author">Created by <a href="https://github.com/ayhon">ayhon</a> and <a href="https://chat.openai.com/">ChatGPT</a></p>
+    <script>
+        const currFile = document.getElementById('curr-file');
+        const loadWasm = document.getElementById('load-wasm');
+        const wasmFile = document.getElementById('wasm-file');
+        const memoryControls = document.getElementById('memory-controls');
+        const elementsShow = document.getElementById('elements-show');
+        let elemsToShow = 200;
+        elementsShow.innerText = elemsToShow;
+        const slider = document.getElementById('memory-slider');
+        slider.value = elemsToShow;
+        slider.addEventListener('input', () => {
+            elemsToShow = slider.value;
+            elementsShow.innerText = elemsToShow;
+            updateMemory();
+        });
+        loadWasm.disabled = true;
+        wasmFile.addEventListener('change', () => {
+            currFile.innerText = wasmFile.files[0].name;
+            loadWasm.disabled = false;
+            // Show again the memory controlsdiv
+            memoryControls.style.display = 'flex';
+        });
+        let instance = undefined;
+        function updateMemory() {
+            if(instance == undefined) return;
+            // Show the contents of the WASM memory in the DOM
+            // Only the first 500 bytes, group by 4 bytes
+            const memory = new Uint8Array(instance.exports.memory.buffer, 0, 4*elemsToShow);
+            const memoryEl = document.getElementById('memory');
+            // Clear the children from memoryEl
+            memoryEl.innerHTML = '';
+            // Add each byte of memory to a div with clas "memory-cell" and append to memoryEl
+            var i = 0;
+            for (let i = 0; i < 4*elemsToShow; i+=4) {
+                const cell = document.createElement('div');
+                cell.classList.add('memory-cell');
+                cell.title = "addr: " + i;
+                let byte = memory[i+3];
+                for (let j = 2; j >= 0; j--) {
+                    byte = byte << 8;
+                    byte = byte | memory[i+j];
+                }
+                cell.innerText = byte;
+                memoryEl.appendChild(cell);
+            }
+        }
+        loadWasm.addEventListener('click', () => {
+            var importObjects = {
+                runtime: {
+                    exceptionHandler: function (code) {
+                        let errStr;
+                        if (code == 1) {
+                            errStr = "Error 1. ";
+                        } else if (code == 2) {
+                            errStr = "Error 2. ";
+                        } else if (code == 3) {
+                            errStr = "Not enough memory. ";
+                        } else {
+                            errStr = "Unknown error\n";
+                        }
+                        throw new Error(errStr);
+                    },
+                    print: function (n) {
+                        alert(n);
+                    },
+                    scan: function () {
+                        let num_str = window.prompt("Enter a number", "0");
+                        let val = parseInt(num_str);
+                        return val;
+                    }
+                }
+            };
+            
+            const reader = new FileReader();
+            reader.readAsArrayBuffer(wasmFile.files[0]);
+            reader.addEventListener('load', async () => {
+                const wasmModule = await WebAssembly.compile(reader.result);
+                instance = await WebAssembly.instantiate(wasmModule, importObjects);
+                updateMemory();
+            });          
+        });
+    </script>
+    <style>
+        .custom-file-upload {
+            border: 1px solid #444;
+            display: inline-block;
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+        .main {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+        input[type="file"] {
+            display: none;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #222;
+            color: #fff;
+        }
+        .button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #fff;
+            border: none;
+            color: #000;
+            font-weight: bolder;
+            font-family: 'Courier New', Courier, monospace;
+            cursor: pointer;
+            margin: 10px;
+        }
+        /* Positoin #author in the bottom right corner */
+        #author {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            margin: 10px;
+            color: #555;
+        }
+        a {
+            color: #89762d;
+            /* Remove underline */
+            text-decoration: none;
+        }
+        #memory {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 1000px;
+            color: #757575;
+        }
+        #memory div {
+            /* width: 20px; */
+            height: 20px;
+            border: 1px solid #757575;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1px 3px;
+            margin-bottom: 2px;
+        }
+        #memory div:hover {
+            border: 1px solid #fcd63d;
+        }
+        #memory-controls {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        #load-wasm {
+            background-color: #fcd63d;
+        }
+        #load-wasm:disabled {
+            background-color: #666;
+        }
+        #curr-file {
+            font-family: 'Courier New', Courier, monospace;
+        }
+    </style>
+</body>
+</html>

@@ -1,6 +1,7 @@
 package main.java.ast.tipos;
 
 import main.java.ast.Contexto;
+import main.java.ast.Delta;
 import main.java.ast.Nodo;
 import main.java.ast.declaraciones.Declaracion;
 import main.java.ast.declaraciones.DeclaracionVar;
@@ -88,6 +89,12 @@ public class TipoRegistro extends Tipo {
             }
         }
         return tam;
+    }
+
+    @Override
+    public void calcularOffset(Delta delta) {
+        Delta d = new Delta();
+        super.calcularOffset(d);
     }
 
     @Override

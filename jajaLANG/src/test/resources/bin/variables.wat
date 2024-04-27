@@ -84,36 +84,22 @@ call $tronco
   i32.const 0
   i32.add
 
-  ;;Asignando el valor: 100
+  ;;Asignando el valor: {
+  ;;at1 = 100
+  ;;}
+    local.tee $temp
+    local.get $temp
+    i32.const 0
+    i32.add
 
-  ;;Evaluamos la expresión
-  i32.const 100
+    ;;Evaluamos la expresión
+    i32.const 100
 
-  ;;La guardamos en la dirección anterior
-  i32.store
+    ;;La guardamos en la dirección anterior
+    i32.store
+    drop
 
   ;;;;;FIN DECLARACIÓN DE var2;;;
-
-  ;;;;INICIO ASIGNACIÓN;;;
-
-  ;;Variable global con delta: 0
-  i32.const 4
-
-  ;;Sacamos la dirección del designador
-
-  ;;Variable con delta: 0
-  local.get $localsStart
-  i32.const 0
-  i32.add
-
-  ;;Cambiamos el orden: DST, SRC -> SRC, DST
-  call $swap
-
-  ;;Copiamos el tamaño del tipo entre 4
-  i32.const 1
-  call $copyn
-
-  ;;;;FIN ASIGNACIÓN;;;
 
   ;;Liberamos la pila
   call $freeStack
