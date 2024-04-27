@@ -94,14 +94,25 @@ public class InsBucleFor extends Instruccion {
         GeneradorCodigo.comentario(";;INICIO BUCLE FOR;;;");
         inicializar();
 
+        GeneradorCodigo.escribir("block");
+        GeneradorCodigo.sangrar();
+
         GeneradorCodigo.escribir("loop");
         GeneradorCodigo.sangrar();
+
             comprobarCondicion();
+
+            GeneradorCodigo.comentario("Cuerpo del bucle.");
             for (Instruccion i : cuerpo) {
                 i.compilar();
             }
+
             incrementarIndice();
             GeneradorCodigo.br(0);
+
+        GeneradorCodigo.desangrar();
+        GeneradorCodigo.escribir("end");
+
         GeneradorCodigo.desangrar();
         GeneradorCodigo.escribir("end");
         GeneradorCodigo.comentario(";;FIN BUCLE FOR;;;");
@@ -125,8 +136,7 @@ public class InsBucleFor extends Instruccion {
         GeneradorCodigo.i32_load();
         
         GeneradorCodigo.comentario("Sacar el valor de la expresión final");
-        fin.compilarExpresion();        //TODO: Hacer esto una sola vez fuera del bucle y usar esa variable local
-
+        fin.compilarExpresion();
 
         GeneradorCodigo.comentario("Comparar: indice > final?");
         GeneradorCodigo.i32_gt_s(); // index > to
@@ -136,8 +146,9 @@ public class InsBucleFor extends Instruccion {
     private void incrementarIndice() {
         GeneradorCodigo.comentario("Incrementar el índice");
 
+        GeneradorCodigo.comentario("Duplicar la posición del índice para cargar y, luego, guardar de nuevo.");
         GeneradorCodigo.mem_location(indice);
-        GeneradorCodigo.duplicate(); // Una posición para guardar y otra para cargar
+        GeneradorCodigo.duplicate();
         GeneradorCodigo.comentario("Cargar valor actual y sumar 1");
         GeneradorCodigo.i32_load();
         GeneradorCodigo.i32_const(1);
