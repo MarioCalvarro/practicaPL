@@ -3,7 +3,7 @@ package main.java.ast.tipos;
 import main.java.ast.Nodo;
 
 public abstract class Tipo extends Nodo {
-    protected static final int TAM_BASICO = 4;
+    public static final int TAM_BASICO = 4;
 
     public Tipo() {
         this.tipo = TipoVacio.instancia();

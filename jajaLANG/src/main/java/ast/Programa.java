@@ -185,6 +185,7 @@ public class Programa extends Nodo {
         GeneradorCodigo.desangrar();
         GeneradorCodigo.comentario("Llamar a 'tronco'");
         GeneradorCodigo.llamar(funcionMain);
+        GeneradorCodigo.drop();     //Ignoramos el resultado del main
         GeneradorCodigo.escribir(")");
 
         //Compilamos las funciones

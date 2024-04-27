@@ -162,21 +162,22 @@ public class Llamada extends Expresion {
             }
         }
 
-        GeneradorCodigo.comentario("Copiar el nuevo SP en la posición desde donde se llama la función");       //TODO: Seguro?
-        GeneradorCodigo.global_get("SP");
-        GeneradorCodigo.i32_const(decFun.getTam() + 4);     //getTam no tiene en cuenta el tamaño del resultado
-        GeneradorCodigo.i32_add();              //localstart + maxTamFunc
-
-        GeneradorCodigo.mem_local(posicion);        //Donde guardamos el resultado
-        GeneradorCodigo.i32_store();
-
-        GeneradorCodigo.comentario("Llamamos a la función.");
         GeneradorCodigo.llamar(exp.nombre());
+
+        //El tipo vacío se almacena como un 0
+        GeneradorCodigo.comentario("En la cima esta la dirección donde se ha almacenado el resultado → Copiar");
+        //Cargamos el destino: this.posicion 
+        GeneradorCodigo.mem_local(this.posicion);
+        //Cargamos el número de posiciones a copiar
+        GeneradorCodigo.i32_const(this.tipo().tam() / 4);
+        //Copiamos del origen al destino
+        GeneradorCodigo.llamar(GeneradorCodigo.COPIAR);
     }
 
     @Override
     public void compilarExpresion() {
         compilar();
+        //Si el tipo de retorno no es simple esto no debería pasar
         GeneradorCodigo.mem_local(this.posicion);
         GeneradorCodigo.i32_load();
     }
@@ -184,8 +185,10 @@ public class Llamada extends Expresion {
     @Override
     public void compilarAsignacion() {
         compilar();
+        GeneradorCodigo.comentario("Cargamos el origen (donde hemos almacenado el resultado de la llamada).");
         GeneradorCodigo.mem_local(posicion);
 
+        GeneradorCodigo.comentario("Copiamos en el destino que deseamos.");
         GeneradorCodigo.llamar(GeneradorCodigo.CAMBIAR);
         GeneradorCodigo.i32_const(tipo.tam() / 4);        //Si es básico se copia solo uno
         GeneradorCodigo.llamar(GeneradorCodigo.COPIAR);

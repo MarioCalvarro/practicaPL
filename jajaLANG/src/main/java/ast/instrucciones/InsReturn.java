@@ -48,14 +48,22 @@ public class InsReturn extends Instruccion {
 
     @Override
     public void compilar() {
-        //TODO:: averiguar qué hacer
+        //1) Cargar en la posición SP - tipoRetornoFun.tam() el resultado.
+        //2) Devolver un puntero a esta posición
+        //3) Que la asignación de la llamada haga la copia adecuada con este puntero
+        GeneradorCodigo.comentario("Guardar el resultado en SP - tipoRetorno");
         GeneradorCodigo.global_get("SP");
-        GeneradorCodigo.i32_const(4);
+        GeneradorCodigo.i32_const(tipoRetornoFun.tam());
         GeneradorCodigo.i32_sub();
-        GeneradorCodigo.i32_load();
 
         expr.compilarAsignacion();
 
+        GeneradorCodigo.comentario("Ponemos en la cima de la pila la dirección donde está el resultado");
+        GeneradorCodigo.global_get("SP");
+        GeneradorCodigo.i32_const(tipoRetornoFun.tam());
+        GeneradorCodigo.i32_sub();
+
+        GeneradorCodigo.comentario("Liberamos la pila y hacemos el return");
         GeneradorCodigo.hacerReturn();
     }
 }
