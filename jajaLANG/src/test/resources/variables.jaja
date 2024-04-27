@@ -11,5 +11,6 @@ diver mas1(a: ent) -> t_dato {
 
 diver tronco() {
     t_dato b = mas1(2);
-    escribirEnt(b);
+    ent a = b.at1;
+    escribirEnt(a);
 }

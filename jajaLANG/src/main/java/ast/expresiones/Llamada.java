@@ -9,6 +9,7 @@ import main.java.ast.designadores.Designador;
 import main.java.ast.designadores.Identificador;
 import main.java.ast.tipos.Tipo;
 import main.java.ast.tipos.TipoFunc;
+import main.java.ast.tipos.TipoVacio;
 import main.java.errors.TypeError;
 
 import java.util.ArrayList;
@@ -123,7 +124,7 @@ public class Llamada extends Expresion {
             }
 
             //Por si necesitamos guardar el resultado
-            if (((TipoFunc) exp.tipo()).tipoRetorno().tam() > 0) {
+            if (!(((TipoFunc) exp.tipo()).tipoRetorno() instanceof TipoVacio)) {
                 GeneradorCodigo.mem_local(posicion);
             }
 
@@ -131,7 +132,7 @@ public class Llamada extends Expresion {
             GeneradorCodigo.llamar(exp.nombre());
 
             //Por si tenemos que guardar el resultado
-            if (((TipoFunc) exp.tipo()).tipoRetorno().tam() > 0) {
+            if (!(((TipoFunc) exp.tipo()).tipoRetorno() instanceof TipoVacio)) {
                 GeneradorCodigo.i32_store();
             }
 

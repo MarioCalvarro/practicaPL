@@ -1,6 +1,8 @@
 (module
-(import "runtime" "print" (func $print (param i32)))
-(import "runtime" "scan" (func $scan (result i32)))
+(import "runtime" "print" (func $escribirEnt (param i32)))
+(import "runtime" "print" (func $escribirBin (param i32)))
+(import "runtime" "scan" (func $leerEnt (result i32)))
+(import "runtime" "scan" (func $leerBin (result i32)))
 (import "runtime" "exceptionHandler" (func $exception (type $_sig_i32)))
 (memory 2000)
 (start $start)
@@ -171,8 +173,8 @@ drop
   (local $localsStart i32)
   (local $temp i32)
 
-  ;;Reservar espacio de pila: 24
-  i32.const 24
+  ;;Reservar espacio de pila: 32
+  i32.const 32
   call $reserveStack
   ;;;;;;;;INICIO POST RESERVA;;;;;;;;
   ;;Guardamos el valor anterior de MP
@@ -234,6 +236,34 @@ drop
   call $copyn
 
   ;;;;;FIN DECLARACIÓN DE b;;;
+
+  ;;;;;INICIO DECLARACIÓN DE a;;;
+
+  ;;Variable con delta: 16
+  local.get $localsStart
+  i32.const 16
+  i32.add
+
+  ;;Asignar el valor: 100
+
+  ;;Evaluar la expresión
+  i32.const 100
+
+  ;;Guardar la dirección anterior
+  i32.store
+
+  ;;;;;FIN DECLARACIÓN DE a;;;
+
+  ;;Sacar la dirección del designador
+
+  ;;Variable con delta: 16
+  local.get $localsStart
+  i32.const 16
+  i32.add
+
+  ;;Cargar el valor dado por esa dirección
+  i32.load
+  call $escribirEnt
 
   ;;Si no hay 'return' (es 'void') ponemos en la posición en la que debería estar un 0
 

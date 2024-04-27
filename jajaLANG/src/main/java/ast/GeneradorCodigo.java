@@ -274,8 +274,10 @@ public class GeneradorCodigo {
         StringBuilder aux = new StringBuilder();
         aux.append("(module\n");
         aux.append("""
-                (import "runtime" "print" (func $print (param i32)))
-                (import "runtime" "scan" (func $scan (result i32)))
+                (import "runtime" "print" (func $escribirEnt (param i32)))
+                (import "runtime" "print" (func $escribirBin (param i32)))
+                (import "runtime" "scan" (func $leerEnt (result i32)))
+                (import "runtime" "scan" (func $leerBin (result i32)))
                 (import "runtime" "exceptionHandler" (func $exception (type $_sig_i32)))
                 """);
         aux.append(String.format("(memory %d)\n", tamMemoria));
