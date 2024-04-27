@@ -43,8 +43,8 @@ drop
   (local $localsStart i32)
   (local $temp i32)
 
-  ;;Reservar espacio de pila: 12
-  i32.const 12
+  ;;Reservar espacio de pila: 16
+  i32.const 16
   call $reserveStack
   ;;;;;;;;INICIO POST RESERVA;;;;;;;;
   ;;Guardamos el valor anterior de MP
@@ -65,35 +65,83 @@ drop
 
   ;;Guardar el resultado en SP - tipoRetorno
   global.get $SP
-  i32.const 4
+  i32.const 8
   i32.sub
 
-  ;;Evaluar la expresión
+  ;;Inicio copia valores del literal de registro.
 
-  ;;Evaluar una operación binaria. Izquierda:
+    ;;Duplicar la dirección inicial del registro.
+    local.tee $temp
+    local.get $temp
 
-  ;;Sacar la dirección del designador
+    ;;Tomar el offset del atributo at2.
+    i32.const 0
+    i32.add
 
-  ;;Variable con delta: 0
-  local.get $localsStart
-  i32.const 0
-  i32.add
+    ;;Copiar el valor del atributo at2 a su posición adecuada.
 
-  ;;Cargar el valor dado por esa dirección
-  i32.load
+    ;;Evaluar la expresión
 
-  ;;Evaluar una operación binaria. Derecha:
-  i32.const 1
+    ;;Evaluar una operación binaria. Izquierda:
 
-  ;;Evaluar una operación binaria. Operador:
-  i32.add
+    ;;Sacar la dirección del designador
 
-  ;;Guardar la dirección anterior
-  i32.store
+    ;;Variable con delta: 0
+    local.get $localsStart
+    i32.const 0
+    i32.add
+
+    ;;Cargar el valor dado por esa dirección
+    i32.load
+
+    ;;Evaluar una operación binaria. Derecha:
+    i32.const 2
+
+    ;;Evaluar una operación binaria. Operador:
+    i32.add
+
+    ;;Guardar la dirección anterior
+    i32.store
+
+    ;;Duplicar la dirección inicial del registro.
+    local.tee $temp
+    local.get $temp
+
+    ;;Tomar el offset del atributo at1.
+    i32.const 4
+    i32.add
+
+    ;;Copiar el valor del atributo at1 a su posición adecuada.
+
+    ;;Evaluar la expresión
+
+    ;;Evaluar una operación binaria. Izquierda:
+
+    ;;Sacar la dirección del designador
+
+    ;;Variable con delta: 0
+    local.get $localsStart
+    i32.const 0
+    i32.add
+
+    ;;Cargar el valor dado por esa dirección
+    i32.load
+
+    ;;Evaluar una operación binaria. Derecha:
+    i32.const 1
+
+    ;;Evaluar una operación binaria. Operador:
+    i32.add
+
+    ;;Guardar la dirección anterior
+    i32.store
+
+    ;;Eliminar la copia de la dirección inicial del regitro.
+    drop
 
   ;;Ponemos en la cima de la pila la dirección donde está el resultado
   global.get $SP
-  i32.const 4
+  i32.const 8
   i32.sub
 
   ;;Liberamos la pila y hacemos el return
@@ -123,8 +171,8 @@ drop
   (local $localsStart i32)
   (local $temp i32)
 
-  ;;Reservar espacio de pila: 16
-  i32.const 16
+  ;;Reservar espacio de pila: 24
+  i32.const 24
   call $reserveStack
   ;;;;;;;;INICIO POST RESERVA;;;;;;;;
   ;;Guardamos el valor anterior de MP
@@ -170,19 +218,19 @@ drop
 
   ;;En la cima esta la dirección donde se ha almacenado el resultado → Copiar
   local.get $localsStart
-  i32.const 4
+  i32.const 8
   i32.add
-  i32.const 1
+  i32.const 2
   call $copyn
 
   ;;Cargamos el origen (donde hemos almacenado el resultado de la llamada).
   local.get $localsStart
-  i32.const 4
+  i32.const 8
   i32.add
 
   ;;Copiamos en el destino que deseamos.
   call $swap
-  i32.const 1
+  i32.const 2
   call $copyn
 
   ;;;;;FIN DECLARACIÓN DE b;;;

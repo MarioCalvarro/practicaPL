@@ -1,13 +1,15 @@
 incognito t_dato = registro {
-    at1: ent,
-}
+    at1, at2: ent,
+};
 
-diver mas1(a: ent) -> ent {
+diver mas1(a: ent) -> t_dato {
     devuelve nuevo {
-        at1 = a + 1
+        at1 = a + 1,
+        at2 = a + 2
     };
 }
 
 diver tronco() {
     t_dato b = mas1(2);
+    escribirEnt(b);
 }

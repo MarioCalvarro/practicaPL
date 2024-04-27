@@ -34,8 +34,10 @@ public class TipoFunc extends Tipo {
     public boolean equals(Object obj) {
         try {
             TipoFunc otro = (TipoFunc) obj;
-            return this.tipoRetorno.equals(otro.tipoRetorno) &&
-                    this.tipoParametros.equals(otro.tipoParametros);
+            //No podemos basarnos también en el tipo de retorno porque en el
+            //momento en el que se llama a este 'equals' (cuando hacemos el
+            //typecheck de una llamada), todavía no lo tenemos asignado.
+            return this.tipoParametros.equals(otro.tipoParametros);
         } catch (ClassCastException e) {
             return false;
         }

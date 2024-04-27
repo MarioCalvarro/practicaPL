@@ -70,7 +70,7 @@ public class Llamada extends Expresion {
         TipoFunc tipoLlamado = new TipoFunc(tipoFun.tipoRetorno(), llamados);
 
         if (!tipoLlamado.equals(tipoFun)) {
-            throw new TypeError("El tipo del la llamada a " + tipoLlamado.toString() + " no es correcto.");
+            throw new TypeError("El tipo de la llamada a " + exp.toString() + " no es correcto.");
 
         }
 
