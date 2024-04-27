@@ -108,27 +108,27 @@ public class InsBucleFor extends Instruccion {
     }
 
     private void inicializar() {
-        GeneradorCodigo.comentario("Inicialización de la variable del bucle");
+        GeneradorCodigo.comentario("Inicializar la variable del bucle");
         GeneradorCodigo.mem_location(indice);
 
-        GeneradorCodigo.comentario("Evaluamos la expresión inicial");
+        GeneradorCodigo.comentario("Evaluar la expresión inicial");
         ini.compilarExpresion();
 
-        GeneradorCodigo.comentario("Guardamos el valor del inicio en la localización del índice");
+        GeneradorCodigo.comentario("Guardar el valor del inicio en la localización del índice");
         GeneradorCodigo.i32_store();
     }
 
     private void comprobarCondicion() {
-        GeneradorCodigo.comentario("Comprobación de la condición del bucle");
+        GeneradorCodigo.comentario("Comprobar la condición del bucle");
         GeneradorCodigo.comentario("Cargar el índice");
         GeneradorCodigo.mem_location(indice);
         GeneradorCodigo.i32_load();
         
-        GeneradorCodigo.comentario("Sacamos el valor de la expresión final");
+        GeneradorCodigo.comentario("Sacar el valor de la expresión final");
         fin.compilarExpresion();        //TODO: Hacer esto una sola vez fuera del bucle y usar esa variable local
 
 
-        GeneradorCodigo.comentario("Comparamos: indice > final?");
+        GeneradorCodigo.comentario("Comparar: indice > final?");
         GeneradorCodigo.i32_gt_s(); // index > to
         GeneradorCodigo.br_if(1);
     }

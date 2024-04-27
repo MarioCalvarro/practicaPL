@@ -57,8 +57,8 @@ call $tronco
   (local $localsStart i32)
   (local $temp i32)
 
-  ;;Reservamos espacio de pila: 16
-  i32.const 16
+  ;;Reservamos espacio de pila: 12
+  i32.const 12
   call $reserveStack
   ;;;;;;;;INICIO POST RESERVA;;;;;;;;
   ;;Guardamos el valor anterior de MP
@@ -84,46 +84,33 @@ call $tronco
   i32.const 0
   i32.add
 
-  ;;Asignando el valor: [-(1), 100]
+  ;;Asignando el valor: &(var1)
 
-    ;;Duplicamos la dirección inicial del array para el siguiente elemento.
-    local.tee $temp
-    local.get $temp
+  ;;Evaluamos la expresión
 
-    ;;Dirección del siguiente elemento: 0 * 4
-    i32.const 0
-    i32.add
+  ;;Variable global con delta: 0
+  i32.const 4
 
-    ;;Copiamos el valor de la expresión en esa posición.
-
-    ;;Evaluamos la expresión
-    i32.const 0
-    i32.const 1
-    i32.sub
-
-    ;;La guardamos en la dirección anterior
-    i32.store
-
-    ;;Duplicamos la dirección inicial del array para el siguiente elemento.
-    local.tee $temp
-    local.get $temp
-
-    ;;Dirección del siguiente elemento: 1 * 4
-    i32.const 4
-    i32.add
-
-    ;;Copiamos el valor de la expresión en esa posición.
-
-    ;;Evaluamos la expresión
-    i32.const 100
-
-    ;;La guardamos en la dirección anterior
-    i32.store
-
-    ;;Eliminamos la dirección inicial duplicada.
-    drop
+  ;;La guardamos en la dirección anterior
+  i32.store
 
   ;;;;;FIN DECLARACIÓN DE var2;;;
+
+  ;;;;INICIO ASIGNACIÓN;;;
+
+  ;;Variable con delta: 0
+  local.get $localsStart
+  i32.const 0
+  i32.add
+  i32.load
+
+  ;;Evaluamos la expresión
+  i32.const 100
+
+  ;;La guardamos en la dirección anterior
+  i32.store
+
+  ;;;;FIN ASIGNACIÓN;;;
 
   ;;Liberamos la pila
   call $freeStack

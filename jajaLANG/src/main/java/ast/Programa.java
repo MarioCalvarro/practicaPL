@@ -183,7 +183,7 @@ public class Programa extends Nodo {
                 } catch (ClassCastException e) {}
             }
         GeneradorCodigo.desangrar();
-        GeneradorCodigo.comentario("Llamada a 'tronco'");
+        GeneradorCodigo.comentario("Llamar a 'tronco'");
         GeneradorCodigo.llamar(funcionMain);
         GeneradorCodigo.escribir(")");
 

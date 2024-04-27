@@ -88,17 +88,17 @@ public class LiteralStruct extends Literal {
             var id_attr = attr.getKey();
             var val_attr = attr.getValue();
 
-            GeneradorCodigo.comentario("Duplicamos la dirección inicial del registro.");
+            GeneradorCodigo.comentario("Duplicar la dirección inicial del registro.");
             GeneradorCodigo.duplicate();
-            GeneradorCodigo.comentario(String.format("Cogemos el offset del atributo %s.", id_attr));
+            GeneradorCodigo.comentario(String.format("Tomar el offset del atributo %s.", id_attr));
             GeneradorCodigo.i32_const(((TipoRegistro) tipo).offsetAtributo(id_attr));
             GeneradorCodigo.i32_add(); //Inicial + delta
 
-            GeneradorCodigo.comentario(String.format("Copiamos el valor del atributo %s a su posición adecuada.", id_attr));
+            GeneradorCodigo.comentario(String.format("Copiar el valor del atributo %s a su posición adecuada.", id_attr));
             val_attr.compilarAsignacion();
         }
 
-        GeneradorCodigo.comentario("Eliminamos la copia de la dirección inicial del regitro.");
+        GeneradorCodigo.comentario("Eliminar la copia de la dirección inicial del regitro.");
         GeneradorCodigo.drop();
         GeneradorCodigo.desangrar();
     }

@@ -115,11 +115,11 @@ public class DeclaracionVar extends Declaracion {
 
         if (this.valor == null) {
             /// Rellena con ceros
-            GeneradorCodigo.comentario("No tiene valor asignado → ceros");
+            GeneradorCodigo.comentario("Sin valor asignado → ceros");
             GeneradorCodigo.i32_const(tipo.tam() / 4);
             GeneradorCodigo.llamar(GeneradorCodigo.ZEROS);
         } else {
-            GeneradorCodigo.comentario("Asignando el valor: " + valor.toString());
+            GeneradorCodigo.comentario("Asignar el valor: " + valor.toString());
             valor.compilarAsignacion();
         }
         GeneradorCodigo.comentario(String.format(";;;FIN DECLARACIÓN DE %s;;;\n", getId()));

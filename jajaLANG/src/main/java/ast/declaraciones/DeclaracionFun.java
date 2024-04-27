@@ -126,7 +126,7 @@ public class DeclaracionFun extends Declaracion {
             int x = 4 + 4;      //4 de MP y 4 de valor de retorno
             int stackSize = this.getTam() + x;
 
-            GeneradorCodigo.comentario("Reservamos espacio de pila: " + stackSize);
+            GeneradorCodigo.comentario("Reservar espacio de pila: " + stackSize);
             GeneradorCodigo.i32_const(stackSize);
             GeneradorCodigo.reservarPila();
 
@@ -134,7 +134,7 @@ public class DeclaracionFun extends Declaracion {
                 ins.compilar();
             }
 
-            GeneradorCodigo.comentario("Liberamos la pila");
+            GeneradorCodigo.comentario("Liberar la pila");
             GeneradorCodigo.liberarPila();
         GeneradorCodigo.desangrar();
         GeneradorCodigo.escribir(")");

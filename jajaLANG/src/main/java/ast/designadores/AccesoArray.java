@@ -51,9 +51,12 @@ public class AccesoArray extends Designador {
     public void compilarDesignador() {
         int tamElementos = ((TipoArray) tipo).tipoElementos().tam();
 
+        GeneradorCodigo.comentario(String.format("Acceder al array %s.", array.toString()));
         GeneradorCodigo.i32_const(tamElementos);
+        GeneradorCodigo.comentario("Calcular el valor del índice.");
         indice.compilarExpresion();
         GeneradorCodigo.i32_mul();      //indice * tamElementos
+        GeneradorCodigo.comentario("Calcular la dirección del array.");
         array.compilarDesignador();
         GeneradorCodigo.i32_add();      //inicio + indice * tamElementos
     }
