@@ -1,5 +1,6 @@
 package main.java.ast.literales;
 
+import main.java.ast.Delta;
 import main.java.ast.GeneradorCodigo;
 import main.java.ast.Nodo;
 import main.java.ast.declaraciones.Declaracion;
@@ -65,6 +66,12 @@ public class LiteralStruct extends Literal {
             atributos.add(new DeclaracionVar(at.getKey(), at.getValue().tipo(), at.getValue()));
         }
         this.tipo = new TipoRegistro(atributos);
+    }
+
+    @Override
+    public void calcularOffset(Delta delta) {
+        Delta d = new Delta();
+        tipo.calcularOffset(d);
     }
 
     @Override

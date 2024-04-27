@@ -16,6 +16,11 @@ public class TipoRegistro extends Tipo {
     private int tam = -1;
 
     public TipoRegistro(List<Declaracion> atributos) {
+        //TODO: Es posible que esto tenga que tener un orden porque al hacer el
+        //cálculo de offset en varios sitios distintos (es decir, como
+        //comparamos por duck-typing) no podemos estar seguros de que el offset
+        //calculado en un sitio sea el mismo que en otro.
+        //Otra alternativa sería buscar una forma de hacerlo una sola vez.
         this.atributos = new HashMap<String, Declaracion>();
         for (Declaracion campo : atributos) {
             this.atributos.put(campo.getId(), campo);
