@@ -1,0 +1,27 @@
+diver calculadora(&a: ent -> &b: ent) -> ent {
+    ent op = leerEnt();
+    si op == 0 {
+        devuelve a + b;
+    } sino op == 1 {
+        devuelve a - b;
+    } sino op == 2 {
+        devuelve a * b;
+    }
+    devuelve -1;
+}
+
+diver tronco() {
+    ent a, b;
+    bin fin = fake;
+    mientras !fin {
+        a = leerEnt();
+        b = leerEnt();
+        ent c = calculadora(a, b);
+        si c == -1 {
+            fin = facto;
+        } sino {
+            escribirEnt(c);
+        }
+    }
+    escribirEnt(-1);
+}
