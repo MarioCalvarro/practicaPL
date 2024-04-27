@@ -163,7 +163,7 @@ public class Llamada extends Expresion {
             }
         }
 
-        GeneradorCodigo.llamar(exp.nombre());
+        GeneradorCodigo.llamar(exp.dec().getId());
 
         //El tipo vacío se almacena como un 0
         GeneradorCodigo.comentario("En la cima esta la dirección donde se ha almacenado el resultado → Copiar");

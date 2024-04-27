@@ -123,8 +123,10 @@ public class InsCond extends Instruccion {
     @Override
     public void calcularOffset(Delta ultimoDelta) {
         ultimoDelta.entrarEnBloque();
-        for (Instruccion ins : cuerpo) {
-            ins.calcularOffset(ultimoDelta);
+        if (cuerpo != null) {
+            for (Instruccion ins : cuerpo) {
+                ins.calcularOffset(ultimoDelta);
+            }
         }
         ultimoDelta.salirDeBloque();
         if (instElse != null) {
@@ -154,7 +156,7 @@ public class InsCond extends Instruccion {
             GeneradorCodigo.desangrar();
 
             GeneradorCodigo.escribir("end");
-        } else {
+        } else if (cuerpo != null) {
             GeneradorCodigo.comentario("Cuerpo del else");
             for (Instruccion i : cuerpo) {
                 i.compilar();
