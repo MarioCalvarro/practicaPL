@@ -1,10 +1,7 @@
-incognito t_dato = registro {
-    at1: ent,
-    at2: bin,
-};
+incognito t_dato = vector(ent, 2);
 
 ent var1 = 1;
 
 diver tronco() {
-    t_dato var2 = nuevo { at1 = 100, at2 = facto };
+    t_dato var2 = nuevo [-1, 100];
 }

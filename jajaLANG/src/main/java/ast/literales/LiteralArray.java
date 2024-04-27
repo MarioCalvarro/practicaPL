@@ -78,19 +78,22 @@ public class LiteralArray extends Literal {
 
     @Override
     public void compilarAsignacion() {
-        int longitud = lExpr.size();
-        for (int i = 0; i < lExpr.size(); ++i) {
-            var elemento = this.lExpr.get(i);
+        GeneradorCodigo.sangrar();
+            for (int i = 0; i < lExpr.size(); ++i) {
+                var elemento = this.lExpr.get(i);
 
-            if (i != longitud - 1) {
-                //Duplicamos la dirección inicial para el siguiente
+                GeneradorCodigo.comentario("Duplicamos la dirección inicial del array para el siguiente elemento.");
                 GeneradorCodigo.duplicate();
+
+                GeneradorCodigo.comentario(String.format("Dirección del siguiente elemento: %d * %d", i, elemento.tipo().tam()));
+                GeneradorCodigo.i32_const(i * elemento.tipo().tam());       //Delta = i * tam_elem
+                GeneradorCodigo.i32_add();      //inicio += delta
+
+                GeneradorCodigo.comentario("Copiamos el valor de la expresión en esa posición.");
+                elemento.compilarAsignacion();
             }
-
-            GeneradorCodigo.i32_const(i * elemento.tipo().tam());       //Delta = i * tam_elem
-            GeneradorCodigo.i32_add();      //inicio += delta
-
-            elemento.compilarAsignacion();
-        }
+            GeneradorCodigo.comentario("Eliminamos la dirección inicial duplicada.");
+            GeneradorCodigo.drop();
+        GeneradorCodigo.desangrar();
     }
 }

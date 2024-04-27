@@ -84,38 +84,35 @@ call $tronco
   i32.const 0
   i32.add
 
-  ;;Asignando el valor: {
-  ;;at2 = facto,
-  ;;at1 = 100
-  ;;}
+  ;;Asignando el valor: [-(1), 100]
 
-  ;;Inicio copia valores del literal de registro.
-
-    ;;Duplicamos la dirección inicial del registro.
+    ;;Duplicamos la dirección inicial del array para el siguiente elemento.
     local.tee $temp
     local.get $temp
 
-    ;;Cogemos el offset del atributo at2.
+    ;;Dirección del siguiente elemento: 0 * 4
     i32.const 0
     i32.add
 
-    ;;Copiamos el valor del atributo at2 a su posición adecuada.
+    ;;Copiamos el valor de la expresión en esa posición.
 
     ;;Evaluamos la expresión
+    i32.const 0
     i32.const 1
+    i32.sub
 
     ;;La guardamos en la dirección anterior
     i32.store
 
-    ;;Duplicamos la dirección inicial del registro.
+    ;;Duplicamos la dirección inicial del array para el siguiente elemento.
     local.tee $temp
     local.get $temp
 
-    ;;Cogemos el offset del atributo at1.
-    i32.const 0
+    ;;Dirección del siguiente elemento: 1 * 4
+    i32.const 4
     i32.add
 
-    ;;Copiamos el valor del atributo at1 a su posición adecuada.
+    ;;Copiamos el valor de la expresión en esa posición.
 
     ;;Evaluamos la expresión
     i32.const 100
@@ -123,7 +120,7 @@ call $tronco
     ;;La guardamos en la dirección anterior
     i32.store
 
-    ;;Eliminamos la copia de la dirección inicial del regitro.
+    ;;Eliminamos la dirección inicial duplicada.
     drop
 
   ;;;;;FIN DECLARACIÓN DE var2;;;
