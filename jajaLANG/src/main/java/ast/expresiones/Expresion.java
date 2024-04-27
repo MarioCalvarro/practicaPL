@@ -22,9 +22,11 @@ public abstract class Expresion extends Instruccion {
     @Override
     public void compilar() {
         //Del único que nos interesa el valor que devuelve es la llamada
+        GeneradorCodigo.comentario(";;INICIO EVALUACIÓN EXPRESIÓN;;;");
         compilarExpresion();
         GeneradorCodigo.comentario("Dropear el valor dado de una expresión compilada como una instrucción.");
         GeneradorCodigo.drop();
+        GeneradorCodigo.comentario(";;FIN EVALUACIÓN EXPRESIÓN;;;");
     }
 
     public abstract void compilarExpresion();

@@ -99,6 +99,7 @@ public class Llamada extends Expresion {
         super.calcularOffset(ultimoDelta);
         DeclaracionFun dec = (DeclaracionFun) exp.dec();
         TipoFunc tipo = (TipoFunc) dec.tipo();
+        //La llamada ocupa el tipo de retorno de la función
         posicion = ultimoDelta.actualizarPosicionDelta(tipo.tipoRetorno().tam());
     }
 
@@ -107,9 +108,9 @@ public class Llamada extends Expresion {
         for (Expresion exp : listaExpresiones) {
             try {
                 Llamada llamada = (Llamada) exp;
+                GeneradorCodigo.comentario("Ejecutamos la llamada de uno de los argumentos.");
                 llamada.compilar();
-            } catch (ClassCastException e) {
-            }
+            } catch (ClassCastException e) {}
         }
 
         var decFun = (DeclaracionFun) this.exp.dec();
@@ -140,33 +141,36 @@ public class Llamada extends Expresion {
         //Parámetros de la función referida
         var params = decFun.parametros();
 
+        GeneradorCodigo.comentario("Copiar los parámetros antes de llamar a la función.");
         for (int i = 0; i < listaExpresiones.size(); i++) {
-            //Copiar los argumentos antes de llamar a la función
             var param = params.get(i);
             var expr = listaExpresiones.get(i);
 
+            GeneradorCodigo.comentario("Nuevo 'localstart' + delta parámetro.");
             GeneradorCodigo.global_get("SP");
             GeneradorCodigo.i32_const(4 + param.getPosicionDelta());
-            GeneradorCodigo.i32_add();      //Localstart + delta
+            GeneradorCodigo.i32_add();
 
             if (param.porReferencia()) {
-                //Copiamos la dirección del designador que se llama
+                GeneradorCodigo.comentario("Parámetro por referencia → Guardar la dirección del designador.");
                 var designador = (Designador) expr;
                 designador.compilarDesignador();
                 GeneradorCodigo.i32_store();
             } else {
-                //Copiamos a la dirección dada antes
+                GeneradorCodigo.comentario("Parámetro por valor → Copiar el valor en su posición adecuada.");
                 expr.compilarAsignacion();
             }
         }
 
+        GeneradorCodigo.comentario("Copiar el nuevo SP en la posición desde donde se llama la función");       //TODO: Seguro?
         GeneradorCodigo.global_get("SP");
-        GeneradorCodigo.i32_const(decFun.getTam() + 4);
+        GeneradorCodigo.i32_const(decFun.getTam() + 4);     //getTam no tiene en cuenta el tamaño del resultado
         GeneradorCodigo.i32_add();              //localstart + maxTamFunc
 
         GeneradorCodigo.mem_local(posicion);        //Donde guardamos el resultado
         GeneradorCodigo.i32_store();
 
+        GeneradorCodigo.comentario("Llamamos a la función.");
         GeneradorCodigo.llamar(exp.nombre());
     }
 

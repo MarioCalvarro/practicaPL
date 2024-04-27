@@ -127,8 +127,11 @@ public class OperadorBin extends Expresion {
 
     @Override
     public void compilarExpresion() {
+        GeneradorCodigo.comentario("Evaluar una operación binaria. Izquierda:");
         izquierda.compilarExpresion();
+        GeneradorCodigo.comentario("Evaluar una operación binaria. Derecha:");
         derecha.compilarExpresion();
+        GeneradorCodigo.comentario("Evaluar una operación binaria. Operador:");
         switch (op) {
             case SUMA:
                 GeneradorCodigo.i32_add();
@@ -174,7 +177,7 @@ public class OperadorBin extends Expresion {
                 //GeneradorCodigo.i32_pot();
                 break;
             default:
-                throw new RuntimeException("Operador no soportada: " + op.toString());
+                throw new RuntimeException("Operador no soportado: " + op.toString());
         }
     }
 
@@ -212,7 +215,7 @@ public class OperadorBin extends Expresion {
                 case POT:
                     return "^";
                 default:
-                    throw new IllegalArgumentException("Invalid operator");
+                    throw new IllegalArgumentException("Operador no válido.");
             }
         }
     }

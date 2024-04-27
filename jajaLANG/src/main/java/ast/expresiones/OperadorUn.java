@@ -49,14 +49,14 @@ public class OperadorUn extends Expresion {
         switch (op) {
             case RESTA:
                 if (!tipoDerecha.equals(TipoEntero.instancia())) {
-                    throw new TypeError(this.derecha.toString() + " no es de tipo entero y  por tanto no se le puede aplicar el menos unario.");
+                    throw new TypeError(this.derecha.toString() + " no es de tipo entero y, por tanto, no se le puede aplicar el operador opuesto.");
                 }
                 this.tipo = TipoEntero.instancia();
                 break;
 
             case NEG:
                 if (!tipoDerecha.equals(TipoBinario.instancia())) {
-                    throw new TypeError(this.derecha.toString() + " no es de tipo booleano y  por tanto no se le puede aplicar la negación unaria.");
+                    throw new TypeError(this.derecha.toString() + " no es de tipo booleano y, por tanto, no se le puede aplicar la negación.");
                 }
                 this.tipo = TipoBinario.instancia();
                 break;
@@ -65,13 +65,13 @@ public class OperadorUn extends Expresion {
                 try {
                     Designador aux = (Designador) derecha;
                 } catch (ClassCastException e) {
-                    throw new TypeError(this.derecha.toString() + " no es un designador y  por tanto no se le puede aplicar el operador dirección.");
+                    throw new TypeError(this.derecha.toString() + " no es un designador y, por tanto, no se le puede aplicar el operador dirección.");
                 }
                 this.tipo = new TipoPuntero(tipoDerecha);
                 break;
 
             default:
-                throw new TypeError(this.op.toString() + " no es un operador unario valido.");
+                throw new TypeError(this.op.toString() + " no es un operador unario válido.");
         }
     }
 
@@ -93,11 +93,13 @@ public class OperadorUn extends Expresion {
     public void compilarExpresion() {
         switch (op) {
             case NEG:
+                GeneradorCodigo.comentario("Evaluar una negación.");
                 GeneradorCodigo.i32_const(1);
                 derecha.compilarExpresion();
                 GeneradorCodigo.i32_xor();
                 break;
             case RESTA:
+                GeneradorCodigo.comentario("Evaluar un opuesto.");
                 GeneradorCodigo.i32_const(0);
                 derecha.compilarExpresion();
                 GeneradorCodigo.i32_sub();
@@ -106,11 +108,12 @@ public class OperadorUn extends Expresion {
                 ((Designador) derecha).compilarDesignador();
                 break;
             default:
-                throw new IllegalArgumentException("Invalid operator '" + op + "'");
+                throw new IllegalArgumentException("Operador no soportado: " + op);
         }
     }
 
     public enum Operadores {
+        //TODO: Operador SUMA
         NEG, DIRECCION, RESTA;
 
         public String toString() {
@@ -122,7 +125,7 @@ public class OperadorUn extends Expresion {
                 case DIRECCION:
                     return "&";
                 default:
-                    throw new IllegalArgumentException("Invalid operator");
+                    throw new IllegalArgumentException("Operador no válido.");
             }
         }
     }
