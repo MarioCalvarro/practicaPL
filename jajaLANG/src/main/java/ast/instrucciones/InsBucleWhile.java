@@ -69,15 +69,30 @@ public class InsBucleWhile extends Instruccion {
 
     @Override
     public void compilar() {
-        //GeneradorCodigo.comentario("INSTRUCCION: " + this.toString());
+        GeneradorCodigo.comentario(";;INICIO BUCLE WHILE;;;");
+        GeneradorCodigo.escribir("block");
         GeneradorCodigo.sangrar();
-        condicion.compilarExpresion();
-        GeneradorCodigo.i32_eqz();
-        GeneradorCodigo.br_if(1);
-        for (Instruccion i : cuerpo) {
-            i.compilar();
-        }
-        GeneradorCodigo.br(0);
+
+            GeneradorCodigo.escribir("loop");
+            GeneradorCodigo.sangrar();
+
+                GeneradorCodigo.comentario("Evaluar condición bucle.");
+                condicion.compilarExpresion();
+                GeneradorCodigo.i32_eqz();
+                GeneradorCodigo.br_if(1);
+
+                GeneradorCodigo.comentario("Cuerpo del bucle.");
+                for (Instruccion i : cuerpo) {
+                    i.compilar();
+                }
+                GeneradorCodigo.br(0);
+
+            GeneradorCodigo.desangrar();
+            GeneradorCodigo.escribir("end");
+
         GeneradorCodigo.desangrar();
+        GeneradorCodigo.escribir("end");
+
+        GeneradorCodigo.comentario(";;FIN BUCLE WHILE;;;");
     }
 }

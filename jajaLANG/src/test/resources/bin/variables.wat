@@ -65,79 +65,149 @@ drop
 
   ;;;;;;;;;FIN POST RESERVA;;;;;;;;
 
-  ;;;;;INICIO DECLARACIÓN DE b;;;
+  ;;;;;INICIO DECLARACIÓN DE i;;;
 
   ;;Variable con delta: 0
   local.get $localsStart
   i32.const 0
   i32.add
 
-  ;;Asignar el valor: [100, 200]
+  ;;Asignar el valor: 100
 
-    ;;Duplicar la dirección inicial del array para el siguiente elemento.
-    local.tee $temp
-    local.get $temp
+  ;;Evaluar la expresión
+  i32.const 100
 
-    ;;Dirección del siguiente elemento: 0 * 4
-    i32.const 0
-    i32.add
+  ;;Guardar la dirección anterior
+  i32.store
 
-    ;;Copiar el valor de la expresión en esa posición.
+  ;;;;;FIN DECLARACIÓN DE i;;;
 
-    ;;Evaluar la expresión
-    i32.const 100
+  ;;;;;INICIO DECLARACIÓN DE cond;;;
 
-    ;;Guardar la dirección anterior
-    i32.store
+  ;;Variable con delta: 4
+  local.get $localsStart
+  i32.const 4
+  i32.add
 
-    ;;Duplicar la dirección inicial del array para el siguiente elemento.
-    local.tee $temp
-    local.get $temp
+  ;;Asignar el valor: facto
 
-    ;;Dirección del siguiente elemento: 1 * 4
-    i32.const 4
-    i32.add
+  ;;Evaluar la expresión
+  i32.const 1
 
-    ;;Copiar el valor de la expresión en esa posición.
+  ;;Guardar la dirección anterior
+  i32.store
 
-    ;;Evaluar la expresión
-    i32.const 200
+  ;;;;;FIN DECLARACIÓN DE cond;;;
 
-    ;;Guardar la dirección anterior
-    i32.store
+  ;;;;INICIO BUCLE WHILE;;;
+  block
+    loop
 
-    ;;Eliminar la dirección inicial duplicada.
-    drop
+      ;;Evaluar condición bucle.
 
-  ;;;;;FIN DECLARACIÓN DE b;;;
+      ;;Sacar la dirección del designador
 
-  ;;Evaluar una operación binaria. Izquierda:
+      ;;Variable con delta: 4
+      local.get $localsStart
+      i32.const 4
+      i32.add
+
+      ;;Cargar el valor dado por esa dirección
+      i32.load
+      i32.eqz
+      br_if 1
+
+      ;;Cuerpo del bucle.
+
+      ;;;;INICIO ASIGNACIÓN;;;
+
+      ;;Variable con delta: 0
+      local.get $localsStart
+      i32.const 0
+      i32.add
+
+      ;;Evaluar la expresión
+
+      ;;Evaluar una operación binaria. Izquierda:
+
+      ;;Sacar la dirección del designador
+
+      ;;Variable con delta: 0
+      local.get $localsStart
+      i32.const 0
+      i32.add
+
+      ;;Cargar el valor dado por esa dirección
+      i32.load
+
+      ;;Evaluar una operación binaria. Derecha:
+      i32.const 10
+
+      ;;Evaluar una operación binaria. Operador:
+      i32.add
+
+      ;;Guardar la dirección anterior
+      i32.store
+
+      ;;;;FIN ASIGNACIÓN;;;
+
+      ;;Sacar la dirección del designador
+
+      ;;Variable con delta: 0
+      local.get $localsStart
+      i32.const 0
+      i32.add
+
+      ;;Cargar el valor dado por esa dirección
+      i32.load
+      call $escribirEnt
+
+      ;;;;INICIO ASIGNACIÓN;;;
+
+      ;;Variable con delta: 4
+      local.get $localsStart
+      i32.const 4
+      i32.add
+
+      ;;Evaluar la expresión
+
+      ;;Evaluar una operación binaria. Izquierda:
+
+      ;;Sacar la dirección del designador
+
+      ;;Variable con delta: 4
+      local.get $localsStart
+      i32.const 4
+      i32.add
+
+      ;;Cargar el valor dado por esa dirección
+      i32.load
+
+      ;;Evaluar una operación binaria. Derecha:
+      i32.const 0
+
+      ;;Evaluar una operación binaria. Operador:
+      i32.and
+
+      ;;Guardar la dirección anterior
+      i32.store
+
+      ;;;;FIN ASIGNACIÓN;;;
+      br 0
+    end
+  end
+
+  ;;;;FIN BUCLE WHILE;;;
 
   ;;Sacar la dirección del designador
 
-  ;;Acceder al array b.
-  i32.const 4
-
-  ;;Calcular el valor del índice.
-  i32.const 0
-  i32.mul
-
-  ;;Calcular la dirección del array.
-
   ;;Variable con delta: 0
   local.get $localsStart
   i32.const 0
-  i32.add
   i32.add
 
   ;;Cargar el valor dado por esa dirección
   i32.load
-
-  ;;Evaluar una operación binaria. Derecha:
-  i32.const 21
-
-  ;;Evaluar una operación binaria. Operador:
-  i32.add
   call $escribirEnt
 
   ;;Si no hay 'return' (es 'void') ponemos en la posición en la que debería estar un 0

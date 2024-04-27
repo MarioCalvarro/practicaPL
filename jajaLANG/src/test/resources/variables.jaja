@@ -1,4 +1,10 @@
 diver tronco() {
-    vector(ent, 2) b = nuevo [100, 200];
-    escribirEnt(b[0] + 21);
+    ent i = 100;
+    bin cond = facto;
+    mientras cond {
+        i += 10;
+        escribirEnt(i);
+        cond &= fake;
+    }
+    escribirEnt(i);
 }
