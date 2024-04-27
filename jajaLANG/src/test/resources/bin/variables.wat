@@ -57,8 +57,8 @@ call $tronco
   (local $localsStart i32)
   (local $temp i32)
 
-  ;;Reservamos espacio de pila: 12
-  i32.const 12
+  ;;Reservamos espacio de pila: 16
+  i32.const 16
   call $reserveStack
   ;;;;;;;;INICIO POST RESERVA;;;;;;;;
   ;;Guardamos el valor anterior de MP
@@ -85,18 +85,45 @@ call $tronco
   i32.add
 
   ;;Asignando el valor: {
+  ;;at2 = facto,
   ;;at1 = 100
   ;;}
+
+  ;;Inicio copia valores del literal de registro.
+
+    ;;Duplicamos la dirección inicial del registro.
     local.tee $temp
     local.get $temp
+
+    ;;Cogemos el offset del atributo at2.
     i32.const 0
     i32.add
+
+    ;;Copiamos el valor del atributo at2 a su posición adecuada.
+
+    ;;Evaluamos la expresión
+    i32.const 1
+
+    ;;La guardamos en la dirección anterior
+    i32.store
+
+    ;;Duplicamos la dirección inicial del registro.
+    local.tee $temp
+    local.get $temp
+
+    ;;Cogemos el offset del atributo at1.
+    i32.const 0
+    i32.add
+
+    ;;Copiamos el valor del atributo at1 a su posición adecuada.
 
     ;;Evaluamos la expresión
     i32.const 100
 
     ;;La guardamos en la dirección anterior
     i32.store
+
+    ;;Eliminamos la copia de la dirección inicial del regitro.
     drop
 
   ;;;;;FIN DECLARACIÓN DE var2;;;

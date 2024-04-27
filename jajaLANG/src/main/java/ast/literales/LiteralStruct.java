@@ -75,21 +75,23 @@ public class LiteralStruct extends Literal {
 
     @Override
     public void compilarAsignacion() {
+        GeneradorCodigo.comentario("Inicio copia valores del literal de registro.");
         GeneradorCodigo.sangrar();
         for (var attr : mapaExpresiones.entrySet()) {
             var id_attr = attr.getKey();
             var val_attr = attr.getValue();
 
-            //Duplicamos la dirección inicial
+            GeneradorCodigo.comentario("Duplicamos la dirección inicial del registro.");
             GeneradorCodigo.duplicate();
+            GeneradorCodigo.comentario(String.format("Cogemos el offset del atributo %s.", id_attr));
             GeneradorCodigo.i32_const(((TipoRegistro) tipo).offsetAtributo(id_attr));
             GeneradorCodigo.i32_add(); //Inicial + delta
 
-            //Asignamos el valor del atributo en inicial + delta
+            GeneradorCodigo.comentario(String.format("Copiamos el valor del atributo %s a su posición adecuada.", id_attr));
             val_attr.compilarAsignacion();
         }
 
-        //Quitamos la dirección inicial
+        GeneradorCodigo.comentario("Eliminamos la copia de la dirección inicial del regitro.");
         GeneradorCodigo.drop();
         GeneradorCodigo.desangrar();
     }
