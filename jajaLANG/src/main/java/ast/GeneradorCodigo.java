@@ -442,4 +442,15 @@ public class GeneradorCodigo {
                 )
                 """);
     }
+
+    public static void generarMainVacio() {
+        escribir("""
+                (func $tronco (result i32)
+                    ;;Main sin contenido
+                    ;;Asumimos que este archivo solo se utilizará como librería
+                    ;;Solo apilamos un 0 para el drop de después
+                    i32.const 0
+                )
+                """);
+    }
 }

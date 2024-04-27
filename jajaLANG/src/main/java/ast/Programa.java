@@ -164,8 +164,11 @@ public class Programa extends Nodo {
         }
 
         if (!hayMain) {
-            //TODO: Error
-            throw new RuntimeException("No main function found");
+            //Si no hay un main creamos uno vacío
+            //La idea es que si no hay main el archivo solo se utilizará como
+            //"librería" asi que solo se "debería" compilar con otro archivo que
+            //sí tuviese main.
+            GeneradorCodigo.generarMainVacio();
         }
 
         GeneradorCodigo.escribir(String.format("(func $start (type $%s)", GeneradorCodigo.SIG_FUNC));
