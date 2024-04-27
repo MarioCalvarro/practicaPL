@@ -50,7 +50,7 @@ public class AccesoStruct extends Designador {
     @Override
     public void compilarDesignador() {
         exp.compilarDesignador();
-        GeneradorCodigo.i32_const(((TipoRegistro) tipo).offsetAtributo(id));
+        GeneradorCodigo.i32_const(((TipoRegistro) exp.tipo()).offsetAtributo(id));
         GeneradorCodigo.i32_add();          //inicio + offsetAtributo
     }
 }

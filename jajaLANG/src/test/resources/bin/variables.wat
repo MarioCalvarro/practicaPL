@@ -40,141 +40,13 @@ call $tronco
 drop
 )
 
-;;Declaración de la función: mas1
-(func $mas1 (result i32)
-  (local $localsStart i32)
-  (local $temp i32)
-
-  ;;Reservar espacio de pila: 16
-  i32.const 16
-  call $reserveStack
-  ;;;;;;;;INICIO POST RESERVA;;;;;;;;
-  ;;Guardamos el valor anterior de MP
-  local.set $temp
-  
-  ;;Guardamos en la posición de MP el antiguo MP
-  global.get $MP
-  local.get $temp
-  i32.store       ;;MEM[MP] = MP_antiguo
-  
-  ;;localStart = MP + 4
-  global.get $MP
-  i32.const 4
-  i32.add
-  local.set $localsStart
-
-  ;;;;;;;;;FIN POST RESERVA;;;;;;;;
-
-  ;;Guardar el resultado en SP - tipoRetorno
-  global.get $SP
-  i32.const 8
-  i32.sub
-
-  ;;Inicio copia valores del literal de registro.
-
-    ;;Duplicar la dirección inicial del registro.
-    local.tee $temp
-    local.get $temp
-
-    ;;Tomar el offset del atributo at2.
-    i32.const 0
-    i32.add
-
-    ;;Copiar el valor del atributo at2 a su posición adecuada.
-
-    ;;Evaluar la expresión
-
-    ;;Evaluar una operación binaria. Izquierda:
-
-    ;;Sacar la dirección del designador
-
-    ;;Variable con delta: 0
-    local.get $localsStart
-    i32.const 0
-    i32.add
-
-    ;;Cargar el valor dado por esa dirección
-    i32.load
-
-    ;;Evaluar una operación binaria. Derecha:
-    i32.const 2
-
-    ;;Evaluar una operación binaria. Operador:
-    i32.add
-
-    ;;Guardar la dirección anterior
-    i32.store
-
-    ;;Duplicar la dirección inicial del registro.
-    local.tee $temp
-    local.get $temp
-
-    ;;Tomar el offset del atributo at1.
-    i32.const 4
-    i32.add
-
-    ;;Copiar el valor del atributo at1 a su posición adecuada.
-
-    ;;Evaluar la expresión
-
-    ;;Evaluar una operación binaria. Izquierda:
-
-    ;;Sacar la dirección del designador
-
-    ;;Variable con delta: 0
-    local.get $localsStart
-    i32.const 0
-    i32.add
-
-    ;;Cargar el valor dado por esa dirección
-    i32.load
-
-    ;;Evaluar una operación binaria. Derecha:
-    i32.const 1
-
-    ;;Evaluar una operación binaria. Operador:
-    i32.add
-
-    ;;Guardar la dirección anterior
-    i32.store
-
-    ;;Eliminar la copia de la dirección inicial del regitro.
-    drop
-
-  ;;Ponemos en la cima de la pila la dirección donde está el resultado
-  global.get $SP
-  i32.const 8
-  i32.sub
-
-  ;;Liberamos la pila y hacemos el return
-  call $freeStack
-  return
-
-  ;;Si no hay 'return' (es 'void') ponemos en la posición en la que debería estar un 0
-
-  ;;Guardar el resultado en SP - tipoRetorno
-  global.get $SP
-  i32.const 4
-  i32.sub
-  i32.const 0
-  i32.store
-
-  ;;Ponemos en la cima de la pila la dirección donde está el resultado
-  global.get $SP
-  i32.const 4
-  i32.sub
-
-  ;;Liberar la pila
-  call $freeStack
-)
-
 ;;Declaración de la función: tronco
 (func $tronco (result i32)
   (local $localsStart i32)
   (local $temp i32)
 
-  ;;Reservar espacio de pila: 32
-  i32.const 32
+  ;;Reservar espacio de pila: 16
+  i32.const 16
   call $reserveStack
   ;;;;;;;;INICIO POST RESERVA;;;;;;;;
   ;;Guardamos el valor anterior de MP
@@ -200,70 +72,59 @@ drop
   i32.const 0
   i32.add
 
-  ;;Asignar el valor: mas1(2)
+  ;;Asignar el valor: {
+  ;;at1 = 1
+  ;;}
 
-  ;;Copiar los parámetros antes de llamar a la función.
+  ;;Inicio copia valores del literal de registro.
 
-  ;;Nuevo 'localstart' + delta parámetro.
-  global.get $SP
-  i32.const 4
-  i32.add
+    ;;Duplicar la dirección inicial del registro.
+    local.tee $temp
+    local.get $temp
 
-  ;;Parámetro por valor → Copiar el valor en su posición adecuada.
+    ;;Tomar el offset del atributo at1.
+    i32.const 0
+    i32.add
 
-  ;;Evaluar la expresión
-  i32.const 2
+    ;;Copiar el valor del atributo at1 a su posición adecuada.
 
-  ;;Guardar la dirección anterior
-  i32.store
-  call $mas1
+    ;;Evaluar la expresión
+    i32.const 1
 
-  ;;En la cima esta la dirección donde se ha almacenado el resultado → Copiar
-  local.get $localsStart
-  i32.const 8
-  i32.add
-  i32.const 2
-  call $copyn
+    ;;Guardar la dirección anterior
+    i32.store
 
-  ;;Cargamos el origen (donde hemos almacenado el resultado de la llamada).
-  local.get $localsStart
-  i32.const 8
-  i32.add
-
-  ;;Copiamos en el destino que deseamos.
-  call $swap
-  i32.const 2
-  call $copyn
+    ;;Eliminar la copia de la dirección inicial del regitro.
+    drop
 
   ;;;;;FIN DECLARACIÓN DE b;;;
 
   ;;;;;INICIO DECLARACIÓN DE a;;;
 
-  ;;Variable con delta: 16
+  ;;Variable con delta: 4
   local.get $localsStart
-  i32.const 16
+  i32.const 4
   i32.add
 
-  ;;Asignar el valor: 100
-
-  ;;Evaluar la expresión
-  i32.const 100
-
-  ;;Guardar la dirección anterior
-  i32.store
-
-  ;;;;;FIN DECLARACIÓN DE a;;;
+  ;;Asignar el valor: (b).at1
 
   ;;Sacar la dirección del designador
 
-  ;;Variable con delta: 16
+  ;;Variable con delta: 0
   local.get $localsStart
-  i32.const 16
+  i32.const 0
+  i32.add
+  i32.const 0
   i32.add
 
-  ;;Cargar el valor dado por esa dirección
-  i32.load
-  call $escribirEnt
+  ;;Cambiar el orden: DST, SRC -> SRC, DST
+  call $swap
+
+  ;;Copiar el tamaño del tipo entre 4
+  i32.const 1
+  call $copyn
+
+  ;;;;;FIN DECLARACIÓN DE a;;;
 
   ;;Si no hay 'return' (es 'void') ponemos en la posición en la que debería estar un 0
 
