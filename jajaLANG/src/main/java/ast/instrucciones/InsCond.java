@@ -127,29 +127,39 @@ public class InsCond extends Instruccion {
             ins.calcularOffset(ultimoDelta);
         }
         ultimoDelta.salirDeBloque();
-        instElse.calcularOffset(ultimoDelta);
+        if (instElse != null) {
+            instElse.calcularOffset(ultimoDelta);
+        }
     }
 
     @Override
     public void compilar() {
-        //GeneradorCodigo.comentario("INSTRUCCION: " + this.toString());
+        GeneradorCodigo.comentario(";;INICIO CONDICIONAL;;;");
         if (condicion != null) {
+            GeneradorCodigo.comentario("Evaluar condción");
             condicion.compilarExpresion();
             GeneradorCodigo.escribir("if");
+
             GeneradorCodigo.sangrar();
+            GeneradorCodigo.comentario("Cuerpo del if");
             for (Instruccion i : cuerpo) {
                 i.compilar();
             }
             GeneradorCodigo.desangrar();
+
             GeneradorCodigo.escribir("else");
+
             GeneradorCodigo.sangrar();
             instElse.compilar();
             GeneradorCodigo.desangrar();
+
             GeneradorCodigo.escribir("end");
         } else {
+            GeneradorCodigo.comentario("Cuerpo del else");
             for (Instruccion i : cuerpo) {
                 i.compilar();
             }
         }
+        GeneradorCodigo.comentario(";;FIN CONDICIONAL;;;");
     }
 }
