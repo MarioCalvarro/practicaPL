@@ -578,6 +578,8 @@ OP8 ::= NEG
     {: RESULT = OperadorUn.Operadores.NEG; :}	 	 
     | RESTA
     {: RESULT = OperadorUn.Operadores.RESTA; :}
+    | SUMA
+    {: RESULT = OperadorUn.Operadores.SUMA; :}
     ;
     
 //Literales y paréntesis
