@@ -47,6 +47,12 @@ public class OperadorUn extends Expresion {
         Tipo tipoDerecha = derecha.tipo();
 
         switch (op) {
+            case SUMA:
+                if (!tipoDerecha.equals(TipoEntero.instancia())) {
+                    throw new TypeError(this.derecha.toString() + " no es de tipo entero y, por tanto, no se le puede aplicar el operador positivo.");
+                }
+                this.tipo = TipoEntero.instancia();
+                break;
             case RESTA:
                 if (!tipoDerecha.equals(TipoEntero.instancia())) {
                     throw new TypeError(this.derecha.toString() + " no es de tipo entero y, por tanto, no se le puede aplicar el operador opuesto.");
@@ -98,6 +104,10 @@ public class OperadorUn extends Expresion {
                 derecha.compilarExpresion();
                 GeneradorCodigo.i32_xor();
                 break;
+            case SUMA:
+                GeneradorCodigo.comentario("Evaluar un positivo.");
+                derecha.compilarExpresion();
+                break;
             case RESTA:
                 GeneradorCodigo.comentario("Evaluar un opuesto.");
                 GeneradorCodigo.i32_const(0);
@@ -114,10 +124,12 @@ public class OperadorUn extends Expresion {
 
     public enum Operadores {
         //TODO: Operador SUMA
-        NEG, DIRECCION, RESTA;
+        SUMA, NEG, DIRECCION, RESTA;
 
         public String toString() {
             switch (this) {
+                case SUMA:
+                    return "+";
                 case NEG:
                     return "!";
                 case RESTA:
