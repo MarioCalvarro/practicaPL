@@ -1,7 +1,8 @@
 diver tronco() {
-    ent i = 100;
-    ent @ punt = &i;
-    @punt += 20;
-
-    escribirEnt(i);
+    vector(vector(ent, 2), 2) x = nuevo [nuevo [1,2], nuevo [3,4]];
+    para i = 0 -> 1 {
+        para ii = 0 -> 1 {
+            escribirEnt(x[i][ii]);
+        }
+    }
 }

@@ -106,14 +106,6 @@ public class Llamada extends Expresion {
 
     @Override
     public void compilar() {
-        for (Expresion exp : listaExpresiones) {
-            try {
-                Llamada llamada = (Llamada) exp;
-                GeneradorCodigo.comentario("Ejecutamos la llamada de uno de los argumentos.");
-                llamada.compilar();
-            } catch (ClassCastException e) {}
-        }
-
         var decFun = (DeclaracionFun) this.exp.dec();
 
         //Caso de ser funciones scan o print

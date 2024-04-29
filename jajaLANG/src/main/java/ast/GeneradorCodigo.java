@@ -257,7 +257,7 @@ public class GeneradorCodigo {
     }
 
     public static void desangrar() {
-        nivel_indentacion -= TAM_INDENTACION;   //TODO: Puede pasar el 0?
+        nivel_indentacion -= TAM_INDENTACION;
     }
 
     public static void bloque() {
