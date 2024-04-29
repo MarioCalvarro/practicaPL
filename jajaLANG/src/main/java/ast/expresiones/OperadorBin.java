@@ -173,8 +173,7 @@ public class OperadorBin extends Expresion {
                 GeneradorCodigo.i32_or();
                 break;
             case POT:
-                //TODO:
-                //GeneradorCodigo.i32_pot();
+                GeneradorCodigo.llamar("potencia");
                 break;
             default:
                 throw new RuntimeException("Operador no soportado: " + op.toString());

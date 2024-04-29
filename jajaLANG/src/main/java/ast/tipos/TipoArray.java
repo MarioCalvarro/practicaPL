@@ -2,7 +2,6 @@ package main.java.ast.tipos;
 
 import main.java.ast.Nodo;
 import main.java.ast.literales.Entero;
-import main.java.errors.TypeError;
 
 import java.util.ArrayList;
 import java.util.List;

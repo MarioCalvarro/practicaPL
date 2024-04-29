@@ -351,6 +351,60 @@ public class GeneradorCodigo {
                 )
                 """);
 
+        //TODO: Casos negativos y cero
+        escribir("""
+        (func $potencia (param $base i32) (param $exp i32) (result i32)
+        (local $resultado i32)
+            i32.const 1
+            local.set $resultado
+            
+            block
+                loop
+                ;; Comprobar si exp es == 0
+                local.get $exp
+                i32.const 0
+                i32.eq
+                br_if 1
+                
+                ;; Si es impar multiplicar por base
+                local.get $exp
+                i32.const 2
+                i32.rem_u
+                i32.const 0
+                i32.ne
+                if
+                    ;; resultado := resultado * base
+                    local.get $resultado
+                    local.get $base
+                    i32.mul
+                    local.set $resultado
+
+                    ;; exp := exp - 1
+                    local.get $exp
+                    i32.const 1
+                    i32.sub
+                    local.set $exp
+                end
+                ;; exp := exp / 2
+                local.get $exp
+                i32.const 2
+                i32.div_u
+                local.set $exp
+
+                ;; base := base * base
+                local.get $base
+                local.get $base
+                i32.mul
+                local.set $base
+
+                br 0
+                end
+            end
+
+            local.get $resultado
+        )
+                """);
+
         // Copiar $n posiciones a partir de $src en $dest
         escribir("""
                 (func $copyn (type $_sig_i32i32i32) ;; copy $n i32 slots from $src to $dest

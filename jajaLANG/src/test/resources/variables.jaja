@@ -1,4 +1,5 @@
 diver tronco() {
-    vector(vector(ent, -2), 2) x = nuevo [nuevo [1,2], nuevo [3,4]];
-    escribirEnt(x[0][2]);
+    ent x;
+    x = leerEnt();
+    escribirEnt(x/0);
 }
