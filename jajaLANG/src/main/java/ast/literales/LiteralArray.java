@@ -72,8 +72,7 @@ public class LiteralArray extends Literal {
 
     @Override
     public void compilarExpresion() {
-        //TODO: Error
-        throw new RuntimeException();
+        throw new RuntimeException("Un array literal no debería ser compilado como una expresión");
     }
 
     @Override

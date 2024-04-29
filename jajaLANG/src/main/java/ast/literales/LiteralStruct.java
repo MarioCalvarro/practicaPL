@@ -76,8 +76,7 @@ public class LiteralStruct extends Literal {
 
     @Override
     public void compilarExpresion() {
-        //TODO: Error
-        throw new RuntimeException();
+        throw new RuntimeException("Un struct literal no debería ser compilado como una expresión");
     }
 
     @Override

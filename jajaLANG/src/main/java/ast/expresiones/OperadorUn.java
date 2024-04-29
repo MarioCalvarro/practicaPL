@@ -123,7 +123,6 @@ public class OperadorUn extends Expresion {
     }
 
     public enum Operadores {
-        //TODO: Operador SUMA
         SUMA, NEG, DIRECCION, RESTA;
 
         public String toString() {

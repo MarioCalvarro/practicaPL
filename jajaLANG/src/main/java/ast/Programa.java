@@ -11,6 +11,7 @@ import main.java.ast.tipos.TipoEntero;
 import main.java.ast.tipos.TipoPuntero;
 import main.java.ast.tipos.TipoVacio;
 import main.java.errors.BindError;
+import main.java.errors.SemanticError;
 
 import java.util.*;
 
@@ -155,8 +156,7 @@ public class Programa extends Nodo {
                 DeclaracionFun funDec = (DeclaracionFun) dec;
                 if (funDec.getId().equals(funcionMain)) {
                     if (hayMain) {
-                        //TODO: Error
-                        throw new RuntimeException("Multiple main functions found");
+                        throw new SemanticError("Hay múltiples funciones main");
                     }
                     hayMain = true;
                 }
