@@ -2,6 +2,7 @@ package main.java.ast.tipos;
 
 import main.java.ast.Nodo;
 import main.java.ast.literales.Entero;
+import main.java.errors.TypeError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,9 @@ public class TipoArray extends Tipo {
 
     public TipoArray(Tipo base, Entero tam) {
         tipoElementos = base;
+        if (tam.valorEntero() < 0){
+            throw new TypeError("El tamaño del array es negativo");
+        }
         this.tam = tam;
     }
 
