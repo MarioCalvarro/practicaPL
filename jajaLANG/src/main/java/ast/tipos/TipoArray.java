@@ -23,6 +23,10 @@ public class TipoArray extends Tipo {
         return tipoElementos;
     }
 
+    public int numElem() {
+        return tam.valorEntero();
+    }
+
     @Override
     public List<Nodo> getAstHijos() {
         List<Nodo> lista = new ArrayList<Nodo>();

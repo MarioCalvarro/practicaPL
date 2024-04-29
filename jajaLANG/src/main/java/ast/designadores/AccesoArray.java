@@ -55,8 +55,36 @@ public class AccesoArray extends Designador {
         GeneradorCodigo.i32_const(tamElementos);
         GeneradorCodigo.comentario("Calcular el valor del índice.");
         indice.compilarExpresion();
-        GeneradorCodigo.i32_mul();      //indice * tamElementos
+
+        GeneradorCodigo.comentario("Comprobar si estamos accediendo a una posición adecuada.");
+        GeneradorCodigo.comentario("Triplicamos el valor del índice (queremos ver si es positivo, inferior al tamaño y usarlo luego).");
+        GeneradorCodigo.duplicate();
+        GeneradorCodigo.duplicate();
+
+        GeneradorCodigo.comentario("Comprobar si el valor es positivo.");
+        GeneradorCodigo.i32_const(0);
+        GeneradorCodigo.i32_lt_s();
+        GeneradorCodigo.escribir("if");
+        GeneradorCodigo.sangrar();
+            GeneradorCodigo.comentario("Excepción tipo 2");
+            GeneradorCodigo.i32_const(2);
+            GeneradorCodigo.llamar(GeneradorCodigo.EXCEPCION);
+        GeneradorCodigo.desangrar();
+        GeneradorCodigo.escribir("end");
+
+        GeneradorCodigo.comentario("Comprobar si el valor es inferior al límite superior.");
+        GeneradorCodigo.i32_const(((TipoArray) array.tipo()).numElem());
+        GeneradorCodigo.i32_ge_s();
+        GeneradorCodigo.escribir("if");
+        GeneradorCodigo.sangrar();
+            GeneradorCodigo.comentario("Excepción tipo 1");
+            GeneradorCodigo.i32_const(1);
+            GeneradorCodigo.llamar(GeneradorCodigo.EXCEPCION);
+        GeneradorCodigo.desangrar();
+        GeneradorCodigo.escribir("end");
+
         GeneradorCodigo.comentario("Calcular la dirección del array.");
+        GeneradorCodigo.i32_mul();      //indice * tamElementos 
         array.compilarDesignador();
         GeneradorCodigo.i32_add();      //inicio + indice * tamElementos
     }

@@ -1,8 +1,4 @@
 diver tronco() {
     vector(vector(ent, 2), 2) x = nuevo [nuevo [1,2], nuevo [3,4]];
-    para i = 0 -> 1 {
-        para ii = 0 -> 1 {
-            escribirEnt(x[i][ii]);
-        }
-    }
+    escribirEnt(x[0][2]);
 }

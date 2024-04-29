@@ -15,6 +15,7 @@ public class GeneradorCodigo {
     public final static String MP = "MP";
     public final static String SP = "SP";
     public final static String NP = "NP";
+    public final static String EXCEPCION = "exception";
 
     private final static StringBuilder sb = new StringBuilder();
     private final static int TAM_INDENTACION = 2;
