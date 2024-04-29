@@ -83,8 +83,7 @@ public class Identificador extends Designador {
             } catch (ClassCastException e) {
             }
         } catch (ClassCastException e) {
-            //TODO: Error
-            throw new RuntimeException();
+            throw new RuntimeException(String.format("El identificador '%s' no se refiere a una variable.", id));
         }
     }
 }
