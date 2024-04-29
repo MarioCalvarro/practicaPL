@@ -13,9 +13,6 @@ public class TipoArray extends Tipo {
 
     public TipoArray(Tipo base, Entero tam) {
         tipoElementos = base;
-        if (tam.valorEntero() < 0){
-            throw new TypeError("El tamaño del array es negativo");
-        }
         this.tam = tam;
     }
 
