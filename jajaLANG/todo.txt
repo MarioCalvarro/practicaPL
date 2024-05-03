@@ -1,0 +1,2 @@
+Preguntar:
+- Hashmap para offset en atributos struct?
