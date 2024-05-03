@@ -14,7 +14,7 @@ diver tronco() {
     ent a = @punt;
     ent b = f(a);
     escribirEnt(b); //Tiene que dar 10
-    //liberar(punt);
+    liberar(punt);
 
 
     //Ejemplo complicado de punteros

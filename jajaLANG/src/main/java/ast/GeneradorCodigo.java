@@ -507,8 +507,8 @@ public class GeneradorCodigo {
                 """);
 
         escribir("""
-                (func $liberar
-                    ;;TODO? Si lo hacemos tenemos que hacer gestión de memoria 
+                (func $liberar (param $pointer i32)
+                     ;;TODO? Si lo hacemos tenemos que hacer gestión de memoria 
                 )
                 """);
     }
