@@ -57,6 +57,8 @@ public class GeneradorCodigo {
 
     public static void reservarHeap() {
         llamar(RESERVAR_HEAP);
+        //Dejamos en la cima el NP
+        global_get(NP);
     }
 
     public static void llamar(String func) {
@@ -289,7 +291,7 @@ public class GeneradorCodigo {
         aux.append("(type $_sig_void (func))\n");
         aux.append("(global $SP (mut i32) (i32.const 0))         ;; start of stack\n");
         aux.append("(global $MP (mut i32) (i32.const 0))         ;; mark pointer\n");
-        aux.append("(global $NP (mut i32) (i32.const 131071996)) ;; heap 2000*64*1024-4\n");
+        aux.append("(global $NP (mut i32) (i32.const 131072000)) ;; heap 2000*64*1024\n");
         cargarFunciones(aux);
         aux.append(sb.toString());
         aux.append("""
@@ -343,15 +345,28 @@ public class GeneradorCodigo {
                 )
                 """);
 
-        //TODO: Reservar Heap
         escribir("""
                 (func $reserveHeap (type $_sig_i32)
-                (param $size i32)
-                ;; ....
+                    (param $size i32)
+                    ;;NP := NP - size
+                    global.get $NP
+                    local.get $size
+                    i32.sub
+                    global.set $NP
+                    ;;El valor reservado tendrá como primera posición NP
+                    ;;Así evitamos tener que invertir todo
+
+                    ;;Overflow
+                    global.get $SP
+                    global.get $NP
+                    i32.gt_u
+                    if
+                        i32.const 3
+                        call $exception
+                    end
                 )
                 """);
 
-        //TODO: Casos negativos y cero
         escribir("""
         (func $potencia (param $base i32) (param $exp i32) (result i32)
         (local $resultado i32)

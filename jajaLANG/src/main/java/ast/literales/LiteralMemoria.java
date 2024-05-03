@@ -49,8 +49,7 @@ public class LiteralMemoria extends Literal {
     public void compilarExpresion() {
         //Reservar el espacio necesario en el heap
         GeneradorCodigo.i32_const(apuntado.tam());
-        GeneradorCodigo.reservarHeap();
-
-        //TODO: Hacer algo con MP
+        GeneradorCodigo.reservarHeap(); //Esta función pone en la cima la
+                                        //dirección adecuada
     }
 }

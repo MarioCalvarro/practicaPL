@@ -18,7 +18,7 @@
     </div>
     <div id="memory-controls">
         <p>Show first <span id="elements-show"></span> bytes</p>
-        <input type="range" min="2" max="800" value="200" id="memory-slider">
+        <input type="range" min="2" max="2000" value="200" id="memory-slider">
     </div>
     <div id="memory"></div>
     <p id="author">Created by <a href="https://github.com/ayhon">ayhon</a> and <a href="https://chat.openai.com/">ChatGPT</a></p>
@@ -185,7 +185,9 @@
             width: 100%;
             max-width: 1000px;
             color: #757575;
-            font-size: 22px;
+            font-size: 20px;
+            height: 300px; /* Adjust height as needed */
+            overflow: auto;
         }
         #memory div {
             /* width: 20px; */
