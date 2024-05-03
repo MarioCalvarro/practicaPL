@@ -1,2 +1,3 @@
 Preguntar:
 - Hashmap para offset en atributos struct?
+- Arrays "dinámicos" por referencia?
