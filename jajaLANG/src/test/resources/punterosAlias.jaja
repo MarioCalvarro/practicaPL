@@ -1,5 +1,5 @@
-//incoginto vec = vector(ent, 2);
-incognito v = ent;
+incognito vec = vector(ent, 2);
+
 diver tronco(){
 
 
