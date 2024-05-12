@@ -8,7 +8,7 @@ vector(dato_t, 2) v2;
 
 diver tronco(){
 
-    v = nuevo [nuevo ent, nuevo ent];
+    v1 = nuevo [nuevo ent, nuevo ent];
 
     ent @ a;
     ent @ b;
@@ -16,7 +16,16 @@ diver tronco(){
     (@a) = 5;
     (@b) = 10;
 
-    v = nuevo [a, b];
+    v1[0]=a;
+    v1[0]=b;
+
+
+    dato_t reg = nuevo {atr1 = a, atr2 = v1 };
+
+    escribirEnt(@reg.atr1); //tiene que ser 5
+    reg.atr1+=1;
+    escribirEnt(@reg.atr2[1]); // tiene que ser 6;
+
 
     liberar(a);
     liberar(b);
