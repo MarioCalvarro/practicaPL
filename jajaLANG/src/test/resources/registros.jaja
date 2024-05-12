@@ -9,7 +9,7 @@ incognito dato_t2 = registro {
 };
 
 vector(ent @, 2) v1;
-vector(dato_t, 2) v2;
+vector(dato_t1, 2) v2;
 
 diver tronco(){
 
@@ -31,7 +31,7 @@ diver tronco(){
 
     reg1.atr1+=1;
     escribirEnt(reg1.atr1); //Deberia ser 6
-    (@reg2.atr2).atr1--;
+    (@(@reg2.atr2).atr1)-=1;
     escribirEnt(reg1.atr1); //Deberia ser 5
 
 
