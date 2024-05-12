@@ -206,13 +206,13 @@ operaciones aritméticas y lógicas.
         \hline
         Operador & Prioridad & Asociatividad \\ 
         \hline
-        \lstinline$()$ & $0$ & Izquierda \\ 
+        \lstinline$[] . ()$ & $0$ & Izquierda \\ 
         \hline
-        \lstinline$[] .$ & $1$ & Izquierda \\ 
+        \lstinline $- ! +$ unarios & $1$ & - \\ 
         \hline
-        \lstinline$-$ unario & $2$ & Derecha \\ 
+        \lstinline$& @$ & $2$ & - \\ 
         \hline
-        \lstinline$& @$ & $3$ & - \\ 
+        \lstinline$^$ & $3$ & - \\ 
         \hline
         \lstinline$* / %$ & $4$ & Izquierda \\ 
         \hline
