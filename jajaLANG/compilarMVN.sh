@@ -2,7 +2,7 @@
 
 # Check if user provided an argument
 if [ -z "$1" ]; then
-    echo "Please provide an argument."
+    echo "Introduzca el nombre del fichero de la carpeta 'resources'."
     exit 1
 fi
 
