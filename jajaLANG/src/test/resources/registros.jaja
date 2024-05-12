@@ -1,5 +1,5 @@
 incognito dato_t1 = registro {
-    atr1: ent @,
+    atr1, atr3, atr4: ent @,
     atr2: vector(ent @, 2),
 };
 
@@ -15,13 +15,15 @@ diver tronco(){
 
     ent @ a;
     ent @ b;
+    ent @ c;
     
     (@a) = leerEnt();
     (@b) = leerEnt();
+    (@c) = 1;
     v1[0]=a;
-    v1[0]=b;
- 
-    dato_t1 reg1 = nuevo {atr1 = a, atr2 = v1 };
+    v1[1]=b;
+    
+    dato_t1 reg1 = nuevo {atr1 = a, atr2 = v1, atr3 = b, atr4 = c};
     dato_t2 reg2 = nuevo {atr1 = b, atr2 = &reg1};
 
     reg1.atr1+=1;
