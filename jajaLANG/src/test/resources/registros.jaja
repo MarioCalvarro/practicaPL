@@ -9,7 +9,6 @@ incognito dato_t2 = registro {
 };
 
 vector(ent @, 2) v1;
-vector(dato_t1, 2) v2;
 
 diver tronco(){
 
@@ -17,24 +16,16 @@ diver tronco(){
 
     ent @ a;
     ent @ b;
-
     (@a) = 5;
     (@b) = 10;
-
     v1[0]=a;
     v1[0]=b;
  
     dato_t1 reg1 = nuevo {atr1 = a, atr2 = v1 };
-
-
-    dato_t2 reg2 = nuevo {atr1 = b, atr2 = reg1};
+    dato_t2 reg2 = nuevo {atr1 = b, atr2 = &reg1};
 
     reg1.atr1+=1;
-    escribirEnt(reg1.atr1); //Deberia ser 6
+    escribirEnt(@reg1.atr1); //Deberia ser 6
     (@(@reg2.atr2).atr1)-=1;
-    escribirEnt(reg1.atr1); //Deberia ser 5
-
-
-    liberar(a);
-    liberar(b);
+    escribirEnt(@reg1.atr1); //Deberia ser 5
 }
