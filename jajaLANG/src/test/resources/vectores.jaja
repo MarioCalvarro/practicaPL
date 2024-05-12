@@ -1,0 +1,23 @@
+incognito dato_t = registro {
+    atr1: ent @,
+    atr2: vector(ent @, 2),
+};
+
+vector(ent @, 2) v1;
+vector(dato_t, 2) v2;
+
+diver tronco(){
+
+    v = nuevo [nuevo ent, nuevo ent];
+
+    ent @ a;
+    ent @ b;
+
+    (@a) = 5;
+    (@b) = 10;
+
+    v = nuevo [a, b];
+
+    liberar(a);
+    liberar(b);
+}
