@@ -7,9 +7,9 @@ diver tronco() {
     escribirEnt(x.arr[0]);
 
     //Asignaciones con operadores
-    ent x2 = 3;
-    x2 += 2;
-    x2 -= 2;
+    ent x2 = leerEnt();
+    x2 += leerEnt();
+    x2 -= leerEnt();
 
     bin a = facto;
     a |= fake;

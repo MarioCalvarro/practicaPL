@@ -14,7 +14,7 @@ diver tronco() {
     //Imprime algo por pantalla
     escribirEnt(r::fun(2));
 
-    para i = 0 -> 10 {
+    para i = 0 -> leerEnt() {
         escribirEnt(fibonacci(i));
     } 
 }

@@ -23,6 +23,6 @@ diver impar(x: ent) -> bin {
 }
 
 diver tronco() {
-    escribirBin(impar(9));
-    escribirBin(par(12));
+    escribirBin(impar(leerEnt()));
+    escribirBin(par(leerEnt()));
 }

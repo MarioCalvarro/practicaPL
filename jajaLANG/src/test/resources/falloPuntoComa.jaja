@@ -15,7 +15,7 @@ diver tronco() {
     //Falta punto y coma
     escribirEnt();
 
-    para i = 0 -> 10 {
+    para i = 0 -> leerEnt() {
         escribirEnt(i);
     } 
 }
