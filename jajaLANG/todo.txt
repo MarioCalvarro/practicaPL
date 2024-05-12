@@ -1,3 +1,4 @@
-Preguntar:
-- Hashmap para offset en atributos struct?
-- Arrays "dinámicos" por referencia?
+- Fichero bash compilar y pasar a wasm
+- Hacer más ejemplos
+- Revisar el código
+- Actualización del documento
