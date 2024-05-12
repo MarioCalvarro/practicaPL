@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>es.ucm.jajaLANG</groupId>
     <artifactId>jajaLANG</artifactId>
-    <version>0.2</version>
+    <version>1.0</version>
     <name>jajaLANG</name>
     <description>Compilador del lenguaje de programación "jajaLANG".
         Desarrollado por Mario Calvarro y Beñat Pérez.

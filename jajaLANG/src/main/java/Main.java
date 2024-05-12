@@ -24,11 +24,9 @@ public class Main {
         File file = new File(ruta);
 
         if (!file.exists()) {
-            System.out.println("File not found: " + ruta);
+            System.out.println("Fichero no encontrado: " + ruta);
             return;
         }
-
-        var parentFolder = file.getParentFile();
 
         Reader input = new InputStreamReader(new FileInputStream(file));
         AnalizadorLexicoJaja lexer = new AnalizadorLexicoJaja(input);
@@ -49,8 +47,7 @@ public class Main {
                 var output = new GeneradorCodigo();
                 programa.compilar();
 
-                File archivoCompilado = new File(parentFolder, String.format("bin/%s", file.getName().replace(".jaja", ".wat")));
-                archivoCompilado.getParentFile().mkdirs();
+                File archivoCompilado = new File(String.format("%s", file.getName().replace(".jaja", ".wat")));
 
                 try (FileWriter escritor = new FileWriter(archivoCompilado)) {
                     escritor.write(output.toString());
