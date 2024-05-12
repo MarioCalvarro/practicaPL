@@ -12,8 +12,8 @@ diver tronco(){
 
     ent @ a;
     ent @ b;
-    (@a) = 5;
-    (@b) = 10;
+    (@a) = leerEnt();
+    (@b) = leerEnt();
     v1[0]=a;
     v1[0]=b;
 
@@ -21,5 +21,5 @@ diver tronco(){
 
     escribirEnt(@reg.atr1); //tiene que ser 5
     reg.atr1+=1;
-    escribirEnt(@reg.atr2[1]); // tiene que ser 6;
+    escribirEnt(@reg.atr2[leerEnt()]); // tiene que ser 6;
 }
