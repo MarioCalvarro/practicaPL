@@ -1,12 +1,13 @@
 package main.java.ast.tipos;
 
+import main.java.ast.Contexto;
 import main.java.ast.Nodo;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TipoPuntero extends Tipo {
-    private final Tipo tipoElemento;
+    private Tipo tipoElemento;
 
     public TipoPuntero(Tipo tipoElemento) {
         this.tipoElemento = tipoElemento;
@@ -21,6 +22,14 @@ public class TipoPuntero extends Tipo {
 
     public Tipo getTipoApuntado() {
         return tipoElemento;
+    }
+
+    @Override
+    public void bind(Contexto ctx) {
+        super.bind(ctx);
+        while (tipoElemento instanceof TipoAlias) {
+            tipoElemento = ((TipoAlias) tipoElemento).tipoApuntado();
+        }
     }
 
     @Override

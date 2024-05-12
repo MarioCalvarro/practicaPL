@@ -1,0 +1,20 @@
+incognito dato_t = registro {
+    atr1: ent,
+    atr2: vector(ent, 2),
+};
+
+diver f(r: dato_t @) {
+   (@r).atr1 = 100;
+}
+
+diver tronco() {
+    ent a = 0;
+    vector(ent, 2) vec = nuevo [1,2];
+    dato_t reg1 = nuevo {atr1 = a, atr2 = vec};
+
+    dato_t @ punt = &reg1;
+
+    f(punt);
+
+    escribirEnt(reg1.atr1);     //Tiene que dar 100
+}

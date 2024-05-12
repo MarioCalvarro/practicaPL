@@ -11,7 +11,6 @@ incognito dato_t2 = registro {
 vector(ent @, 2) v1;
 
 diver tronco(){
-
     v1 = nuevo [nuevo ent, nuevo ent];
 
     ent @ a;
