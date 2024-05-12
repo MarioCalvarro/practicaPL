@@ -136,7 +136,7 @@ public class InsBucleFor extends Instruccion {
         GeneradorCodigo.i32_load();
         
         GeneradorCodigo.comentario("Sacar el valor de la expresión final");
-        fin.compilarExpresion();
+        fin.compilarExpresion();    //Tenemos que compilar la expresión todo el rato porque es posible que dentro del bucle se cambie alguno de sus términos
 
         GeneradorCodigo.comentario("Comparar: indice > final?");
         GeneradorCodigo.i32_gt_s(); // index > to

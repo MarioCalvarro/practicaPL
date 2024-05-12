@@ -124,7 +124,6 @@ public class Programa extends Nodo {
 
     private void traerDefExternas() {
         for (Import lib : mapa_imports.values()) {
-            // lib.getAST().traerDefExternas();         Esto lo haríamos si permitiesemos recursividad
             for (Declaracion d : lib.getAST().lista_declaraciones) {
                 //Solo nos vamos a quedar con las funciones
                 try {
