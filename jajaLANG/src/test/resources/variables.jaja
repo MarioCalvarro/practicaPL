@@ -1,5 +1,5 @@
 diver tronco() {
     ent @ x = nuevo ent;
-    @x = 10;
+    @x = leerEnt();
     escribirEnt(@x);
 }

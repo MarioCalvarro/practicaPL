@@ -69,10 +69,6 @@
             }
         }
         loadWasm.addEventListener('click', () => {
-            let printingList = false;
-            let charList = "";
-            let tam = 0;
-            let cuenta = 0;
             var importObjects = {
                 runtime: {
                     exceptionHandler: function (code) {
@@ -96,26 +92,6 @@
                         let val = parseInt(num_str);
                         return val;
                     },
-                    printChars: function (n) {
-                        //Primero recive el tamaño (m) de la lista
-                        //Luego se le llama ese m veces cada una con una letra
-                        //Se le llama una última vez con -1 para indicar el final
-                        if (!printingList) {
-                            tam = n;
-                            printingList = true;
-                        }
-                        else {
-                            charList += String.fromCharCode(97 + n);
-                            cuenta += 1;
-                            if (cuenta === tam) {
-                                alert(charList);
-                                tam = 0;
-                                cuenta = 0;
-                                charList = "";
-                                printingList = false;
-                            }
-                        }
-                    }
                 }
             };
             
