@@ -1,5 +1,0 @@
-- Fichero bash compilar y pasar a wasm
-- Hacer JS
-- Hacer más ejemplos
-- Revisar el código
-- Actualización del documento
