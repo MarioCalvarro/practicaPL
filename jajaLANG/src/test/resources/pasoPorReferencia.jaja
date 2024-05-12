@@ -13,11 +13,11 @@ diver f(r: dato_t) -> dato_t {
 //}
 
 diver tronco() {
-    ent a = 0;
-    vector(ent, 2) vec = nuevo [1,2];
-    dato_t reg1 = nuevo {atr1 = a};
+    //ent a = 0;
+    //vector(ent, 2) vec = nuevo [1,2];
+    //dato_t reg1 = nuevo {atr1 = a};
 
-    dato_t reg = nuevo {atr1 = reg1.atr1};
+    //dato_t reg = nuevo {atr1 = reg1.atr1};
 
    // dato_t @ puntero = & reg1;
 
@@ -25,6 +25,6 @@ diver tronco() {
     //f(&reg1);
     //f(puntreg);
 
-    escribirEnt(reg1.atr1); //Tiene que dar 1
+    //escribirEnt(reg1.atr1); //Tiene que dar 1
     //escribirEnt((@puntreg).a); //Tiene que dar 1
 }

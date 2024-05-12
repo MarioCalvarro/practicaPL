@@ -41,7 +41,7 @@ public abstract class Nodo {
             //Comprobar si el tipo es tipo alias
             TipoAlias tAlias = (TipoAlias) tipo;
             return tAlias.tipoApuntado();
-        } catch (ClassCastException e) {
+        } catch (ClassCastException | NullPointerException e) {
             return tipo;
         }
     }

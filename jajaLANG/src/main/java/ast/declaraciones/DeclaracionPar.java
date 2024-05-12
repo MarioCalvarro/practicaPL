@@ -1,11 +1,7 @@
 package main.java.ast.declaraciones;
 
 import main.java.ast.Delta;
-import main.java.ast.Nodo;
 import main.java.ast.tipos.Tipo;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class DeclaracionPar extends DeclaracionVar {
     private final boolean porReferencia;
@@ -31,10 +27,6 @@ public class DeclaracionPar extends DeclaracionVar {
         } else {
             return "&" + id + ": " + tipo.toString();
         }
-    }
-
-    public List<Nodo> getAstHijos() {
-        return new ArrayList<Nodo>();
     }
 
     @Override
