@@ -1,0 +1,13 @@
+//incoginto vec = vector(ent, 2);
+incognito v = ent;
+diver tronco(){
+
+
+    //vec v1 = nuevo [1,2];
+
+   // vec @ punt1 = & v1;
+
+    //(vec @) @ punt2 = & punt1;
+
+    //excribirEnt((@(@ punt2))[1]);
+}
