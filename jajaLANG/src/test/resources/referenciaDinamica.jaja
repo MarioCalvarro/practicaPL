@@ -4,7 +4,7 @@ incognito dato_t = registro {
 };
 
 diver f(&a: ent) -> ent {
-	a += 1;
+    a += 1;
     devuelve a;
 }
 
