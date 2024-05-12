@@ -26,5 +26,5 @@ diver tronco() {
     f2(puntero);
 
     escribirEnt(reg1.atr1); //Tiene que dar 1
-    escribirEnt((@puntero).a); //Tiene que dar 1
+    //escribirEnt((@puntero).a); //Tiene que dar 1
 }

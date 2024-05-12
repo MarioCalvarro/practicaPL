@@ -6,6 +6,7 @@ import main.java.ast.GeneradorCodigo;
 import main.java.ast.Nodo;
 import main.java.ast.instrucciones.Instruccion;
 import main.java.ast.tipos.Tipo;
+import main.java.ast.tipos.TipoAlias;
 import main.java.ast.tipos.TipoFunc;
 import main.java.ast.tipos.TipoVacio;
 
@@ -15,6 +16,7 @@ import java.util.List;
 public class DeclaracionFun extends Declaracion {
     private final List<DeclaracionPar> parametros;
     private final List<Instruccion> cuerpo;
+    private Tipo tipoRetorno;
     private String id;
     private int tam;
     private boolean importado = false;
@@ -37,11 +39,12 @@ public class DeclaracionFun extends Declaracion {
         this.id = id;
         this.parametros = parametros;
         this.cuerpo = cuerpo;
+        this.tipoRetorno = TipoVacio.instancia();
         List<Tipo> tipoPars = new ArrayList<Tipo>();
         for (DeclaracionPar par : parametros) {
             tipoPars.add(par.tipo());
         }
-        this.tipo = new TipoFunc(TipoVacio.instancia(), tipoPars);
+        this.tipo = new TipoFunc(tipoRetorno, tipoPars);
     }
 
     // Funcion con retorno
@@ -49,6 +52,7 @@ public class DeclaracionFun extends Declaracion {
         this.id = id;
         this.parametros = parametros;
         this.cuerpo = cuerpo;
+        this.tipoRetorno = tipoRetorno;
         List<Tipo> tipoPars = new ArrayList<Tipo>();
         for (DeclaracionPar par : parametros) {
             tipoPars.add(par.tipo());
@@ -105,6 +109,17 @@ public class DeclaracionFun extends Declaracion {
         // retorno de la función ya que los ámbitos no tienen orden
         ctx.insertar(this);
         super.bind(ctx);
+        //Actualizar tipoFun
+        List<Tipo> tipoPars = new ArrayList<Tipo>();
+        for (DeclaracionPar par : parametros) {
+            tipoPars.add(par.tipo());
+        }
+
+        while (tipoRetorno instanceof TipoAlias) {
+            tipoRetorno = ((TipoAlias) tipoRetorno).tipoApuntado();
+        }
+
+        this.tipo = new TipoFunc(tipoRetorno, tipoPars);
         ctx.desapilarAmbito();
     }
 
