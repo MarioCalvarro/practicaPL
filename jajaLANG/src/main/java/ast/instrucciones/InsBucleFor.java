@@ -75,21 +75,6 @@ public class InsBucleFor extends Instruccion {
     }
 
     @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("para").append(" ").append(id).append(" = ").append(ini)
-                .append(" -> ").append(fin).append(" {\n");
-
-        for (Instruccion ins : cuerpo) {
-            sb.append(ins).append(";\n");
-        }
-
-        sb.append("}");
-
-        return sb.toString();
-    }
-
-    @Override
     public void compilar() {
         GeneradorCodigo.comentario(";;INICIO BUCLE FOR;;;");
         inicializar();
@@ -100,15 +85,15 @@ public class InsBucleFor extends Instruccion {
         GeneradorCodigo.escribir("loop");
         GeneradorCodigo.sangrar();
 
-            comprobarCondicion();
+        comprobarCondicion();
 
-            GeneradorCodigo.comentario("Cuerpo del bucle.");
-            for (Instruccion i : cuerpo) {
-                i.compilar();
-            }
+        GeneradorCodigo.comentario("Cuerpo del bucle.");
+        for (Instruccion i : cuerpo) {
+            i.compilar();
+        }
 
-            incrementarIndice();
-            GeneradorCodigo.br(0);
+        incrementarIndice();
+        GeneradorCodigo.br(0);
 
         GeneradorCodigo.desangrar();
         GeneradorCodigo.escribir("end");
@@ -134,7 +119,7 @@ public class InsBucleFor extends Instruccion {
         GeneradorCodigo.comentario("Cargar el índice");
         GeneradorCodigo.mem_location(indice);
         GeneradorCodigo.i32_load();
-        
+
         GeneradorCodigo.comentario("Sacar el valor de la expresión final");
         fin.compilarExpresion();    //Tenemos que compilar la expresión todo el rato porque es posible que dentro del bucle se cambie alguno de sus términos
 
@@ -156,5 +141,20 @@ public class InsBucleFor extends Instruccion {
 
         GeneradorCodigo.comentario("Guardar el nuevo resultado");
         GeneradorCodigo.i32_store();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("para").append(" ").append(id).append(" = ").append(ini)
+                .append(" -> ").append(fin).append(" {\n");
+
+        for (Instruccion ins : cuerpo) {
+            sb.append(ins).append(";\n");
+        }
+
+        sb.append("}");
+
+        return sb.toString();
     }
 }

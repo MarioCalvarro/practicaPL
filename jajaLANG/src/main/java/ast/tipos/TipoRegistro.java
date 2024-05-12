@@ -53,6 +53,12 @@ public class TipoRegistro extends Tipo {
     }
 
     @Override
+    public void calcularOffset(Delta delta) {
+        Delta d = new Delta();
+        super.calcularOffset(d);
+    }
+
+    @Override
     public boolean equals(Object obj) {
         try {
             TipoRegistro otro = (TipoRegistro) obj;
@@ -94,12 +100,6 @@ public class TipoRegistro extends Tipo {
             }
         }
         return tam;
-    }
-
-    @Override
-    public void calcularOffset(Delta delta) {
-        Delta d = new Delta();
-        super.calcularOffset(d);
     }
 
     @Override

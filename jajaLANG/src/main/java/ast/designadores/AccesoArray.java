@@ -66,9 +66,9 @@ public class AccesoArray extends Designador {
         GeneradorCodigo.i32_lt_s();
         GeneradorCodigo.escribir("if");
         GeneradorCodigo.sangrar();
-            GeneradorCodigo.comentario("Excepción tipo 2");
-            GeneradorCodigo.i32_const(2);
-            GeneradorCodigo.llamar(GeneradorCodigo.EXCEPCION);
+        GeneradorCodigo.comentario("Excepción tipo 2");
+        GeneradorCodigo.i32_const(2);
+        GeneradorCodigo.llamar(GeneradorCodigo.EXCEPCION);
         GeneradorCodigo.desangrar();
         GeneradorCodigo.escribir("end");
 
@@ -77,9 +77,9 @@ public class AccesoArray extends Designador {
         GeneradorCodigo.i32_ge_s();
         GeneradorCodigo.escribir("if");
         GeneradorCodigo.sangrar();
-            GeneradorCodigo.comentario("Excepción tipo 1");
-            GeneradorCodigo.i32_const(1);
-            GeneradorCodigo.llamar(GeneradorCodigo.EXCEPCION);
+        GeneradorCodigo.comentario("Excepción tipo 1");
+        GeneradorCodigo.i32_const(1);
+        GeneradorCodigo.llamar(GeneradorCodigo.EXCEPCION);
         GeneradorCodigo.desangrar();
         GeneradorCodigo.escribir("end");
 

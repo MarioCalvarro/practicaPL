@@ -135,36 +135,36 @@ public class DeclaracionFun extends Declaracion {
         GeneradorCodigo.comentario("Declaración de la función: " + this.getId());
         GeneradorCodigo.escribir(String.format("(func $%s (result i32)", this.getId()));
         GeneradorCodigo.sangrar();
-            GeneradorCodigo.escribir(String.format("(local $%s i32)", GeneradorCodigo.INICIO_LOCAL));
-            GeneradorCodigo.escribir("(local $temp i32)");
+        GeneradorCodigo.escribir(String.format("(local $%s i32)", GeneradorCodigo.INICIO_LOCAL));
+        GeneradorCodigo.escribir("(local $temp i32)");
 
-            int stackSize = this.getTam() + 4;
+        int stackSize = this.getTam() + 4;
 
-            GeneradorCodigo.comentario("Reservar espacio de pila: " + stackSize);
-            GeneradorCodigo.i32_const(stackSize);
-            GeneradorCodigo.reservarPila();
+        GeneradorCodigo.comentario("Reservar espacio de pila: " + stackSize);
+        GeneradorCodigo.i32_const(stackSize);
+        GeneradorCodigo.reservarPila();
 
-            for (Instruccion ins : cuerpo) {
-                ins.compilar();
-            }
-            
+        for (Instruccion ins : cuerpo) {
+            ins.compilar();
+        }
 
-            GeneradorCodigo.comentario("Si no hay 'return' (es 'void') ponemos en la posición en la que debería estar un 0");
-            GeneradorCodigo.comentario("Guardar el resultado en SP - tipoRetorno");
-            GeneradorCodigo.global_get("SP");
-            GeneradorCodigo.i32_const(Tipo.TAM_BASICO);
-            GeneradorCodigo.i32_sub();
 
-            GeneradorCodigo.i32_const(0);
-            GeneradorCodigo.i32_store();
+        GeneradorCodigo.comentario("Si no hay 'return' (es 'void') ponemos en la posición en la que debería estar un 0");
+        GeneradorCodigo.comentario("Guardar el resultado en SP - tipoRetorno");
+        GeneradorCodigo.global_get("SP");
+        GeneradorCodigo.i32_const(Tipo.TAM_BASICO);
+        GeneradorCodigo.i32_sub();
 
-            GeneradorCodigo.comentario("Ponemos en la cima de la pila la dirección donde está el resultado");
-            GeneradorCodigo.global_get("SP");
-            GeneradorCodigo.i32_const(Tipo.TAM_BASICO);
-            GeneradorCodigo.i32_sub();
+        GeneradorCodigo.i32_const(0);
+        GeneradorCodigo.i32_store();
 
-            GeneradorCodigo.comentario("Liberar la pila");
-            GeneradorCodigo.liberarPila();
+        GeneradorCodigo.comentario("Ponemos en la cima de la pila la dirección donde está el resultado");
+        GeneradorCodigo.global_get("SP");
+        GeneradorCodigo.i32_const(Tipo.TAM_BASICO);
+        GeneradorCodigo.i32_sub();
+
+        GeneradorCodigo.comentario("Liberar la pila");
+        GeneradorCodigo.liberarPila();
         GeneradorCodigo.desangrar();
         GeneradorCodigo.escribir(")");
     }

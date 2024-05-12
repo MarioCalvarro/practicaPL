@@ -55,11 +55,6 @@ public class DeclaracionVar extends Declaracion {
     }
 
     @Override
-    public String getId() {
-        return this.id;
-    }
-
-    @Override
     public String toString() {
         if (tipo == null) {
             System.err.println("Error si variable sin tipo!");
@@ -122,5 +117,10 @@ public class DeclaracionVar extends Declaracion {
             valor.compilarAsignacion();
         }
         GeneradorCodigo.comentario(String.format(";;;FIN DECLARACIÓN DE %s;;;\n", getId()));
+    }
+
+    @Override
+    public String getId() {
+        return this.id;
     }
 }

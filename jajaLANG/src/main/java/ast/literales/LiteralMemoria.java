@@ -50,6 +50,6 @@ public class LiteralMemoria extends Literal {
         //Reservar el espacio necesario en el heap
         GeneradorCodigo.i32_const(apuntado.tam());
         GeneradorCodigo.reservarHeap(); //Esta función pone en la cima la
-                                        //dirección adecuada
+        //dirección adecuada
     }
 }

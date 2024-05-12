@@ -1,15 +1,11 @@
 package main.java;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.InputStreamReader;
-import java.io.Reader;
-
 import main.java.ast.GeneradorCodigo;
 import main.java.ast.Programa;
 import main.java.lexico.AnalizadorLexicoJaja;
 import main.java.sintactico.AnalizadorSintacticoJaja;
+
+import java.io.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -37,7 +33,7 @@ public class Main {
             case "ast":
                 System.out.println(programa);
                 break;
-            case "bind": 
+            case "bind":
                 programa.bind();
                 break;
             case "typecheck":

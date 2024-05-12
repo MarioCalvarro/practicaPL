@@ -22,12 +22,13 @@ public class GeneradorCodigo {
     private final static int tamMemoria = 2000;
     private static int nivel_indentacion = 0;
 
-    public static void comentario(String comentario) {
-        String[] lines = comentario.split("\n");
-        sb.append("\n");
-        for (String line : lines) {
-            escribir(";;" + line + "\n");
-        }
+    public static void reservarPila() {
+        llamar(RESERVAR_PILA);
+        trasReservarPila();
+    }
+
+    public static void llamar(String func) {
+        escribir("call $" + func);
     }
 
     private static void trasReservarPila() {
@@ -50,9 +51,20 @@ public class GeneradorCodigo {
         comentario(";;;;;;;FIN POST RESERVA;;;;;;;;");
     }
 
-    public static void reservarPila() {
-        llamar(RESERVAR_PILA);
-        trasReservarPila();
+    public static void escribir(String instruccion) {
+        sb.append(instruccion.indent(nivel_indentacion));
+    }
+
+    public static void local_set(String name) {
+        escribir(String.format("local.set $%s", name));
+    }
+
+    public static void comentario(String comentario) {
+        String[] lines = comentario.split("\n");
+        sb.append("\n");
+        for (String line : lines) {
+            escribir(";;" + line + "\n");
+        }
     }
 
     public static void reservarHeap() {
@@ -61,12 +73,8 @@ public class GeneradorCodigo {
         global_get(NP);
     }
 
-    public static void llamar(String func) {
-        escribir("call $" + func);
-    }
-
-    public static void escribir(String instruccion) {
-        sb.append(instruccion.indent(nivel_indentacion));
+    public static void global_get(String name) {
+        escribir("global.get $" + name);
     }
 
     //Pila de operaciones
@@ -191,10 +199,6 @@ public class GeneradorCodigo {
         escribir(String.format("local.get %d", index));
     }
 
-    public static void local_set(String name) {
-        escribir(String.format("local.set $%s", name));
-    }
-
     public static void local_set(int index) {
         escribir(String.format("local.set %d", index));
     }
@@ -218,10 +222,6 @@ public class GeneradorCodigo {
 
     public static void global_mut(String name, String type, String value) {
         escribir(String.format("(global %s (mut %s) (%s.const %s))", name, type, type, value));
-    }
-
-    public static void global_get(String name) {
-        escribir("global.get $" + name);
     }
 
     public static void global_get(int index) {
@@ -259,10 +259,6 @@ public class GeneradorCodigo {
         nivel_indentacion += TAM_INDENTACION;
     }
 
-    public static void desangrar() {
-        nivel_indentacion -= TAM_INDENTACION;
-    }
-
     public static void bloque() {
         escribir("block");
     }
@@ -270,6 +266,21 @@ public class GeneradorCodigo {
     public static void fin() {
         desangrar();
         escribir("end");
+    }
+
+    public static void desangrar() {
+        nivel_indentacion -= TAM_INDENTACION;
+    }
+
+    public static void generarMainVacio() {
+        escribir("""
+                (func $tronco (result i32)
+                    ;;Main sin contenido
+                    ;;Asumimos que este archivo solo se utilizará como librería
+                    ;;Solo apilamos un 0 para el drop de después
+                    i32.const 0
+                )
+                """);
     }
 
     @Override
@@ -368,57 +379,57 @@ public class GeneradorCodigo {
                 """);
 
         escribir("""
-        (func $potencia (param $base i32) (param $exp i32) (result i32)
-        (local $resultado i32)
-            i32.const 1
-            local.set $resultado
-            
-            block
-                loop
-                ;; Comprobar si exp es == 0
-                local.get $exp
-                i32.const 0
-                i32.eq
-                br_if 1
-                
-                ;; Si es impar multiplicar por base
-                local.get $exp
-                i32.const 2
-                i32.rem_u
-                i32.const 0
-                i32.ne
-                if
-                    ;; resultado := resultado * base
-                    local.get $resultado
-                    local.get $base
-                    i32.mul
-                    local.set $resultado
-
-                    ;; exp := exp - 1
-                    local.get $exp
+                (func $potencia (param $base i32) (param $exp i32) (result i32)
+                (local $resultado i32)
                     i32.const 1
-                    i32.sub
-                    local.set $exp
-                end
-                ;; exp := exp / 2
-                local.get $exp
-                i32.const 2
-                i32.div_u
-                local.set $exp
+                    local.set $resultado
+                    
+                    block
+                        loop
+                        ;; Comprobar si exp es == 0
+                        local.get $exp
+                        i32.const 0
+                        i32.eq
+                        br_if 1
+                        
+                        ;; Si es impar multiplicar por base
+                        local.get $exp
+                        i32.const 2
+                        i32.rem_u
+                        i32.const 0
+                        i32.ne
+                        if
+                            ;; resultado := resultado * base
+                            local.get $resultado
+                            local.get $base
+                            i32.mul
+                            local.set $resultado
 
-                ;; base := base * base
-                local.get $base
-                local.get $base
-                i32.mul
-                local.set $base
+                            ;; exp := exp - 1
+                            local.get $exp
+                            i32.const 1
+                            i32.sub
+                            local.set $exp
+                        end
+                        ;; exp := exp / 2
+                        local.get $exp
+                        i32.const 2
+                        i32.div_u
+                        local.set $exp
 
-                br 0
-                end
-            end
+                        ;; base := base * base
+                        local.get $base
+                        local.get $base
+                        i32.mul
+                        local.set $base
 
-            local.get $resultado
-        )
-                """);
+                        br 0
+                        end
+                    end
+
+                    local.get $resultado
+                )
+                        """);
 
         // Copiar $n posiciones a partir de $src en $dest
         escribir("""
@@ -509,17 +520,6 @@ public class GeneradorCodigo {
         escribir("""
                 (func $liberar (param $pointer i32)
                      ;;TODO? Si lo hacemos tenemos que hacer gestión de memoria 
-                )
-                """);
-    }
-
-    public static void generarMainVacio() {
-        escribir("""
-                (func $tronco (result i32)
-                    ;;Main sin contenido
-                    ;;Asumimos que este archivo solo se utilizará como librería
-                    ;;Solo apilamos un 0 para el drop de después
-                    i32.const 0
                 )
                 """);
     }

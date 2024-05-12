@@ -73,22 +73,22 @@ public class InsBucleWhile extends Instruccion {
         GeneradorCodigo.escribir("block");
         GeneradorCodigo.sangrar();
 
-            GeneradorCodigo.escribir("loop");
-            GeneradorCodigo.sangrar();
+        GeneradorCodigo.escribir("loop");
+        GeneradorCodigo.sangrar();
 
-                GeneradorCodigo.comentario("Evaluar condición bucle.");
-                condicion.compilarExpresion();
-                GeneradorCodigo.i32_eqz();
-                GeneradorCodigo.br_if(1);
+        GeneradorCodigo.comentario("Evaluar condición bucle.");
+        condicion.compilarExpresion();
+        GeneradorCodigo.i32_eqz();
+        GeneradorCodigo.br_if(1);
 
-                GeneradorCodigo.comentario("Cuerpo del bucle.");
-                for (Instruccion i : cuerpo) {
-                    i.compilar();
-                }
-                GeneradorCodigo.br(0);
+        GeneradorCodigo.comentario("Cuerpo del bucle.");
+        for (Instruccion i : cuerpo) {
+            i.compilar();
+        }
+        GeneradorCodigo.br(0);
 
-            GeneradorCodigo.desangrar();
-            GeneradorCodigo.escribir("end");
+        GeneradorCodigo.desangrar();
+        GeneradorCodigo.escribir("end");
 
         GeneradorCodigo.desangrar();
         GeneradorCodigo.escribir("end");

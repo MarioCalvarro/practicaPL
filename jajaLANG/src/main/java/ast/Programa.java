@@ -1,10 +1,6 @@
 package main.java.ast;
 
-import main.java.ast.declaraciones.Declaracion;
-import main.java.ast.declaraciones.DeclaracionFun;
-import main.java.ast.declaraciones.DeclaracionPar;
-import main.java.ast.declaraciones.DeclaracionVar;
-import main.java.ast.declaraciones.Import;
+import main.java.ast.declaraciones.*;
 import main.java.ast.designadores.Identificador;
 import main.java.ast.tipos.TipoBinario;
 import main.java.ast.tipos.TipoEntero;
@@ -48,16 +44,16 @@ public class Programa extends Nodo {
 
         //Escritura
         ambitoGlobal.poner(new DeclaracionFun("escribirEnt",
-                    Arrays.asList(new DeclaracionPar("num", TipoEntero.instancia(), false)),
-                    TipoVacio.instancia()));
+                Arrays.asList(new DeclaracionPar("num", TipoEntero.instancia(), false)),
+                TipoVacio.instancia()));
         ambitoGlobal.poner(new DeclaracionFun("escribirBin",
-                    Arrays.asList(new DeclaracionPar("num", TipoBinario.instancia(), false)),
-                    TipoVacio.instancia()));
+                Arrays.asList(new DeclaracionPar("num", TipoBinario.instancia(), false)),
+                TipoVacio.instancia()));
 
         //Liberar
         ambitoGlobal.poner(new DeclaracionFun("liberar",
-                    Arrays.asList(new DeclaracionPar("puntero", new TipoPuntero(null), false)),
-                    TipoVacio.instancia()));
+                Arrays.asList(new DeclaracionPar("puntero", new TipoPuntero(null), false)),
+                TipoVacio.instancia()));
     }
 
 
@@ -101,12 +97,6 @@ public class Programa extends Nodo {
         return lista;
     }
 
-    public void bind() {
-        Contexto ctx = new Contexto(this, this.ambitoGlobal);
-        super.bind(ctx);
-        bindDone = true;
-    }
-
     @Override
     public void typecheck() {
         if (!bindDone) {
@@ -120,28 +110,6 @@ public class Programa extends Nodo {
     public void calcularOffset(Delta d) {
         super.calcularOffset(d);
         tamVarGlobales = d.getMax();
-    }
-
-    private void traerDefExternas() {
-        for (Import lib : mapa_imports.values()) {
-            for (Declaracion d : lib.getAST().lista_declaraciones) {
-                //Solo nos vamos a quedar con las funciones
-                try {
-                    DeclaracionFun dec = (DeclaracionFun) d;
-                    dec.nuevoPrefijo(lib.getId());
-                    lista_declaraciones.add(dec);
-                } catch (ClassCastException e) {
-                }
-            }
-        }
-    }
-
-    public void calcularOffset() {
-        if (!typecheckDone) {
-            typecheck();
-        }
-        traerDefExternas();
-        calcularOffset(new Delta());
     }
 
     @Override
@@ -159,7 +127,8 @@ public class Programa extends Nodo {
                     }
                     hayMain = true;
                 }
-            } catch (ClassCastException e) {}
+            } catch (ClassCastException e) {
+            }
         }
 
         if (!hayMain) {
@@ -174,16 +143,17 @@ public class Programa extends Nodo {
         GeneradorCodigo.escribir(String.format("(local $%s i32)", GeneradorCodigo.INICIO_LOCAL));
         GeneradorCodigo.escribir("(local $temp i32)");
         GeneradorCodigo.sangrar();
-            //Reservamos memoria para las variables globales
-            GeneradorCodigo.i32_const(4 + tamVarGlobales);      //MP + Tam. Variables Globales
-            GeneradorCodigo.reservarPila();
+        //Reservamos memoria para las variables globales
+        GeneradorCodigo.i32_const(4 + tamVarGlobales);      //MP + Tam. Variables Globales
+        GeneradorCodigo.reservarPila();
 
-            for (Declaracion dec : lista_declaraciones) {
-                try {
-                    DeclaracionVar var = (DeclaracionVar) dec;
-                    var.compilar();
-                } catch (ClassCastException e) {}
+        for (Declaracion dec : lista_declaraciones) {
+            try {
+                DeclaracionVar var = (DeclaracionVar) dec;
+                var.compilar();
+            } catch (ClassCastException e) {
             }
+        }
         GeneradorCodigo.desangrar();
         GeneradorCodigo.comentario("Llamar a 'tronco'");
         GeneradorCodigo.llamar(funcionMain);
@@ -195,7 +165,36 @@ public class Programa extends Nodo {
             try {
                 DeclaracionFun funDec = (DeclaracionFun) dec;
                 funDec.compilar();
-            } catch (ClassCastException e) {}
+            } catch (ClassCastException e) {
+            }
         }
+    }
+
+    public void calcularOffset() {
+        if (!typecheckDone) {
+            typecheck();
+        }
+        traerDefExternas();
+        calcularOffset(new Delta());
+    }
+
+    private void traerDefExternas() {
+        for (Import lib : mapa_imports.values()) {
+            for (Declaracion d : lib.getAST().lista_declaraciones) {
+                //Solo nos vamos a quedar con las funciones
+                try {
+                    DeclaracionFun dec = (DeclaracionFun) d;
+                    dec.nuevoPrefijo(lib.getId());
+                    lista_declaraciones.add(dec);
+                } catch (ClassCastException e) {
+                }
+            }
+        }
+    }
+
+    public void bind() {
+        Contexto ctx = new Contexto(this, this.ambitoGlobal);
+        super.bind(ctx);
+        bindDone = true;
     }
 }

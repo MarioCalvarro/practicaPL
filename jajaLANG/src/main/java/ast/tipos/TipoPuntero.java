@@ -20,16 +20,16 @@ public class TipoPuntero extends Tipo {
         return lista;
     }
 
-    public Tipo getTipoApuntado() {
-        return tipoElemento;
-    }
-
     @Override
     public void bind(Contexto ctx) {
         super.bind(ctx);
         while (tipoElemento instanceof TipoAlias) {
             tipoElemento = ((TipoAlias) tipoElemento).tipoApuntado();
         }
+    }
+
+    public Tipo getTipoApuntado() {
+        return tipoElemento;
     }
 
     @Override
