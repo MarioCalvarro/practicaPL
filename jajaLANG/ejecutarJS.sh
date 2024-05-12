@@ -1,6 +1,7 @@
-if [ -z "$1" ]; then
-    echo "Introduzca el nombre del fichero 'wasm'."
+# Check if two arguments are provided
+if [ $# -ne 2 ]; then
+    echo "Uso: $0 <fichero.wasm> <fichero_input.txt>"
     exit 1
 fi
 
-node main.js $1 < input.txt
+node main.js $1 < $2
